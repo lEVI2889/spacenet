@@ -1,0 +1,1721 @@
+<!DOCTYPE html><html lang="en" style=""><svg class="inline-defs-container" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg><head>
+<title>SpaceNet AI CRM & NOC Operations Platform</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230066ff'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z'/></svg>"><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#424656", "inverse-on-surface": "#eef0ff", "surface-container-highest": "#dae2fd", "error": "#ba1a1a", "primary": "#0050cb", "on-tertiary": "#ffffff", "tertiary-container": "#8848f9", "tertiary-fixed": "#eaddff", "on-primary": "#ffffff", "tertiary-fixed-dim": "#d2bbff", "background": "#faf8ff", "on-primary-container": "#f8f7ff", "on-secondary-fixed": "#001d31", "on-primary-fixed-variant": "#003fa4", "surface-container-lowest": "#ffffff", "error-container": "#ffdad6", "surface-dim": "#d2d9f4", "primary-container": "#0066ff", "surface": "#faf8ff", "on-secondary-container": "#00476e", "surface-container": "#eaedff", "surface-variant": "#dae2fd", "on-tertiary-fixed": "#25005a", "on-secondary-fixed-variant": "#004b73", "on-primary-fixed": "#001849", "outline-variant": "#c2c6d8", "surface-tint": "#0054d6", "on-secondary": "#ffffff", "on-tertiary-fixed-variant": "#5a00c6", "surface-container-low": "#f2f3ff", "on-tertiary-container": "#fdf6ff", "on-error-container": "#93000a", "secondary-fixed": "#cce5ff", "on-error": "#ffffff", "outline": "#727687", "tertiary": "#6e26df", "surface-bright": "#faf8ff", "inverse-primary": "#b3c5ff", "on-background": "#131b2e", "secondary-fixed-dim": "#93ccff", "secondary": "#006398", "primary-fixed": "#dae1ff", "inverse-surface": "#283044", "on-surface": "#131b2e", "primary-fixed-dim": "#b3c5ff", "surface-container-high": "#e2e7ff", "secondary-container": "#5bb8fe" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "space-lg": "1rem", "gutter": "1rem", "margin-desktop": "2rem", "space-md": "0.75rem", "space-2xl": "2rem", "space-xl": "1.5rem", "margin": "1rem", "space-xs": "0.25rem", "gutter-desktop": "1.5rem" }, "fontFamily": { "headline-xl-mobile": [ "Geist" ], "body-lg": [ "Geist" ], "body-sm": [ "Geist" ], "code-metric": [ "JetBrains Mono" ], "headline-lg": [ "Geist" ], "label-md": [ "Geist" ], "headline-sm": [ "Geist" ], "headline-md": [ "Geist" ], "label-sm": [ "Geist" ], "code-telemetry": [ "JetBrains Mono" ], "body-md": [ "Geist" ], "headline-xl": [ "Geist" ] }, "fontSize": { "headline-xl-mobile": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "body-lg": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" } ], "body-sm": [ "13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" } ], "code-metric": [ "14px", { "lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" } ], "headline-sm": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-md": [ "20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" } ], "code-telemetry": [ "12px", { "lineHeight": "16px", "letterSpacing": "-0.01em", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-xl": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "600" } ] } } } }</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" onclick="openCmdPalette()" onfocus="openCmdPalette()" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
+<!-- Interactive View Switcher Sub-Header Bar & Live System Metric Ribbon -->
+<div class="sticky top-16 z-30 bg-surface/90 backdrop-blur-md px-space-md py-space-sm mb-space-lg shadow-sm flex flex-wrap items-center justify-between gap-space-md rounded-xl">
+<div class="flex items-center gap-space-xs overflow-x-auto py-1">
+<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-headline-sm text-label-md transition-all bg-primary-container text-on-primary-container shadow-sm" id="nav-btn-dashboard" onclick="switchView('dashboard')">
+<span class="material-symbols-outlined text-[18px]">dashboard</span>
+<span class="">Dashboard</span>
+</button>
+<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-unified-inbox" onclick="switchView('unified-inbox')">
+<span class="material-symbols-outlined text-[18px]">inbox</span>
+<span class="">Unified Inbox</span>
+<span class="ml-1 px-1.5 py-0.2 bg-primary text-on-primary text-[10px] font-code-telemetry rounded-full">3</span>
+</button>
+<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-tickets" onclick="switchView('tickets')">
+<span class="material-symbols-outlined text-[18px]">confirmation_number</span>
+<span class="">Tickets</span>
+<span class="ml-1 px-1.5 py-0.2 bg-surface-container-highest text-on-surface-variant text-[10px] font-code-telemetry rounded-full">14</span>
+</button>
+<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-sales-leads" onclick="switchView('sales-leads')">
+<span class="material-symbols-outlined text-[18px]">trending_up</span>
+<span class="">Sales / Leads</span>
+<span class="ml-1 px-1.5 py-0.2 bg-tertiary-container text-on-tertiary-container text-[10px] font-code-telemetry rounded-full">8</span>
+</button>
+<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-network-outages" onclick="switchView('network-outages')">
+<span class="material-symbols-outlined text-[18px]">router</span>
+<span class="">Network Outages</span>
+<span class="ml-1 px-2 py-0.2 bg-error-container text-on-error-container text-[10px] font-semibold rounded-full flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span>1 Active
+        </span>
+</button>
+</div>
+<!-- Right Quick Controls -->
+<div class="flex items-center gap-space-sm">
+<div class="hidden lg:flex items-center gap-space-xs bg-surface-container-low px-space-sm py-1 rounded-lg">
+<span class="material-symbols-outlined text-[16px] text-primary">psychology</span>
+<span class="font-code-telemetry text-code-telemetry text-on-surface">Auto-Pilot: <strong class="text-primary font-semibold">Active</strong></span>
+</div>
+<button class="px-space-md py-1.5 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded-lg flex items-center gap-space-xs transition-colors" onclick="triggerGlobalDiagnostics()">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span class="">Quick ONT Sweep</span>
+</button>
+</div>
+</div>
+<!-- Notification Toast Layer -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-space-sm px-space-lg py-space-md bg-inverse-surface text-inverse-on-surface rounded-xl shadow-xl" id="toast-notification">
+<span class="material-symbols-outlined text-secondary-container" id="toast-icon">check_circle</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-label-md" id="toast-title">Notification</span>
+<span class="font-body-sm text-body-sm text-surface-container-highest" id="toast-msg">Operation completed successfully.</span>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- VIEW 1: DASHBOARD VIEW (DEFAULT ACTIVE)                                 -->
+<!-- ========================================================================= -->
+<section class="app-view flex flex-col gap-space-xl" id="view-dashboard">
+<!-- Top Hero KPI Metric Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-lg">
+<!-- Total Chats -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-20 h-20 bg-primary/5 rounded-full pointer-events-none"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Inbound Volume</span>
+<span class="p-1.5 bg-surface-container rounded-lg text-primary">
+<span class="material-symbols-outlined text-[20px]">forum</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-sm">
+<span class="font-headline-xl text-headline-xl text-on-surface font-semibold tracking-tight">4,829</span>
+<span class="font-code-telemetry text-code-telemetry text-secondary font-semibold flex items-center">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span> +18.4%
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Across WhatsApp, FB, Web, Telegram</p>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="">7-day rolling window</span>
+<span class="text-primary font-semibold">99.4% uptime</span>
+</div>
+</div>
+<!-- AI-Handled Chats -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-20 h-20 bg-tertiary/5 rounded-full pointer-events-none"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">AI Automation Rate</span>
+<span class="p-1.5 bg-tertiary-fixed text-on-tertiary-fixed rounded-lg">
+<span class="material-symbols-outlined text-[20px]">smart_toy</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-sm">
+<span class="font-headline-xl text-headline-xl text-tertiary font-semibold tracking-tight">3,912</span>
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed font-code-telemetry text-label-sm text-on-tertiary-fixed font-semibold">81.0% Auto</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Avg AI response latency: <strong class="text-on-surface font-code-metric">3.2s</strong></p>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="">Target: 75.0%</span>
+<span class="text-secondary font-semibold">+6.0% over SLA</span>
+</div>
+</div>
+<!-- Open Tickets -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Escalated Tickets</span>
+<span class="p-1.5 bg-surface-container rounded-lg text-primary">
+<span class="material-symbols-outlined text-[20px]">confirmation_number</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-sm">
+<span class="font-headline-xl text-headline-xl text-on-surface font-semibold tracking-tight">14</span>
+<span class="font-code-telemetry text-code-telemetry text-secondary font-semibold flex items-center">
+<span class="material-symbols-outlined text-[16px]">arrow_downward</span> -5 vs ystd
+            </span>
+</div>
+<div class="flex items-center gap-space-xs mt-1">
+<span class="px-2 py-0.5 bg-error-container text-on-error-container font-label-sm text-label-sm rounded-md font-semibold">8 Critical</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface-variant font-label-sm text-label-sm rounded-md">6 Normal</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="">Mean Resolution Time</span>
+<span class="font-code-metric text-on-surface">34 mins</span>
+</div>
+</div>
+<!-- Sales Pipeline Leads -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">New Sales Inbound</span>
+<span class="p-1.5 bg-secondary-fixed text-on-secondary-fixed rounded-lg">
+<span class="material-symbols-outlined text-[20px]">attach_money</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-sm">
+<span class="font-headline-xl text-headline-xl text-on-surface font-semibold tracking-tight">142</span>
+<span class="font-code-telemetry text-code-telemetry text-secondary font-semibold">+22 today</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Est. Pipeline: <strong class="text-on-surface font-semibold">$38,400 MRR</strong></p>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="">AI Lead Qualification</span>
+<span class="text-primary font-semibold">91% accuracy</span>
+</div>
+</div>
+</div>
+<!-- Complaint & Incident Trends Visualization + Live Diagnostics -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Main Line Chart Card (8 cols) -->
+<div class="lg:col-span-8 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex flex-wrap items-center justify-between gap-space-md mb-space-md">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Weekly Complaint &amp; Incident Velocity</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Live telemetry comparing automated AI resolutions against field dispatches</p>
+</div>
+<div class="flex items-center gap-space-sm">
+<!-- Legend -->
+<div class="flex items-center gap-space-md text-label-sm font-label-sm mr-space-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-on-surface">AI Auto-Resolved</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-error"></span>
+<span class="text-on-surface-variant">Escalated to Tech</span>
+</div>
+</div>
+<!-- Period Switcher Buttons -->
+<div class="bg-surface-container p-1 rounded-lg flex items-center gap-1 text-label-sm font-label-sm">
+<button class="chart-period-btn px-2.5 py-1 rounded bg-surface-container-lowest text-primary font-semibold shadow-xs" onclick="updateTrendChart('24h', this)">24h</button>
+<button class="chart-period-btn px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface" onclick="updateTrendChart('7d', this)">7D</button>
+<button class="chart-period-btn px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface" onclick="updateTrendChart('30d', this)">30D</button>
+</div>
+</div>
+</div>
+<!-- SVG Line Chart Canvas -->
+<div class="relative w-full h-64 bg-surface-container-low/40 rounded-xl p-space-md flex flex-col justify-between overflow-hidden">
+<!-- Background Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none p-4 opacity-30">
+<div class="w-full h-px bg-outline-variant"></div>
+<div class="w-full h-px bg-outline-variant"></div>
+<div class="w-full h-px bg-outline-variant"></div>
+<div class="w-full h-px bg-outline-variant"></div>
+</div>
+<!-- Dynamic SVG Wave -->
+<svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 700 200">
+<defs>
+<linearGradient id="aiGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#0066ff" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#0066ff" stop-opacity="0.0"></stop>
+</linearGradient>
+</defs>
+<!-- AI Resolved Area & Path -->
+<polygon fill="url(#aiGradient)" id="chart-area" points="30,170 120,130 220,150 320,80 420,95 520,40 670,55 670,185 30,185"></polygon>
+<polyline fill="none" id="chart-line-ai" points="30,170 120,130 220,150 320,80 420,95 520,40 670,55" stroke="#0050cb" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></polyline>
+<!-- Escalated Line -->
+<polyline fill="none" id="chart-line-escalated" points="30,180 120,165 220,168 320,140 420,150 520,135 670,120" stroke="#ba1a1a" stroke-dasharray="4 4" stroke-linecap="round" stroke-width="2"></polyline>
+<!-- Interactive Anchor Dots -->
+<circle class="hover:scale-150 transition-transform cursor-pointer" cx="30" cy="170" fill="#0050cb" onclick="showChartDetail('Mon: 142 Resolved, 12 Escalated')" r="4"></circle>
+<circle class="hover:scale-150 transition-transform cursor-pointer" cx="120" cy="130" fill="#0050cb" onclick="showChartDetail('Tue: 260 Resolved, 22 Escalated')" r="4"></circle>
+<circle class="hover:scale-150 transition-transform cursor-pointer" cx="220" cy="150" fill="#0050cb" onclick="showChartDetail('Wed: 210 Resolved, 18 Escalated')" r="4"></circle>
+<circle class="hover:scale-150 transition-transform cursor-pointer" cx="320" cy="80" fill="#0066ff" onclick="showChartDetail('Thu Peak: 512 Resolved, 41 Escalated')" r="5"></circle>
+<circle class="hover:scale-150 transition-transform cursor-pointer" cx="420" cy="95" fill="#0050cb" onclick="showChartDetail('Fri: 460 Resolved, 34 Escalated')" r="4"></circle>
+<circle class="hover:scale-150 transition-transform cursor-pointer animate-pulse" cx="520" cy="40" fill="#0050cb" onclick="showChartDetail('Sat High AI Surge: 680 Resolved, 19 Escalated')" r="6"></circle>
+<circle class="hover:scale-150 transition-transform cursor-pointer" cx="670" cy="55" fill="#0050cb" onclick="showChartDetail('Sun: 610 Resolved, 25 Escalated')" r="4"></circle>
+</svg>
+<!-- Day Labels -->
+<div class="flex justify-between font-code-telemetry text-[11px] text-on-surface-variant pt-2">
+<span class="">MON</span>
+<span class="">TUE</span>
+<span class="">WED</span>
+<span class="">THU</span>
+<span class="">FRI</span>
+<span class="">SAT</span>
+<span class="">SUN (Today)</span>
+</div>
+</div>
+<div class="mt-space-sm px-space-md py-1.5 bg-surface-container rounded-lg flex items-center justify-between text-body-sm font-body-sm" id="chart-tooltip-bar">
+<div class="flex items-center gap-space-xs text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-primary">analytics</span>
+<span id="chart-info-text" class="">Saturday Surge: 680 AI auto-resolutions (GPON ONT reboot scripts triggered).</span>
+</div>
+<span class="font-code-telemetry text-label-sm text-on-surface-variant">Hover or click dots for telemetry</span>
+</div>
+</div>
+<!-- Secondary Telemetry Widgets (4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-space-lg">
+<!-- Live Network Health Card -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">hub</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">NOC Core Health</h3>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-code-telemetry text-[11px] font-semibold">99.98% SLA</span>
+</div>
+<div class="flex flex-col gap-space-sm font-label-md text-label-md">
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-on-surface">North GPON OLT Rings</span>
+</div>
+<span class="font-code-telemetry text-secondary font-semibold">Normal (2.1 dBm)</span>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-on-surface">DNS Resolvers (Anycast)</span>
+</div>
+<span class="font-code-telemetry text-primary font-semibold">9ms RTT</span>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+<span class="text-on-surface">North Sector Substation</span>
+</div>
+<span class="font-code-telemetry text-error font-semibold">Severe Fiber Sever</span>
+</div>
+</div>
+<button class="mt-space-md w-full py-2 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-space-xs transition-colors" onclick="switchView('network-outages')">
+<span class="">Inspect Outage Matrix</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+<!-- Recent AI Actions Feed -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px]">auto_awesome</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent AI Agent Actions</h3>
+</div>
+<span class="font-code-telemetry text-[11px] text-on-surface-variant">Live stream</span>
+</div>
+<div class="flex flex-col gap-space-sm overflow-y-auto max-h-56 pr-1">
+<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex items-start gap-space-sm">
+<span class="p-1 rounded bg-tertiary-fixed text-tertiary material-symbols-outlined text-[14px] mt-0.5">restart_alt</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[12px] text-on-surface">Auto-reset GPON ONT for Cust #8832</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant">Signal calibrated to -19.2 dBm. Chat closed.</span>
+<span class="font-code-telemetry text-[10px] text-outline mt-0.5">2 mins ago via WhatsApp bot</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex items-start gap-space-sm">
+<span class="p-1 rounded bg-secondary-fixed text-secondary material-symbols-outlined text-[14px] mt-0.5">credit_score</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[12px] text-on-surface">Applied $10 SLA rebate to FiberBiz #1029</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant">Detected 42 min micro-jitter outage automatically.</span>
+<span class="font-code-telemetry text-[10px] text-outline mt-0.5">14 mins ago via Copilot Rule</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex items-start gap-space-sm">
+<span class="p-1 rounded bg-surface-container-highest text-primary material-symbols-outlined text-[14px] mt-0.5">forward_to_inbox</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[12px] text-on-surface">Sent 10G dedicated contract to Apex Corp</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant">Lead scored 94/100, quote auto-generated.</span>
+<span class="font-code-telemetry text-[10px] text-outline mt-0.5">38 mins ago via Lead Agent</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- VIEW 2: UNIFIED INBOX VIEW                                              -->
+<!-- ========================================================================= -->
+<section class="app-view flex flex-col gap-space-lg hidden" id="view-unified-inbox">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg h-[calc(100vh-140px)] min-h-[700px]">
+<!-- Left Column: Channel Filter + Chat Thread List (4 cols) -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col h-full overflow-hidden">
+<!-- Inbox Search & Filter Tabs -->
+<div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low/50">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-2 text-outline text-[18px]">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" placeholder="Filter chats or customer ID..." type="text">
+</div>
+<!-- Channel Filter Pill Strip -->
+<div class="flex items-center gap-1 overflow-x-auto pb-1 text-label-sm font-label-sm">
+<button class="inbox-filter-pill px-2.5 py-1 rounded bg-primary text-on-primary font-semibold" onclick="filterInbox('all', this)">All</button>
+<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1" onclick="filterInbox('whatsapp', this)">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> WhatsApp
+            </button>
+<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1" onclick="filterInbox('facebook', this)">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Facebook
+            </button>
+<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1" onclick="filterInbox('web', this)">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span> Web
+            </button>
+<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface" onclick="filterInbox('telegram', this)">Telegram</button>
+</div>
+</div>
+<!-- Chat List Items -->
+<div class="flex-1 overflow-y-auto divide-y divide-surface-container-low" id="inbox-thread-list">
+<!-- Customer 1: Active Alex Rivera -->
+<div class="chat-thread-item p-space-md bg-surface-container-high/60 cursor-pointer hover:bg-surface-container transition-colors flex flex-col gap-1" onclick="selectCustomer('alex', this)">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-code-telemetry text-[11px] font-semibold">WA</span>
+<span class="font-headline-sm text-body-md text-on-surface font-semibold">Alex Rivera</span>
+<span class="font-code-telemetry text-code-telemetry text-on-surface-variant font-medium">#8832</span>
+</div>
+<span class="font-code-telemetry text-[11px] text-outline">Just now</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface truncate">"My upload speed is fluctuating during meetings..."</p>
+<div class="flex items-center justify-between mt-1">
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">auto_awesome</span> AI Diagnostics
+              </span>
+<span class="font-code-telemetry text-[11px] text-secondary font-semibold">Fiber 500M</span>
+</div>
+</div>
+<!-- Customer 2: Sarah Jenkins -->
+<div class="chat-thread-item p-space-md hover:bg-surface-container transition-colors cursor-pointer flex flex-col gap-1" onclick="selectCustomer('sarah', this)">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-code-telemetry text-[11px] font-semibold">FB</span>
+<span class="font-headline-sm text-body-md text-on-surface font-semibold">Sarah Jenkins</span>
+<span class="font-code-telemetry text-code-telemetry text-on-surface-variant font-medium">#4491</span>
+</div>
+<span class="font-code-telemetry text-[11px] text-outline">4m ago</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">"Need to upgrade office router for 25 new workstations"</p>
+<div class="flex items-center justify-between mt-1">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Sales Lead</span>
+<span class="font-code-telemetry text-[11px] text-on-surface-variant">Office Pro 1G</span>
+</div>
+</div>
+<!-- Customer 3: Marcus Vance -->
+<div class="chat-thread-item p-space-md hover:bg-surface-container transition-colors cursor-pointer flex flex-col gap-1" onclick="selectCustomer('marcus', this)">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-code-telemetry text-[11px] font-semibold">WEB</span>
+<span class="font-headline-sm text-body-md text-on-surface font-semibold">Marcus Vance</span>
+<span class="font-code-telemetry text-code-telemetry text-on-surface-variant font-medium">#1092</span>
+</div>
+<span class="font-code-telemetry text-[11px] text-outline">18m ago</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">"Red light on my router PON port. Is there an outage?"</p>
+<div class="flex items-center justify-between mt-1">
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">LOS Red Alert</span>
+<span class="font-code-telemetry text-[11px] text-error">Home Lite</span>
+</div>
+</div>
+<!-- Customer 4: Elena Rostov -->
+<div class="chat-thread-item p-space-md hover:bg-surface-container transition-colors cursor-pointer flex flex-col gap-1" onclick="selectCustomer('elena', this)">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-code-telemetry text-[11px] font-semibold">TG</span>
+<span class="font-headline-sm text-body-md text-on-surface font-semibold">Elena Rostov</span>
+<span class="font-code-telemetry text-code-telemetry text-on-surface-variant font-medium">#7721</span>
+</div>
+<span class="font-code-telemetry text-[11px] text-outline">1h ago</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">"Can I pay using corporate wire transfer this month?"</p>
+<div class="flex items-center justify-between mt-1">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Billing Query</span>
+<span class="font-code-telemetry text-[11px] text-on-surface-variant">Fiber Gigabit</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Active Live Chat Window & AI Copilot (8 cols) -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col h-full overflow-hidden">
+<!-- Chat Header with Live Auto-Pilot / Human Handover Toggle -->
+<div class="p-space-md bg-surface-container-low/70 flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm">
+              AR
+            </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold" id="chat-customer-name">Alex Rivera</h3>
+<span class="font-code-telemetry text-code-telemetry text-primary font-semibold">#8832</span>
+<span id="chat-channel-badge" class="px-2 py-0.2 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">WhatsApp</span>
+            <div class="flex items-center gap-1 bg-surface-container px-1 py-0.5 rounded-lg text-[11px] font-label-sm">
+              <span class="text-outline px-1">AI Lang:</span>
+              <button class="px-1.5 py-0.5 rounded bg-primary text-on-primary font-semibold" onclick="setAiLanguage('EN', this)">EN</button>
+              <button class="px-1.5 py-0.5 rounded hover:bg-surface-container-high text-on-surface" onclick="setAiLanguage('BN', this)">বাংলা</button>
+              <button class="px-1.5 py-0.5 rounded hover:bg-surface-container-high text-on-surface" onclick="setAiLanguage('Banglish', this)">Banglish</button>
+            </div>
+
+</div>
+<span class="font-body-sm text-label-sm text-on-surface-variant">Circuit ID: <span class="font-code-telemetry">SPN-FBR-0941</span> • Plan: Fiber 500Mbps</span>
+</div>
+</div>
+<!-- Handover Toggle Pill -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5 px-space-sm py-1 bg-tertiary-fixed text-on-tertiary-fixed rounded-full font-label-md text-label-md font-semibold" id="agent-mode-badge">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+<span id="agent-mode-text" class="">AI Copilot Handling</span>
+</div>
+<!-- Handover switch -->
+<label class="flex items-center cursor-pointer select-none">
+<span class="font-label-sm text-label-sm text-on-surface-variant mr-2">Override:</span>
+<div class="relative">
+<input class="sr-only" id="copilot-toggle" onchange="toggleAgentOverride(this)" type="checkbox">
+<div class="block bg-surface-container-high w-11 h-6 rounded-full transition-colors"></div>
+<div class="dot absolute left-1 top-1 bg-surface-container-lowest w-4 h-4 rounded-full transition-transform shadow-xs"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold ml-2" id="override-label">Human Off</span>
+</label>
+</div>
+</div>
+<!-- Real-Time Chat Log Stream -->
+<div class="flex-1 p-space-lg overflow-y-auto flex flex-col gap-space-md bg-surface/30" id="chat-message-stream">
+<!-- Customer Message -->
+<div class="flex items-start gap-space-sm max-w-xl">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface font-semibold text-xs">AR</div>
+<div class="flex flex-col gap-1">
+<div class="bg-surface-container-lowest p-space-md rounded-2xl rounded-tl-none shadow-xs font-body-sm text-body-sm text-on-surface">
+                Hi, my connection keeps dropping during video calls today. It was fine yesterday. Could you check if something is wrong with my fiber box?
+              </div>
+<span class="font-code-telemetry text-[10px] text-outline ml-2">10:41 AM • Received</span>
+</div>
+</div>
+<!-- AI Diagnostic Telemetry Embed Card -->
+<div class="self-center w-full max-w-md my-1 bg-surface-container-low p-space-md rounded-xl shadow-xs">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1.5 text-tertiary font-headline-sm text-label-md font-semibold">
+<span class="material-symbols-outlined text-[16px]">csv</span>
+<span class="">Copilot Automated Optical Inspection</span>
+</div>
+<span class="px-2 py-0.2 rounded bg-surface-container font-code-telemetry text-[10px] text-secondary font-semibold">PASS</span>
+</div>
+<div class="grid grid-cols-3 gap-2 font-code-telemetry text-center">
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="text-[10px] text-on-surface-variant block">Optical Rx</span>
+<span class="text-body-sm font-semibold text-secondary">-19.2 dBm</span>
+</div>
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="text-[10px] text-on-surface-variant block">ONT Ping</span>
+<span class="text-body-sm font-semibold text-on-surface">11.4 ms</span>
+</div>
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="text-[10px] text-on-surface-variant block">Pkt Loss</span>
+<span class="text-body-sm font-semibold text-secondary">0.00%</span>
+</div>
+</div>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-2 text-center">GPON Physical Link is healthy. Diagnostic suggests local Wi-Fi 2.4GHz interference.</p>
+</div>
+<!-- AI Agent Reply -->
+<div class="flex items-start gap-space-sm max-w-xl self-end flex-row-reverse">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-semibold text-xs">
+<span class="material-symbols-outlined text-[16px]">smart_toy</span>
+</div>
+<div class="flex flex-col gap-1 items-end">
+<div class="bg-primary text-on-primary p-space-md rounded-2xl rounded-tr-none shadow-xs font-body-sm text-body-sm">
+                Hello Alex! I just ran a remote diagnostic on your GPON ONT modem (#8832). Your physical fiber link has strong signal (-19.2 dBm, 0% packet loss). 
+                <br><br>
+                We detected that your dual-band router is currently merging 2.4GHz and 5GHz. Would you like me to separate bands or optimize your 5GHz channel automatically?
+              </div>
+<span class="font-code-telemetry text-[10px] text-outline mr-2">10:42 AM • AI Agent</span>
+</div>
+</div>
+<!-- Customer Followup -->
+<div class="flex items-start gap-space-sm max-w-xl">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface font-semibold text-xs">AR</div>
+<div class="flex flex-col gap-1">
+<div class="bg-surface-container-lowest p-space-md rounded-2xl rounded-tl-none shadow-xs font-body-sm text-body-sm text-on-surface">
+                Yes please! Can you switch my laptop to the 5GHz channel?
+              </div>
+<span class="font-code-telemetry text-[10px] text-outline ml-2">10:44 AM • Received</span>
+</div>
+</div>
+</div>
+<!-- 3 Clickable AI Suggested Replies Toolbar -->
+<div class="px-space-md py-space-xs bg-surface-container-low/40 flex flex-col gap-1">
+<span class="font-label-sm text-[11px] text-tertiary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">bolt</span> Click an AI Suggested Reply to load &amp; send:
+          </span>
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1">
+<button class="ai-chip text-left whitespace-nowrap px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-body-sm text-label-md transition-all shadow-xs flex items-center gap-1.5" onclick="insertAiReply('I have applied channel auto-optimization on your 5GHz band. Please test your speed now!')">
+<span class="text-tertiary">✨</span> "I've applied 5GHz channel auto-optimization..."
+            </button>
+<button class="ai-chip text-left whitespace-nowrap px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-body-sm text-label-md transition-all shadow-xs flex items-center gap-1.5" onclick="insertAiReply('Speed test indicates 492 Mbps to your gateway. Let\'s inspect local Wi-Fi channels.')">
+<span class="text-tertiary">✨</span> "Speed test shows 492 Mbps to gateway..."
+            </button>
+<button class="ai-chip text-left whitespace-nowrap px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-body-sm text-label-md transition-all shadow-xs flex items-center gap-1.5" onclick="insertAiReply('I have scheduled a North Sector field tech dispatch for 2:00 PM if drops persist.')">
+<span class="text-tertiary">✨</span> "Dispatching tech crew to North Sector..."
+            </button>
+</div>
+</div>
+<!-- Chat Input Field -->
+<div class="p-space-md bg-surface-container-lowest flex items-center gap-space-sm">
+<button class="p-2 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+</button>
+<input class="flex-1 px-space-md py-2 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" id="chat-input" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="Type a message or trigger slash command (/reboot, /speedtest)..." type="text">
+<button class="px-space-lg py-2 bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-label-md rounded-lg flex items-center gap-1.5 shadow-sm transition-colors" onclick="sendChatMessage()">
+<span class="">Send</span>
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- VIEW 3: TICKETS VIEW                                                    -->
+<!-- ========================================================================= -->
+<section class="app-view flex flex-col gap-space-lg hidden" id="view-tickets">
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<!-- Filter Toolbar -->
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-sm flex-1 max-w-3xl">
+<div class="relative flex-1 min-w-[200px]">
+<span class="material-symbols-outlined absolute left-2.5 top-2.5 text-outline text-[18px]">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" id="ticket-search-input" onkeyup="filterTicketRows()" placeholder="Search Ticket ID, Customer, Circuit..." type="text">
+</div>
+<!-- Type filter dropdown -->
+<select class="bg-surface-container-low text-on-surface font-label-md text-label-md px-3 py-1.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" id="ticket-type-filter" onchange="filterTicketRows()">
+<option value="ALL">Issue: All Types</option>
+<option value="NO_INTERNET">No Internet</option>
+<option value="BILLING">Billing Dispute</option>
+<option value="SLOW_SPEED">Slow Speed</option>
+</select>
+<!-- Priority filter dropdown -->
+<select class="bg-surface-container-low text-on-surface font-label-md text-label-md px-3 py-1.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" id="ticket-priority-filter" onchange="filterTicketRows()">
+<option value="ALL">Priority: All</option>
+<option value="URGENT">Urgent Flashing</option>
+<option value="NORMAL">Normal</option>
+</select>
+<!-- Status filter dropdown -->
+<select class="bg-surface-container-low text-on-surface font-label-md text-label-md px-3 py-1.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" id="ticket-status-filter" onchange="filterTicketRows()">
+<option value="ALL">Status: All States</option>
+<option value="INVESTIGATING">Investigating</option>
+<option value="AWAITING">Awaiting Customer</option>
+<option value="AI_DIAG">AI Diagnostics Done</option>
+</select>
+</div>
+<button class="px-space-md py-1.5 bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-label-md rounded-lg flex items-center gap-1 shadow-sm transition-colors" onclick="createNewTicketMock()">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span class="">Create Ticket</span>
+</button>
+</div>
+<!-- Tickets Data Table -->
+<div class="overflow-x-auto rounded-lg">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<tr class="border-b border-surface-container-high">
+<th class="py-3 px-space-md">
+<input class="rounded text-primary focus:ring-0" type="checkbox" onclick="event.stopPropagation()">
+</th>
+<th class="py-3 px-space-md">Ticket ID</th>
+<th class="py-3 px-space-md">Customer &amp; Circuit</th>
+<th class="py-3 px-space-md">Connection Type</th>
+<th class="py-3 px-space-md text-left border-b border-surface-container-high">Issue Type</th>
+<th class="py-3 px-space-md text-left border-b border-surface-container-high">Priority</th>
+<th class="py-3 px-space-md">Handling Agent</th>
+<th class="py-3 px-space-md text-left border-b border-surface-container-high">Status</th>
+<th class="py-3 px-space-md text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low" id="ticket-table-body">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors cursor-pointer group" onclick="openTicketDetail('#TKT-9042', 'Alex Rivera', 'SPN-FBR-0941', 'Fiber 1Gbps', 'No Internet', 'URGENT', 'Investigating', 'GPON ONT reboot attempted. Optical Rx -19.2 dBm normal, checking OLT switch port')" data-priority="URGENT" data-status="INVESTIGATING" data-type="NO_INTERNET">
+<td class="py-3 px-space-md"><input class="rounded text-primary focus:ring-0" type="checkbox" onclick="event.stopPropagation()"></td>
+<td class="py-3 px-space-md font-code-metric text-primary font-semibold">#TKT-9042</td>
+<td class="py-3 px-space-md">
+<div class="flex flex-col">
+<span class="font-headline-sm text-label-md text-on-surface">Alex Rivera</span>
+<span class="font-code-telemetry text-[11px] text-outline">SPN-FBR-0941</span>
+</div>
+</td>
+<td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">Fiber 1Gbps</td>
+<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">No Internet</span></td>
+<td class="py-3 px-space-md text-center"><div class="flex items-center justify-center"><span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span> Urgent</span></div></td>
+<td class="py-3 px-space-md">
+<span class="flex items-center gap-1 font-label-sm text-tertiary">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span> AI Copilot
+                </span>
+</td>
+<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">Investigating</span></td>
+<td class="py-3 px-space-md text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-secondary" onclick="resolveTicketRow(this, '#TKT-9042')" title="Resolve Ticket"><span class="material-symbols-outlined text-[18px]">check</span></button>
+<button class="p-1 hover:bg-surface-container rounded text-primary" onclick="switchView('unified-inbox')" title="Open Chat"><span class="material-symbols-outlined text-[18px]">forum</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors cursor-pointer group" onclick="openTicketDetail('#TKT-9038', 'Vanguard Logistics', 'SPN-DED-4410', 'Dedicated Leased Line', 'Billing Dispute', 'NORMAL', 'Awaiting Customer', 'Invoice #2026-10 dispute. Pro-rated 42 min downtime SLA credit applied')" data-priority="NORMAL" data-status="AWAITING" data-type="BILLING">
+<td class="py-3 px-space-md"><input class="rounded text-primary focus:ring-0" type="checkbox" onclick="event.stopPropagation()"></td>
+<td class="py-3 px-space-md font-code-metric text-primary font-semibold">#TKT-9038</td>
+<td class="py-3 px-space-md">
+<div class="flex flex-col">
+<span class="font-headline-sm text-label-md text-on-surface">Vanguard Logistics</span>
+<span class="font-code-telemetry text-[11px] text-outline">SPN-DED-4410</span>
+</div>
+</td>
+<td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">Dedicated Leased Line</td>
+<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm font-semibold">Billing Dispute</span></td>
+<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Normal</span></td>
+<td class="py-3 px-space-md">
+<span class="font-label-sm text-on-surface">Agent: Rachel P.</span>
+</td>
+<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">Awaiting Customer</span></td>
+<td class="py-3 px-space-md text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-secondary" onclick="resolveTicketRow(this, '#TKT-9038')" title="Resolve"><span class="material-symbols-outlined text-[18px]">check</span></button>
+<button class="p-1 hover:bg-surface-container rounded text-primary" onclick="showToast('Invoice recalculated and resent', 'SPN-DED-4410')" title="Resend Quote"><span class="material-symbols-outlined text-[18px]">receipt_long</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors cursor-pointer group" onclick="openTicketDetail('#TKT-9035', 'Hyperion Studio', 'SPN-FBR-7719', 'Fiber 1Gbps', 'Slow Speed', 'NORMAL', 'AI Diagnostics Done', 'Channel band auto-optimized to 160MHz. Speed verified 940/920 Mbps')" data-priority="NORMAL" data-status="AI_DIAG" data-type="SLOW_SPEED">
+<td class="py-3 px-space-md"><input class="rounded text-primary focus:ring-0" type="checkbox" onclick="event.stopPropagation()"></td>
+<td class="py-3 px-space-md font-code-metric text-primary font-semibold">#TKT-9035</td>
+<td class="py-3 px-space-md">
+<div class="flex flex-col">
+<span class="font-headline-sm text-label-md text-on-surface">Hyperion Studio</span>
+<span class="font-code-telemetry text-[11px] text-outline">SPN-FBR-7719</span>
+</div>
+</td>
+<td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">Fiber 1Gbps</td>
+<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Slow Speed</span></td>
+<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Normal</span></td>
+<td class="py-3 px-space-md">
+<span class="flex items-center gap-1 font-label-sm text-tertiary">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span> AI Agent
+                </span>
+</td>
+<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">AI Diagnostics Done</span></td>
+<td class="py-3 px-space-md text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-secondary" onclick="resolveTicketRow(this, '#TKT-9035')"><span class="material-symbols-outlined text-[18px]">check</span></button>
+<button class="p-1 hover:bg-surface-container rounded text-primary" onclick="showToast('Channel band switched to 160MHz', 'SPN-FBR-7719')"><span class="material-symbols-outlined text-[18px]">tune</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors cursor-pointer group" onclick="openTicketDetail('#TKT-9042', 'Alex Rivera', 'SPN-FBR-0941', 'Fiber 1Gbps', 'No Internet', 'URGENT', 'Investigating', 'GPON ONT reboot attempted. Optical Rx -19.2 dBm normal, checking OLT switch port')" data-priority="URGENT" data-status="INVESTIGATING" data-type="NO_INTERNET">
+<td class="py-3 px-space-md"><input class="rounded text-primary focus:ring-0" type="checkbox" onclick="event.stopPropagation()"></td>
+<td class="py-3 px-space-md font-code-metric text-primary font-semibold">#TKT-9031</td>
+<td class="py-3 px-space-md">
+<div class="flex flex-col">
+<span class="font-headline-sm text-label-md text-on-surface">Marcus Vance</span>
+<span class="font-code-telemetry text-[11px] text-outline">SPN-VDS-1092</span>
+</div>
+</td>
+<td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">VDSL 100M</td>
+<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">No Internet</span></td>
+<td class="py-3 px-space-md text-center"><div class="flex items-center justify-center"><span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span> Urgent</span></div></td>
+<td class="py-3 px-space-md">
+<span class="font-label-sm text-on-surface">Field NOC Dispatch</span>
+</td>
+<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">Investigating</span></td>
+<td class="py-3 px-space-md text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-secondary" onclick="resolveTicketRow(this, '#TKT-9031')"><span class="material-symbols-outlined text-[18px]">check</span></button>
+<button class="p-1 hover:bg-surface-container rounded text-primary" onclick="switchView('network-outages')"><span class="material-symbols-outlined text-[18px]">build</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs text-on-surface-variant font-label-md text-label-md">
+<span class="">Showing <strong class="text-on-surface">1 - 4</strong> of <strong class="text-on-surface">14</strong> open tickets</span>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 bg-surface-container rounded hover:bg-surface-container-high transition-colors">Prev</button>
+<button class="px-2.5 py-1 bg-primary text-on-primary rounded font-semibold">1</button>
+<button class="px-2.5 py-1 bg-surface-container rounded hover:bg-surface-container-high transition-colors">2</button>
+<button class="px-2.5 py-1 bg-surface-container rounded hover:bg-surface-container-high transition-colors">Next</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- VIEW 4: SALES LEADS VIEW                                                -->
+<!-- ========================================================================= -->
+<section class="app-view flex flex-col gap-space-lg hidden" id="view-sales-leads">
+<!-- Header Summary Ribbon -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<span class="p-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed material-symbols-outlined text-[24px]">monetization_on</span>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Inbound ISP Expansion Pipeline</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">AI leads scored via chatbot qualifications &amp; business registration lookups</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-1.5 bg-tertiary-container hover:bg-tertiary text-on-tertiary-container font-headline-sm text-label-md rounded-lg flex items-center gap-1 transition-colors" onclick="showToast('AI Dialing Bot Queued', 'Running 8 automated qualification calls')">
+<span class="material-symbols-outlined text-[16px]">smart_toy</span>
+<span class="">Run Auto-Prospector</span>
+</button>
+</div>
+</div>
+<!-- 3-Column Kanban Board -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Column 1: New Leads -->
+<div class="bg-surface-container-low/70 rounded-xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="font-headline-sm text-headline-sm text-on-surface">New Leads</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-code-telemetry text-label-sm font-semibold">4</span>
+</div>
+<!-- Lead Card 1 -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer border border-transparent hover:border-primary/20 flex flex-col gap-space-xs" onclick="openLeadModal(this)">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Office Dedicated</span>
+<span class="font-code-telemetry text-code-telemetry font-bold text-primary">$399/mo</span>
+</div>
+<h4 class="font-headline-sm text-body-md text-on-surface font-semibold mt-1">Apex Media Production</h4>
+<p class="font-body-sm text-[12px] text-on-surface-variant">North Downtown Harbor, Suite 400</p>
+<div class="p-1.5 rounded bg-surface-container flex items-center justify-between my-1">
+<span class="font-label-sm text-[11px] text-on-surface-variant">AI Intent Score:</span>
+<span class="font-code-metric text-[12px] text-secondary font-bold">96/100 🔥 High</span>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<button class="w-full py-1.5 bg-primary text-on-primary font-label-md text-label-md rounded hover:bg-primary-container transition-colors flex items-center justify-center gap-1" onclick="showToast('AI Outreach Call Dispatched', 'Calling Apex Media rep via AI Telephony')">
+<span class="material-symbols-outlined text-[14px]">call</span> AI Outreach
+            </button>
+</div>
+</div>
+<!-- Lead Card 2 -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer border border-transparent hover:border-primary/20 flex flex-col gap-space-xs" onclick="openLeadModal(this)">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded-md bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">Home Gigabit</span>
+<span class="font-code-telemetry text-code-telemetry font-bold text-on-surface">$89/mo</span>
+</div>
+<h4 class="font-headline-sm text-body-md text-on-surface font-semibold mt-1">Dr. Julian Scott</h4>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Highland Park Estates, Unit 12B</p>
+<div class="p-1.5 rounded bg-surface-container flex items-center justify-between my-1">
+<span class="font-label-sm text-[11px] text-on-surface-variant">AI Intent Score:</span>
+<span class="font-code-metric text-[12px] text-on-surface font-bold">88/100 • Ready</span>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<button class="w-full py-1.5 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded transition-colors flex items-center justify-center gap-1" onclick="showToast('Custom Quote Sent', 'SMS with e-sign link delivered to +1-555-0192')">
+<span class="material-symbols-outlined text-[14px]">send</span> Send Quote
+            </button>
+</div>
+</div>
+</div>
+<!-- Column 2: Contacted -->
+<div class="bg-surface-container-low/70 rounded-xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Contacted</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-code-telemetry text-label-sm font-semibold">3</span>
+</div>
+<!-- Lead Card 3 -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer border border-transparent hover:border-primary/20 flex flex-col gap-space-xs" onclick="openLeadModal(this)">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Office 10G Ring</span>
+<span class="font-code-telemetry text-code-telemetry font-bold text-primary">$1,200/mo</span>
+</div>
+<h4 class="font-headline-sm text-body-md text-on-surface font-semibold mt-1">BlueStone Financial Group</h4>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Financial Core Tower, Floors 18-20</p>
+<div class="p-1.5 rounded bg-surface-container flex items-center justify-between my-1">
+<span class="font-label-sm text-[11px] text-on-surface-variant">Status:</span>
+<span class="font-code-metric text-[12px] text-secondary font-bold">Bot Call Answered</span>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<button class="w-full py-1.5 bg-primary text-on-primary font-label-md text-label-md rounded hover:bg-primary-container transition-colors flex items-center justify-center gap-1" onclick="showToast('SLA Spec Packet Transmitted', 'Delivered 99.999% SLA architecture schematic')">
+<span class="material-symbols-outlined text-[14px]">description</span> Deliver SLA Pack
+            </button>
+</div>
+</div>
+</div>
+<!-- Column 3: Interested / Pending Contract -->
+<div class="bg-surface-container-low/70 rounded-xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Pending Contract</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-code-telemetry text-label-sm font-semibold">2</span>
+</div>
+<!-- Lead Card 4 -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer border border-transparent hover:border-primary/20 flex flex-col gap-space-xs" onclick="openLeadModal(this)">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Dark Fiber Pair</span>
+<span class="font-code-telemetry text-code-telemetry font-bold text-primary">$2,450/mo</span>
+</div>
+<h4 class="font-headline-sm text-body-md text-on-surface font-semibold mt-1">Harbor Regional Health</h4>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Medical Campus Substation B</p>
+<div class="p-1.5 rounded bg-surface-container flex items-center justify-between my-1">
+<span class="font-label-sm text-[11px] text-on-surface-variant">DocuSign:</span>
+<span class="font-code-metric text-[12px] text-tertiary font-bold">Awaiting CIO Sign</span>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<button class="w-full py-1.5 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded transition-colors flex items-center justify-center gap-1" onclick="showToast('Automated SMS Reminder Sent', 'Notified CIO Dr. Kim of pending signature')">
+<span class="material-symbols-outlined text-[14px]">notification_important</span> Send Reminder
+            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- VIEW 5: NETWORK OUTAGES VIEW                                            -->
+<!-- ========================================================================= -->
+<section class="app-view flex flex-col gap-space-lg hidden" id="view-network-outages">
+<!-- Prominent Alert Banner -->
+<div class="bg-error-container text-on-error-container p-space-lg rounded-xl shadow-md flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<span class="p-2.5 rounded-xl bg-error text-on-error material-symbols-outlined text-[28px] animate-pulse">crisis_alert</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-md text-headline-md font-bold">CRITICAL OUTAGE: North Sector Substation Sever</h2>
+<span class="px-2 py-0.5 bg-error text-on-error font-code-telemetry text-label-sm rounded-full font-bold uppercase tracking-wider">Severity Level 1</span>
+</div>
+<p class="font-body-md text-body-md mt-1 opacity-90">
+            Physical 96-core trunk severed by third-party municipal excavation. 3 GPON Distribution Nodes offline. 1,420 impacted customers.
+          </p>
+</div>
+</div>
+<!-- Action Button that triggers interactive modal -->
+<button class="px-space-xl py-space-sm bg-on-error-container text-on-primary hover:bg-black font-headline-sm text-body-md rounded-lg flex items-center gap-2 shadow-lg transition-transform active:scale-95" onclick="openMaintenanceModal()">
+<span class="material-symbols-outlined text-[20px]">send_time_extension</span>
+<span class="">⚡ Send Maintenance Notice</span>
+</button>
+</div>
+<!-- Outage Area Breakdown & Restoration Matrix Table -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Active Fiber Segment Incidents</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Live telemetry synced with Field Service Management (FSM) GPS squads</p>
+</div>
+<button class="px-space-md py-1.5 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded-lg flex items-center gap-1 transition-colors" onclick="showToast('Telemetry Poll Complete', 'All 18 OLT switches queried successfully')">
+<span class="material-symbols-outlined text-[16px]">sync</span> Refresh Signals
+        </button>
+</div>
+<div class="overflow-x-auto rounded-lg">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<tr>
+<th class="py-3 px-space-md">District / Fiber Ring</th>
+<th class="py-3 px-space-md">Fault Classification</th>
+<th class="py-3 px-space-md">Complaints / Impact</th>
+<th class="py-3 px-space-md">Estimated Restoration</th>
+<th class="py-3 px-space-md">Field Crew Assigned</th>
+<th class="py-3 px-space-md text-left">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-error animate-ping"></span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold">North Downtown District</span>
+<span class="font-code-telemetry text-[11px] text-outline">Hub: N-DWT-OLT-03</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md text-center">
+<span class="inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">Full Fiber Sever</span>
+</td>
+<td class="py-3 px-space-md font-code-telemetry">
+<strong class="text-error font-semibold">142 complaints</strong> / 1,420 users
+              </td>
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-1 font-code-telemetry font-bold text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-error">timer</span>
+<span class="">ETA: 45 mins</span>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-1.5 font-label-md text-on-surface">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="">Team Delta-4 (On Site Splicing)</span>
+</div>
+</td>
+<td class="py-3 px-space-md text-right">
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded" onclick="openMaintenanceModal()">
+                  Broadcast Update
+                </button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold">Highland Park Hub</span>
+<span class="font-code-telemetry text-[11px] text-outline">Hub: HLP-OLT-01</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md text-center">
+<span class="inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm font-semibold">Degraded Optical Signal</span>
+</td>
+<td class="py-3 px-space-md font-code-telemetry">
+<strong class="text-on-surface font-semibold">18 complaints</strong> / 320 users
+              </td>
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-1 font-code-telemetry font-bold text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-primary">timer</span>
+<span class="">ETA: 2h 15m</span>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-1.5 font-label-md text-on-surface">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="">Squad Alpha-2 (En Route)</span>
+</div>
+</td>
+<td class="py-3 px-space-md text-right">
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded" onclick="showToast('Diagnostics Dispatched', 'Automated SFP optical loopback test running')">
+                  Run Loopback
+                </button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold">Harbor Industrial Park</span>
+<span class="font-code-telemetry text-[11px] text-outline">Hub: HBR-CORE-02</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md text-center">
+<span class="inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Hardware Fault (PDU)</span>
+</td>
+<td class="py-3 px-space-md font-code-telemetry">
+<span class="text-secondary font-semibold">0 active complaints</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-code-telemetry text-secondary font-semibold">Restored 10m ago</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-label-md text-on-surface-variant">Cleared by NOC Chief</span>
+</td>
+<td class="py-3 px-space-md text-right">
+<span class="px-2.5 py-1 text-outline font-label-sm text-label-sm">Archived</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- MODAL: BROADCAST MAINTENANCE NOTICE                                     -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="maintenance-modal">
+<div class="bg-surface-container-lowest max-w-xl w-full rounded-2xl shadow-2xl p-space-xl flex flex-col gap-space-lg transform scale-95 transition-transform duration-200" id="modal-container">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="p-2 rounded-xl bg-error-container text-on-error-container">
+<span class="material-symbols-outlined text-[24px]">crisis_alert</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Emergency SMS / Push Broadcast</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Targeted Subscriber Incident Notification</p>
+</div>
+</div>
+<button class="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container" onclick="closeMaintenanceModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm font-body-sm text-body-sm">
+<div class="p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<span class="text-on-surface-variant">Target Audience Scope:</span>
+<span class="font-code-telemetry font-bold text-on-surface">1,420 Subscribers (North District OLT)</span>
+</div>
+<label class="font-label-md text-label-md text-on-surface font-semibold">Message Copy Preview (AI Optimized for Churn Prevention):</label>
+<textarea class="w-full h-28 p-space-md bg-surface-container-low rounded-xl text-on-surface font-body-sm focus:outline-none focus:ring-2 focus:ring-primary resize-none leading-relaxed" id="notice-copy">SpaceNet Advisory: We have identified a physical fiber break affecting North Downtown. Crew Delta-4 is splicing lines now. Est. restoration: 45 minutes. An automatic 24-hour service credit has been credited to your bill.</textarea>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="">WhatsApp, SMS, App Push</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-headline-sm text-label-md" onclick="closeMaintenanceModal()">
+            Cancel
+          </button>
+<button class="px-space-lg py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-label-md flex items-center gap-1.5 shadow-md" onclick="executeBroadcastSend()">
+<span class="material-symbols-outlined text-[16px]">campaign</span>
+<span class="">Authorize &amp; Broadcast</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Vanilla JavaScript for instant client-side interaction & tab orchestration -->
+<script>
+  // Global State
+  let currentActiveView = 'dashboard';
+  let currentCustomerKey = 'alex';
+  let aiLanguageMode = 'EN';
+  let isSidebarCollapsed = false;
+
+  // Conversations Dataset
+  const customerConversations = {
+    alex: {
+      name: 'Alex Rivera',
+      id: '#8832',
+      channel: 'WhatsApp',
+      circuit: 'SPN-FBR-0941',
+      plan: 'Fiber 500Mbps',
+      messages: [
+        { sender: 'customer', text: 'Hi, my connection keeps dropping during video calls today. It was fine yesterday. Could you check if something is wrong with my fiber box?', time: '10:41 AM' },
+        { sender: 'telemetry', opticalRx: '-19.2 dBm', ping: '11.4 ms', loss: '0.00%', text: 'GPON Physical Link is healthy. Diagnostic suggests local Wi-Fi 2.4GHz interference.' },
+        { sender: 'ai', text: 'Hello Alex! I just ran a remote diagnostic on your GPON ONT modem (#8832). Your physical fiber link has strong signal (-19.2 dBm, 0% packet loss).<br><br>We detected that your dual-band router is currently merging 2.4GHz and 5GHz. Would you like me to separate bands or optimize your 5GHz channel automatically?', time: '10:42 AM' },
+        { sender: 'customer', text: 'Yes please! Can you switch my laptop to the 5GHz channel?', time: '10:44 AM' }
+      ],
+      suggestions: [
+        "I have applied channel auto-optimization on your 5GHz band. Please test your speed now!",
+        "Speed test indicates 492 Mbps to your gateway. Let's inspect local Wi-Fi channels.",
+        "I have scheduled a North Sector field tech dispatch for 2:00 PM if drops persist."
+      ]
+    },
+    sarah: {
+      name: 'Sarah Jenkins',
+      id: '#4491',
+      channel: 'Facebook',
+      circuit: 'SPN-OFF-2281',
+      plan: 'Office Pro 1Gbps',
+      messages: [
+        { sender: 'customer', text: 'Hello SpaceNet team, our creative agency is adding 25 new workstations next Monday. We need an upgraded Wi-Fi 6 mesh setup and dedicated IP.', time: '09:15 AM' },
+        { sender: 'ai', text: 'Hi Sarah! That is fantastic news on your agency expansion. Our Office Pro 1G plan includes 2 static IPv4 addresses and supports our Enterprise Wi-Fi 6 Mesh Trio with zero downtime guarantee.<br><br>Would you like me to book our commercial solutions engineer for a site survey tomorrow?', time: '09:18 AM' },
+        { sender: 'customer', text: 'Yes, tomorrow morning between 10 AM and 12 PM works best for our operations director.', time: '09:22 AM' }
+      ],
+      suggestions: [
+        "I have scheduled your commercial site survey for tomorrow at 10:30 AM with Lead Engineer Asif.",
+        "Sending our commercial SLA packet with 99.99% uptime guarantee and mesh hardware specs.",
+        "Here is a direct WhatsApp link to our corporate account manager: +880 1819-009988."
+      ]
+    },
+    marcus: {
+      name: 'Marcus Vance',
+      id: '#1092',
+      channel: 'Web Chat',
+      circuit: 'SPN-VDS-1092',
+      plan: 'Home Lite 100M',
+      messages: [
+        { sender: 'customer', text: 'Urgent! The PON light on my router just turned solid RED and internet stopped working completely.', time: '10:30 AM' },
+        { sender: 'ai', text: 'Hello Marcus! We have detected a physical fiber trunk cut in your district (North Downtown Substation trunk severed by municipal excavation).<br><br>Our emergency splicing crew Delta-4 is on site. Estimated restoration time is 40 minutes. An automated 24-hour SLA credit has already been issued to your account.', time: '10:31 AM' },
+        { sender: 'customer', text: 'Thank you for the quick notice! Will I get an SMS when the connection is back up?', time: '10:33 AM' }
+      ],
+      suggestions: [
+        "Yes, our automated outage system will send you an SMS alert the instant your ONT syncs back online.",
+        "Splicing crew Delta-4 has restored 64 of 96 trunk fibers. ETA updated to 25 minutes.",
+        "Your account #1092 has been credited $5 for this unforeseen fiber cut."
+      ]
+    },
+    elena: {
+      name: 'Elena Rostov',
+      id: '#7721',
+      channel: 'Telegram',
+      circuit: 'SPN-CORP-7721',
+      plan: 'Fiber Gigabit',
+      messages: [
+        { sender: 'customer', text: 'Good morning! Can we pay our monthly invoice via bKash Merchant or bank wire transfer this month?', time: '08:45 AM' },
+        { sender: 'ai', text: 'Good morning Elena! Absolutely. SpaceNet supports direct bKash Merchant payment via account 01700-SPACENET, or corporate EFT to our City Bank account.<br><br>Your current balance for October is 4,500 BDT with due date on Nov 5th.', time: '08:47 AM' },
+        { sender: 'customer', text: 'Great, just sent 4,500 BDT via bKash. TrxID is 9K38LA01Z.', time: '08:50 AM' }
+      ],
+      suggestions: [
+        "Payment received and verified! TrxID 9K38LA01Z logged. Your connection is active through Nov 30.",
+        "Sending official money receipt PDF and corporate VAT invoice to your registered email.",
+        "Your account is set to auto-renew. Let us know if you need bandwidth throttling adjustments."
+      ]
+    }
+  };
+
+  // 1. Navigation & View Switching
+  function switchView(viewId) {
+    currentActiveView = viewId;
+    window.location.hash = '#' + viewId;
+
+    // Hide all view sections
+    document.querySelectorAll('.app-view').forEach(view => {
+      view.classList.add('hidden');
+    });
+
+    // Reveal target view
+    const target = document.getElementById('view-' + viewId);
+    if (target) {
+      target.classList.remove('hidden');
+    }
+
+    // Update Top Navigation Switcher Pills
+    document.querySelectorAll('.view-switch-btn').forEach(btn => {
+      btn.className = 'view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all';
+    });
+    const activeTopBtn = document.getElementById('nav-btn-' + viewId);
+    if (activeTopBtn) {
+      activeTopBtn.className = 'view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-headline-sm text-label-md transition-all bg-primary-container text-on-primary-container shadow-sm';
+    }
+
+    // Sync Shell Left Sidebar Navigation links
+    document.querySelectorAll('aside nav a').forEach(link => {
+      const linkPath = link.getAttribute('data-path');
+      if (linkPath === viewId) {
+        link.className = 'flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors';
+      } else {
+        link.className = 'flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors';
+      }
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Handle URL hash changes & initial load
+  window.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.replace('#', '');
+    const validViews = ['dashboard', 'unified-inbox', 'tickets', 'sales-leads', 'network-outages'];
+    if (validViews.includes(hash)) {
+      switchView(hash);
+    } else {
+      switchView('dashboard');
+    }
+
+    // Intercept sidebar links
+    document.querySelectorAll('aside nav a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const path = link.getAttribute('data-path');
+        if (path) switchView(path);
+      });
+    });
+
+    // Keyboard shortcut ⌘K / Ctrl+K
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        openCmdPalette();
+      }
+      if (e.key === 'Escape') {
+        closeCmdPalette();
+        closeTicketModal();
+        closeLeadModal();
+        closeCreateTicketModal();
+        closeMaintenanceModal();
+      }
+    });
+  });
+
+  // 2. Toast Notification
+  function showToast(title, message) {
+    const toast = document.getElementById('toast-notification');
+    const toastTitle = document.getElementById('toast-title');
+    const toastMsg = document.getElementById('toast-msg');
+
+    toastTitle.textContent = title;
+    toastMsg.textContent = message;
+
+    toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+    toast.classList.add('translate-y-0', 'opacity-100');
+
+    if (window._toastTimeout) clearTimeout(window._toastTimeout);
+    window._toastTimeout = setTimeout(() => {
+      toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+      toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 4000);
+  }
+
+  // 3. Sidebar Collapse / Expand
+  function toggleSidebarCollapse() {
+    isSidebarCollapsed = !isSidebarCollapsed;
+    const sidebar = document.getElementById('app-sidebar');
+    const mainWrapper = document.getElementById('main-content-wrapper');
+    const header = document.getElementById('app-header');
+    const textEls = document.querySelectorAll('.sidebar-text');
+
+    if (isSidebarCollapsed) {
+      sidebar.classList.remove('w-64');
+      sidebar.classList.add('w-20');
+      mainWrapper.classList.remove('pl-64');
+      mainWrapper.classList.add('pl-20');
+      header.classList.remove('left-64');
+      header.classList.add('left-20');
+      textEls.forEach(el => el.classList.add('hidden'));
+    } else {
+      sidebar.classList.remove('w-20');
+      sidebar.classList.add('w-64');
+      mainWrapper.classList.remove('pl-20');
+      mainWrapper.classList.add('pl-64');
+      header.classList.remove('left-20');
+      header.classList.add('left-64');
+      textEls.forEach(el => el.classList.remove('hidden'));
+    }
+    showToast('Sidebar View', isSidebarCollapsed ? 'Collapsed to icon mode' : 'Expanded to full menu');
+  }
+
+  // 4. Unified Inbox
+  function insertAiReply(replyText) {
+    const input = document.getElementById('chat-input');
+    input.value = replyText;
+    input.focus();
+    input.classList.add('ring-2', 'ring-primary');
+    setTimeout(() => input.classList.remove('ring-2', 'ring-primary'), 800);
+    showToast('AI Reply Loaded', 'Suggested response placed in composer. Hit Enter to send.');
+  }
+
+  function setAiLanguage(lang, btn) {
+    aiLanguageMode = lang;
+    btn.parentElement.querySelectorAll('button').forEach(b => {
+      b.className = 'px-1.5 py-0.5 rounded hover:bg-surface-container-high text-on-surface';
+    });
+    btn.className = 'px-1.5 py-0.5 rounded bg-primary text-on-primary font-semibold';
+    showToast('AI Agent Language', 'Response tone updated to: ' + lang);
+  }
+
+  function toggleAgentOverride(toggleEl) {
+    const badge = document.getElementById('agent-mode-badge');
+    const label = document.getElementById('override-label');
+
+    if (toggleEl.checked) {
+      badge.className = 'flex items-center gap-1.5 px-space-sm py-1 bg-surface-container text-on-surface rounded-full font-label-md text-label-md font-semibold';
+      badge.innerHTML = '<span class="material-symbols-outlined text-[14px]">person</span><span>Human Agent Override</span>';
+      label.textContent = 'Human ON';
+      showToast('Human Override Activated', 'Conversation reassigned to Tier III Support NOC.');
+    } else {
+      badge.className = 'flex items-center gap-1.5 px-space-sm py-1 bg-tertiary-fixed text-on-tertiary-fixed rounded-full font-label-md text-label-md font-semibold';
+      badge.innerHTML = '<span class="material-symbols-outlined text-[14px]">auto_awesome</span><span id="agent-mode-text">AI Copilot Handling</span>';
+      label.textContent = 'Human Off';
+      showToast('AI Auto-Pilot Restored', 'Conversation handed back to SpaceNet AI Agent.');
+    }
+  }
+
+  function renderCustomerConversation(key) {
+    const cust = customerConversations[key];
+    if (!cust) return;
+
+    // Update Header
+    document.getElementById('chat-customer-name').textContent = cust.name;
+    const subheader = document.querySelector('.lg\:col-span-8 header, #view-unified-inbox .lg\:col-span-8 span.font-code-telemetry');
+    const nameEl = document.getElementById('chat-customer-name');
+    if (nameEl && nameEl.nextElementSibling) {
+      nameEl.nextElementSibling.textContent = cust.id;
+    }
+    const badge = document.getElementById('chat-channel-badge');
+    if (badge) badge.textContent = cust.channel;
+
+    // Render Messages Stream
+    const stream = document.getElementById('chat-message-stream');
+    stream.innerHTML = '';
+
+    cust.messages.forEach(m => {
+      if (m.sender === 'customer') {
+        const div = document.createElement('div');
+        div.className = 'flex items-start gap-space-sm max-w-xl';
+        div.innerHTML = `
+          <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface font-semibold text-xs">${cust.name.split(' ').map(n=>n[0]).join('')}</div>
+          <div class="flex flex-col gap-1">
+            <div class="bg-surface-container-lowest p-space-md rounded-2xl rounded-tl-none shadow-xs font-body-sm text-body-sm text-on-surface">
+              ${m.text}
+            </div>
+            <span class="font-code-telemetry text-[10px] text-outline ml-2">${m.time} &bull; Received</span>
+          </div>
+        `;
+        stream.appendChild(div);
+      } else if (m.sender === 'ai') {
+        const div = document.createElement('div');
+        div.className = 'flex items-start gap-space-sm max-w-xl self-end flex-row-reverse';
+        div.innerHTML = `
+          <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-semibold text-xs">
+            <span class="material-symbols-outlined text-[16px]">smart_toy</span>
+          </div>
+          <div class="flex flex-col gap-1 items-end">
+            <div class="bg-primary text-on-primary p-space-md rounded-2xl rounded-tr-none shadow-xs font-body-sm text-body-sm">
+              ${m.text}
+            </div>
+            <span class="font-code-telemetry text-[10px] text-outline mr-2">${m.time} &bull; AI Agent</span>
+          </div>
+        `;
+        stream.appendChild(div);
+      } else if (m.sender === 'telemetry') {
+        const div = document.createElement('div');
+        div.className = 'self-center w-full max-w-md my-1 bg-surface-container-low p-space-md rounded-xl shadow-xs';
+        div.innerHTML = `
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-1.5 text-tertiary font-headline-sm text-label-md font-semibold">
+              <span class="material-symbols-outlined text-[16px]">csv</span>
+              <span>Copilot Automated Optical Inspection</span>
+            </div>
+            <span class="px-2 py-0.2 rounded bg-surface-container font-code-telemetry text-[10px] text-secondary font-semibold">PASS</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2 font-code-telemetry text-center">
+            <div class="bg-surface-container-lowest p-1.5 rounded">
+              <span class="text-[10px] text-on-surface-variant block">Optical Rx</span>
+              <span class="text-body-sm font-semibold text-secondary">${m.opticalRx}</span>
+            </div>
+            <div class="bg-surface-container-lowest p-1.5 rounded">
+              <span class="text-[10px] text-on-surface-variant block">ONT Ping</span>
+              <span class="text-body-sm font-semibold text-on-surface">${m.ping}</span>
+            </div>
+            <div class="bg-surface-container-lowest p-1.5 rounded">
+              <span class="text-[10px] text-on-surface-variant block">Pkt Loss</span>
+              <span class="text-body-sm font-semibold text-secondary">${m.loss}</span>
+            </div>
+          </div>
+          <p class="font-body-sm text-[11px] text-on-surface-variant mt-2 text-center">${m.text}</p>
+        `;
+        stream.appendChild(div);
+      }
+    });
+
+    // Render suggestions
+    const chipContainer = document.querySelector('.ai-chip')?.parentElement;
+    if (chipContainer && cust.suggestions) {
+      chipContainer.innerHTML = cust.suggestions.map(s => `
+        <button class="ai-chip text-left whitespace-nowrap px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-body-sm text-label-md transition-all shadow-xs flex items-center gap-1.5 cursor-pointer active:scale-95" onclick="insertAiReply(${JSON.stringify(s)})">
+          <span class="text-tertiary">✨</span> "${s.slice(0, 36)}..."
+        </button>
+      `).join('');
+    }
+
+    stream.scrollTop = stream.scrollHeight;
+  }
+
+  function selectCustomer(custKey, rowEl) {
+    currentCustomerKey = custKey;
+    document.querySelectorAll('.chat-thread-item').forEach(el => {
+      el.classList.remove('bg-surface-container-high/60');
+    });
+    if (rowEl) rowEl.classList.add('bg-surface-container-high/60');
+    renderCustomerConversation(custKey);
+  }
+
+  function sendChatMessage() {
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const stream = document.getElementById('chat-message-stream');
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'flex items-start gap-space-sm max-w-xl self-end flex-row-reverse';
+    msgDiv.innerHTML = `
+      <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-semibold text-xs">
+        <span class="material-symbols-outlined text-[16px]">send</span>
+      </div>
+      <div class="flex flex-col gap-1 items-end">
+        <div class="bg-primary text-on-primary p-space-md rounded-2xl rounded-tr-none shadow-xs font-body-sm text-body-sm">
+          ${text}
+        </div>
+        <span class="font-code-telemetry text-[10px] text-outline mr-2">Just now &bull; Agent Dispatched</span>
+      </div>
+    `;
+    stream.appendChild(msgDiv);
+    input.value = '';
+    stream.scrollTop = stream.scrollHeight;
+    showToast('Message Dispatched', `Delivered to ${customerConversations[currentCustomerKey].name} via ${customerConversations[currentCustomerKey].channel}`);
+
+    // Simulated Smart Customer / AI Follow-up
+    setTimeout(() => {
+      const replyDiv = document.createElement('div');
+      replyDiv.className = 'flex items-start gap-space-sm max-w-xl';
+      
+      let replyText = "Thank you! I just tested and everything is running perfectly now. Speed test hit 498 Mbps!";
+      if (text.toLowerCase().includes('site survey') || text.toLowerCase().includes('engineer')) {
+        replyText = "Confirmed! Our operations team has noted the engineer visit. Thanks for the swift support!";
+      } else if (text.toLowerCase().includes('payment') || text.toLowerCase().includes('bkash')) {
+        replyText = "Payment acknowledged! Money receipt has been received on WhatsApp. Thank you SpaceNet!";
+      }
+
+      replyDiv.innerHTML = `
+        <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface font-semibold text-xs">
+          ${customerConversations[currentCustomerKey].name.split(' ').map(n=>n[0]).join('')}
+        </div>
+        <div class="flex flex-col gap-1">
+          <div class="bg-surface-container-lowest p-space-md rounded-2xl rounded-tl-none shadow-xs font-body-sm text-body-sm text-on-surface">
+            ${replyText}
+          </div>
+          <span class="font-code-telemetry text-[10px] text-outline ml-2">Just now &bull; Customer Reply</span>
+        </div>
+      `;
+      stream.appendChild(replyDiv);
+      stream.scrollTop = stream.scrollHeight;
+    }, 1000);
+  }
+
+  function filterInbox(ch, btn) {
+    document.querySelectorAll('.inbox-filter-pill').forEach(b => {
+      b.className = 'inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm';
+    });
+    btn.className = 'inbox-filter-pill px-2.5 py-1 rounded bg-primary text-on-primary font-semibold font-label-sm text-label-sm';
+
+    const items = document.querySelectorAll('.chat-thread-item');
+    items.forEach(item => {
+      if (ch === 'all') {
+        item.style.display = '';
+      } else if (ch === 'whatsapp' && item.innerText.includes('Alex')) {
+        item.style.display = '';
+      } else if (ch === 'facebook' && item.innerText.includes('Sarah')) {
+        item.style.display = '';
+      } else if (ch === 'web' && item.innerText.includes('Marcus')) {
+        item.style.display = '';
+      } else if (ch === 'telegram' && item.innerText.includes('Elena')) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    showToast('Channel Filtered', 'Showing conversations for: ' + ch.toUpperCase());
+  }
+
+  // 5. Tickets Management & Details
+  let currentModalTicket = null;
+
+  function openTicketDetail(id, cust, circuit, plan, type, prio, status, diag) {
+    currentModalTicket = { id, cust, circuit, plan, type, prio, status, diag };
+    document.getElementById('td-modal-id').textContent = id;
+    document.getElementById('td-modal-cust').textContent = cust;
+    document.getElementById('td-modal-circuit').textContent = circuit;
+    document.getElementById('td-modal-plan').textContent = plan;
+    document.getElementById('td-modal-prio').textContent = prio;
+    document.getElementById('td-modal-diag').textContent = diag;
+
+    const modal = document.getElementById('ticket-detail-modal');
+    const container = document.getElementById('ticket-modal-container');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      container.classList.remove('scale-95');
+      container.classList.add('scale-100');
+    }, 10);
+  }
+
+  function closeTicketModal() {
+    const modal = document.getElementById('ticket-detail-modal');
+    const container = document.getElementById('ticket-modal-container');
+    modal.classList.add('opacity-0');
+    container.classList.remove('scale-100');
+    container.classList.add('scale-95');
+    setTimeout(() => modal.classList.add('hidden'), 200);
+  }
+
+  function markTicketModalResolved() {
+    closeTicketModal();
+    if (currentModalTicket) {
+      showToast('Ticket Resolved', `${currentModalTicket.id} closed and customer notification SMS dispatched.`);
+    }
+  }
+
+  function goToChatFromTicket() {
+    closeTicketModal();
+    switchView('unified-inbox');
+    if (currentModalTicket && currentModalTicket.cust.includes('Alex')) {
+      selectCustomer('alex');
+    } else if (currentModalTicket && currentModalTicket.cust.includes('Marcus')) {
+      selectCustomer('marcus');
+    }
+  }
+
+  function filterTicketRows() {
+    const searchVal = document.getElementById('ticket-search-input').value.toLowerCase();
+    const typeVal = document.getElementById('ticket-type-filter').value;
+    const prioVal = document.getElementById('ticket-priority-filter').value;
+    const statVal = document.getElementById('ticket-status-filter').value;
+
+    const rows = document.querySelectorAll('#ticket-table-body tr');
+    rows.forEach(r => {
+      const text = r.innerText.toLowerCase();
+      const rType = r.getAttribute('data-type');
+      const rPrio = r.getAttribute('data-priority');
+      const rStat = r.getAttribute('data-status');
+
+      const matchesSearch = text.includes(searchVal);
+      const matchesType = (typeVal === 'ALL' || rType === typeVal);
+      const matchesPrio = (prioVal === 'ALL' || rPrio === prioVal);
+      const matchesStat = (statVal === 'ALL' || rStat === statVal);
+
+      if (matchesSearch && matchesType && matchesPrio && matchesStat) {
+        r.style.display = '';
+      } else {
+        r.style.display = 'none';
+      }
+    });
+  }
+
+  function resolveTicketRow(btn, ticketId) {
+    const row = btn.closest('tr');
+    row.style.opacity = '0.35';
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-secondary">done_all</span>';
+    showToast('Ticket Resolved', `${ticketId} closed and customer satisfaction survey SMS dispatched.`);
+  }
+
+  function createNewTicketMock() {
+    const modal = document.getElementById('create-ticket-modal');
+    const container = document.getElementById('create-ticket-container');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      container.classList.remove('scale-95');
+      container.classList.add('scale-100');
+    }, 10);
+  }
+
+  function closeCreateTicketModal() {
+    const modal = document.getElementById('create-ticket-modal');
+    const container = document.getElementById('create-ticket-container');
+    modal.classList.add('opacity-0');
+    container.classList.remove('scale-100');
+    container.classList.add('scale-95');
+    setTimeout(() => modal.classList.add('hidden'), 200);
+  }
+
+  function submitCreateTicket() {
+    const cust = document.getElementById('new-ticket-cust').value || 'New Customer (#9912)';
+    const type = document.getElementById('new-ticket-type').value;
+    const prio = document.getElementById('new-ticket-prio').value;
+    closeCreateTicketModal();
+
+    const tbody = document.getElementById('ticket-table-body');
+    const tr = document.createElement('tr');
+    tr.className = 'hover:bg-surface-container-high/40 transition-colors cursor-pointer group';
+    tr.setAttribute('data-type', type);
+    tr.setAttribute('data-priority', prio);
+    tr.setAttribute('data-status', 'INVESTIGATING');
+    const tktId = '#TKT-' + Math.floor(1000 + Math.random() * 9000);
+
+    tr.innerHTML = `
+      <td class="py-3 px-space-md"><input class="rounded text-primary focus:ring-0" type="checkbox" onclick="event.stopPropagation()"></td>
+      <td class="py-3 px-space-md font-code-metric text-primary font-semibold">${tktId}</td>
+      <td class="py-3 px-space-md">
+        <div class="flex flex-col">
+          <span class="font-headline-sm text-label-md text-on-surface">${cust}</span>
+          <span class="font-code-telemetry text-[11px] text-outline">SPN-NEW-${Math.floor(100+Math.random()*900)}</span>
+        </div>
+      </td>
+      <td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">Fiber Gigabit</td>
+      <td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">${type}</span></td>
+      <td class="py-3 px-space-md text-center"><span class="px-2 py-0.5 rounded-full ${prio==='URGENT'?'bg-error-container text-on-error-container font-semibold':'bg-surface-container text-on-surface-variant font-label-sm'}">${prio}</span></td>
+      <td class="py-3 px-space-md"><span class="flex items-center gap-1 font-label-sm text-tertiary"><span class="material-symbols-outlined text-[14px]">auto_awesome</span> AI Copilot</span></td>
+      <td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">Investigating</span></td>
+      <td class="py-3 px-space-md text-right">
+        <div class="flex items-center justify-end gap-1">
+          <button class="p-1 hover:bg-surface-container rounded text-secondary" onclick="event.stopPropagation(); resolveTicketRow(this, '${tktId}')"><span class="material-symbols-outlined text-[18px]">check</span></button>
+        </div>
+      </td>
+    `;
+    tbody.prepend(tr);
+    showToast('New Ticket Logged', `${tktId} registered for ${cust} with AI Copilot triaging.`);
+  }
+
+  // 6. Leads & Pipeline
+  function openLeadModal(cardEl) {
+    const title = cardEl.querySelector('h4')?.textContent || 'Commercial Lead';
+    const plan = cardEl.querySelector('.font-code-telemetry')?.textContent || '$399/mo';
+    const addr = cardEl.querySelector('p')?.textContent || 'Downtown Harbor';
+
+    document.getElementById('lead-modal-title').textContent = title;
+    document.getElementById('lead-modal-plan').textContent = plan + ' Dedicated Fiber Package';
+    document.getElementById('lead-modal-addr').textContent = addr;
+
+    const modal = document.getElementById('lead-modal');
+    const container = document.getElementById('lead-modal-container');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      container.classList.remove('scale-95');
+      container.classList.add('scale-100');
+    }, 10);
+  }
+
+  function closeLeadModal() {
+    const modal = document.getElementById('lead-modal');
+    const container = document.getElementById('lead-modal-container');
+    modal.classList.add('opacity-0');
+    container.classList.remove('scale-100');
+    container.classList.add('scale-95');
+    setTimeout(() => modal.classList.add('hidden'), 200);
+  }
+
+  function triggerLeadAction(actionName, msg) {
+    closeLeadModal();
+    showToast(actionName, msg);
+  }
+
+  // 7. Network Outage & Maintenance Modal
+  function openMaintenanceModal() {
+    const modal = document.getElementById('maintenance-modal');
+    const container = document.getElementById('modal-container');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      container.classList.remove('scale-95');
+      container.classList.add('scale-100');
+    }, 10);
+  }
+
+  function closeMaintenanceModal() {
+    const modal = document.getElementById('maintenance-modal');
+    const container = document.getElementById('modal-container');
+    modal.classList.add('opacity-0');
+    container.classList.remove('scale-100');
+    container.classList.add('scale-95');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 200);
+  }
+
+  function executeBroadcastSend() {
+    closeMaintenanceModal();
+    showToast('🚨 Maintenance Broadcast Dispatched', '1,420 subscribers notified via SMS, WhatsApp & Push. 24-hr credit credited.');
+    
+    // Update active incident status badge in outages table
+    const tableBadge = document.querySelector('#view-network-outages tbody tr:first-child button');
+    if (tableBadge) {
+      tableBadge.className = 'px-2.5 py-1 bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md rounded font-semibold';
+      tableBadge.textContent = 'Broadcasted (1,420 notified)';
+    }
+  }
+
+  // 8. Command Palette
+  function openCmdPalette() {
+    const modal = document.getElementById('cmd-palette-modal');
+    const container = document.getElementById('cmd-palette-container');
+    const input = document.getElementById('cmd-palette-input');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      container.classList.remove('scale-95');
+      container.classList.add('scale-100');
+      input.value = '';
+      input.focus();
+    }, 10);
+  }
+
+  function closeCmdPalette() {
+    const modal = document.getElementById('cmd-palette-modal');
+    const container = document.getElementById('cmd-palette-container');
+    modal.classList.add('opacity-0');
+    container.classList.remove('scale-100');
+    container.classList.add('scale-95');
+    setTimeout(() => modal.classList.add('hidden'), 200);
+  }
+
+  function filterCommandPalette() {
+    const query = document.getElementById('cmd-palette-input').value.toLowerCase();
+    const buttons = document.querySelectorAll('#cmd-palette-list button');
+    buttons.forEach(b => {
+      if (b.innerText.toLowerCase().includes(query)) {
+        b.style.display = '';
+      } else {
+        b.style.display = 'none';
+      }
+    });
+  }
+
+  // 9. Chart Interactions
+  function updateTrendChart(period, btn) {
+    document.querySelectorAll('.chart-period-btn').forEach(b => {
+      b.className = 'chart-period-btn px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface';
+    });
+    btn.className = 'chart-period-btn px-2.5 py-1 rounded bg-surface-container-lowest text-primary font-semibold shadow-xs';
+
+    const info = document.getElementById('chart-info-text');
+    if (period === '24h') {
+      info.textContent = 'Last 24 Hours: 412 complaints logged, 381 resolved by AI Copilot without dispatch.';
+    } else if (period === '7d') {
+      info.textContent = 'Weekly Totals: 3,912 AI auto-resolutions, 14 field technician escalations.';
+    } else {
+      info.textContent = 'Last 30 Days: 18,290 total tickets handled with 84.1% self-resolution rate.';
+    }
+    showToast('Chart Filtered', 'Displaying telemetry for window: ' + period);
+  }
+
+  function showChartDetail(txt) {
+    const info = document.getElementById('chart-info-text');
+    info.textContent = txt;
+  }
+
+  function triggerGlobalDiagnostics() {
+    showToast('ONT Remote Sweep Initiated', 'Optical calibration sweeping 8,400 active customer terminals...');
+  }
+</script>
+</body>
+</html>
