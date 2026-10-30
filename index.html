@@ -372,6 +372,7 @@
 <span class="font-code-telemetry text-code-telemetry text-primary font-semibold">#8832</span>
 <span id="chat-channel-badge" class="px-2 py-0.2 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">WhatsApp</span>
 <span id="chat-type-badge" class="px-2 py-0.2 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">mail</span> Direct Message</span>
+<span id="chat-origin-badge" class="hidden px-2 py-0.2 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-[11px] flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">link</span> Continued from Public Comment</span>
             <div class="flex items-center gap-1 bg-surface-container px-1 py-0.5 rounded-lg text-[11px] font-label-sm">
               <span class="text-outline px-1">AI Lang:</span>
               <button class="px-1.5 py-0.5 rounded bg-primary text-on-primary font-semibold" onclick="setAiLanguage('EN', this)">EN</button>
@@ -423,6 +424,95 @@
       <span class="material-symbols-outlined text-[13px]">mode_comment</span>
       <span id="post-context-meta">Public customer comment on this post</span>
     </div>
+  </div>
+</div>
+<!-- Public Comment to Private DM Transition Recommendation Banner -->
+<div id="comment-to-dm-banner" class="hidden px-space-md py-2 bg-primary-fixed/30 border-b border-primary/20 flex flex-wrap items-center justify-between gap-2 text-[12px] transition-all">
+  <div class="flex items-center gap-2 min-w-0">
+    <span class="material-symbols-outlined text-primary text-[18px] shrink-0">mark_chat_unread</span>
+    <div class="truncate">
+      <span class="font-headline-sm font-semibold text-primary">Public Comment Thread:</span>
+      <span class="text-on-surface ml-1">Inquiry requires subscriber-specific verification (contact/address).</span>
+      <span class="text-[10px] text-outline block">Avoid sharing customer PII in public social replies.</span>
+    </div>
+  </div>
+  <div class="flex items-center gap-2 shrink-0">
+    <button onclick="insertPublicDmInvite()" class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg font-medium text-[11px] flex items-center gap-1 transition-colors cursor-pointer" title="Load public invitation into composer">
+      <span class="material-symbols-outlined text-[13px] text-primary">reply</span>
+      <span>Insert Public Invite</span>
+    </button>
+    <button onclick="continueInPrivateDm()" class="px-3 py-1 bg-primary hover:bg-primary-container text-on-primary rounded-lg font-semibold text-[11px] flex items-center gap-1 shadow-xs transition-colors cursor-pointer" title="Transition to secure 1:1 direct message">
+      <span class="material-symbols-outlined text-[13px]">forward_to_inbox</span>
+      <span>Continue in Private DM</span>
+    </button>
+  </div>
+</div>
+
+<!-- Customer Frustration Alert Banner (Deterministic Sentiment Indicator) -->
+<div id="chat-frustration-alert" class="hidden px-space-md py-2 bg-error-container/70 border-b border-error/30 flex flex-wrap items-center justify-between gap-2 text-on-error-container text-[12px] transition-all">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-error text-[18px]">sentiment_very_dissatisfied</span>
+    <div>
+      <span class="font-headline-sm font-bold text-error">Customer Frustration Detected:</span>
+      <span class="font-body-sm text-on-error-container ml-1" id="frustration-reason-text">Dissatisfaction patterns &amp; repeated downtime complaint detected.</span>
+      <span class="text-[10px] opacity-75 italic block">(Deterministic sentiment rule pattern &bull; High churn risk &bull; Escalation recommended)</span>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <button onclick="escalateToHumanFromFrustration()" class="px-3 py-1 bg-error hover:bg-error/90 text-on-error font-headline-sm text-[11px] rounded-lg flex items-center gap-1 shadow-xs cursor-pointer transition-colors">
+      <span class="material-symbols-outlined text-[14px]">support_agent</span>
+      <span>Escalate to Human NOC</span>
+    </button>
+  </div>
+</div>
+
+<!-- AI Copilot Intent Recognition & Basic Routing Banner -->
+<div id="chat-ai-routing-banner" class="px-space-md py-2 bg-surface-container-low/90 border-b border-surface-container flex flex-wrap items-center justify-between gap-2 text-[12px] font-body-sm transition-all">
+  <div class="flex flex-wrap items-center gap-2">
+    <div class="flex items-center gap-1 text-tertiary font-headline-sm font-semibold">
+      <span class="material-symbols-outlined text-[16px]">psychology</span>
+      <span>AI Intent:</span>
+    </div>
+    <span id="routing-detected-intent" class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-semibold text-[11px]">
+      Package &amp; Speed Inquiry
+    </span>
+    <span class="text-outline text-[11px]">&bull; Route:</span>
+    <span id="routing-suggested-route" class="font-medium text-on-surface text-[11px]">Knowledge Base / FAQ</span>
+    <span id="routing-confidence-pill" class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-code-telemetry text-[10px]">96% Match</span>
+  </div>
+  <div class="flex items-center gap-1.5" id="routing-actions-container">
+    <button id="routing-action-btn" class="px-2.5 py-1 rounded-md bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-[11px] flex items-center gap-1 transition-colors cursor-pointer" onclick="handleRoutingAction()">
+      <span class="material-symbols-outlined text-[13px] text-primary" id="routing-action-icon">auto_stories</span>
+      <span id="routing-action-label">Explore KB Answer</span>
+    </button>
+  </div>
+</div>
+<!-- Demo Only: Customer Inbound Message Simulator Strip (Issue 5) -->
+<div id="demo-customer-simulator-strip" class="px-space-md py-1.5 bg-surface-container/60 border-b border-surface-container flex flex-wrap items-center justify-between gap-2 text-[11px] font-body-sm transition-all">
+  <div class="flex items-center gap-1.5 text-on-surface-variant font-medium">
+    <span class="material-symbols-outlined text-[15px] text-primary">sensors</span>
+    <span class="font-headline-sm text-label-sm font-semibold text-on-surface">Demo Simulator:</span>
+    <span class="text-outline text-[10px] hidden sm:inline">Simulate inbound customer inquiry</span>
+  </div>
+  <div class="flex flex-wrap items-center gap-1.5 flex-1 max-w-xl justify-end">
+    <select id="sim-preset-select" onchange="handleSimPresetChange(this)" class="px-2 py-1 bg-surface-container-low text-on-surface rounded border border-surface-container font-body-sm text-[11px] focus:outline-none focus:ring-1 focus:ring-primary max-w-[240px] truncate cursor-pointer">
+      <option value="">-- Choose Preset Customer Inquiry --</option>
+      <option value="Will I receive an automatic bill credit if my internet is down for 24 hours?">Outage Credit: "Will I receive automatic bill credit if internet is down 24h?"</option>
+      <option value="Is SpaceNet available in Banani? Do you guarantee 99.9% uptime?">Multi-Intent: "Available in Banani? Do you guarantee 99.9% uptime?"</option>
+      <option value="How much is the installation fee for Fiber Gamer 300M, and is it available in Banani?">3-Part Multi-Intent: "Fee for Fiber Gamer 300M &amp; available in Banani?"</option>
+      <option value="Great! How much is the installation fee for Fiber Gamer 300M, and is it available in Banani?">Package &amp; Setup: "Installation fee for Fiber Gamer 300M in Banani?"</option>
+      <option value="How can I pay my monthly bill via bKash Merchant?">Billing: "How can I pay monthly bill via bKash Merchant?"</option>
+      <option value="What packages are available and what are the speeds?">Packages: "What packages are available and what are speeds?"</option>
+      <option value="My connection is dropping and PON light is flashing red!">Technical: "Connection dropping and PON light is flashing red!"</option>
+      <option value="This is the third time I called. Internet is still not working and worst service ever!">Frustration: "3rd time I called. Still not working, worst service!"</option>
+      <option value="প্যাকেজের দাম কত এবং ধানমন্ডিতে লাইন আছে?">বাংলা: "প্যাকেজের দাম কত এবং ধানমন্ডিতে লাইন আছে?"</option>
+      <option value="Dhanmondi-te notun line nite chai setup fee koto?">Banglish: "Dhanmondi-te notun line nite chai setup fee koto?"</option>
+    </select>
+    <input id="sim-custom-input" type="text" placeholder="Or type fictional inquiry..." class="flex-1 min-w-[130px] px-2 py-1 bg-surface-container-low text-on-surface rounded border border-surface-container text-[11px] focus:outline-none focus:ring-1 focus:ring-primary placeholder:text-outline" onkeydown="if(event.key==='Enter') executeSimulateCustomerMessage()">
+    <button onclick="executeSimulateCustomerMessage()" class="px-2.5 py-1 bg-secondary text-on-secondary hover:bg-secondary/90 rounded font-headline-sm text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition-colors cursor-pointer">
+      <span class="material-symbols-outlined text-[13px]">send</span>
+      <span>Simulate Inbound</span>
+    </button>
   </div>
 </div>
 <!-- Real-Time Chat Log Stream -->
@@ -489,10 +579,13 @@
 </div>
 <!-- 3 Clickable AI Suggested Replies Toolbar -->
 <div class="px-space-md py-space-xs bg-surface-container-low/40 flex flex-col gap-1">
-<span class="font-label-sm text-[11px] text-tertiary font-semibold flex items-center gap-1">
-<span class="material-symbols-outlined text-[13px]">bolt</span> Click an AI Suggested Reply to load &amp; send:
-          </span>
-<div class="flex items-center gap-space-xs overflow-x-auto pb-1">
+<div class="flex items-center justify-between">
+  <span class="font-label-sm text-[11px] text-tertiary font-semibold flex items-center gap-1">
+    <span class="material-symbols-outlined text-[13px]">bolt</span> Click an AI Suggested Reply to load &amp; send:
+  </span>
+  <span id="ai-suggestions-lang-tag" class="text-outline text-[10px] font-code-telemetry">Lang: EN &bull; Contextual</span>
+</div>
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1" id="chat-suggestions-container">
 <button class="ai-chip text-left whitespace-nowrap px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-body-sm text-label-md transition-all shadow-xs flex items-center gap-1.5" onclick="insertAiReply('I have applied channel auto-optimization on your 5GHz band. Please test your speed now!')">
 <span class="text-tertiary">✨</span> "I've applied 5GHz channel auto-optimization..."
             </button>
@@ -1074,7 +1167,22 @@
         { id: 'm-alx-1', sender: 'customer', text: 'Hi, my connection keeps dropping during video calls today. It was fine yesterday. Could you check if something is wrong with my fiber box?', time: '10:41 AM' },
         { id: 'm-alx-2', sender: 'telemetry', opticalRx: '-19.2 dBm', ping: '11.4 ms', loss: '0.00%', text: 'GPON Physical Link is healthy. Diagnostic suggests local Wi-Fi 2.4GHz interference.' },
         { id: 'm-alx-3', sender: 'ai', text: 'Hello Alex! I just ran a remote diagnostic on your GPON ONT modem (#8832). Your physical fiber link has strong signal (-19.2 dBm, 0% packet loss).<br><br>We detected that your dual-band router is currently merging 2.4GHz and 5GHz. Would you like me to separate bands or optimize your 5GHz channel automatically?', time: '10:42 AM' },
-        { id: 'm-alx-4', sender: 'customer', text: 'Yes please! Can you switch my laptop to the 5GHz channel?', time: '10:44 AM' }
+        { id: 'm-alx-4', sender: 'customer', text: 'Yes please! Can you switch my laptop to the 5GHz channel?', time: '10:44 AM' },
+        {
+          id: 'vmsg-alx-1',
+          sender: 'voice',
+          customerInitials: 'AR',
+          duration: '0:34',
+          audioSource: 'WhatsApp Voice Note (44.1 kHz Opus)',
+          language: 'English',
+          transcript: "Hey SpaceNet, I tried restarting the router like you suggested, but the 5GHz Wi-Fi is still not showing up on my iPhone. Only 2.4GHz appears. Can you check my router config remotely?",
+          detectedIntent: 'Technical Problem (5GHz Wi-Fi Radio Broadcast)',
+          confidence: '97% Match',
+          keyEntities: ['Device: iPhone', 'Radio: 5GHz Wi-Fi', 'Issue: SSID Broadcast Hidden'],
+          suggestedAction: "Separate 2.4GHz & 5GHz SSIDs and force 5GHz radio broadcast enable.",
+          suggestedReply: "I just accessed your ONT remotely and enabled the 5GHz radio broadcast with SSID 'SpaceNet-5G'. Please connect now!",
+          time: '10:45 AM'
+        }
       ],
       suggestions: [
         "I have applied channel auto-optimization on your 5GHz band. Please test your speed now!",
@@ -1137,7 +1245,22 @@
       messages: [
         { id: 'm-frh-1', sender: 'customer', text: 'Hey SpaceNet! Saw your Instagram story for the Fiber Gamer 300M package. Does it feature low-latency routing for competitive gaming, and is Banani covered?', time: '11:20 AM' },
         { id: 'm-frh-2', sender: 'ai', text: 'Hello Farhan! Thanks for reaching out via Instagram. Yes, our Fiber Gamer 300Mbps package includes dedicated fastpath gaming routing with sub-5ms latency to regional gaming clusters.<br><br>Banani Block B & C are fully covered on our GPON fiber ring. It comes with a Wi-Fi 6 gaming ONT with priority QoS. Would you like to reserve an installation slot for this week?', time: '11:22 AM' },
-        { id: 'm-frh-3', sender: 'customer', text: 'Awesome! That latency is exactly what I need for Valorant. Do you have a slot open this Thursday afternoon?', time: '11:25 AM' }
+        { id: 'm-frh-3', sender: 'customer', text: 'Awesome! That latency is exactly what I need for Valorant. Do you have a slot open this Thursday afternoon?', time: '11:25 AM' },
+        {
+          id: 'vmsg-frh-1',
+          sender: 'voice',
+          customerInitials: 'FA',
+          duration: '0:42',
+          audioSource: 'Instagram Voice Note',
+          language: 'বাংলা (Bangla)',
+          transcript: "আসসালামু আলাইকুম, বনানী ব্লক সি-তে আমাদের গেম পার্লারে ৩০ জন একসাথে ভ্যালোরেন্ট খেলি। আপনাদের গেমিং প্যাকেজে কি কোনো ডিসকানেকশন বা প্যাকেট লসের রিস্ক আছে?",
+          detectedIntent: 'New Connection & Esports Low-Latency Routing',
+          confidence: '96% Match',
+          keyEntities: ['এলাকা: বনানী ব্লক সি', 'লাইন: গেম পার্লার (৩০ ইউজার)', 'গেম: Valorant / CS2', 'প্যাকেজ: Fiber Gamer 300M'],
+          suggestedAction: 'বনানী ব্লক সি ফাইবার ডিস্ট্রিবিউশন হাব থেকে ডেডিকেটেড ফাস্টপাথ রুট অফার করুন।',
+          suggestedReply: 'ওয়ালাইকুম আসসালাম ফারহান ভাই! বনানী ব্লক সি-তে আমাদের রিডানড্যান্ট ফাইবার রিং রয়েছে এবং সিঙ্গাপুর AWS-এ পিং ৩০ms-এর নিচে থাকে। কোনো প্যাকেট লস হবে না।',
+          time: '11:27 AM'
+        }
       ],
       suggestions: [
         "Yes, we have a Thursday 3:00 PM installation slot open in Banani. Shall I reserve it for you?",
@@ -1198,8 +1321,23 @@
       lastMessageTime: '1h ago',
       messages: [
         { id: 'm-eln-1', sender: 'customer', text: 'Good morning! Can we pay our monthly invoice via bKash Merchant or bank wire transfer this month?', time: '08:45 AM' },
-        { id: 'm-eln-2', sender: 'ai', text: 'Good morning Elena! Absolutely. SpaceNet supports direct bKash Merchant payment via account 01700-SPACENET, or corporate EFT to our City Bank account.<br><br>Your current balance for October is 4,500 BDT with due date on Nov 5th.', time: '08:47 AM' },
-        { id: 'm-eln-3', sender: 'customer', text: 'Great, just sent 4,500 BDT via bKash. TrxID is 9K38LA01Z.', time: '08:50 AM' }
+        { id: 'm-eln-2', sender: 'ai', text: 'Good morning Elena! Absolutely. SpaceNet supports direct bKash Merchant payment via account 01700-000000 (DEMO ONLY), or corporate EFT to our City Bank demo account.<br><br>Your current balance for October is 4,500 BDT with due date on Nov 5th.', time: '08:47 AM' },
+        { id: 'm-eln-3', sender: 'customer', text: 'Great, just sent 4,500 BDT via bKash. TrxID is 9K38LA01Z.', time: '08:50 AM' },
+        {
+          id: 'vmsg-eln-1',
+          sender: 'voice',
+          customerInitials: 'ER',
+          duration: '0:28',
+          audioSource: 'Telegram Voice Note',
+          language: 'Banglish',
+          transcript: "Bhaiya, ami bKash diye 4,500 taka pathiyechi kintu TrxID SMS ta ekhono ashe nai. Apnader system e ki payment update hoyeche?",
+          detectedIntent: 'Billing Inquiry (bKash Payment Verification)',
+          confidence: '95% Match',
+          keyEntities: ['Payment Method: bKash Merchant', 'Amount: 4,500 BDT', 'Status: TrxID SMS Pending'],
+          suggestedAction: 'Verify merchant bKash ledger and dispatch payment confirmation receipt.',
+          suggestedReply: 'TrxID 9K38LA01Z verify kora hoyeche! 4,500 BDT payment amader system-e successfully receive hoyeche. Apnar connection active ache.',
+          time: '08:52 AM'
+        }
       ],
       suggestions: [
         "Payment received and verified! TrxID 9K38LA01Z logged. Your connection is active through Nov 30.",
@@ -1428,23 +1566,1086 @@
     showToast('Sidebar View', isSidebarCollapsed ? 'Collapsed to icon mode' : 'Expanded to full menu');
   }
 
-  // 4. Unified Inbox
-  function insertAiReply(replyText) {
+  // =========================================================================
+  // MODULE 02: AI AGENT & CONVERSATIONAL INTELLIGENCE ENGINE
+  // =========================================================================
+
+  // 1. Structured Local Knowledge Base Dataset (Feature Group 1 & 2, Remediated for Issues 1, 2, 6)
+  const SPACE_NET_KNOWLEDGE_BASE = {
+    packages_pricing: {
+      category: 'Packages & Pricing',
+      label: 'Package & Speed Inquiry',
+      intents: ['package_inquiry', 'pricing_inquiry', 'speed_inquiry'],
+      keywords: {
+        en: ['package', 'packages', 'plan', 'plans', 'speed', 'speeds', 'mbps', '100m', '150m', '200m', '300m', '500m', 'gigabit', 'price', 'pricing', 'cost', 'how much', 'monthly'],
+        bn: ['প্যাকেজ', 'প্ল্যান', 'গতি', 'স্পিড', 'দাম', 'কত টাকা', 'খরচ', 'মাসিক বিল', 'ইন্টারনেট চার্জ'],
+        banglish: ['package', 'packages', 'packager', 'plan', 'speed', 'dam', 'koto taka', 'khoroch', 'monthly bill', 'charge koto', 'koto mbps']
+      },
+      route: 'faq',
+      routeLabel: 'Package Catalog / FAQ',
+      responses: {
+        EN: "SpaceNet offers ultra-fast fiber packages [Fictional Demo Catalog — All prices (BDT) are simulated demonstration data]:\n• Home Lite (100 Mbps) — 1,200 BDT/mo\n• Fiber Home (150 Mbps) — 1,600 BDT/mo (Includes Dual-band GPON ONT)\n• Fiber Streamer (200 Mbps) — 2,000 BDT/mo (Optimized for 4K streaming)\n• Fiber Gamer (300 Mbps) — 2,500 BDT/mo (Sub-5ms fastpath routing, Wi-Fi 6)\n• Fiber Pro (500 Mbps) — 3,500 BDT/mo\n• Office Pro (1 Gbps) — 5,500 BDT/mo (2 Static IPs & 99.99% SLA)\nAll packages feature symmetrical bandwidth and zero data caps.",
+        BN: "SpaceNet-এর দ্রুতগতির অপটিক্যাল ফাইবার ইন্টারনেট প্যাকেজসমূহ [কাল্পনিক ডেমো ক্যাটালগ — মূল্যের বিবরণ শুধুমাত্র প্রদর্শনীমূলক]:\n• হোম লাইট (১০০ এমবিপিএস) — ১,২০০ টাকা/মাস\n• ফাইবার হোম (১৫০ এমবিপিএস) — ১,৬০০ টাকা/মাস (ডুয়াল-ব্যান্ড GPON ONT সহ)\n• ফাইবার স্ট্রিমার (২০০ এমবিপিএস) — ২,০০০ টাকা/মাস (৪কে স্ট্রিমিং অপ্টিমাইজড)\n• ফাইবার গেমার (৩০০ এমবিপিএস) — ২,৫০০ টাকা/মাস (সাব-৫মি.সে. লো-পিং, Wi-Fi 6)\n• ফাইবার প্রো (৫০০ এমবিপিএস) — ৩,৫০০ টাকা/মাস\n• অফিস প্রো (১ জিবিপিএস) — ৫,৫০০ টাকা/মাস (২টি স্ট্যাটিক আইপি ও ৯৯.৯৯% এসএলএ)\nপ্রতিটি প্যাকেজে রয়েছে সম্পূর্ণ আনলিমিটেড সিমেট্রিকাল ব্যান্ডউইথ।",
+        Banglish: "SpaceNet-er popular high-speed fiber packages [Fictional Demo Catalog — All prices (BDT) are simulated demonstration fixtures]:\n• Home Lite (100 Mbps) — 1,200 BDT/mo\n• Fiber Home (150 Mbps) — 1,600 BDT/mo (Dual-band GPON ONT router shoh)\n• Fiber Streamer (200 Mbps) — 2,000 BDT/mo (4K streaming optimized)\n• Fiber Gamer (300 Mbps) — 2,500 BDT/mo (Fastpath low-ping routing, Wi-Fi 6)\n• Fiber Pro (500 Mbps) — 3,500 BDT/mo\n• Office Pro (1 Gbps) — 5,500 BDT/mo (2 Static IP ebong 99.99% SLA)\nShob packagetei fully unlimited symmetrical bandwidth paben."
+      }
+    },
+    coverage_availability: {
+      category: 'Coverage & Availability',
+      label: 'Coverage & Availability',
+      intents: ['coverage_inquiry', 'area_availability'],
+      keywords: {
+        en: ['coverage', 'available', 'availability', 'covered', 'dhanmondi', 'banani', 'gulshan', 'uttara', 'mirpur', 'mohakhali', 'bashundhara', 'area', 'location', 'zone'],
+        bn: ['কভারেজ', 'পাওয়া যাবে', 'উপলব্ধ', 'কভার্ড', 'ধানমন্ডি', 'বনানী', 'গুলশান', 'উত্তরা', 'মিরপুর', 'মহাখালী', 'বসুন্ধরা', 'এলাকা', 'লাইন আছে'],
+        banglish: ['coverage', 'available kina', 'pawa jabe', 'covered kina', 'dhanmondi', 'banani', 'gulshan', 'uttara', 'mirpur', 'elaka', 'connection ache', 'line ache', 'net ache', 'network ache']
+      },
+      route: 'sales_handoff',
+      routeLabel: 'Coverage Desk / Sales',
+      responses: {
+        EN: "SpaceNet GPON optical fiber network is active and operational across [Demonstration Nodes — Coverage zones are simulated fixtures]:\n• Banani (Blocks A through C)\n• Gulshan 1 & 2\n• Dhanmondi (Roads 1 through 27)\n• Uttara (Sectors 1 through 14)\n• Mirpur (DOHS & Section 10/11)\n• Mohakhali DOHS & Bashundhara R/A\nPlease share your building address and floor number so our engineering team can verify spare splitter port availability.",
+        BN: "SpaceNet অপটিক্যাল ফাইবার সংযোগ বর্তমানে নিচের এলাকাগুলোতে সক্রিয় রয়েছে [প্রদর্শনীমূলক কভারেজ ডেটা]:\n• বনানী (ব্লক এ থেকে সি)\n• গুলশান ১ ও ২\n• ধানমন্ডি (রোড ১ থেকে ২৭)\n• উত্তরা (সেক্টর ১ থেকে ১৪)\n• মিরপুর (ডিওএইচএস ও সেকশন ১০/১১)\n• মহাখালী ডিওএইচএস এবং বসুন্ধরা আ/এ\nআপনার ভবন ও ফ্ল্যাট নম্বর জানালে আমাদের ইঞ্জিনিয়ারিং টিম অবিলম্বে স্প্লিটার পোর্টের প্রাপ্যতা নিশ্চিত করতে পারবে।",
+        Banglish: "SpaceNet optical fiber network active ache [Demonstration coverage data]:\n• Banani (Block A theke C)\n• Gulshan 1 & 2\n• Dhanmondi (Road 1 theke 27)\n• Uttara (Sector 1 theke 14)\n• Mirpur (DOHS & Section 10/11)\n• Mohakhali DOHS ebong Bashundhara R/A\nApnar exact building address bolle amra immediate GPON splitter port check kore janate parbo."
+      }
+    },
+    installation_procedure: {
+      category: 'Installation & Setup',
+      label: 'Installation & Setup Inquiry',
+      intents: ['installation_inquiry', 'setup_timeline'],
+      keywords: {
+        en: ['install', 'installation', 'setup', 'charge', 'fee', 'cable', 'technician visit', 'how long to setup', 'new connection', 'booking'],
+        bn: ['ইনস্টলেশন', 'সেটআপ', 'ফি', 'চার্জ', 'সংযোগ দিতে কতদিন', 'কানেকশন ফি', 'নতুন লাইন', 'টেকনিশিয়ান'],
+        banglish: ['install', 'installation', 'setup', 'fee', 'charge koto', 'notun line', 'kobe ashbe', 'technician', 'shomoy koto lagbe']
+      },
+      route: 'sales_handoff',
+      routeLabel: 'Installation Desk',
+      responses: {
+        EN: "SpaceNet Installation Guidelines [Demonstration Specification — Fictional terms]:\n• Standard installation fee: 1,000 BDT (100% Free for 150 Mbps+ plans or 6-month advance billing).\n• Deployment timeline: Optical fiber installation is completed within 2 to 3 hours of technician arrival.\n• Next-day installation appointments are available across all covered zones upon NID submission.",
+        BN: "SpaceNet ইনস্টলেশন সংক্রান্ত তথ্য [প্রদর্শনীমূলক বিবরণ]:\n• স্ট্যান্ডার্ড ইনস্টলেশন ফি ১,০০০ টাকা (১৫০ এমবিপিএস বা তার বেশি প্যাকেজে অথবা ৬ মাসের অগ্রিম বিলে সম্পূর্ণ ফ্রি)।\n• সময়সীমা: টেকনিশিয়ান আসার পর ফাইবার ক্যাবল স্থাপন ও কনফিগারেশনে ২ থেকে ৩ ঘণ্টা সময় লাগে।\n• এনআইডি ভেরিফিকেশনের পর ২৪ ঘণ্টার মধ্যে পরবর্তী দিনের ইনস্টলেশন স্লট নিশ্চিত করা যায়।",
+        Banglish: "Installation Details [Demonstration Specification]:\n• Standard installation fee 1,000 BDT (150 Mbps+ package ba 6-month advance dile installation 100% FREE).\n• Technician ashar por fiber connection complete hote 2 theke 3 ghonta lage.\n• NID verification-er por 24 hours-er moddhe next-day installation slot pawa jay."
+      }
+    },
+    billing_guidance: {
+      category: 'Billing & Payments',
+      label: 'Billing & Payment Guidance',
+      intents: ['billing_inquiry', 'payment_methods', 'due_date'],
+      keywords: {
+        en: ['pay', 'payment', 'bkash', 'nagad', 'rocket', 'bank', 'invoice', 'due date', 'receipt', 'trxid', 'overdue'],
+        bn: ['পেমেন্ট', 'পরিশোধ', 'টাকা দিব', 'বিকাশ', 'নগদ', 'রকেট', 'ব্যাংক', 'ইনভয়েস', 'রসিদ', 'বকেয়া', 'শেষ তারিখ'],
+        banglish: ['payment', 'porishodh', 'taka dibo', 'bkash', 'nagad', 'rocket', 'bank', 'invoice', 'receipt', 'due date', 'baki']
+      },
+      route: 'billing_guidance',
+      routeLabel: 'Billing Desk',
+      responses: {
+        EN: "Billing & Payment Methods [DEMO ONLY — Fictional Accounts — Do Not Transfer Real Funds]:\n• bKash Merchant: 01700-000000 (DEMO-SIMULATION ONLY — Use Customer ID as reference)\n• Nagad & Rocket: Simulated Merchant Bill Pay\n• Bank Wire: City Bank Fictional Demo Account #999-SPACENET-DEMO\n• Due Date: Monthly bills generate on the 1st, due by the 5th. Grace period runs through the 7th.\n[SpaceNet Prototype Demo — All payment channels and numbers are simulated fixtures].",
+        BN: "বিল ও পেমেন্ট সংক্রান্ত তথ্য [ডেমো সিমুলেশন — কাল্পনিক অ্যাকাউন্ট — টাকা পাঠাবেন না]:\n• bKash মার্চেন্ট: 01700-000000 (ডেমো রেফারেন্স — কাস্টমার আইডি লিখুন)\n• নগদ ও রকেট: সিমুলেটেড মার্চেন্ট বিল পে\n• ব্যাংক ট্রান্সফার: সিটি ব্যাংক ডেমো অ্যাকাউন্ট #999-SPACENET-DEMO\n• শেষ তারিখ: প্রতি মাসের ১ তারিখে বিল তৈরি হয় এবং ৫ তারিখের মধ্যে পরিশোধযোগ্য।",
+        Banglish: "Billing & Payment Methods [DEMO ONLY — Fictional Accounts — Do Not Transfer Real Funds]:\n• bKash Merchant: 01700-000000 (DEMO-SIMULATION ONLY — Use Customer ID as ref)\n• Nagad & Rocket: Simulated Merchant Bill Pay\n• Bank Wire: City Bank Fictional Demo Account #999-SPACENET-DEMO\n• Due Date: Mash-er 1 tarikh bill create hoy ebong 5 tarikh-er moddhe pay korte hoy."
+      }
+    },
+    package_changes: {
+      category: 'Package Changes',
+      label: 'Package Migration / Upgrade',
+      intents: ['upgrade_downgrade', 'change_plan'],
+      keywords: {
+        en: ['upgrade', 'downgrade', 'change plan', 'switch package', 'increase speed', 'decrease speed', 'change package'],
+        bn: ['আপগ্রেড', 'ডাউনগ্রেড', 'প্যাকেজ পরিবর্তন', 'প্ল্যান চেঞ্জ', 'স্পিড বাড়ানো', 'স্পিড কমানো'],
+        banglish: ['upgrade', 'downgrade', 'package change', 'plan change', 'speed barano', 'package switch']
+      },
+      route: 'sales_handoff',
+      routeLabel: 'Package Manager',
+      responses: {
+        EN: "Package Migration Policy [Demonstration Terms — Simulated fixtures]:\n• Upgrades: Can be requested anytime and activate within 15 minutes with ZERO migration fees. Pro-rated billing applies.\n• Downgrades: Must be requested before the 25th of the month, taking effect on the 1st of the next billing cycle.",
+        BN: "প্যাকেজ পরিবর্তন নীতিমালা [প্রদর্শনীমূলক বিবরণ]:\n• আপগ্রেড: যেকোনো সময় কোনো ফি ছাড়াই তাৎক্ষণিকভাবে আপগ্রেড করা যায় এবং ১৫ মিনিটের মধ্যে সক্রিয় হয়।\n• ডাউনগ্রেড: প্রতি মাসের ২৫ তারিখের মধ্যে আবেদন করতে হবে, যা পরবর্তী মাসের ১ তারিখ থেকে কার্যকর হবে।",
+        Banglish: "Package Migration Policy [Demonstration Terms]:\n• Upgrade: Kono extra fee charai instantly upgrade kora jay, 15 minutes-er moddhe speed update hoye jay.\n• Downgrade: Mash-er 25 tarikh-er moddhe request korte hobe, ja porer mash-er 1 tarikh theke effective hobe."
+      }
+    },
+    service_policies_sla: {
+      category: 'Service Policies & SLA',
+      label: 'SLA & Outage Policy',
+      intents: ['sla_uptime', 'outage_policy', 'refund_policy', 'bill_credit_outage'],
+      keywords: {
+        en: [
+          'sla', 'policy', 'uptime', 'guarantee', 'refund', 'compensation', 'credit',
+          'downtime credit', 'outage compensation', 'automatic bill credit', 'bill credit',
+          'service credit', 'outage credit', 'down for 24 hours', 'down for', 'internet down',
+          'internet is down', 'credit if', 'refund for outage'
+        ],
+        bn: [
+          'এসএলএ', 'পলিসি', 'আপটাইম', 'গ্যারান্টি', 'ক্ষতিপূরণ', 'রিফান্ড', 'ক্রেডিট',
+          'নীতিমালা', 'বিল ক্রেডিট', 'সার্ভিস ক্রেডিট', 'স্বয়ংক্রিয় ক্রেডিট', 'ইন্টারনেট ডাউন', 'বিভ্রাট ক্ষতিপূরণ'
+        ],
+        banglish: [
+          'sla', 'policy', 'uptime', 'guarantee', 'refund', 'khotipuron', 'credit', 'downtime',
+          'automatic bill credit', 'bill credit', 'service credit', 'outage credit', 'net down'
+        ]
+      },
+      route: 'faq',
+      routeLabel: 'Service Policies',
+      responses: {
+        EN: "SpaceNet SLA & Outage Credit Policies [Simulated SLA Policy — Demonstration fixtures]:\n• Automatic Outage Bill Credit: Yes! Any unscheduled optical fiber outage lasting longer than 30 minutes triggers an automatic 24-hour service bill credit to your monthly statement. If an outage lasts 24 hours, corresponding multi-day SLA credits are credited automatically without requiring manual ticket filing.\n• Uptime Guarantee: 99.9% Uptime SLA for residential fiber connections; 99.99% with dedicated secondary trunk failover for Office Pro.\n• Free Hardware Support: Lifetime free replacement for faulty GPON ONT units damaged by natural wear or electrical surges.",
+        BN: "SpaceNet এসএলএ ও বিভ্রাট ক্রেডিট নীতিমালা [প্রদর্শনীমূলক এসএলএ পলিসি]:\n• স্বয়ংক্রিয় বিভ্রাট বিল ক্রেডিট: হ্যাঁ! কোনো অনির্ধারিত ফাইবার বিভ্রাট ৩০ মিনিটের বেশি স্থায়ী হলে স্বয়ংক্রিয়ভাবে আপনার অ্যাকাউন্টে ২৪ ঘণ্টার সার্ভিস বিল ক্রেডিট যোগ হয়। ২৪ ঘণ্টা সংযোগ বিচ্ছিন্ন থাকলে আনুপাতিক বহুগুণ ক্ষতিপূরণ ক্রেডিট কোনো ম্যানুয়াল আবেদন ছাড়াই সরাসরি যুক্ত হয়।\n• আপটাইম গ্যারান্টি: আবাসিক সংযোগে ৯৯.৯% এবং অফিস প্রো সংযোগে ৯৯.৯৯% আপটাইম এসএলএ।\n• ফ্রি হার্ডওয়্যার সাপোর্ট: বজ্রপাত বা যান্ত্রিক ত্রুটিতে GPON ONT সম্পূর্ণ বিনামূল্যে পরিবর্তনযোগ্য।",
+        Banglish: "SpaceNet SLA & Outage Credit Policies [Simulated SLA Policy — Demonstration fixtures]:\n• Automatic Outage Bill Credit: Yes! 30 minutes-er beshi kono unplanned fiber outage thakle automatically apnar account-e 24 hours service bill credit add hoye jay. Connection jodi 24 hours down thake, tobe automated multi-day SLA credit direct apply hoy.\n• Uptime Guarantee: Residential plan-e 99.9% ebong Office Pro plan-e 99.99% uptime guarantee dewa hoy.\n• Free Hardware Support: Factory defect ba surge damage-e GPON ONT free replace kora hoy."
+      }
+    },
+    support_hours: {
+      category: 'Support & Working Hours',
+      label: 'Support Working Hours',
+      intents: ['support_hours', 'helpline_schedule'],
+      keywords: {
+        en: ['hours', 'working hours', 'office hours', 'support hours', 'open', 'when can i call', 'helpline', 'schedule'],
+        bn: ['কাজের সময়', 'অফিস সময়', 'সাপোর্ট কখন খোলা', 'খোলা থাকে', 'হেল্পলাইন সময়', 'কখন ফোন দিব'],
+        banglish: ['working hours', 'office hours', 'support kokhon khola', 'helpline', 'kobe open', 'koto shomoy']
+      },
+      route: 'faq',
+      routeLabel: 'Support Info',
+      responses: {
+        EN: "Support Operations Schedule [Demonstration Schedule — Simulated fixtures]:\n• Customer Care Helpline & WhatsApp: 24 Hours / 7 Days a Week (Always Online).\n• Network Operations Center (NOC): 24/7 proactive optical monitoring.\n• Field Technicians & Splicing Crews: 8:00 AM – 10:00 PM daily for physical premises visits.",
+        BN: "সাপোর্ট ও কার্যকাল সময়সূচি [প্রদর্শনীমূলক বিবরণ]:\n• কাস্টমার কেয়ার হেল্পলাইন ও হোয়াটসঅ্যাপ: সপ্তাহে ৭ দিন ২৪ ঘণ্টাই খোলা (সর্বদা সচল)।\n• নেটওয়ার্ক অপারেশনস সেন্টার (NOC): ২৪/৭ অপটিক্যাল মনিটরিং সক্রিয়।\n• ফিল্ড টেকনিশিয়ান ভিজিট: প্রতিদিন সকাল ৮:০০ থেকে রাত ১০:০০ পর্যন্ত যেকোনো ফিজিক্যাল সেটআপের জন্য পাওয়া যায়।",
+        Banglish: "Support Schedule [Demonstration Schedule]:\n• Customer Care Helpline & WhatsApp: 24 Hours / 7 Days a week (shob shomoy active).\n• Network Operations Center (NOC): 24/7 continuous optical monitoring.\n• Field Technician Visit: Protidin shokal 8:00 theke raat 10:00 porjonto physical visit kora hoy."
+      }
+    },
+    technical_problem: {
+      category: 'Technical Troubleshooting',
+      label: 'Technical Troubleshooting',
+      intents: ['slow_internet', 'connection_drop', 'pon_red_light', 'wifi_issue'],
+      keywords: {
+        en: ['slow', 'speed slow', 'drop', 'dropping', 'disconnect', 'disconnecting', 'red light', 'pon light', 'los light', 'no internet', 'not working', 'router', 'wifi', 'reboot', 'restart', 'ping', 'high ping', 'packet loss', 'buffering'],
+        bn: ['ধীরগতি', 'স্লো', 'ড্রপ', 'ডিসকানেক্ট', 'লাল বাতি', 'পন লাইট', 'এলওএস লাইট', 'কাজ করছে না', 'ইন্টারনেট নাই', 'রাউটার', 'রিস্টার্ট', 'পিং বেশি', 'প্যাকেট লস'],
+        banglish: ['slow', 'speed pacchi na', 'drop korche', 'disconnect hoy', 'red light', 'pon light', 'los light', 'kaj korche na', 'net nai', 'router', 'restart', 'ping high', 'packet loss']
+      },
+      route: 'ticket_suggest',
+      routeLabel: 'Support Ticket Desk',
+      responses: {
+        EN: "Technical Diagnostic Guidance [Demonstration Diagnostics — Simulated procedures]:\n1. Power cycle your GPON ONT modem: Unplug power for 30 seconds and reconnect.\n2. Verify the green fiber connector on the bottom is firmly seated without tight bends.\n3. Check indicators: PON light should be solid Green. If PON is Red/Flashing, a physical fiber break is detected and our NOC team must dispatch a splicing crew.\n4. Wi-Fi tips: Separate 2.4GHz and 5GHz bands; use 5GHz for latency-sensitive streaming/gaming.",
+        BN: "প্রযুক্তিগত প্রাথমিক সমাধান [প্রদর্শনীমূলক ডায়াগনস্টিক]:\n১. আপনার GPON ONT মডেমটি ৩০ সেকেন্ডের জন্য বন্ধ করে পুনরায় চালু করুন।\n২. পেছনের সবুজ ফাইবার ক্যাবলটি বাঁকা না করে শক্তভাবে লাগানো আছে কিনা নিশ্চিত করুন।\n৩. লাইট চেক করুন: PON লাইট স্থির সবুজ থাকা আবশ্যক। PON লাল বা জ্বলজ্বল করলে লাইনে ফাইবার কাট হয়েছে এবং আমাদের টেকনিশিয়ান পাঠাতে হবে।\n৪. ওয়াইফাই টিপস: ২.৪ ও ৫ গিগাহার্টজ ব্যান্ড আলাদা রাখুন এবং গেমিংয়ের জন্য ৫ গিগাহার্টজ ব্যবহার করুন।",
+        Banglish: "Technical Diagnostic Tips [Demonstration Diagnostics]:\n1. GPON ONT modem 30 second power off kore abar on korun.\n2. Pichoner green fiber connector-ti thikmoto lagano ache kina check korun (cable jeno bend na hoy).\n3. Indicator light: PON light solid Green thakte hobe. Red ba blinking hole physical fiber break hoyeche ebong NOC technician lagbe.\n4. Wi-Fi advice: 2.4GHz ebong 5GHz SSID alada korun, gaming/streaming-er jonno 5GHz use korun."
+      }
+    },
+    human_escalation: {
+      category: 'Human Escalation',
+      label: 'Human Staff Escalation',
+      intents: ['request_human', 'talk_to_staff', 'frustrated_escalation'],
+      keywords: {
+        en: ['human', 'agent', 'person', 'staff', 'representative', 'supervisor', 'talk to someone', 'frustrated', 'terrible', 'worst', 'disappointed', 'complaint'],
+        bn: ['মানুষ', 'এজেন্ট', 'প্রতিনিধি', 'কর্মকর্তা', 'কারো সাথে কথা বলতে চাই', 'অভিযোগ', 'বিরক্তিকর', 'সমাধান চাই', 'খারাপ সার্ভিস'],
+        banglish: ['human', 'agent', 'staff', 'kotha bolte chai', 'manush', 'supervisor', 'faltu', 'biroktikor', 'complaint', 'solve hoy nai']
+      },
+      route: 'human_escalation',
+      routeLabel: 'Tier III NOC Escalation',
+      responses: {
+        EN: "I understand your frustration and request for personal assistance. I have prioritized this conversation for immediate takeover by our Tier III Support NOC engineers. A senior network specialist will step in shortly.",
+        BN: "আপনার অসুবিধার জন্য আমরা আন্তরিকভাবে দুঃখিত। আমি এই সেশনটি জরুরি ভিত্তিতে আমাদের টায়ার ৩ সাপোর্ট টিমের কাছে হস্তান্তর করছি। একজন সিনিয়র ইঞ্জিনিয়ার এখনই লাইনে যুক্ত হচ্ছেন।",
+        Banglish: "Apnar shomoshshar jonno amra shobar age antorikbhabe dukkhito. Session-ti urgent priority-te amader Tier III NOC Support Engineer-er kache hand over kora hoyeche. Ekjon senior engineer ekhoni takeover korchen."
+      }
+    }
+  };
+
+  const KNOWLEDGE_FALLBACK_RESPONSES = {
+    EN: "Thank you for contacting SpaceNet Support! I could not locate a precise match for your query in our automated knowledge base.\n\nI can assist you directly with:\n• Packages, Speeds & Pricing (100M – 1G)\n• Coverage Areas (Dhanmondi, Banani, Gulshan, Uttara, Mirpur)\n• Billing Methods (bKash Demo, Nagad, Bank Wire)\n• Technical Wi-Fi & Optical Line Diagnostics\n• Outage Policies & Automatic SLA Bill Credits\n\nAlternatively, click 'Human Staff Override' above to connect with a Tier III NOC specialist.",
+    BN: "SpaceNet সাপোর্টে যোগাযোগের জন্য ধন্যবাদ! আপনার নির্দিষ্ট প্রশ্নের সরাসরি উত্তর আমাদের স্বয়ংক্রিয় নলেজবেসে খুঁজে পাওয়া যায়নি।\n\nআমি আপনাকে সহায়তা করতে পারি:\n• ইন্টারনেট প্যাকেজ, গতি ও মূল্যতালিকা (১০০এম - ১জি)\n• কভারেজ এলাকা (ধানমন্ডি, বনানী, গুলশান, উত্তরা, মিরপুর)\n• বিল পরিশোধের মাধ্যম (বিকাশ, নগদ, ব্যাংক)\n• ওয়াইফাই ও অপটিক্যাল ফাইবার ডায়াগনস্টিক\n• বিভ্রাট ক্ষতিপূরণ ও স্বয়ংক্রিয় বিল ক্রেডিট নীতিমালা\n\nঅথবা সরাসরি আমাদের টায়ার ৩ ইঞ্জিনিয়ারের সাথে কথা বলতে উপরের 'Human Staff Override' অপশনটি চালু করুন।",
+    Banglish: "SpaceNet support-e jogajog korar jonno dhonnobad! Apnar query-ti amader automated knowledge base-e direct match kore ni.\n\nAmi apnake help korte pari:\n• Packages, Speeds & Pricing (100M theke 1G)\n• Coverage Areas (Dhanmondi, Banani, Gulshan, Uttara, Mirpur)\n• Billing Methods (bKash, Nagad, Bank Wire)\n• Technical Wi-Fi & Optical Line Diagnostics\n• Outage Policies & Automatic SLA Bill Credits\n\nOthoba direct ekjon Tier III NOC engineer-er shathe kotha bolte upore 'Human Staff Override' toggle on korun."
+  };
+
+  // Known packages dictionary for targeted entity responses
+  const SPACE_NET_PACKAGES = [
+    {
+      key: 'gamer_300m',
+      name: 'Fiber Gamer (300 Mbps)',
+      speed: 300,
+      price: '2,500 BDT/mo',
+      features: 'Sub-5ms fastpath routing, Wi-Fi 6 ONT included',
+      freeInstall: true,
+      bnName: 'ফাইবার গেমার (৩০০ এমবিপিএস)',
+      bnPrice: '২,৫০০ টাকা/মাস',
+      bnFeatures: 'সাব-৫মি.সে. লো-পিং ফাস্টপাথ রাউটিং, Wi-Fi 6 ONT অন্তর্ভুক্ত',
+      banglishName: 'Fiber Gamer (300 Mbps)',
+      banglishPrice: '2,500 BDT/mo',
+      banglishFeatures: 'Fastpath low-ping routing, Wi-Fi 6 ONT shoh',
+      match: /(?:fiber\s+)?gamer(?:\s+300m(?:bps)?)?|\b300m(?:bps)?\b/i
+    },
+    {
+      key: 'home_150m',
+      name: 'Fiber Home (150 Mbps)',
+      speed: 150,
+      price: '1,600 BDT/mo',
+      features: 'Dual-band GPON ONT included',
+      freeInstall: true,
+      bnName: 'ফাইবার হোম (১৫০ এমবিপিএস)',
+      bnPrice: '১,৬০০ টাকা/মাস',
+      bnFeatures: 'ডুয়াল-ব্যান্ড GPON ONT অন্তর্ভুক্ত',
+      banglishName: 'Fiber Home (150 Mbps)',
+      banglishPrice: '1,600 BDT/mo',
+      banglishFeatures: 'Dual-band GPON ONT router shoh',
+      match: /(?:fiber\s+)?home\s+150m(?:bps)?|\b150m(?:bps)?\b/i
+    },
+    {
+      key: 'streamer_200m',
+      name: 'Fiber Streamer (200 Mbps)',
+      speed: 200,
+      price: '2,000 BDT/mo',
+      features: 'Optimized for 4K streaming & low jitter',
+      freeInstall: true,
+      bnName: 'ফাইবার স্ট্রিমার (২০০ এমবিপিএস)',
+      bnPrice: '২,০০০ টাকা/মাস',
+      bnFeatures: '৪কে স্ট্রিমিং ও লো-জিটার অপ্টিমাইজড',
+      banglishName: 'Fiber Streamer (200 Mbps)',
+      banglishPrice: '2,000 BDT/mo',
+      banglishFeatures: '4K streaming low jitter optimized',
+      match: /(?:fiber\s+)?streamer(?:\s+200m(?:bps)?)?|\b200m(?:bps)?\b/i
+    },
+    {
+      key: 'lite_100m',
+      name: 'Home Lite (100 Mbps)',
+      speed: 100,
+      price: '1,200 BDT/mo',
+      features: 'Symmetrical fiber browsing',
+      freeInstall: false,
+      bnName: 'হোম লাইট (১০০ এমবিপিএস)',
+      bnPrice: '১,২০০ টাকা/মাস',
+      bnFeatures: 'সিমেট্রিকাল ফাইবার ব্রাউজিং',
+      banglishName: 'Home Lite (100 Mbps)',
+      banglishPrice: '1,200 BDT/mo',
+      banglishFeatures: 'Symmetrical fiber browsing',
+      match: /home\s+lite|\b100m(?:bps)?\b/i
+    },
+    {
+      key: 'pro_500m',
+      name: 'Fiber Pro (500 Mbps)',
+      speed: 500,
+      price: '3,500 BDT/mo',
+      features: 'High bandwidth multi-user studio plan',
+      freeInstall: true,
+      bnName: 'ফাইবার প্রো (৫০০ এমবিপিএস)',
+      bnPrice: '৩,৫০০ টাকা/মাস',
+      bnFeatures: 'হাই ব্যান্ডউইথ মাল্টি-ইউজার স্টুডিও প্ল্যান',
+      banglishName: 'Fiber Pro (500 Mbps)',
+      banglishPrice: '3,500 BDT/mo',
+      banglishFeatures: 'High bandwidth multi-user studio plan',
+      match: /(?:fiber\s+)?pro\s+500m(?:bps)?|\b500m(?:bps)?\b/i
+    },
+    {
+      key: 'office_1g',
+      name: 'Office Pro (1 Gbps)',
+      speed: 1000,
+      price: '5,500 BDT/mo',
+      features: '2 Static IPs & 99.99% SLA dedicated routing',
+      freeInstall: true,
+      bnName: 'অফিস প্রো (১ জিবিপিএস)',
+      bnPrice: '৫,৫০০ টাকা/মাস',
+      bnFeatures: '২টি স্ট্যাটিক আইপি ও ৯৯.৯৯% এসএলএ ডেডিকেটেড রাউটিং',
+      banglishName: 'Office Pro (1 Gbps)',
+      banglishPrice: '5,500 BDT/mo',
+      banglishFeatures: '2 Static IPs & 99.99% SLA dedicated routing',
+      match: /office\s+pro|\b1\s*g(?:bps)?\b|gigabit/i
+    }
+  ];
+
+  // Known coverage zones dictionary for targeted entity responses
+  const SPACE_NET_COVERAGE_ZONES = [
+    { key: 'banani', match: /\bbanani|বনানী\b/i, name: 'Banani', details: 'Blocks A through C', bnName: 'বনানী (ব্লক এ থেকে সি)', banglishName: 'Banani (Block A theke C)' },
+    { key: 'gulshan', match: /\bgulshan|গুলশান\b/i, name: 'Gulshan', details: 'Gulshan 1 & 2', bnName: 'গুলশান ১ ও ২', banglishName: 'Gulshan 1 & 2' },
+    { key: 'dhanmondi', match: /\bdhanmondi|ধানমন্ডি\b/i, name: 'Dhanmondi', details: 'Roads 1 through 27', bnName: 'ধানমন্ডি (রোড ১ থেকে ২৭)', banglishName: 'Dhanmondi (Road 1 theke 27)' },
+    { key: 'uttara', match: /\buttara|উত্তরা\b/i, name: 'Uttara', details: 'Sectors 1 through 14', bnName: 'উত্তরা (সেক্টর ১ থেকে ১৪)', banglishName: 'Uttara (Sector 1 theke 14)' },
+    { key: 'mirpur', match: /\bmirpur|মিরপুর\b/i, name: 'Mirpur', details: 'DOHS & Section 10/11', bnName: 'মিরপুর (ডিওএইচএস ও সেকশন ১০/১১)', banglishName: 'Mirpur (DOHS & Section 10/11)' },
+    { key: 'mohakhali', match: /\bmohakhali|মহাখালী\b/i, name: 'Mohakhali', details: 'Mohakhali DOHS', bnName: 'মহাখালী ডিওএইচএস', banglishName: 'Mohakhali DOHS' },
+    { key: 'bashundhara', match: /\bbashundhara|বসুন্ধরা\b/i, name: 'Bashundhara', details: 'Bashundhara R/A', bnName: 'বসুন্ধরা আ/এ', banglishName: 'Bashundhara R/A' }
+  ];
+
+  function extractInquiryEntities(cleanText) {
+    const text = cleanText || '';
+    const pkg = SPACE_NET_PACKAGES.find(p => p.match.test(text)) || null;
+    const zone = SPACE_NET_COVERAGE_ZONES.find(z => z.match.test(text)) || null;
+    return { pkg, zone };
+  }
+
+  function getCategoryResponse(key, outputLang, entities) {
+    const cat = SPACE_NET_KNOWLEDGE_BASE[key];
+    if (!cat) return "";
+
+    // 1. Packages & Pricing: Targeted entity vs Full Catalog
+    if (key === 'packages_pricing' && entities && entities.pkg) {
+      const p = entities.pkg;
+      if (outputLang === 'BN') {
+        return `SpaceNet ${p.bnName} — ${p.bnPrice} (${p.bnFeatures}) [কাল্পনিক ডেমো ক্যাটালগ — মূল্যের বিবরণ শুধুমাত্র প্রদর্শনীমূলক]। এতে রয়েছে সম্পূর্ণ আনলিমিটেড সিমেট্রিকাল ব্যান্ডউইথ।`;
+      } else if (outputLang === 'Banglish') {
+        return `SpaceNet ${p.banglishName} — ${p.banglishPrice} (${p.banglishFeatures}) [Fictional Demo Catalog — Simulated fixtures]. Symmetrical unlimited bandwidth paben.`;
+      } else {
+        return `SpaceNet ${p.name} — ${p.price} (${p.features}) [Fictional Demo Catalog — All prices (BDT) are simulated demonstration data]. Symmetrical bandwidth with zero data caps.`;
+      }
+    }
+
+    // 2. Installation: Highlight 100% Free for 150M+ packages
+    if (key === 'installation_procedure' && entities && entities.pkg && entities.pkg.freeInstall) {
+      const p = entities.pkg;
+      if (outputLang === 'BN') {
+        return `ইনস্টলেশন সংক্রান্ত তথ্য [প্রদর্শনীমূলক বিবরণ]: স্ট্যান্ডার্ড ইনস্টলেশন ফি ১,০০০ টাকা, তবে ${p.bnName} (১৫০এম+ প্যাকেজ) হওয়ায় ইনস্টলেশন সম্পূর্ণ ফ্রি! টেকনিশিয়ান আসার পর ২ থেকে ৩ ঘণ্টার মধ্যে লাইন চালু হয়।`;
+      } else if (outputLang === 'Banglish') {
+        return `Installation Details [Demonstration Specification]: Standard installation fee 1,000 BDT, kintu ${p.banglishName} (150M+ plan) howay installation 100% FREE! Technician ashar 2-3 hours-e connection ready hoye jay.`;
+      } else {
+        return `Installation Guidelines [Demonstration Specification]: Standard installation fee is 1,000 BDT, but for ${p.name} (150M+ plans) it is 100% FREE! Optical fiber installation is completed within 2 to 3 hours upon technician arrival.`;
+      }
+    }
+
+    // 3. Coverage: Highlight specific confirmed zone vs general list
+    if (key === 'coverage_availability' && entities && entities.zone) {
+      const z = entities.zone;
+      if (outputLang === 'BN') {
+        return `হ্যাঁ, SpaceNet অপটিক্যাল ফাইবার নেটওয়ার্ক ${z.bnName}-এ বর্তমানে সম্পূর্ণ সক্রিয় রয়েছে [প্রদর্শনীমূলক কভারেজ ডেটা]। আপনার ভবন ও ফ্ল্যাট নম্বর জানালে আমাদের ইঞ্জিনিয়ারিং টিম অবিলম্বে স্প্লিটার পোর্টের প্রাপ্যতা নিশ্চিত করতে পারবে।`;
+      } else if (outputLang === 'Banglish') {
+        return `Yes, SpaceNet GPON optical fiber network ${z.banglishName}-e fully active ache [Demonstration coverage data]. Apnar building address bolle amra immediate GPON splitter port check kore janate parbo.`;
+      } else {
+        return `Yes, SpaceNet GPON optical fiber network is active and operational in ${z.name} (${z.details}) [Demonstration Node — Coverage zones are simulated fixtures]. Please share your building address and floor number so our engineering team can verify spare splitter port availability.`;
+      }
+    }
+
+    // Base knowledge base responses
+    return cat.responses[outputLang] || cat.responses['EN'];
+  }
+
+  // 2. Deterministic Intent Classifier (Feature Group 1, 2, 4 + Issues 1 & 2 Multi-Intent & Outage Credit)
+  function classifyCustomerIntent(text, preferredLang) {
+    const raw = (text || '').trim();
+    const clean = raw.toLowerCase().replace(/[^\p{L}\p{M}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim();
+
+    // Language detection heuristics
+    let detectedLang = 'EN';
+    if (/[\u0980-\u09FF]/.test(raw)) {
+      detectedLang = 'BN';
+    } else if (/\b(apni|apnar|korte|kore|korbo|koto|taka|ache|kina|shathe|kotha|pawa|jabe|doya|amader|shomoy|bhaiya|faltu|biroktikor|cholche|baje|kaj|dibo|hobe|janaben|dekhi)\b/i.test(clean)) {
+      detectedLang = 'Banglish';
+    }
+
+    const outputLang = preferredLang || detectedLang;
+
+    // Issue 1: Outage Credit / Downtime Bill Credit Specific Compound Rule
+    const hasOutageCreditIntent = /(bill credit|service credit|outage credit|downtime credit|credit.*(?:down|outage|cut|break)|(?:down|outage|cut|break).*credit|বিল ক্রেডিট|সার্ভিস ক্রেডিট|ক্ষতিপূরণ|down thakle.*credit)/i.test(clean);
+
+    // Score all categories
+    const scoredCategories = [];
+
+    for (const [key, category] of Object.entries(SPACE_NET_KNOWLEDGE_BASE)) {
+      let score = 0;
+      const allKeywords = [
+        ...new Set([
+          ...(category.keywords.en || []),
+          ...(category.keywords.bn || []),
+          ...(category.keywords.banglish || [])
+        ])
+      ];
+
+      for (const kw of allKeywords) {
+        if (!kw) continue;
+        const kwLower = kw.toLowerCase();
+        if (clean.includes(kwLower)) {
+          if (['upgrade', 'downgrade', 'change plan', 'switch package', 'আপগ্রেড', 'ডাউনগ্রেড'].includes(kwLower)) {
+            score += 5;
+          } else if (kwLower.includes('automatic bill credit') || kwLower.includes('bill credit') || kwLower.includes('outage compensation')) {
+            score += 6;
+          } else if (kwLower.includes(' ')) {
+            score += 3;
+          } else {
+            score += 1;
+          }
+        }
+      }
+
+      // Priority boost for Outage Bill Credit (Issue 1)
+      if (key === 'service_policies_sla' && hasOutageCreditIntent) {
+        score += 12;
+      }
+
+      // If user asks about outage credit, penalize generic billing guidance
+      if (key === 'billing_guidance' && hasOutageCreditIntent) {
+        score = Math.max(0, score - 8);
+      }
+
+      if (score > 0) {
+        scoredCategories.push({ key, category, score });
+      }
+    }
+
+    scoredCategories.sort((a, b) => b.score - a.score);
+
+    // Filter candidate categories with score >= 2
+    const validCandidates = scoredCategories.filter(sc => sc.score >= 2);
+
+    // Overlap guards:
+    // 1. Guard against false package noun overlap when asking solely to upgrade/downgrade a plan
+    const hasExplicitPricingWord = /(how much|price|pricing|cost|rate|taka|dam|khoroch|100m|150m|200m|300m|500m|1g)/i.test(clean);
+    let filteredCandidates = validCandidates;
+    if (!hasExplicitPricingWord) {
+      const hasUpgrade = filteredCandidates.some(c => c.key === 'package_changes');
+      if (hasUpgrade) {
+        filteredCandidates = filteredCandidates.filter(c => c.key !== 'packages_pricing');
+      }
+    }
+
+    // 2. Outage credit takes precedence over generic billing
+    if (hasOutageCreditIntent) {
+      filteredCandidates = filteredCandidates.filter(c => c.key !== 'billing_guidance');
+    }
+
+    // Support up to 3 distinct intents in one customer message
+    const selectedIntents = filteredCandidates.slice(0, 3);
+    const entities = extractInquiryEntities(clean);
+
+    // Multi-Intent Recognition (2 or 3 intents)
+    if (selectedIntents.length >= 2) {
+      const confidence = 0.96;
+      const points = selectedIntents.map((item, idx) => {
+        const numStr = outputLang === 'BN' ? ['১', '২', '৩'][idx] : String(idx + 1);
+        const ans = getCategoryResponse(item.key, outputLang, entities);
+        return `${numStr}. ${item.category.label}:\n${ans}`;
+      });
+
+      let multiResp = "";
+      if (outputLang === 'BN') {
+        multiResp = `আপনার অনুসন্ধান সম্পর্কিত তথ্যাবলি নিচে উল্লেখ করা হলো:\n\n${points.join('\n\n')}`;
+      } else if (outputLang === 'Banglish') {
+        multiResp = `Apnar ${selectedIntents.length === 2 ? 'duto' : 'protiti'} inquiry-r information niche dewa holo:\n\n${points.join('\n\n')}`;
+      } else {
+        multiResp = `Here is the information addressing each part of your inquiry:\n\n${points.join('\n\n')}`;
+      }
+
+      const intentKey = selectedIntents.map(i => i.key).join('+');
+      const intentLabel = `${selectedIntents.map(i => i.category.label).join(' & ')} (Multi-Intent)`;
+
+      return {
+        intent: intentKey,
+        label: intentLabel,
+        category: 'Multi-Intent Inquiry',
+        isMultiIntent: true,
+        intents: selectedIntents.map(i => i.key),
+        confidence: confidence,
+        route: selectedIntents[0].category.route,
+        routeLabel: `${selectedIntents[0].category.routeLabel} / Multi`,
+        response: multiResp,
+        detectedLanguage: detectedLang,
+        outputLanguage: outputLang,
+        entities: entities
+      };
+    }
+
+    // Standard Single Intent Match
+    if (scoredCategories.length > 0 && scoredCategories[0].score > 0) {
+      const best = scoredCategories[0];
+      const confidence = Math.min(0.98, 0.82 + best.score * 0.05);
+      const resp = getCategoryResponse(best.key, outputLang, entities);
+      return {
+        intent: best.key,
+        label: best.category.label,
+        category: best.category.category,
+        confidence: confidence,
+        route: best.category.route,
+        routeLabel: best.category.routeLabel,
+        response: resp,
+        detectedLanguage: detectedLang,
+        outputLanguage: outputLang,
+        isMultiIntent: false,
+        entities: entities
+      };
+    }
+
+    // Graceful fallback for unrecognized queries
+    return {
+      intent: 'unknown',
+      label: 'General Clarification',
+      category: 'Unrecognized Query',
+      confidence: 0.42,
+      route: 'faq',
+      routeLabel: 'General Clarification',
+      response: KNOWLEDGE_FALLBACK_RESPONSES[outputLang] || KNOWLEDGE_FALLBACK_RESPONSES['EN'],
+      detectedLanguage: detectedLang,
+      outputLanguage: outputLang,
+      isMultiIntent: false
+    };
+  }
+
+  // 3. Customer Frustration Detection Engine (Feature Group 5)
+  function detectCustomerFrustration(conv) {
+    if (!conv || !conv.messages) return { isFrustrated: false };
+
+    const triggersEN = [
+      'still not working', 'not working', 'dropping', 'third time', '3 times', '3rd time',
+      'contacted you three times', 'very disappointed', 'disappointed', 'worst', 'terrible',
+      'unacceptable', 'cancel subscription', 'cancel connection', 'waste of money',
+      'horrible', 'awful', 'fed up', 'useless', 'stopped working completely', 'solid red'
+    ];
+    const triggersBN = [
+      'কাজ করছে না', 'খারাপ সার্ভিস', 'বিরক্তিকর', 'সমাধান হয়নি', 'বাতিল করতে চাই',
+      'ফালতু', '৩ বার বলছি', '৩য় বার', 'টাকা নষ্ট', 'অভিযোগ', 'বাজে সার্ভিস'
+    ];
+    const triggersBanglish = [
+      'kaj korche na', 'kharap service', 'biroktikor', 'solve hoy nai', 'cancel korbo',
+      'faltu service', '3 bar bolchi', 'taka nosto', 'worst service', 'baje service',
+      'kichui kaj kore na', 'net cholche na'
+    ];
+
+    const allTriggers = [...triggersEN, ...triggersBN, ...triggersBanglish];
+
+    for (let i = conv.messages.length - 1; i >= 0; i--) {
+      const msg = conv.messages[i];
+      if (msg.sender === 'customer' || msg.sender === 'voice') {
+        const textToScan = (msg.text || msg.transcript || '').toLowerCase();
+        for (const trigger of allTriggers) {
+          if (textToScan.includes(trigger.toLowerCase())) {
+            return {
+              isFrustrated: true,
+              trigger: trigger,
+              reason: `Dissatisfaction trigger "${trigger}" identified in customer messages.`
+            };
+          }
+        }
+      }
+    }
+
+    return { isFrustrated: false };
+  }
+
+  // 4. Copilot Routing Status Sync (Feature Group 4 & Issue 3 Distinction)
+  function updateAiCopilotRouting(conv) {
+    const banner = document.getElementById('chat-ai-routing-banner');
+    const intentEl = document.getElementById('routing-detected-intent');
+    const routeEl = document.getElementById('routing-suggested-route');
+    const confPill = document.getElementById('routing-confidence-pill');
+    const actionBtn = document.getElementById('routing-action-btn');
+    const actionLabel = document.getElementById('routing-action-label');
+    const actionIcon = document.getElementById('routing-action-icon');
+
+    if (!banner || !conv) return;
+
+    // Find the latest customer or voice inquiry to classify CURRENT intent
+    let textToAnalyze = '';
+    for (let i = conv.messages.length - 1; i >= 0; i--) {
+      const m = conv.messages[i];
+      if (m.sender === 'customer' || m.sender === 'voice') {
+        textToAnalyze = m.text || m.transcript || '';
+        break;
+      }
+    }
+    if (!textToAnalyze && conv.messages.length > 0) {
+      textToAnalyze = conv.messages[0].text || '';
+    }
+
+    const classification = classifyCustomerIntent(textToAnalyze, aiLanguageMode);
+
+    // Issue 3: Distinguish historical frustration from CURRENT intent
+    const frustration = detectCustomerFrustration(conv);
+    if (frustration.isFrustrated && conv.status !== 'human_takeover') {
+      // Keep current customer intent visible, but route suggests Human NOC handover
+      if (intentEl) intentEl.textContent = `${classification.label} (Frustration Flagged)`;
+      if (routeEl) routeEl.textContent = 'Human Tier III NOC (Urgent Handover)';
+      if (confPill) confPill.textContent = 'High Churn Risk';
+      if (actionLabel) actionLabel.textContent = 'Escalate to NOC';
+      if (actionIcon) actionIcon.textContent = 'support_agent';
+      banner.setAttribute('data-active-route', 'human_escalation');
+      return;
+    }
+
+    if (intentEl) intentEl.textContent = classification.label;
+    if (routeEl) routeEl.textContent = classification.routeLabel;
+    if (confPill) confPill.textContent = `${Math.round(classification.confidence * 100)}% Match`;
+
+    banner.setAttribute('data-active-route', classification.route);
+
+    if (actionLabel && actionIcon) {
+      if (classification.route === 'ticket_suggest') {
+        actionLabel.textContent = 'Suggest Ticket';
+        actionIcon.textContent = 'confirmation_number';
+      } else if (classification.route === 'sales_handoff') {
+        actionLabel.textContent = 'Suggest Sales Lead';
+        actionIcon.textContent = 'person_add';
+      } else if (classification.route === 'billing_guidance') {
+        actionLabel.textContent = 'Open Billing Info';
+        actionIcon.textContent = 'receipt_long';
+      } else if (classification.route === 'human_escalation') {
+        actionLabel.textContent = 'Escalate to NOC';
+        actionIcon.textContent = 'support_agent';
+      } else {
+        actionLabel.textContent = 'Explore KB Answer';
+        actionIcon.textContent = 'auto_stories';
+      }
+    }
+  }
+
+  function handleRoutingAction() {
+    const conv = getConversation(currentConversationId) || customerConversations[currentCustomerKey];
+    if (!conv) return;
+
+    const banner = document.getElementById('chat-ai-routing-banner');
+    const route = banner ? banner.getAttribute('data-active-route') : 'faq';
+
+    if (route === 'human_escalation') {
+      escalateToHumanFromFrustration();
+    } else if (route === 'ticket_suggest') {
+      showToast('Ticket Routing Recommendation', `Recommended creating a diagnostic ticket for Circuit ${conv.circuitId || 'SPN-FBR-0941'}.`);
+    } else if (route === 'sales_handoff') {
+      showToast('Sales Handoff Recommendation', `Recommended creating a Sales Lead for ${conv.customerName} on ${conv.channelLabel}.`);
+    } else if (route === 'billing_guidance') {
+      const billAns = SPACE_NET_KNOWLEDGE_BASE.billing_guidance.responses[aiLanguageMode] || SPACE_NET_KNOWLEDGE_BASE.billing_guidance.responses['EN'];
+      insertAiReply(billAns.replace(/\n/g, ' '));
+      showToast('Billing Guidance Loaded', 'Fictional demo payment instructions loaded into composer.');
+    } else {
+      let text = '';
+      for (let i = conv.messages.length - 1; i >= 0; i--) {
+        const m = conv.messages[i];
+        if (m.sender === 'customer' || m.sender === 'voice') {
+          text = m.text || m.transcript || '';
+          break;
+        }
+      }
+      const classification = classifyCustomerIntent(text, aiLanguageMode);
+      insertAiReply(classification.response.replace(/\n/g, ' '));
+      showToast('Knowledge Base Answer Loaded', 'Contextual response loaded into composer. Edit or hit Enter to send.');
+    }
+  }
+
+  // 5. Dynamic Contextual Suggestions Generator (Feature Group 5 & Issue 3 Fix: Dynamic based on Latest Customer Message)
+  function generateContextualSuggestions(conv, lang) {
+    if (!conv) return [];
+
+    // Under Human Takeover: Staff responses
+    if (conv.status === 'human_takeover') {
+      if (lang === 'BN') {
+        return [
+          "আমি টায়ার ৩ এনওসি থেকে রোহান বলছি। আমি আমাদের OLT সুইচে আপনার ফাইবার ইন্টারফেস পরীক্ষা করছি।",
+          "আপনার ওএনটি-তে অপটিক্যাল সিগন্যাল ক্যালিব্রেশন পাঠানো হয়েছে। অনুগ্রহ করে ৬০ সেকেন্ড পর রাউটার রিবুট করুন।",
+          "আমাদের ফিল্ড টেকনিশিয়ান টিম আপনার ফাইবার ক্যাবলটি সরাসরি পরীক্ষার জন্য রওনা হয়েছে।"
+        ];
+      } else if (lang === 'Banglish') {
+        return [
+          "Ami Tier III NOC theke Rohan bolchi. Amader OLT switch-e apnar fiber interface inspect kora hocche.",
+          "Apnar ONT-te optical signal calibration push kora hoyeche. Please 60 second por router reboot korun.",
+          "Amader field technician team apnar jumper cable check korar jonno 15 minute-er moddhe pouchabe."
+        ];
+      } else {
+        return [
+          "This is Rohan from Tier III NOC. I am currently inspecting your fiber interface on our OLT switch.",
+          "I have pushed an optical power calibration to your ONT. Please reboot your router in 60 seconds.",
+          "Our field technician crew is 15 minutes away from your location to inspect the optical jumper cable."
+        ];
+      }
+    }
+
+    // Public Post Comments: Social replies with DM invitation
+    if (conv.type === 'comment') {
+      if (lang === 'BN') {
+        return [
+          "যোগাযোগের জন্য ধন্যবাদ! আপনার বাসার নম্বর ও ফোন নম্বরটি আমাদের ইনবক্স করুন, যাতে আমরা দ্রুত পোর্ট প্রাপ্যতা জানাতে পারি।",
+          "আপনার এলাকায় আমাদের ফাইবার সংযোগ সক্রিয় রয়েছে। ফ্রি রাউটার আপগ্রেডের জন্য অনুগ্রহ করে আমাদের মেসেজ দিন।",
+          "প্যাকেজের বিস্তারিত ও ৪৮ ঘণ্টার ট্রায়াল সংযোগের জন্য ইনবক্সে যোগাযোগ করার অনুরোধ রইল।"
+        ];
+      } else if (lang === 'Banglish') {
+        return [
+          "Jogajog korar jonno dhonnobad! Apnar building address ebong phone number DM korun jate amra port check korte pari.",
+          "Apnar elakay amader fiber active ache. Free Wi-Fi 6 router upgrade-er jonno please amader direct message pathan.",
+          "Package pricing ebong 48-hour trial connection-er jonno feel free to inbox us."
+        ];
+      } else {
+        return [
+          "Thanks for reaching out! Please DM us your building address and contact number so our team can check port availability.",
+          "We have verified fiber coverage in your area. Please send us a private message to schedule a router upgrade.",
+          "Feel free to send us a direct message for package pricing and a 48-hour trial connection."
+        ];
+      }
+    }
+
+    // Issue 3 Remediation: Dynamically inspect LATEST customer message instead of hardcoding by conv.key
+    let latestCustMsg = null;
+    for (let i = conv.messages.length - 1; i >= 0; i--) {
+      if (conv.messages[i].sender === 'customer' || conv.messages[i].sender === 'voice') {
+        latestCustMsg = conv.messages[i];
+        break;
+      }
+    }
+
+    const latestText = latestCustMsg ? (latestCustMsg.text || latestCustMsg.transcript || '') : '';
+    const currentClassification = classifyCustomerIntent(latestText, lang);
+    const intentKey = currentClassification.intent;
+    const latestEntities = extractInquiryEntities((latestText || '').toLowerCase());
+
+    // Specific Package & Zone Inquiry (e.g. Fiber Gamer 300M in Banani)
+    if (latestEntities.pkg && latestEntities.zone) {
+      const p = latestEntities.pkg;
+      const z = latestEntities.zone;
+      if (lang === 'BN') {
+        return [
+          `${z.name}-এ ${p.bnName} প্যাকেজে ইনস্টলেশন সম্পূর্ণ ফ্রি।`,
+          `${z.name}-এ আমাদের ওএলটি স্প্লিটার পোর্ট অবিলম্বে সংযোগের জন্য প্রস্তুত।`,
+          `আপনি কি আগামীকালের জন্য ${z.name}-এ টেকনিশিয়ান ইনস্টলেশন স্লট বুক করতে চান?`
+        ];
+      } else if (lang === 'Banglish') {
+        return [
+          `${z.name}-e ${p.banglishName} package-e installation 100% FREE.`,
+          `${z.name}-e amader GPON fiber port ready ache booking-er jonno.`,
+          `Agamikal ${z.name}-e technician visit slot confirm korte chan?`
+        ];
+      } else {
+        return [
+          `Installation is 100% FREE for ${p.name} in ${z.name} with Wi-Fi 6 ONT included.`,
+          `We have verified active GPON splitter capacity in ${z.name} (${z.details}).`,
+          `Would you like to schedule an installation appointment in ${z.name} for tomorrow afternoon?`
+        ];
+      }
+    }
+
+    // A. Installation, Coverage, or Package inquiries (e.g. Fiber Gamer 300M in Banani)
+    if (intentKey.includes('installation_procedure') || intentKey.includes('coverage_availability') || intentKey.includes('packages_pricing') || intentKey.includes('package_changes')) {
+      if (lang === 'BN') {
+        return [
+          "১৫০এম+ প্যাকেজ বা ৬ মাসের অগ্রিম বিলে ইনস্টলেশন সম্পূর্ণ ফ্রি (অন্যথায় ১,০০০ টাকা)।",
+          "বনানী ও ধানমন্ডিতে আমাদের অপটিক্যাল ফাইবার পোর্ট অবিলম্বে সংযোগ দেওয়ার জন্য প্রস্তুত।",
+          "আপনি কি আগামী বৃহস্পতিবার দুপুর ৩:০০ টায় ইনস্টলেশন স্লট নিশ্চিত করতে চান?"
+        ];
+      } else if (lang === 'Banglish') {
+        return [
+          "150Mbps+ plan ba 6-month advance payment-e installation fee 100% FREE.",
+          "Banani ebong Dhanmondi-te amader high-speed GPON port ready ache.",
+          "Apni ki Thursday 3:00 PM-e installation slot reserve korte chan?"
+        ];
+      } else {
+        return [
+          "Installation is free with 150M+ plans or 6-month advance (standard fee is 1,000 BDT).",
+          "We have active GPON fiber ports in Banani ready for next-day installation.",
+          "Would you like me to book our installation crew for this Thursday at 3:00 PM?"
+        ];
+      }
+    }
+
+    // B. Service Policies & Outage Bill Credit inquiries
+    if (intentKey.includes('service_policies_sla')) {
+      if (lang === 'BN') {
+        return [
+          "৩০ মিনিটের বেশি অনির্ধারিত বিভ্রাটের ক্ষেত্রে স্বয়ংক্রিয়ভাবে ২৪ ঘণ্টার বিল ক্রেডিট যুক্ত হয়।",
+          "আমরা আবাসিক সংযোগে ৯৯.৯% এবং অফিস প্রো সংযোগে ৯৯.৯৯% আপটাইম নিশ্চিত করি।",
+          "আপনার অ্যাকাউন্টে সাম্প্রতিক বিভ্রাটের জন্য স্বয়ংক্রিয় ক্ষতিপূরণ ক্রেডিট যাচাই করা হচ্ছে।"
+        ];
+      } else if (lang === 'Banglish') {
+        return [
+          "30 min-er beshi outage thakle automatically 24-hour service bill credit account-e add hoy.",
+          "Amra residential connection-e 99.9% ebong Office Pro plan-e 99.99% uptime guarantee dei.",
+          "Apnar account-e recent fiber breakdown-er SLA credit verification chalano hocche."
+        ];
+      } else {
+        return [
+          "Any unscheduled outage exceeding 30 minutes triggers an automatic 24-hour SLA bill credit.",
+          "SpaceNet guarantees 99.9% uptime for residential plans and 99.99% for Office Pro.",
+          "Your account has been flagged for automated SLA credit processing."
+        ];
+      }
+    }
+
+    // C. Billing & Payments
+    if (intentKey.includes('billing_guidance')) {
+      if (lang === 'BN') {
+        return [
+          "পেমেন্ট সফলভাবে সম্পন্ন হয়েছে! আপনার নিবন্ধিত ইমেইলে ভ্যাট ইনভয়েস ও রসিদ পাঠানো হয়েছে।",
+          "SpaceNet bKash মার্চেন্টে (01700-000000) কোনো বাড়তি ফি ছাড়াই যেকোনো সময় বিল পরিশোধ করা যায়।",
+          "প্রতি মাসের ৫ তারিখের মধ্যে বিল পরিশোধ করলে নিরবচ্ছিন্ন সংযোগ নিশ্চিত থাকে।"
+        ];
+      } else if (lang === 'Banglish') {
+        return [
+          "Payment verify kora hoyeche! Registered email-e VAT invoice ebong money receipt pathano hoyeche.",
+          "SpaceNet bKash Merchant (01700-000000)-e zero charge-e bill pay korte paren.",
+          "Monthly bill 5 tarikh-er moddhe pay korle uninterrupted fiber connection thake."
+        ];
+      } else {
+        return [
+          "Payment received and verified! Sending official VAT invoice and receipt to your registered email.",
+          "SpaceNet supports simulated bKash Merchant (01700-000000) with zero transaction surcharge.",
+          "Your connection is active through the end of the billing cycle."
+        ];
+      }
+    }
+
+    // D. Technical Troubleshooting & Wi-Fi
+    if (intentKey.includes('technical_problem')) {
+      if (lang === 'BN') {
+        return [
+          "আপনার রাউটারে ৫ গিগাহার্টজ চ্যানেল অটো-অপ্টিমাইজেশন করা হয়েছে। স্পিড টেস্ট করে দেখুন!",
+          "অপটিক্যাল সিগন্যাল -১৯.২ ডিবিএম (স্বাভাবিক)। চলুন ২.৪ ও ৫ গিগাহার্টজ ব্যান্ড আলাদা করি।",
+          "সমস্যা স্থায়ী হলে আমরা দুপুর ২:০০ টায় নর্থ সেক্টরে ফিল্ড টেকনিশিয়ান পাঠাতে প্রস্তুত।"
+        ];
+      } else if (lang === 'Banglish') {
+        return [
+          "Apnar router-e 5GHz channel auto-optimization apply kora hoyeche. Ekhon speed test korun!",
+          "Optical signal -19.2 dBm (Healthy). 2.4GHz ebong 5GHz SSID alada kore test korun.",
+          "Shomoshsha thakle North Sector field tech dispatch 2:00 PM-e schedule kora jabe."
+        ];
+      } else {
+        return [
+          "I have applied channel auto-optimization on your 5GHz band. Please test your speed now!",
+          "Speed test indicates healthy optical signal. Let's inspect local Wi-Fi bands.",
+          "I have scheduled a North Sector field tech dispatch for 2:00 PM if drops persist."
+        ];
+      }
+    }
+
+    // Default suggestions in selected language
+    if (lang === 'BN') {
+      return [
+        "SpaceNet ফাইবার সংযোগে আপনাকে স্বাগতম! আমি কি আপনাকে কোনো প্যাকেজ বা টেকনিক্যাল তথ্যে সহায়তা করতে পারি?",
+        "আপনার অপটিক্যাল সিগন্যাল ও ব্যান্ডউইথ প্রোফাইল পরীক্ষা করা হয়েছে, সংযোগ সুস্থ রয়েছে।",
+        "আমাদের কাস্টমার কেয়ার টিম সপ্তাহে ৭ দিন ২৪ ঘণ্টাই আপনার সেবায় নিয়োজিত।"
+      ];
+    } else if (lang === 'Banglish') {
+      return [
+        "SpaceNet fiber-e apnake shagotom! Kono package ba technical query-te help lagbe ki?",
+        "Apnar optical signal ebong bandwidth profile test kora hoyeche, connection fully normal.",
+        "Amader customer care helpline 24/7 round-the-clock apnar jonno open ache."
+      ];
+    } else {
+      return [
+        "Welcome to SpaceNet Fiber! How can I assist you with your internet connection or packages today?",
+        "Your optical line signal and gateway throughput are verified healthy.",
+        "Our customer care helpline and NOC are active 24/7 for any support needs."
+      ];
+    }
+  }
+
+  // 6. Voice Message Transcript Interaction (Feature Group 6)
+  function toggleVoiceTranscript(id) {
+    const drawer = document.getElementById(`voice-drawer-${id}`);
+    const btnLabel = document.getElementById(`btn-label-transcript-${id}`);
+    if (!drawer) return;
+    const isHidden = drawer.classList.contains('hidden');
+    if (isHidden) {
+      drawer.classList.remove('hidden');
+      if (btnLabel) btnLabel.textContent = 'Hide Transcript & Analysis';
+    } else {
+      drawer.classList.add('hidden');
+      if (btnLabel) btnLabel.textContent = 'View AI Transcript & Analysis';
+    }
+  }
+
+  // 7. Public Comment to Private DM Actions (Feature Group 3 & Issue 4 Remediation)
+  function insertPublicDmInvite() {
+    const currentConv = getConversation(currentConversationId) || customerConversations[currentCustomerKey];
+    if (!currentConv) return;
+    const name = (currentConv.customerName || 'Subscriber').split(' ')[0];
+    let inviteText = `Hi ${name}! Thanks for reaching out. To check your building's fiber port availability and protect your privacy, please send us a direct message with your contact number and full address.`;
+    if (aiLanguageMode === 'BN') {
+      inviteText = `ধন্যবাদ ${name} ভাই! আপনার ঠিকানায় অপটিক্যাল ফাইবার পোর্ট পরীক্ষা এবং গোপনীয়তা রক্ষার স্বার্থে, অনুগ্রহ করে আপনার ফোন নম্বর ও বিস্তারিত ঠিকানা আমাদের ইনবক্স করুন।`;
+    } else if (aiLanguageMode === 'Banglish') {
+      inviteText = `Hi ${name}! Thanks for reaching out. Apnar address-e fiber port check korte ebong privacy ensure korte, doya kore apnar contact number ebong address amader DM korun.`;
+    }
+    setComposerMode('message');
     const input = document.getElementById('chat-input');
-    input.value = replyText;
-    input.focus();
-    input.classList.add('ring-2', 'ring-primary');
-    setTimeout(() => input.classList.remove('ring-2', 'ring-primary'), 800);
-    showToast('AI Reply Loaded', 'Suggested response placed in composer. Hit Enter to send.');
+    if (input) {
+      input.value = inviteText;
+      input.focus();
+    }
+    showToast('Public DM Invite Loaded', 'Invitation text placed in composer. You can edit before posting.');
+  }
+
+  function continueInPrivateDm() {
+    const currentConv = getConversation(currentConversationId) || customerConversations[currentCustomerKey];
+    if (!currentConv) return;
+
+    // Issue 4: Precise deduplication matching by originCommentId or canonical DM ID
+    const targetDmConvId = currentConv.conversationId.endsWith('-DM') ? currentConv.conversationId : `${currentConv.conversationId}-DM`;
+    let dmConv = conversations.find(c =>
+      c.conversationId === targetDmConvId ||
+      (c.originCommentId === currentConv.conversationId && c.type === 'dm') ||
+      (c.customerId === currentConv.customerId && c.type === 'dm' && c.originCommentId === currentConv.conversationId)
+    );
+
+    if (!dmConv) {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      dmConv = {
+        conversationId: targetDmConvId,
+        customerId: currentConv.customerId,
+        key: `${currentConv.key}-dm`,
+        displayId: `${currentConv.displayId} (DM)`,
+        customerName: currentConv.customerName,
+        channel: currentConv.channel,
+        channelLabel: `${currentConv.channelLabel} DM`,
+        channelBadge: currentConv.channelBadge,
+        channelColor: currentConv.channelColor,
+        badgeColor: currentConv.badgeColor,
+        type: 'dm',
+        status: 'ai_handling',
+        unread: false,
+        circuitId: currentConv.circuitId,
+        plan: currentConv.plan,
+        planBadge: currentConv.planBadge,
+        planBadgeColor: currentConv.planBadgeColor,
+        tag: { label: 'Private Transition', icon: 'forward_to_inbox', bg: 'bg-primary-fixed text-on-primary-fixed font-semibold' },
+        originCommentId: currentConv.conversationId,
+        originPostSnippet: currentConv.postContext ? currentConv.postContext.postSnippet : 'Public post discussion',
+        lastMessageTime: 'Just now',
+        messages: [
+          {
+            id: 'sys-trans-' + Date.now(),
+            sender: 'system',
+            eventType: 'transition',
+            text: `Privacy Transition: Thread transitioned from public ${currentConv.channelLabel} comment to secure 1:1 Direct Message.`,
+            time: timeStr
+          },
+          {
+            id: 'm-dm-trans-1',
+            sender: 'customer',
+            text: `Hello SpaceNet team, continuing our discussion from your public post comment. My building address is House 42, Road 27, Dhanmondi. My contact number is +880 1711-223344.`,
+            time: timeStr
+          },
+          {
+            id: 'm-dm-trans-2',
+            sender: 'ai',
+            text: `Hi ${currentConv.customerName}! Thank you for continuing in private. We have verified Dhanmondi Road 27 fiber capacity. Would you like our installation engineer to visit tomorrow afternoon?`,
+            time: timeStr
+          }
+        ],
+        suggestions: [
+          "I have scheduled your Wi-Fi 6 router upgrade for tomorrow between 2:00 PM - 4:00 PM.",
+          "Our field engineer Asif (+880 1712-998877) will call 30 minutes before arrival.",
+          "Here is your upgrade confirmation tracking reference: #UPG-5120."
+        ]
+      };
+      conversations.push(dmConv);
+      syncLegacyCustomerConversations();
+    }
+
+    if (currentTypeFilter === 'comment') {
+      filterType('all');
+    }
+
+    renderThreadList();
+    selectConversation(dmConv.conversationId);
+    showToast('Private Message Thread', `Connected to secure 1:1 DM for ${dmConv.customerName}.`);
+  }
+
+  // 8. Human Escalation Action from Frustration (Feature Group 5)
+  function escalateToHumanFromFrustration() {
+    const conv = getConversation(currentConversationId) || customerConversations[currentCustomerKey];
+    if (!conv) return;
+
+    if (conv.status !== 'human_takeover') {
+      const toggle = document.getElementById('copilot-toggle');
+      if (toggle) {
+        toggle.checked = true;
+        toggleAgentOverride(toggle);
+      } else {
+        conv.status = 'human_takeover';
+        const now = new Date();
+        conv.messages.push({
+          id: 'sys-' + Date.now(),
+          sender: 'system',
+          eventType: 'takeover',
+          text: 'Human Takeover: Session escalated to Human Support (Rohan / Tier III NOC) due to detected customer frustration.',
+          time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        });
+        renderCustomerConversation(conv.conversationId);
+        renderThreadList();
+      }
+    }
+    showToast('Escalated to Human NOC', 'Session reassigned to Rohan (Tier III NOC Support).');
+  }
+
+  // 9. Customer Message Simulation Handler (Issue 5 Remediation)
+  function executeSimulateCustomerMessage(customText) {
+    const selectEl = document.getElementById('sim-preset-select');
+    const inputEl = document.getElementById('sim-custom-input');
+    const text = (typeof customText === 'string' && customText.trim()) || (inputEl && inputEl.value.trim()) || (selectEl && selectEl.value) || '';
+
+    if (!text) {
+      showToast('Demo Simulator', 'Please choose a preset inquiry or type a fictional customer message.');
+      return;
+    }
+
+    const conv = getConversation(currentConversationId) || customerConversations[currentCustomerKey];
+    if (!conv) {
+      showToast('No Active Chat', 'Please select a conversation from the Unified Inbox.');
+      return;
+    }
+
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    // Inject as incoming customer message
+    conv.messages.push({
+      id: 'sim-cust-' + Date.now(),
+      sender: 'customer',
+      text: text,
+      time: timeStr
+    });
+    conv.lastMessageTime = 'Just now';
+
+    if (inputEl) inputEl.value = '';
+    if (selectEl) selectEl.selectedIndex = 0;
+
+    renderCustomerConversation(conv.conversationId);
+    renderThreadList();
+
+    // Issue 7: Human Takeover strictly pauses automatic AI responses
+    if (conv.status === 'human_takeover') {
+      showToast('Inbound Customer Message', 'Human Override Active: AI auto-reply paused. Copilot suggestions updated for staff review.');
+      return;
+    }
+
+    // AI Handling Mode: Schedule deterministic knowledge base response
+    showToast('Inbound Customer Message', 'AI Copilot analyzing customer query...');
+
+    if (conv._pendingReplyTimeout) {
+      clearTimeout(conv._pendingReplyTimeout);
+      conv._pendingReplyTimeout = null;
+    }
+
+    conv._pendingReplyTimeout = setTimeout(() => {
+      conv._pendingReplyTimeout = null;
+      const targetConv = getConversation(conv.conversationId);
+      if (!targetConv || targetConv.status === 'human_takeover') return;
+
+      const classification = classifyCustomerIntent(text, aiLanguageMode);
+
+      targetConv.messages.push({
+        id: 'msg-ai-' + Date.now(),
+        sender: 'ai',
+        text: classification.response.replace(/\n/g, '<br>'),
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      });
+      targetConv.lastMessageTime = 'Just now';
+
+      if (currentConversationId === targetConv.conversationId) {
+        renderCustomerConversation(targetConv.conversationId);
+      }
+      renderThreadList();
+      showToast('AI Response Dispatched', `Classified as ${classification.label}`);
+    }, 800);
+  }
+
+  function handleSimPresetChange(selectEl) {
+    const inputEl = document.getElementById('sim-custom-input');
+    if (selectEl.value && inputEl) {
+      inputEl.value = selectEl.value;
+    }
+  }
+
+  // 4. Unified Inbox Engine
+  function insertAiReply(replyText) {
+    if (currentComposerMode === 'note') {
+      setComposerMode('message');
+      showToast('Switched to Message Mode', 'AI suggestions are customer-facing and cannot be logged as internal notes.');
+    }
+    const input = document.getElementById('chat-input');
+    if (input) {
+      input.value = replyText;
+      input.focus();
+      input.classList.add('ring-2', 'ring-primary');
+      setTimeout(() => input.classList.remove('ring-2', 'ring-primary'), 800);
+    }
+    showToast('AI Reply Loaded', 'Suggested response placed in composer. Edit or hit Enter to send.');
   }
 
   function setAiLanguage(lang, btn) {
     aiLanguageMode = lang;
-    btn.parentElement.querySelectorAll('button').forEach(b => {
-      b.className = 'px-1.5 py-0.5 rounded hover:bg-surface-container-high text-on-surface';
-    });
-    btn.className = 'px-1.5 py-0.5 rounded bg-primary text-on-primary font-semibold';
-    showToast('AI Agent Language', 'Response tone updated to: ' + lang);
+    if (btn && btn.parentElement) {
+      btn.parentElement.querySelectorAll('button').forEach(b => {
+        b.className = 'px-1.5 py-0.5 rounded hover:bg-surface-container-high text-on-surface';
+      });
+      btn.className = 'px-1.5 py-0.5 rounded bg-primary text-on-primary font-semibold';
+    }
+    const langNames = { EN: 'English', BN: 'বাংলা (Bangla)', Banglish: 'Banglish' };
+    showToast('AI Agent Language', 'Suggestions & tone updated to: ' + (langNames[lang] || lang));
+    renderCustomerConversation(currentConversationId);
   }
 
   function toggleAgentOverride(toggleEl) {
@@ -1490,7 +2691,6 @@
     renderThreadList();
   }
 
-  // 4. Unified Inbox Engine (Module 01 - Tasks 1, 2, 3, 4, 5)
   function filterType(type, btn) {
     currentTypeFilter = type;
     if (!btn) {
@@ -1604,6 +2804,11 @@
       postBanner.classList.add('hidden');
     }
 
+    const originBadge = document.getElementById('chat-origin-badge');
+    if (originBadge) {
+      originBadge.classList.add('hidden');
+    }
+
     const circuitPlanEl = document.getElementById('chat-circuit-plan');
     if (circuitPlanEl) {
       circuitPlanEl.innerHTML = '<span class="text-outline">No conversation matches active filters</span>';
@@ -1652,7 +2857,7 @@
         const matchConvId = (conv.conversationId || '').toLowerCase().includes(q);
         const matchCircuit = (conv.circuitId || '').toLowerCase().includes(q);
         const matchPlan = (conv.plan || '').toLowerCase().includes(q);
-        const matchMessages = conv.messages && conv.messages.some(m => (m.text || '').toLowerCase().includes(q));
+        const matchMessages = conv.messages && conv.messages.some(m => (m.text || m.transcript || '').toLowerCase().includes(q));
         const matchPost = conv.postContext && (conv.postContext.postSnippet || '').toLowerCase().includes(q);
         return matchName || matchCustId || matchConvId || matchCircuit || matchPlan || matchMessages || matchPost;
       }
@@ -1678,7 +2883,6 @@
       currentCustomerKey = filtered[0].key;
       renderCustomerConversation(currentConversationId);
     } else {
-      // Ensure current conversation details are rendered if recovering from empty state
       const stream = document.getElementById('chat-message-stream');
       if (stream && stream.querySelector('.empty-chat-placeholder')) {
         renderCustomerConversation(currentConversationId);
@@ -1693,7 +2897,7 @@
       let previewText = '';
       if (conv.messages && conv.messages.length > 0) {
         const lastMsg = conv.messages[conv.messages.length - 1];
-        previewText = (lastMsg.text || '').replace(/<[^>]*>?/gm, '');
+        previewText = (lastMsg.text || lastMsg.transcript || '').replace(/<[^>]*>?/gm, '');
       }
 
       const iconHtml = conv.tag && conv.tag.icon
@@ -1777,7 +2981,6 @@
     renderCustomerConversation(conv.conversationId);
   }
 
-  // Backward compatibility alias for existing callers (e.g. goToChatFromTicket)
   function selectCustomer(custKey, rowEl) {
     selectConversation(custKey);
   }
@@ -1817,12 +3020,23 @@
       }
     }
 
+    // Issue 4: Show linked origin badge if this DM was continued from a public comment
+    const originBadge = document.getElementById('chat-origin-badge');
+    if (originBadge) {
+      if (cust.originCommentId && cust.type === 'dm') {
+        originBadge.classList.remove('hidden');
+        originBadge.title = `Continued from Public Comment (${cust.originCommentId})`;
+      } else {
+        originBadge.classList.add('hidden');
+      }
+    }
+
     const circuitPlanEl = document.getElementById('chat-circuit-plan');
     if (circuitPlanEl) {
       circuitPlanEl.innerHTML = `Circuit ID: <span class="font-code-telemetry">${escapeHtml(cust.circuitId || cust.circuit)}</span> &bull; Plan: ${escapeHtml(cust.plan)}`;
     }
 
-    // Sync Parent Social Post Context Banner (For Public Post Comments)
+    // 1. Sync Parent Social Post Context Banner (For Public Post Comments)
     const postBanner = document.getElementById('chat-post-context-banner');
     if (postBanner) {
       if (cust.type === 'comment' && cust.postContext) {
@@ -1846,7 +3060,35 @@
       }
     }
 
-    // Sync Per-Conversation Human Takeover / AI Handback Control State
+    // 2. Sync Public Comment to DM Banner (Feature Group 3)
+    const commentDmBanner = document.getElementById('comment-to-dm-banner');
+    if (commentDmBanner) {
+      if (cust.type === 'comment') {
+        commentDmBanner.classList.remove('hidden');
+      } else {
+        commentDmBanner.classList.add('hidden');
+      }
+    }
+
+    // 3. Customer Frustration Detection Banner (Feature Group 5)
+    const frustrationAlert = document.getElementById('chat-frustration-alert');
+    const frustrationReason = document.getElementById('frustration-reason-text');
+    const frustrationStatus = detectCustomerFrustration(cust);
+    if (frustrationAlert) {
+      if (frustrationStatus.isFrustrated && cust.status !== 'human_takeover') {
+        frustrationAlert.classList.remove('hidden');
+        if (frustrationReason) {
+          frustrationReason.textContent = frustrationStatus.reason;
+        }
+      } else {
+        frustrationAlert.classList.add('hidden');
+      }
+    }
+
+    // 4. AI Copilot Intent Recognition & Routing Status (Feature Group 4 & Issue 3 Distinction)
+    updateAiCopilotRouting(cust);
+
+    // 5. Sync Per-Conversation Human Takeover / AI Handback Control State
     const copilotToggle = document.getElementById('copilot-toggle');
     const agentBadge = document.getElementById('agent-mode-badge');
     const overrideLabel = document.getElementById('override-label');
@@ -1882,7 +3124,7 @@
       overrideLabel.textContent = isHuman ? 'Human ON' : 'Human Off';
     }
 
-    // Render Messages Stream
+    // 6. Render Messages Stream
     const stream = document.getElementById('chat-message-stream');
     if (stream) {
       stream.innerHTML = '';
@@ -1898,6 +3140,101 @@
             <div class="flex flex-col gap-1">
               <div class="bg-surface-container-lowest p-space-md rounded-2xl rounded-tl-none shadow-xs font-body-sm text-body-sm text-on-surface">
                 ${m.text}
+              </div>
+              <span class="font-code-telemetry text-[10px] text-outline ml-2">${escapeHtml(m.time || '')} &bull; ${recLabel}</span>
+            </div>
+          `;
+          stream.appendChild(div);
+        } else if (m.sender === 'voice' || m.isVoice) {
+          const div = document.createElement('div');
+          div.className = 'flex items-start gap-space-sm max-w-xl';
+          const recLabel = cust.type === 'comment' ? 'Voice Message &bull; Public' : 'Voice Message &bull; Direct';
+          const drawerId = `voice-drawer-${m.id}`;
+          const safeReply = (m.suggestedReply || '').replace(/'/g, "\\'");
+          div.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-semibold text-xs">
+              ${escapeHtml(m.customerInitials || initials)}
+            </div>
+            <div class="flex flex-col gap-1 w-full max-w-lg">
+              <div class="bg-surface-container-lowest p-space-md rounded-2xl rounded-tl-none shadow-xs border border-surface-container font-body-sm text-on-surface flex flex-col gap-2">
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                      <span class="material-symbols-outlined text-[18px]">mic</span>
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-1.5">
+                        <span class="font-headline-sm text-label-md font-semibold text-on-surface">Customer Voice Note</span>
+                        <span class="font-code-telemetry text-[11px] text-outline">(${escapeHtml(m.duration || '0:30')})</span>
+                      </div>
+                      <span class="font-code-telemetry text-[10px] text-outline block">${escapeHtml(m.audioSource || 'Audio Recording')}</span>
+                    </div>
+                  </div>
+                  <!-- Waveform Simulation Visualizer -->
+                  <div class="flex items-center gap-0.5 h-6 px-2 bg-surface-container-low rounded-md">
+                    <span class="w-1 bg-primary/70 rounded-full h-3"></span>
+                    <span class="w-1 bg-primary/90 rounded-full h-5"></span>
+                    <span class="w-1 bg-primary rounded-full h-2"></span>
+                    <span class="w-1 bg-primary/80 rounded-full h-4"></span>
+                    <span class="w-1 bg-primary rounded-full h-6"></span>
+                    <span class="w-1 bg-primary/90 rounded-full h-3"></span>
+                    <span class="w-1 bg-primary/70 rounded-full h-5"></span>
+                    <span class="w-1 bg-primary rounded-full h-2"></span>
+                    <span class="w-1 bg-primary/80 rounded-full h-4"></span>
+                  </div>
+                </div>
+
+                <div class="pt-1 flex items-center justify-between border-t border-surface-container">
+                  <button onclick="toggleVoiceTranscript('${escapeHtml(m.id)}')" id="btn-transcript-${escapeHtml(m.id)}" class="px-2.5 py-1 text-[11px] font-headline-sm rounded-md bg-tertiary-fixed text-on-tertiary-fixed hover:bg-tertiary-fixed-dim transition-colors flex items-center gap-1 cursor-pointer">
+                    <span class="material-symbols-outlined text-[13px]">auto_awesome</span>
+                    <span id="btn-label-transcript-${escapeHtml(m.id)}">View AI Transcript &amp; Analysis</span>
+                  </button>
+                  <span class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-label-sm text-[10px]">
+                    ${escapeHtml(m.language || 'English')}
+                  </span>
+                </div>
+
+                <!-- Expandable Simulated Transcript Drawer -->
+                <div id="${drawerId}" class="hidden flex flex-col gap-2 pt-2 border-t border-surface-container mt-1 bg-surface-container-low/60 p-2.5 rounded-lg text-xs">
+                  <div class="flex items-center justify-between">
+                    <span class="font-headline-sm font-semibold text-primary flex items-center gap-1 text-[11px]">
+                      <span class="material-symbols-outlined text-[14px]">transcribe</span>
+                      Simulated Voice Transcript:
+                    </span>
+                    <span class="font-code-telemetry text-[10px] text-outline">Offline Mock Simulation</span>
+                  </div>
+                  <p class="font-body-sm text-body-sm italic text-on-surface bg-surface-container-lowest p-2 rounded border border-surface-container">
+                    "${escapeHtml(m.transcript || '')}"
+                  </p>
+
+                  <div class="grid grid-cols-2 gap-2 text-[11px]">
+                    <div class="bg-surface-container-lowest p-1.5 rounded">
+                      <span class="text-outline text-[10px] block">Detected Intent:</span>
+                      <span class="font-semibold text-on-surface">${escapeHtml(m.detectedIntent || 'General Technical')}</span>
+                    </div>
+                    <div class="bg-surface-container-lowest p-1.5 rounded">
+                      <span class="text-outline text-[10px] block">Confidence:</span>
+                      <span class="font-semibold text-secondary font-code-telemetry">${escapeHtml(m.confidence || '96% Match')}</span>
+                    </div>
+                  </div>
+
+                  ${m.keyEntities && m.keyEntities.length ? `
+                    <div class="flex flex-wrap items-center gap-1 text-[10px]">
+                      <span class="text-outline">Extracted Entities:</span>
+                      ${m.keyEntities.map(e => `<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface font-medium">${escapeHtml(e)}</span>`).join('')}
+                    </div>
+                  ` : ''}
+
+                  <div class="flex items-center justify-between gap-2 pt-1 border-t border-surface-container">
+                    <span class="text-[10px] text-outline italic">No microphone or live speech API used.</span>
+                    ${m.suggestedReply ? `
+                      <button onclick="insertAiReply('${safeReply}')" class="px-2.5 py-1 rounded bg-primary text-on-primary text-[11px] font-semibold flex items-center gap-1 hover:bg-primary-container transition-colors cursor-pointer">
+                        <span class="material-symbols-outlined text-[12px]">reply</span>
+                        Load Suggested AI Reply
+                      </button>
+                    ` : ''}
+                  </div>
+                </div>
               </div>
               <span class="font-code-telemetry text-[10px] text-outline ml-2">${escapeHtml(m.time || '')} &bull; ${recLabel}</span>
             </div>
@@ -1937,10 +3274,13 @@
           stream.appendChild(div);
         } else if (m.sender === 'system') {
           const isTakeover = m.eventType === 'takeover';
+          const isTransition = m.eventType === 'transition';
+          const icon = isTakeover ? 'shield_person' : (isTransition ? 'forward_to_inbox' : 'smart_toy');
+          const iconColor = isTakeover ? 'text-amber-600' : (isTransition ? 'text-primary' : 'text-primary');
           const div = document.createElement('div');
           div.className = 'self-center w-full max-w-lg my-1.5 px-space-md py-1.5 rounded-full bg-surface-container border border-surface-container-high text-on-surface-variant font-label-sm text-[11px] flex items-center justify-center gap-1.5 shadow-xs text-center';
           div.innerHTML = `
-            <span class="material-symbols-outlined text-[15px] ${isTakeover ? 'text-amber-600' : 'text-primary'}">${isTakeover ? 'shield_person' : 'smart_toy'}</span>
+            <span class="material-symbols-outlined text-[15px] ${iconColor}">${icon}</span>
             <span>${escapeHtml(m.text)} &bull; ${escapeHtml(m.time || '')}</span>
           `;
           stream.appendChild(div);
@@ -1999,17 +3339,25 @@
       stream.scrollTop = stream.scrollHeight;
     }
 
-    // Render suggestions
-    const chipContainer = document.querySelector('.ai-chip')?.parentElement;
-    if (chipContainer && cust.suggestions) {
+    // 7. Render Contextual AI Suggestions (Feature Group 5 & Issue 3)
+    const chipContainer = document.getElementById('chat-suggestions-container') || document.querySelector('.ai-chip')?.parentElement;
+    const contextualSuggestions = generateContextualSuggestions(cust, aiLanguageMode);
+    if (chipContainer && contextualSuggestions) {
       chipContainer.innerHTML = '';
-      cust.suggestions.forEach(s => {
+      contextualSuggestions.forEach(s => {
         const btn = document.createElement('button');
         btn.className = 'ai-chip text-left whitespace-nowrap px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-body-sm text-label-md transition-all shadow-xs flex items-center gap-1.5 cursor-pointer active:scale-95';
         btn.innerHTML = `<span class="text-tertiary">✨</span> "${escapeHtml(s.slice(0, 36))}..."`;
         btn.onclick = () => insertAiReply(s);
         chipContainer.appendChild(btn);
       });
+    }
+
+    // Update Language Indicator Pill on Suggestion Toolbar
+    const langTag = document.getElementById('ai-suggestions-lang-tag');
+    if (langTag) {
+      const langLabels = { EN: 'EN', BN: 'বাংলা', Banglish: 'Banglish' };
+      langTag.textContent = `Lang: ${langLabels[aiLanguageMode] || aiLanguageMode} &bull; Contextual`;
     }
 
     // Sync composer input mode and hints
@@ -2048,7 +3396,7 @@
       renderCustomerConversation(conv.conversationId);
       renderThreadList();
       showToast('Internal Note Saved', 'Private note added to thread. Not visible to customer.');
-      return; // Absolute safety: never trigger simulated replies or customer events
+      return;
     }
 
     // Handle Outgoing Message (Customer Message or Public Reply)
@@ -2080,35 +3428,48 @@
       conv._pendingReplyTimeout = null;
     }
 
-    // Under Human Takeover: AI auto-responses are STRICTLY PAUSED.
-    // However, the customer can still send an inbound reply simulation.
-    // In AI handling: both customer follow-up and AI auto-copilot remain active.
+    // Under Human Takeover: AI auto-responses are STRICTLY PAUSED (Issue 7)
+    if (isHuman) {
+      conv._pendingReplyTimeout = setTimeout(() => {
+        conv._pendingReplyTimeout = null;
+        const targetConv = getConversation(conv.conversationId);
+        if (!targetConv || targetConv.status !== 'human_takeover') return;
+
+        let ack = "Thank you Rohan! I appreciate you taking over this personally. Standing by for your update.";
+        if (aiLanguageMode === 'BN') {
+          ack = "ধন্যবাদ রোহান ভাই! আমি অপেক্ষা করছি, সংযোগটি পরীক্ষা করে আপডেট জানাবেন।";
+        } else if (aiLanguageMode === 'Banglish') {
+          ack = "Thank you Rohan bhaiya! Ami wait korchi, line check kore update janaben.";
+        }
+
+        targetConv.messages.push({
+          id: 'msg-cust-' + Date.now(),
+          sender: 'customer',
+          text: ack,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        });
+        targetConv.lastMessageTime = 'Just now';
+        if (currentConversationId === targetConv.conversationId) {
+          renderCustomerConversation(targetConv.conversationId);
+        }
+        renderThreadList();
+      }, 1200);
+      return;
+    }
+
+    // AI Handling Mode: Process query through Deterministic Knowledge Base & Intent Classifier
+    const classification = classifyCustomerIntent(text, aiLanguageMode);
+
     conv._pendingReplyTimeout = setTimeout(() => {
       conv._pendingReplyTimeout = null;
-      // Re-verify current conversation still exists and status
       const targetConv = getConversation(conv.conversationId);
-      if (!targetConv) return;
+      if (!targetConv || targetConv.status === 'human_takeover') return;
 
-      let replyText = "Thank you! I just tested and everything is running perfectly now. Speed test hit 498 Mbps!";
-      const lower = text.toLowerCase();
-      if (lower.includes('site survey') || lower.includes('engineer')) {
-        replyText = "Confirmed! Our operations team has noted the engineer visit. Thanks for the swift support!";
-      } else if (lower.includes('payment') || lower.includes('bkash')) {
-        replyText = "Payment acknowledged! Money receipt has been received on WhatsApp. Thank you SpaceNet!";
-      } else if (lower.includes('thursday') || lower.includes('installation') || lower.includes('reserve') || lower.includes('gamer') || lower.includes('3:00') || lower.includes('slot')) {
-        replyText = "Thursday 3:00 PM works great! I have my NID copy ready for the connection form. See you then!";
-      } else if (isComment) {
-        if (targetConv.channel === 'facebook') {
-          replyText = "Thanks for confirming! Sending our Dhanmondi building address and my phone number via DM now.";
-        } else {
-          replyText = "Awesome! 31ms to Singapore is unbeatable for our esports team. Reaching out via DM for trial.";
-        }
-      }
-
+      // Add AI Response from Knowledge Base
       targetConv.messages.push({
-        id: 'msg-' + (Date.now() + 1),
-        sender: 'customer',
-        text: replyText,
+        id: 'msg-ai-' + Date.now(),
+        sender: 'ai',
+        text: classification.response.replace(/\n/g, '<br>'),
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       });
       targetConv.lastMessageTime = 'Just now';
@@ -2117,7 +3478,7 @@
         renderCustomerConversation(targetConv.conversationId);
       }
       renderThreadList();
-    }, 1000);
+    }, 800);
   }
 
   function filterInbox(ch, btn) {
