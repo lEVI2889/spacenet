@@ -74,7 +74,7 @@
 <span class="material-symbols-outlined text-[16px]">arrow_upward</span> +18.4%
             </span>
 </div>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Across WhatsApp, FB, Web, Telegram</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Across WhatsApp, FB, Instagram, Web, Telegram</p>
 </div>
 <div class="mt-space-md pt-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
 <span class="">7-day rolling window</span>
@@ -319,91 +319,31 @@
 <div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low/50">
 <div class="relative">
 <span class="material-symbols-outlined absolute left-2.5 top-2 text-outline text-[18px]">search</span>
-<input class="w-full pl-9 pr-3 py-1.5 bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" placeholder="Filter chats or customer ID..." type="text">
+<input id="inbox-search-input" oninput="handleInboxSearch(this.value)" class="w-full pl-9 pr-3 py-1.5 bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" placeholder="Filter chats or customer ID..." type="text">
 </div>
 <!-- Channel Filter Pill Strip -->
-<div class="flex items-center gap-1 overflow-x-auto pb-1 text-label-sm font-label-sm">
-<button class="inbox-filter-pill px-2.5 py-1 rounded bg-primary text-on-primary font-semibold" onclick="filterInbox('all', this)">All</button>
-<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1" onclick="filterInbox('whatsapp', this)">
+<div id="inbox-filter-strip" class="flex items-center gap-1 overflow-x-auto pb-1 text-label-sm font-label-sm">
+<button class="inbox-filter-pill px-2.5 py-1 rounded bg-primary text-on-primary font-semibold flex items-center gap-1 whitespace-nowrap transition-colors" data-channel="all" onclick="filterInbox('all', this)">All</button>
+<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-channel="whatsapp" onclick="filterInbox('whatsapp', this)">
 <span class="w-2 h-2 rounded-full bg-secondary"></span> WhatsApp
             </button>
-<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1" onclick="filterInbox('facebook', this)">
+<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-channel="facebook" onclick="filterInbox('facebook', this)">
 <span class="w-2 h-2 rounded-full bg-primary"></span> Facebook
             </button>
-<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1" onclick="filterInbox('web', this)">
-<span class="w-2 h-2 rounded-full bg-secondary-container"></span> Web
+<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-channel="instagram" onclick="filterInbox('instagram', this)">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> Instagram
             </button>
-<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface" onclick="filterInbox('telegram', this)">Telegram</button>
+<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-channel="telegram" onclick="filterInbox('telegram', this)">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> Telegram
+            </button>
+<button class="inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-channel="web" onclick="filterInbox('web', this)">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span> Website Chat
+            </button>
 </div>
 </div>
 <!-- Chat List Items -->
 <div class="flex-1 overflow-y-auto divide-y divide-surface-container-low" id="inbox-thread-list">
-<!-- Customer 1: Active Alex Rivera -->
-<div class="chat-thread-item p-space-md bg-surface-container-high/60 cursor-pointer hover:bg-surface-container transition-colors flex flex-col gap-1" onclick="selectCustomer('alex', this)">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-xs">
-<span class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-code-telemetry text-[11px] font-semibold">WA</span>
-<span class="font-headline-sm text-body-md text-on-surface font-semibold">Alex Rivera</span>
-<span class="font-code-telemetry text-code-telemetry text-on-surface-variant font-medium">#8832</span>
-</div>
-<span class="font-code-telemetry text-[11px] text-outline">Just now</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface truncate">"My upload speed is fluctuating during meetings..."</p>
-<div class="flex items-center justify-between mt-1">
-<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]">auto_awesome</span> AI Diagnostics
-              </span>
-<span class="font-code-telemetry text-[11px] text-secondary font-semibold">Fiber 500M</span>
-</div>
-</div>
-<!-- Customer 2: Sarah Jenkins -->
-<div class="chat-thread-item p-space-md hover:bg-surface-container transition-colors cursor-pointer flex flex-col gap-1" onclick="selectCustomer('sarah', this)">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-xs">
-<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-code-telemetry text-[11px] font-semibold">FB</span>
-<span class="font-headline-sm text-body-md text-on-surface font-semibold">Sarah Jenkins</span>
-<span class="font-code-telemetry text-code-telemetry text-on-surface-variant font-medium">#4491</span>
-</div>
-<span class="font-code-telemetry text-[11px] text-outline">4m ago</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant truncate">"Need to upgrade office router for 25 new workstations"</p>
-<div class="flex items-center justify-between mt-1">
-<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Sales Lead</span>
-<span class="font-code-telemetry text-[11px] text-on-surface-variant">Office Pro 1G</span>
-</div>
-</div>
-<!-- Customer 3: Marcus Vance -->
-<div class="chat-thread-item p-space-md hover:bg-surface-container transition-colors cursor-pointer flex flex-col gap-1" onclick="selectCustomer('marcus', this)">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-xs">
-<span class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-code-telemetry text-[11px] font-semibold">WEB</span>
-<span class="font-headline-sm text-body-md text-on-surface font-semibold">Marcus Vance</span>
-<span class="font-code-telemetry text-code-telemetry text-on-surface-variant font-medium">#1092</span>
-</div>
-<span class="font-code-telemetry text-[11px] text-outline">18m ago</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant truncate">"Red light on my router PON port. Is there an outage?"</p>
-<div class="flex items-center justify-between mt-1">
-<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">LOS Red Alert</span>
-<span class="font-code-telemetry text-[11px] text-error">Home Lite</span>
-</div>
-</div>
-<!-- Customer 4: Elena Rostov -->
-<div class="chat-thread-item p-space-md hover:bg-surface-container transition-colors cursor-pointer flex flex-col gap-1" onclick="selectCustomer('elena', this)">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-xs">
-<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-code-telemetry text-[11px] font-semibold">TG</span>
-<span class="font-headline-sm text-body-md text-on-surface font-semibold">Elena Rostov</span>
-<span class="font-code-telemetry text-code-telemetry text-on-surface-variant font-medium">#7721</span>
-</div>
-<span class="font-code-telemetry text-[11px] text-outline">1h ago</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant truncate">"Can I pay using corporate wire transfer this month?"</p>
-<div class="flex items-center justify-between mt-1">
-<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Billing Query</span>
-<span class="font-code-telemetry text-[11px] text-on-surface-variant">Fiber Gigabit</span>
-</div>
-</div>
+<!-- Dynamically populated by renderThreadList() -->
 </div>
 </div>
 <!-- Right Column: Active Live Chat Window & AI Copilot (8 cols) -->
@@ -411,7 +351,7 @@
 <!-- Chat Header with Live Auto-Pilot / Human Handover Toggle -->
 <div class="p-space-md bg-surface-container-low/70 flex flex-wrap items-center justify-between gap-space-sm">
 <div class="flex items-center gap-space-md">
-<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm">
+<div id="chat-customer-avatar" class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm">
               AR
             </div>
 <div class="flex flex-col">
@@ -427,7 +367,7 @@
             </div>
 
 </div>
-<span class="font-body-sm text-label-sm text-on-surface-variant">Circuit ID: <span class="font-code-telemetry">SPN-FBR-0941</span> • Plan: Fiber 500Mbps</span>
+<span id="chat-circuit-plan" class="font-body-sm text-label-sm text-on-surface-variant">Circuit ID: <span class="font-code-telemetry">SPN-FBR-0941</span> • Plan: Fiber 500Mbps</span>
 </div>
 </div>
 <!-- Handover Toggle Pill -->
@@ -1035,23 +975,51 @@
 <script>
   // Global State
   let currentActiveView = 'dashboard';
+  let currentConversationId = 'CONV-WA-8832';
   let currentCustomerKey = 'alex';
+  let currentChannelFilter = 'all';
+  let currentSearchQuery = '';
   let aiLanguageMode = 'EN';
   let isSidebarCollapsed = false;
 
-  // Conversations Dataset
-  const customerConversations = {
-    alex: {
-      name: 'Alex Rivera',
-      id: '#8832',
-      channel: 'WhatsApp',
-      circuit: 'SPN-FBR-0941',
+  // Utility: HTML Escaper for safe text rendering
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  // Normalized Conversations Dataset (Module 01 - Task 1 Contract)
+  const conversations = [
+    {
+      conversationId: 'CONV-WA-8832',
+      customerId: 'CUST-8832',
+      key: 'alex',
+      displayId: '#8832',
+      customerName: 'Alex Rivera',
+      channel: 'whatsapp',
+      channelLabel: 'WhatsApp',
+      channelBadge: 'WA',
+      channelColor: 'bg-secondary text-on-secondary',
+      badgeColor: 'bg-secondary-fixed text-on-secondary-fixed',
+      type: 'dm',
+      status: 'ai_handling',
+      unread: false,
+      circuitId: 'SPN-FBR-0941',
       plan: 'Fiber 500Mbps',
+      planBadge: 'Fiber 500M',
+      planBadgeColor: 'text-secondary',
+      tag: { label: 'AI Diagnostics', icon: 'auto_awesome', bg: 'bg-tertiary-fixed text-on-tertiary-fixed' },
+      lastMessageTime: 'Just now',
       messages: [
-        { sender: 'customer', text: 'Hi, my connection keeps dropping during video calls today. It was fine yesterday. Could you check if something is wrong with my fiber box?', time: '10:41 AM' },
-        { sender: 'telemetry', opticalRx: '-19.2 dBm', ping: '11.4 ms', loss: '0.00%', text: 'GPON Physical Link is healthy. Diagnostic suggests local Wi-Fi 2.4GHz interference.' },
-        { sender: 'ai', text: 'Hello Alex! I just ran a remote diagnostic on your GPON ONT modem (#8832). Your physical fiber link has strong signal (-19.2 dBm, 0% packet loss).<br><br>We detected that your dual-band router is currently merging 2.4GHz and 5GHz. Would you like me to separate bands or optimize your 5GHz channel automatically?', time: '10:42 AM' },
-        { sender: 'customer', text: 'Yes please! Can you switch my laptop to the 5GHz channel?', time: '10:44 AM' }
+        { id: 'm-alx-1', sender: 'customer', text: 'Hi, my connection keeps dropping during video calls today. It was fine yesterday. Could you check if something is wrong with my fiber box?', time: '10:41 AM' },
+        { id: 'm-alx-2', sender: 'telemetry', opticalRx: '-19.2 dBm', ping: '11.4 ms', loss: '0.00%', text: 'GPON Physical Link is healthy. Diagnostic suggests local Wi-Fi 2.4GHz interference.' },
+        { id: 'm-alx-3', sender: 'ai', text: 'Hello Alex! I just ran a remote diagnostic on your GPON ONT modem (#8832). Your physical fiber link has strong signal (-19.2 dBm, 0% packet loss).<br><br>We detected that your dual-band router is currently merging 2.4GHz and 5GHz. Would you like me to separate bands or optimize your 5GHz channel automatically?', time: '10:42 AM' },
+        { id: 'm-alx-4', sender: 'customer', text: 'Yes please! Can you switch my laptop to the 5GHz channel?', time: '10:44 AM' }
       ],
       suggestions: [
         "I have applied channel auto-optimization on your 5GHz band. Please test your speed now!",
@@ -1059,16 +1027,30 @@
         "I have scheduled a North Sector field tech dispatch for 2:00 PM if drops persist."
       ]
     },
-    sarah: {
-      name: 'Sarah Jenkins',
-      id: '#4491',
-      channel: 'Facebook',
-      circuit: 'SPN-OFF-2281',
+    {
+      conversationId: 'CONV-FB-4491',
+      customerId: 'CUST-4491',
+      key: 'sarah',
+      displayId: '#4491',
+      customerName: 'Sarah Jenkins',
+      channel: 'facebook',
+      channelLabel: 'Facebook',
+      channelBadge: 'FB',
+      channelColor: 'bg-primary text-on-primary',
+      badgeColor: 'bg-primary-fixed text-on-primary-fixed',
+      type: 'dm',
+      status: 'ai_handling',
+      unread: false,
+      circuitId: 'SPN-OFF-2281',
       plan: 'Office Pro 1Gbps',
+      planBadge: 'Office Pro 1G',
+      planBadgeColor: 'text-on-surface-variant',
+      tag: { label: 'Sales Lead', icon: '', bg: 'bg-surface-container text-on-surface' },
+      lastMessageTime: '4m ago',
       messages: [
-        { sender: 'customer', text: 'Hello SpaceNet team, our creative agency is adding 25 new workstations next Monday. We need an upgraded Wi-Fi 6 mesh setup and dedicated IP.', time: '09:15 AM' },
-        { sender: 'ai', text: 'Hi Sarah! That is fantastic news on your agency expansion. Our Office Pro 1G plan includes 2 static IPv4 addresses and supports our Enterprise Wi-Fi 6 Mesh Trio with zero downtime guarantee.<br><br>Would you like me to book our commercial solutions engineer for a site survey tomorrow?', time: '09:18 AM' },
-        { sender: 'customer', text: 'Yes, tomorrow morning between 10 AM and 12 PM works best for our operations director.', time: '09:22 AM' }
+        { id: 'm-srh-1', sender: 'customer', text: 'Hello SpaceNet team, our creative agency is adding 25 new workstations next Monday. We need an upgraded Wi-Fi 6 mesh setup and dedicated IP.', time: '09:15 AM' },
+        { id: 'm-srh-2', sender: 'ai', text: 'Hi Sarah! That is fantastic news on your agency expansion. Our Office Pro 1G plan includes 2 static IPv4 addresses and supports our Enterprise Wi-Fi 6 Mesh Trio with zero downtime guarantee.<br><br>Would you like me to book our commercial solutions engineer for a site survey tomorrow?', time: '09:18 AM' },
+        { id: 'm-srh-3', sender: 'customer', text: 'Yes, tomorrow morning between 10 AM and 12 PM works best for our operations director.', time: '09:22 AM' }
       ],
       suggestions: [
         "I have scheduled your commercial site survey for tomorrow at 10:30 AM with Lead Engineer Asif.",
@@ -1076,16 +1058,61 @@
         "Here is a direct WhatsApp link to our corporate account manager: +880 1819-009988."
       ]
     },
-    marcus: {
-      name: 'Marcus Vance',
-      id: '#1092',
-      channel: 'Web Chat',
-      circuit: 'SPN-VDS-1092',
-      plan: 'Home Lite 100M',
+    {
+      conversationId: 'CONV-IG-6210',
+      customerId: 'CUST-6210',
+      key: 'farhan',
+      displayId: '#6210',
+      customerName: 'Farhan Ahmed',
+      channel: 'instagram',
+      channelLabel: 'Instagram',
+      channelBadge: 'IG',
+      channelColor: 'bg-tertiary text-on-tertiary',
+      badgeColor: 'bg-tertiary-fixed text-on-tertiary-fixed',
+      type: 'dm',
+      status: 'ai_handling',
+      unread: false,
+      circuitId: 'SPN-GAM-6210',
+      plan: 'Fiber Gamer 300Mbps',
+      planBadge: 'Fiber Gamer 300M',
+      planBadgeColor: 'text-tertiary',
+      tag: { label: 'Package Inquiry', icon: 'sports_esports', bg: 'bg-tertiary-fixed text-on-tertiary-fixed font-semibold' },
+      lastMessageTime: '12m ago',
       messages: [
-        { sender: 'customer', text: 'Urgent! The PON light on my router just turned solid RED and internet stopped working completely.', time: '10:30 AM' },
-        { sender: 'ai', text: 'Hello Marcus! We have detected a physical fiber trunk cut in your district (North Downtown Substation trunk severed by municipal excavation).<br><br>Our emergency splicing crew Delta-4 is on site. Estimated restoration time is 40 minutes. An automated 24-hour SLA credit has already been issued to your account.', time: '10:31 AM' },
-        { sender: 'customer', text: 'Thank you for the quick notice! Will I get an SMS when the connection is back up?', time: '10:33 AM' }
+        { id: 'm-frh-1', sender: 'customer', text: 'Hey SpaceNet! Saw your Instagram story for the Fiber Gamer 300M package. Does it feature low-latency routing for competitive gaming, and is Banani covered?', time: '11:20 AM' },
+        { id: 'm-frh-2', sender: 'ai', text: 'Hello Farhan! Thanks for reaching out via Instagram. Yes, our Fiber Gamer 300Mbps package includes dedicated fastpath gaming routing with sub-5ms latency to regional gaming clusters.<br><br>Banani Block B & C are fully covered on our GPON fiber ring. It comes with a Wi-Fi 6 gaming ONT with priority QoS. Would you like to reserve an installation slot for this week?', time: '11:22 AM' },
+        { id: 'm-frh-3', sender: 'customer', text: 'Awesome! That latency is exactly what I need for Valorant. Do you have a slot open this Thursday afternoon?', time: '11:25 AM' }
+      ],
+      suggestions: [
+        "Yes, we have a Thursday 3:00 PM installation slot open in Banani. Shall I reserve it for you?",
+        "Sending the Fiber Gamer 300M spec sheet and monthly pricing breakdown (2,500 BDT/mo).",
+        "Would you like our technician to set up static IP configuration during installation?"
+      ]
+    },
+    {
+      conversationId: 'CONV-WEB-1092',
+      customerId: 'CUST-1092',
+      key: 'marcus',
+      displayId: '#1092',
+      customerName: 'Marcus Vance',
+      channel: 'web',
+      channelLabel: 'Website Chat',
+      channelBadge: 'WEB',
+      channelColor: 'bg-secondary-container text-on-secondary-container',
+      badgeColor: 'bg-secondary-container text-on-secondary-container',
+      type: 'dm',
+      status: 'ai_handling',
+      unread: false,
+      circuitId: 'SPN-VDS-1092',
+      plan: 'Home Lite 100M',
+      planBadge: 'Home Lite',
+      planBadgeColor: 'text-error',
+      tag: { label: 'LOS Red Alert', icon: '', bg: 'bg-error-container text-on-error-container font-semibold' },
+      lastMessageTime: '18m ago',
+      messages: [
+        { id: 'm-mrc-1', sender: 'customer', text: 'Urgent! The PON light on my router just turned solid RED and internet stopped working completely.', time: '10:30 AM' },
+        { id: 'm-mrc-2', sender: 'ai', text: 'Hello Marcus! We have detected a physical fiber trunk cut in your district (North Downtown Substation trunk severed by municipal excavation).<br><br>Our emergency splicing crew Delta-4 is on site. Estimated restoration time is 40 minutes. An automated 24-hour SLA credit has already been issued to your account.', time: '10:31 AM' },
+        { id: 'm-mrc-3', sender: 'customer', text: 'Thank you for the quick notice! Will I get an SMS when the connection is back up?', time: '10:33 AM' }
       ],
       suggestions: [
         "Yes, our automated outage system will send you an SMS alert the instant your ONT syncs back online.",
@@ -1093,16 +1120,30 @@
         "Your account #1092 has been credited $5 for this unforeseen fiber cut."
       ]
     },
-    elena: {
-      name: 'Elena Rostov',
-      id: '#7721',
-      channel: 'Telegram',
-      circuit: 'SPN-CORP-7721',
+    {
+      conversationId: 'CONV-TG-7721',
+      customerId: 'CUST-7721',
+      key: 'elena',
+      displayId: '#7721',
+      customerName: 'Elena Rostov',
+      channel: 'telegram',
+      channelLabel: 'Telegram',
+      channelBadge: 'TG',
+      channelColor: 'bg-primary-container text-on-primary',
+      badgeColor: 'bg-primary-container text-on-primary',
+      type: 'dm',
+      status: 'ai_handling',
+      unread: false,
+      circuitId: 'SPN-CORP-7721',
       plan: 'Fiber Gigabit',
+      planBadge: 'Fiber Gigabit',
+      planBadgeColor: 'text-on-surface-variant',
+      tag: { label: 'Billing Query', icon: '', bg: 'bg-surface-container text-on-surface' },
+      lastMessageTime: '1h ago',
       messages: [
-        { sender: 'customer', text: 'Good morning! Can we pay our monthly invoice via bKash Merchant or bank wire transfer this month?', time: '08:45 AM' },
-        { sender: 'ai', text: 'Good morning Elena! Absolutely. SpaceNet supports direct bKash Merchant payment via account 01700-SPACENET, or corporate EFT to our City Bank account.<br><br>Your current balance for October is 4,500 BDT with due date on Nov 5th.', time: '08:47 AM' },
-        { sender: 'customer', text: 'Great, just sent 4,500 BDT via bKash. TrxID is 9K38LA01Z.', time: '08:50 AM' }
+        { id: 'm-eln-1', sender: 'customer', text: 'Good morning! Can we pay our monthly invoice via bKash Merchant or bank wire transfer this month?', time: '08:45 AM' },
+        { id: 'm-eln-2', sender: 'ai', text: 'Good morning Elena! Absolutely. SpaceNet supports direct bKash Merchant payment via account 01700-SPACENET, or corporate EFT to our City Bank account.<br><br>Your current balance for October is 4,500 BDT with due date on Nov 5th.', time: '08:47 AM' },
+        { id: 'm-eln-3', sender: 'customer', text: 'Great, just sent 4,500 BDT via bKash. TrxID is 9K38LA01Z.', time: '08:50 AM' }
       ],
       suggestions: [
         "Payment received and verified! TrxID 9K38LA01Z logged. Your connection is active through Nov 30.",
@@ -1110,7 +1151,27 @@
         "Your account is set to auto-renew. Let us know if you need bandwidth throttling adjustments."
       ]
     }
-  };
+  ];
+
+  // Backward compatibility dictionary and resolver
+  const customerConversations = {};
+  function syncLegacyCustomerConversations() {
+    conversations.forEach(c => {
+      // populate legacy fields
+      c.name = c.customerName;
+      c.id = c.displayId;
+      c.circuit = c.circuitId;
+      customerConversations[c.conversationId] = c;
+      customerConversations[c.key] = c;
+      customerConversations[c.customerId] = c;
+    });
+  }
+  syncLegacyCustomerConversations();
+
+  function getConversation(idOrKey) {
+    if (!idOrKey) return null;
+    return conversations.find(c => c.conversationId === idOrKey || c.key === idOrKey || c.customerId === idOrKey) || customerConversations[idOrKey] || null;
+  }
 
   // 1. Navigation & View Switching
   function switchView(viewId) {
@@ -1152,6 +1213,10 @@
 
   // Handle URL hash changes & initial load
   window.addEventListener('DOMContentLoaded', () => {
+    syncLegacyCustomerConversations();
+    renderThreadList();
+    renderCustomerConversation(currentConversationId);
+
     const hash = window.location.hash.replace('#', '');
     const validViews = ['dashboard', 'unified-inbox', 'tickets', 'sales-leads', 'network-outages'];
     if (validViews.includes(hash)) {
@@ -1268,104 +1333,291 @@
     }
   }
 
-  function renderCustomerConversation(key) {
-    const cust = customerConversations[key];
+  // 4. Unified Inbox Engine (Module 01 - Task 1 & 2)
+  function renderEmptyChatState() {
+    const nameEl = document.getElementById('chat-customer-name');
+    if (nameEl) {
+      nameEl.textContent = 'No conversation selected';
+      if (nameEl.nextElementSibling) {
+        nameEl.nextElementSibling.textContent = '';
+      }
+    }
+
+    const avatarEl = document.getElementById('chat-customer-avatar');
+    if (avatarEl) {
+      avatarEl.textContent = '--';
+    }
+
+    const badge = document.getElementById('chat-channel-badge');
+    if (badge) {
+      badge.textContent = 'None';
+      badge.className = 'px-2 py-0.2 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm';
+    }
+
+    const circuitPlanEl = document.getElementById('chat-circuit-plan');
+    if (circuitPlanEl) {
+      circuitPlanEl.innerHTML = '<span class="text-outline">No conversation matches active filters</span>';
+    }
+
+    const stream = document.getElementById('chat-message-stream');
+    if (stream) {
+      stream.innerHTML = `
+        <div class="h-full flex flex-col items-center justify-center text-center text-on-surface-variant py-16 my-auto empty-chat-placeholder">
+          <span class="material-symbols-outlined text-[48px] text-outline mb-2">forum</span>
+          <p class="font-headline-sm text-body-md font-semibold text-on-surface">No Conversations Found</p>
+          <p class="font-body-sm text-label-sm text-outline mt-1">Select a visible thread or clear filters to view messages.</p>
+        </div>
+      `;
+    }
+
+    const chipContainer = document.querySelector('.ai-chip')?.parentElement;
+    if (chipContainer) {
+      chipContainer.innerHTML = '';
+    }
+  }
+
+  function handleInboxSearch(val) {
+    currentSearchQuery = val ? val.trim() : '';
+    renderThreadList();
+  }
+
+  function renderThreadList() {
+    const container = document.getElementById('inbox-thread-list');
+    if (!container) return;
+
+    const filtered = conversations.filter(conv => {
+      // 1. Channel filter
+      if (currentChannelFilter !== 'all') {
+        if (conv.channel !== currentChannelFilter) return false;
+      }
+      // 2. Search query filter
+      if (currentSearchQuery) {
+        const q = currentSearchQuery.toLowerCase();
+        const matchName = (conv.customerName || '').toLowerCase().includes(q);
+        const matchCustId = (conv.customerId || '').toLowerCase().includes(q) || (conv.displayId || '').toLowerCase().includes(q) || (conv.id || '').toLowerCase().includes(q);
+        const matchConvId = (conv.conversationId || '').toLowerCase().includes(q);
+        const matchCircuit = (conv.circuitId || '').toLowerCase().includes(q);
+        const matchPlan = (conv.plan || '').toLowerCase().includes(q);
+        const matchMessages = conv.messages && conv.messages.some(m => (m.text || '').toLowerCase().includes(q));
+        return matchName || matchCustId || matchConvId || matchCircuit || matchPlan || matchMessages;
+      }
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div class="p-space-xl flex flex-col items-center justify-center text-center text-on-surface-variant py-12">
+          <span class="material-symbols-outlined text-[32px] text-outline mb-2">search_off</span>
+          <p class="font-headline-sm text-body-md font-semibold text-on-surface">No conversations found</p>
+          <p class="font-body-sm text-label-sm text-outline mt-1">No chats match "${escapeHtml(currentSearchQuery || currentChannelFilter)}".</p>
+        </div>
+      `;
+      renderEmptyChatState();
+      return;
+    }
+
+    // If current conversation is not among visible filtered items, select first visible
+    const isCurrentInFiltered = filtered.some(conv => conv.conversationId === currentConversationId);
+    if (!isCurrentInFiltered) {
+      currentConversationId = filtered[0].conversationId;
+      currentCustomerKey = filtered[0].key;
+      renderCustomerConversation(currentConversationId);
+    } else {
+      // Ensure current conversation details are rendered if recovering from empty state
+      const stream = document.getElementById('chat-message-stream');
+      if (stream && stream.querySelector('.empty-chat-placeholder')) {
+        renderCustomerConversation(currentConversationId);
+      }
+    }
+
+    container.innerHTML = filtered.map(conv => {
+      const isActive = conv.conversationId === currentConversationId;
+      const activeClass = isActive ? 'bg-surface-container-high/60' : 'hover:bg-surface-container';
+
+      // Latest message preview text
+      let previewText = '';
+      if (conv.messages && conv.messages.length > 0) {
+        const lastMsg = conv.messages[conv.messages.length - 1];
+        previewText = (lastMsg.text || '').replace(/<[^>]*>?/gm, '');
+      }
+
+      const iconHtml = conv.tag && conv.tag.icon
+        ? `<span class="material-symbols-outlined text-[12px]">${escapeHtml(conv.tag.icon)}</span>`
+        : '';
+
+      return `
+        <div class="chat-thread-item p-space-md ${activeClass} cursor-pointer transition-colors flex flex-col gap-1"
+             data-conversation-id="${escapeHtml(conv.conversationId)}"
+             data-customer-id="${escapeHtml(conv.customerId)}"
+             data-channel="${escapeHtml(conv.channel)}"
+             onclick="selectConversation('${escapeHtml(conv.conversationId)}')">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-space-xs">
+              <span class="w-6 h-6 rounded-full ${conv.channelColor} flex items-center justify-center font-code-telemetry text-[11px] font-semibold">${escapeHtml(conv.channelBadge)}</span>
+              <span class="font-headline-sm text-body-md text-on-surface font-semibold">${escapeHtml(conv.customerName)}</span>
+              <span class="font-code-telemetry text-code-telemetry text-on-surface-variant font-medium">${escapeHtml(conv.displayId || conv.id)}</span>
+            </div>
+            <span class="font-code-telemetry text-[11px] text-outline">${escapeHtml(conv.lastMessageTime)}</span>
+          </div>
+          <p class="font-body-sm text-body-sm ${isActive ? 'text-on-surface' : 'text-on-surface-variant'} truncate">"${escapeHtml(previewText)}"</p>
+          <div class="flex items-center justify-between mt-1">
+            <span class="px-2 py-0.5 rounded-full ${conv.tag ? conv.tag.bg : 'bg-surface-container text-on-surface'} font-label-sm text-label-sm font-semibold flex items-center gap-1">
+              ${iconHtml} ${escapeHtml(conv.tag ? conv.tag.label : '')}
+            </span>
+            <span class="font-code-telemetry text-[11px] ${conv.planBadgeColor} font-semibold">${escapeHtml(conv.planBadge)}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function selectConversation(convId) {
+    const conv = getConversation(convId);
+    if (!conv) return;
+
+    currentConversationId = conv.conversationId;
+    currentCustomerKey = conv.key;
+
+    // Update active highlight on thread items
+    document.querySelectorAll('.chat-thread-item').forEach(el => {
+      const match = el.getAttribute('data-conversation-id') === conv.conversationId;
+      if (match) {
+        el.classList.add('bg-surface-container-high/60');
+        el.classList.remove('hover:bg-surface-container');
+        const p = el.querySelector('p');
+        if (p) {
+          p.classList.add('text-on-surface');
+          p.classList.remove('text-on-surface-variant');
+        }
+      } else {
+        el.classList.remove('bg-surface-container-high/60');
+        el.classList.add('hover:bg-surface-container');
+        const p = el.querySelector('p');
+        if (p) {
+          p.classList.remove('text-on-surface');
+          p.classList.add('text-on-surface-variant');
+        }
+      }
+    });
+
+    renderCustomerConversation(conv.conversationId);
+  }
+
+  // Backward compatibility alias for existing callers (e.g. goToChatFromTicket)
+  function selectCustomer(custKey, rowEl) {
+    selectConversation(custKey);
+  }
+
+  function renderCustomerConversation(idOrKey) {
+    const cust = getConversation(idOrKey) || customerConversations[idOrKey];
     if (!cust) return;
 
     // Update Header
-    document.getElementById('chat-customer-name').textContent = cust.name;
-    const subheader = document.querySelector('.lg\:col-span-8 header, #view-unified-inbox .lg\:col-span-8 span.font-code-telemetry');
     const nameEl = document.getElementById('chat-customer-name');
-    if (nameEl && nameEl.nextElementSibling) {
-      nameEl.nextElementSibling.textContent = cust.id;
+    if (nameEl) {
+      nameEl.textContent = cust.customerName || cust.name;
+      if (nameEl.nextElementSibling) {
+        nameEl.nextElementSibling.textContent = cust.displayId || cust.id;
+      }
     }
+
+    const avatarEl = document.getElementById('chat-customer-avatar');
+    if (avatarEl) {
+      avatarEl.textContent = (cust.customerName || cust.name).split(' ').map(n => n[0]).join('');
+    }
+
     const badge = document.getElementById('chat-channel-badge');
-    if (badge) badge.textContent = cust.channel;
+    if (badge) {
+      badge.textContent = cust.channelLabel || cust.channel;
+      badge.className = `px-2 py-0.2 rounded-full ${cust.badgeColor || 'bg-secondary-fixed text-on-secondary-fixed'} font-label-sm text-label-sm`;
+    }
+
+    const circuitPlanEl = document.getElementById('chat-circuit-plan');
+    if (circuitPlanEl) {
+      circuitPlanEl.innerHTML = `Circuit ID: <span class="font-code-telemetry">${escapeHtml(cust.circuitId || cust.circuit)}</span> &bull; Plan: ${escapeHtml(cust.plan)}`;
+    }
 
     // Render Messages Stream
     const stream = document.getElementById('chat-message-stream');
-    stream.innerHTML = '';
+    if (stream) {
+      stream.innerHTML = '';
+      const initials = (cust.customerName || cust.name).split(' ').map(n => n[0]).join('');
 
-    cust.messages.forEach(m => {
-      if (m.sender === 'customer') {
-        const div = document.createElement('div');
-        div.className = 'flex items-start gap-space-sm max-w-xl';
-        div.innerHTML = `
-          <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface font-semibold text-xs">${cust.name.split(' ').map(n=>n[0]).join('')}</div>
-          <div class="flex flex-col gap-1">
-            <div class="bg-surface-container-lowest p-space-md rounded-2xl rounded-tl-none shadow-xs font-body-sm text-body-sm text-on-surface">
-              ${m.text}
+      cust.messages.forEach(m => {
+        if (m.sender === 'customer') {
+          const div = document.createElement('div');
+          div.className = 'flex items-start gap-space-sm max-w-xl';
+          div.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface font-semibold text-xs">${escapeHtml(initials)}</div>
+            <div class="flex flex-col gap-1">
+              <div class="bg-surface-container-lowest p-space-md rounded-2xl rounded-tl-none shadow-xs font-body-sm text-body-sm text-on-surface">
+                ${m.text}
+              </div>
+              <span class="font-code-telemetry text-[10px] text-outline ml-2">${escapeHtml(m.time || '')} &bull; Received</span>
             </div>
-            <span class="font-code-telemetry text-[10px] text-outline ml-2">${m.time} &bull; Received</span>
-          </div>
-        `;
-        stream.appendChild(div);
-      } else if (m.sender === 'ai') {
-        const div = document.createElement('div');
-        div.className = 'flex items-start gap-space-sm max-w-xl self-end flex-row-reverse';
-        div.innerHTML = `
-          <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-semibold text-xs">
-            <span class="material-symbols-outlined text-[16px]">smart_toy</span>
-          </div>
-          <div class="flex flex-col gap-1 items-end">
-            <div class="bg-primary text-on-primary p-space-md rounded-2xl rounded-tr-none shadow-xs font-body-sm text-body-sm">
-              ${m.text}
+          `;
+          stream.appendChild(div);
+        } else if (m.sender === 'ai') {
+          const div = document.createElement('div');
+          div.className = 'flex items-start gap-space-sm max-w-xl self-end flex-row-reverse';
+          div.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-semibold text-xs">
+              <span class="material-symbols-outlined text-[16px]">smart_toy</span>
             </div>
-            <span class="font-code-telemetry text-[10px] text-outline mr-2">${m.time} &bull; AI Agent</span>
-          </div>
-        `;
-        stream.appendChild(div);
-      } else if (m.sender === 'telemetry') {
-        const div = document.createElement('div');
-        div.className = 'self-center w-full max-w-md my-1 bg-surface-container-low p-space-md rounded-xl shadow-xs';
-        div.innerHTML = `
-          <div class="flex items-center justify-between mb-2">
-            <div class="flex items-center gap-1.5 text-tertiary font-headline-sm text-label-md font-semibold">
-              <span class="material-symbols-outlined text-[16px]">csv</span>
-              <span>Copilot Automated Optical Inspection</span>
+            <div class="flex flex-col gap-1 items-end">
+              <div class="bg-primary text-on-primary p-space-md rounded-2xl rounded-tr-none shadow-xs font-body-sm text-body-sm">
+                ${m.text}
+              </div>
+              <span class="font-code-telemetry text-[10px] text-outline mr-2">${escapeHtml(m.time || '')} &bull; AI Agent</span>
             </div>
-            <span class="px-2 py-0.2 rounded bg-surface-container font-code-telemetry text-[10px] text-secondary font-semibold">PASS</span>
-          </div>
-          <div class="grid grid-cols-3 gap-2 font-code-telemetry text-center">
-            <div class="bg-surface-container-lowest p-1.5 rounded">
-              <span class="text-[10px] text-on-surface-variant block">Optical Rx</span>
-              <span class="text-body-sm font-semibold text-secondary">${m.opticalRx}</span>
+          `;
+          stream.appendChild(div);
+        } else if (m.sender === 'telemetry') {
+          const div = document.createElement('div');
+          div.className = 'self-center w-full max-w-md my-1 bg-surface-container-low p-space-md rounded-xl shadow-xs';
+          div.innerHTML = `
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-1.5 text-tertiary font-headline-sm text-label-md font-semibold">
+                <span class="material-symbols-outlined text-[16px]">csv</span>
+                <span>Copilot Automated Optical Inspection</span>
+              </div>
+              <span class="px-2 py-0.2 rounded bg-surface-container font-code-telemetry text-[10px] text-secondary font-semibold">PASS</span>
             </div>
-            <div class="bg-surface-container-lowest p-1.5 rounded">
-              <span class="text-[10px] text-on-surface-variant block">ONT Ping</span>
-              <span class="text-body-sm font-semibold text-on-surface">${m.ping}</span>
+            <div class="grid grid-cols-3 gap-2 font-code-telemetry text-center">
+              <div class="bg-surface-container-lowest p-1.5 rounded">
+                <span class="text-[10px] text-on-surface-variant block">Optical Rx</span>
+                <span class="text-body-sm font-semibold text-secondary">${escapeHtml(m.opticalRx || '')}</span>
+              </div>
+              <div class="bg-surface-container-lowest p-1.5 rounded">
+                <span class="text-[10px] text-on-surface-variant block">ONT Ping</span>
+                <span class="text-body-sm font-semibold text-on-surface">${escapeHtml(m.ping || '')}</span>
+              </div>
+              <div class="bg-surface-container-lowest p-1.5 rounded">
+                <span class="text-[10px] text-on-surface-variant block">Pkt Loss</span>
+                <span class="text-body-sm font-semibold text-secondary">${escapeHtml(m.loss || '')}</span>
+              </div>
             </div>
-            <div class="bg-surface-container-lowest p-1.5 rounded">
-              <span class="text-[10px] text-on-surface-variant block">Pkt Loss</span>
-              <span class="text-body-sm font-semibold text-secondary">${m.loss}</span>
-            </div>
-          </div>
-          <p class="font-body-sm text-[11px] text-on-surface-variant mt-2 text-center">${m.text}</p>
-        `;
-        stream.appendChild(div);
-      }
-    });
+            <p class="font-body-sm text-[11px] text-on-surface-variant mt-2 text-center">${escapeHtml(m.text || '')}</p>
+          `;
+          stream.appendChild(div);
+        }
+      });
+
+      stream.scrollTop = stream.scrollHeight;
+    }
 
     // Render suggestions
     const chipContainer = document.querySelector('.ai-chip')?.parentElement;
     if (chipContainer && cust.suggestions) {
-      chipContainer.innerHTML = cust.suggestions.map(s => `
-        <button class="ai-chip text-left whitespace-nowrap px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-body-sm text-label-md transition-all shadow-xs flex items-center gap-1.5 cursor-pointer active:scale-95" onclick="insertAiReply(${JSON.stringify(s)})">
-          <span class="text-tertiary">✨</span> "${s.slice(0, 36)}..."
-        </button>
-      `).join('');
+      chipContainer.innerHTML = '';
+      cust.suggestions.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = 'ai-chip text-left whitespace-nowrap px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-body-sm text-label-md transition-all shadow-xs flex items-center gap-1.5 cursor-pointer active:scale-95';
+        btn.innerHTML = `<span class="text-tertiary">✨</span> "${escapeHtml(s.slice(0, 36))}..."`;
+        btn.onclick = () => insertAiReply(s);
+        chipContainer.appendChild(btn);
+      });
     }
-
-    stream.scrollTop = stream.scrollHeight;
-  }
-
-  function selectCustomer(custKey, rowEl) {
-    currentCustomerKey = custKey;
-    document.querySelectorAll('.chat-thread-item').forEach(el => {
-      el.classList.remove('bg-surface-container-high/60');
-    });
-    if (rowEl) rowEl.classList.add('bg-surface-container-high/60');
-    renderCustomerConversation(custKey);
   }
 
   function sendChatMessage() {
@@ -1373,76 +1625,86 @@
     const text = input.value.trim();
     if (!text) return;
 
+    // Check if chat pane is currently in empty placeholder state
     const stream = document.getElementById('chat-message-stream');
-    const msgDiv = document.createElement('div');
-    msgDiv.className = 'flex items-start gap-space-sm max-w-xl self-end flex-row-reverse';
-    msgDiv.innerHTML = `
-      <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-semibold text-xs">
-        <span class="material-symbols-outlined text-[16px]">send</span>
-      </div>
-      <div class="flex flex-col gap-1 items-end">
-        <div class="bg-primary text-on-primary p-space-md rounded-2xl rounded-tr-none shadow-xs font-body-sm text-body-sm">
-          ${text}
-        </div>
-        <span class="font-code-telemetry text-[10px] text-outline mr-2">Just now &bull; Agent Dispatched</span>
-      </div>
-    `;
-    stream.appendChild(msgDiv);
+    if (stream && stream.querySelector('.empty-chat-placeholder')) {
+      showToast('No Active Chat', 'Please select or clear filters to activate a conversation.');
+      return;
+    }
+
+    const conv = getConversation(currentConversationId) || customerConversations[currentCustomerKey];
+    if (!conv) return;
+
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    // Append outbound message to conversation history
+    conv.messages.push({
+      id: 'msg-' + Date.now(),
+      sender: 'ai',
+      text: text,
+      time: timeStr
+    });
+    conv.lastMessageTime = 'Just now';
+
     input.value = '';
-    stream.scrollTop = stream.scrollHeight;
-    showToast('Message Dispatched', `Delivered to ${customerConversations[currentCustomerKey].name} via ${customerConversations[currentCustomerKey].channel}`);
+    renderCustomerConversation(conv.conversationId);
+    renderThreadList();
+
+    showToast('Message Dispatched', `Delivered to ${conv.customerName || conv.name} via ${conv.channelLabel || conv.channel}`);
 
     // Simulated Smart Customer / AI Follow-up
     setTimeout(() => {
-      const replyDiv = document.createElement('div');
-      replyDiv.className = 'flex items-start gap-space-sm max-w-xl';
-      
       let replyText = "Thank you! I just tested and everything is running perfectly now. Speed test hit 498 Mbps!";
-      if (text.toLowerCase().includes('site survey') || text.toLowerCase().includes('engineer')) {
+      const lower = text.toLowerCase();
+      if (lower.includes('site survey') || lower.includes('engineer')) {
         replyText = "Confirmed! Our operations team has noted the engineer visit. Thanks for the swift support!";
-      } else if (text.toLowerCase().includes('payment') || text.toLowerCase().includes('bkash')) {
+      } else if (lower.includes('payment') || lower.includes('bkash')) {
         replyText = "Payment acknowledged! Money receipt has been received on WhatsApp. Thank you SpaceNet!";
+      } else if (lower.includes('thursday') || lower.includes('installation') || lower.includes('reserve') || lower.includes('gamer') || lower.includes('3:00') || lower.includes('slot')) {
+        replyText = "Thursday 3:00 PM works great! I have my NID copy ready for the connection form. See you then!";
       }
 
-      replyDiv.innerHTML = `
-        <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface font-semibold text-xs">
-          ${customerConversations[currentCustomerKey].name.split(' ').map(n=>n[0]).join('')}
-        </div>
-        <div class="flex flex-col gap-1">
-          <div class="bg-surface-container-lowest p-space-md rounded-2xl rounded-tl-none shadow-xs font-body-sm text-body-sm text-on-surface">
-            ${replyText}
-          </div>
-          <span class="font-code-telemetry text-[10px] text-outline ml-2">Just now &bull; Customer Reply</span>
-        </div>
-      `;
-      stream.appendChild(replyDiv);
-      stream.scrollTop = stream.scrollHeight;
+      conv.messages.push({
+        id: 'msg-' + (Date.now() + 1),
+        sender: 'customer',
+        text: replyText,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      });
+      conv.lastMessageTime = 'Just now';
+
+      if (currentConversationId === conv.conversationId) {
+        renderCustomerConversation(conv.conversationId);
+      }
+      renderThreadList();
     }, 1000);
   }
 
   function filterInbox(ch, btn) {
-    document.querySelectorAll('.inbox-filter-pill').forEach(b => {
-      b.className = 'inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm';
-    });
-    btn.className = 'inbox-filter-pill px-2.5 py-1 rounded bg-primary text-on-primary font-semibold font-label-sm text-label-sm';
+    currentChannelFilter = ch;
 
-    const items = document.querySelectorAll('.chat-thread-item');
-    items.forEach(item => {
-      if (ch === 'all') {
-        item.style.display = '';
-      } else if (ch === 'whatsapp' && item.innerText.includes('Alex')) {
-        item.style.display = '';
-      } else if (ch === 'facebook' && item.innerText.includes('Sarah')) {
-        item.style.display = '';
-      } else if (ch === 'web' && item.innerText.includes('Marcus')) {
-        item.style.display = '';
-      } else if (ch === 'telegram' && item.innerText.includes('Elena')) {
-        item.style.display = '';
-      } else {
-        item.style.display = 'none';
-      }
+    // Auto-discover button element if not passed explicitly
+    if (!btn) {
+      btn = document.querySelector(`.inbox-filter-pill[data-channel="${ch}"]`);
+    }
+
+    document.querySelectorAll('.inbox-filter-pill').forEach(b => {
+      b.className = 'inbox-filter-pill px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap font-label-sm text-label-sm transition-colors';
     });
-    showToast('Channel Filtered', 'Showing conversations for: ' + ch.toUpperCase());
+    if (btn) {
+      btn.className = 'inbox-filter-pill px-2.5 py-1 rounded bg-primary text-on-primary font-semibold flex items-center gap-1 whitespace-nowrap font-label-sm text-label-sm transition-colors';
+    }
+
+    renderThreadList();
+    const labelMap = {
+      all: 'All Channels',
+      whatsapp: 'WhatsApp',
+      facebook: 'Facebook',
+      instagram: 'Instagram',
+      telegram: 'Telegram',
+      web: 'Website Chat'
+    };
+    showToast('Channel Filtered', 'Showing conversations for: ' + (labelMap[ch] || ch.toUpperCase()));
   }
 
   // 5. Tickets Management & Details
@@ -1485,6 +1747,7 @@
 
   function goToChatFromTicket() {
     closeTicketModal();
+    filterInbox('all');
     switchView('unified-inbox');
     if (currentModalTicket && currentModalTicket.cust.includes('Alex')) {
       selectCustomer('alex');
