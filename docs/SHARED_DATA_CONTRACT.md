@@ -1,7 +1,7 @@
 # SpaceNet AI CRM — Shared Data Contract & Architecture Standard
 
-**Document Version:** 1.2.0
-**Effective Date:** 2026-10-30
+**Document Version:** 1.3.0
+**Effective Date:** 2026-10-31
 **Authors & Maintainers:** Rohan (Customer-Facing & Support Lead) & Adnan (Operations & Admin Lead)
 **Repository:** `https://github.com/lEVI2889/spacenet`
 **Current Phase:** Frontend-Only Interactive CRM Demonstration
@@ -16,7 +16,16 @@ SpaceNet is an intelligent Customer Relationship Management (CRM) and Network Op
 * **Stack:** Vanilla HTML5, Modern ECMAScript (ES6+), styled via Tailwind CSS (MD3-adapted token set).
 * **Build System:** Bundled and validated using Vite (`vite build`, output to `dist/`).
 * **Runtime State:** Single-page reactive state engine. All state collections reside in-memory within client JavaScript runtime memory (`index.html`).
-* **Backend Status:** **No production backend or live network APIs exist.** All network telemetry, customer queries, AI copilot responses, social feeds, simulated voice notes, and diagnostic results are simulated locally in the browser without external network calls or cloud dependencies.
+* **Backend Status:** **No production backend or live network APIs exist.** All network telemetry, customer queries, AI copilot responses, social feeds, simulated voice notes, customer verification lookups, support tickets, and diagnostic results are simulated locally in the browser without external network calls or cloud dependencies.
+
+### 1.2 Specification Version History
+
+| Version | Date | Author | Core Additions & Scope |
+| :--- | :--- | :--- | :--- |
+| **v1.0.0** | 2026-10-30 | Rohan | Initial Shared Data Contract & Identifier Conventions (Module 01 Tasks 1–2). |
+| **v1.1.0** | 2026-10-30 | Rohan | Omnichannel Expansion, Social Comments, Takeover & Private Notes (Module 01 Tasks 3–5). |
+| **v1.2.0** | 2026-10-30 | Rohan | AI Conversational Intelligence, Multilingual Knowledge Base, Comment-to-DM, Voice Simulation (Module 02). |
+| **v1.3.0** | 2026-10-31 | Rohan | Support Tickets & Customer Registry Contract, 7 Lifecycle States, Category Diagnostics, SLA Overdue, CSAT Ratings & Parallel Development Integration Hooks (Module 03). |
 
 ---
 
@@ -28,11 +37,11 @@ To guarantee seamless navigation and referential integrity across modules develo
 
 | Entity | Canonical Format | UI Display Alias | Example | Implemented In |
 | :--- | :--- | :--- | :--- | :--- |
-| **Customer** | `CUST-<ID>` | `#<ID>` | `CUST-8832` (`#8832`), `CUST-5120` (`#5120`) | Module 01 (Inbox), Module 03 (Tickets) |
+| **Registered Customer** | `CUST-<ID>` | `#<ID>` | `CUST-8832` (`#8832`), `CUST-4410` (`#4410`) | Module 01 (Inbox), Module 03 (`SPACE_NET_CUSTOMERS`) |
 | **Conversation** | `CONV-<CHANNEL_KEY>-<ID>` | N/A | `CONV-WA-8832`, `CONV-FB-5120` | Module 01 (Tasks 1–5) |
 | **Linked Private DM** | `CONV-<CHANNEL_KEY>-<ID>-DM` | N/A | `CONV-FB-5120-DM` | Module 02 (Feature Group 3) |
-| **Circuit / Connection** | `SPN-<TYPE>-<ID>` | `SPN-<TYPE>-<ID>` | `SPN-FBR-0941`, `SPN-GAM-3340` | Module 01 (Inbox), Module 03 (Tickets) |
-| **Support Ticket** | `TKT-<ID>` | `#TKT-<ID>` | `TKT-1042` (`#TKT-1042`) | Module 03 (Tickets Desk) |
+| **Circuit / Connection** | `SPN-<TYPE>-<ID>` | `SPN-<TYPE>-<ID>` | `SPN-FBR-0941`, `SPN-DED-4410` | Module 01 (Inbox), Module 03 (Tickets) |
+| **Support Ticket** | `TKT-<ID>` | `#TKT-<ID>` | `TKT-9042` (`#TKT-9042`) | Module 03 (Tickets Desk) |
 | **Standard Message** | `m-<CUST_ABBR>-<NUM>` or `msg-<TIMESTAMP>` | N/A | `m-alx-1`, `msg-1730301234` | Module 01 (Tasks 1–5) |
 | **Voice Note Message** | `vmsg-<CUST_ABBR>-<NUM>` | N/A | `vmsg-alx-1`, `vmsg-frh-1` | Module 02 (Feature Group 6) |
 | **System Event Log** | `sys-<TIMESTAMP>` | N/A | `sys-1730302345` | Module 01 (Task 4) |
@@ -43,15 +52,15 @@ To guarantee seamless navigation and referential integrity across modules develo
 
 | Entity | Current Format in DOM | Planned Canonical Format | Notes |
 | :--- | :--- | :--- | :--- |
-| **Sales Leads** | Stored in Kanban cards without primary key | `LEAD-<NUM>` (e.g. `LEAD-3012`) | Module 06 Kanban cards currently use customer names and companies directly. |
-| **Network Outages** | Static banner & modal text | `OUT-<ZONE>-<NUM>` (e.g. `OUT-DAC-0104`) | Module 05/07 severity incident alert banners. |
+| **Sales Leads** | Stored in Kanban cards without primary key | `LEAD-<NUM>` (e.g. `LEAD-3012`) | Module 06 (Sales & Leads) |
+| **Network Outages** | Static banner & modal text | `OUT-<ZONE>-<NUM>` (e.g. `OUT-DAC-0104`) | Module 08 (Network Outages / NOC) severity alert banners. |
 
 ### 2.3 Proposed Identifiers — Requires Adnan's Review & Agreement
 
 | Entity | Proposed Format | Description | Target Module |
 | :--- | :--- | :--- | :--- |
-| **Technician Task** | `TASK-TECH-<NUM>` | Field dispatch assignment ID | Module 08 (Field Dispatch) |
-| **Invoice / Billing** | `INV-<NUM>` | Billing statement and charge record ID | Module 09 (Billing & Accounts) |
+| **Invoice / Billing** | `INV-<NUM>` | Billing statement and charge record ID | Module 07 (Billing & Plans) |
+| **Technician Task** | `TASK-TECH-<NUM>` | Field dispatch assignment ID | Module 09 (Technician & Field Operations) |
 | **ONT Hardware MAC** | `00:E0:4C:<HEX>` | Physical hardware address identifier | Telemetry & Diagnostics |
 
 ---
@@ -217,9 +226,9 @@ The knowledge base comprises 9 structured ISP topics:
 Every customer inquiry is processed by `classifyCustomerIntent(text, preferredLang)`, returning a standardized classification payload:
 ```typescript
 interface IntentClassificationResult {
-  intent: string;                              // e.g. "packages_pricing" | "coverage_availability"
+  intent: string;                              // e.g. "packages_pricing" | "coverage_availability" | "technical_problem"
   confidence: number;                          // Decimal score (0.00 – 0.99)
-  route: 'ticket_suggest' | 'sales_handoff' | 'billing_guidance' | 'faq' | 'noc_escalate';
+  route: 'ticket_suggest' | 'sales_handoff' | 'billing_guidance' | 'faq' | 'human_escalation';
   isMultiIntent: boolean;                      // True when >= 2 distinct strong intents are detected
   intents: string[];                           // Array of matched category keys
   entities: {
@@ -247,7 +256,169 @@ interface IntentClassificationResult {
 
 ---
 
-## 6. Customer Message Simulator (`#demo-customer-simulator-strip`)
+## 6. Support Tickets & Customer Registry Contract (Module 03)
+
+Module 03 establishes the formal Support Desk architecture, connecting customer conversations and technical diagnostics with unified ticketing, verification, guided troubleshooting, and lifecycle management.
+
+### 6.1 Shared Subscriber Registry (`SPACE_NET_CUSTOMERS`)
+The canonical in-memory subscriber registry provides verified customer records across all modules:
+```typescript
+interface SpaceNetCustomer {
+  customerId: string;                         // Canonical ID (e.g. 'CUST-8832')
+  displayId: string;                          // UI Display Alias (e.g. '#8832')
+  name: string;                               // Full subscriber or corporate entity name
+  phone: string;                              // Phone number (e.g. '+880 1711-098832')
+  email: string;                              // Contact email address
+  circuitId: string;                          // Active circuit reference (e.g. 'SPN-FBR-0941')
+  plan: string;                               // Subscribed bandwidth plan (e.g. 'Fiber 500M')
+  connectionType: string;                     // Connection technology (e.g. 'Fiber 1Gbps', 'Dedicated Leased Line')
+  address: string;                            // Service installation address
+  zone: string;                               // Service zone (e.g. 'Dhanmondi', 'Gulshan', 'Banani')
+  activeConversationId: string | null;        // Originating conversation thread link if present
+}
+```
+
+* **Customer Verification Helper (`verifyCustomer(query)`):**
+  Accepts query string matching customer ID (`CUST-8832`), display ID (`#8832`), partial/full name (`Alex Rivera`), phone digits (`01711098832`), or circuit ID (`SPN-FBR-0941`). Returns `{ verified: true, customer }` or `{ verified: false, error }`.
+* **Fictional Verification Fallback:** Unregistered lookups are rejected with explicit guidance: *"Customer record not found. Fictional verification fallback: Please verify customer phone or ID, or select from registered subscribers."*
+
+### 6.2 Canonical Support Ticket Schema (`SpaceNetTicket`)
+Every ticket in `tickets` adheres strictly to the normalized structure below:
+```typescript
+interface SpaceNetTicket {
+  // Canonical Identifiers
+  ticketId: string;                           // Format: 'TKT-<NUM>' (e.g. 'TKT-9042')
+  displayId: string;                          // Format: '#TKT-<NUM>' (e.g. '#TKT-9042')
+  customerId: string;                         // Format: 'CUST-<ID>' (e.g. 'CUST-8832')
+  customerName: string;                       // e.g. 'Alex Rivera'
+  circuitId: string;                          // Format: 'SPN-<TYPE>-<ID>' (e.g. 'SPN-FBR-0941')
+  connectionType: string;                     // e.g. 'Fiber 1Gbps', 'Fiber GPON', 'Dedicated Leased Line'
+
+  // Categorization & Priority
+  category: 'NO_INTERNET' | 'SLOW_INTERNET' | 'ROUTER_WIFI' | 'BILLING' | 'GENERAL';
+  categoryLabel: string;                      // Display label (e.g. 'No Internet', 'Slow Speed')
+  priority: 'NORMAL' | 'HIGH' | 'URGENT';
+
+  // Lifecycle State
+  status: 'OPEN' | 'IN_PROGRESS' | 'PENDING_CUSTOMER' | 'ESCALATED' | 'RESOLVED' | 'CLOSED' | 'REOPENED';
+  statusLabel: string;                        // e.g. 'Open', 'Investigating', 'Awaiting Customer', 'Resolved', 'Closed', 'Reopened'
+
+  // Issue Content
+  subject: string;                            // Short incident headline
+  description: string;                        // Technical symptom description
+  handlingAgent: string;                      // e.g. 'AI Copilot' | 'Tier III NOC Engineering' | 'Agent: Rachel P.'
+  assignedStaff: string;                      // Assigned internal technician or engineer
+
+  // Omnichannel Chat Linkage
+  relatedConversationId: string | null;       // Link to originating conversation (e.g. 'CONV-WA-8832')
+  sourceChannel: string;                      // e.g. 'whatsapp' | 'facebook' | 'web' | 'portal' | 'desk'
+
+  // SLA & Timestamps
+  createdAt: string;                          // ISO 8601 creation timestamp
+  updatedAt: string;                          // ISO 8601 last modified timestamp
+  slaDueHours: number;                        // SLA target duration: 4 (Urgent), 8 (High), 24 (Normal)
+  resolvedAt: string | null;                  // ISO 8601 timestamp when marked RESOLVED
+  closedAt: string | null;                    // ISO 8601 timestamp when confirmed CLOSED
+  reopenedAt: string | null;                  // ISO 8601 timestamp when REOPENED
+
+  // Guided Troubleshooting Steps
+  guidedSteps: Array<{
+    id: string;                               // Step identifier (e.g. 'step-1')
+    label: string;                            // Technical verification instruction
+    completed: boolean;                       // Completion status
+    completedAt: string | null;               // Completion timestamp / relative label
+  }>;
+
+  // Resolution & Customer Feedback
+  resolutionSummary: string | null;           // Remediation notes and verification proof
+  feedback: {
+    rating: number;                           // 1 - 5 star score
+    comment: string;                          // Customer review text
+    submittedAt: string;                      // Submission ISO 8601 timestamp
+  } | null;
+
+  // Chronological Audit Log
+  history: Array<{
+    timestamp: string;                        // ISO 8601 timestamp
+    timeStr: string;                          // Human-readable relative string
+    author: string;                           // Action initiator
+    action: 'CREATED' | 'STATUS_CHANGE' | 'ESCALATED' | 'RESOLVED' | 'CLOSED' | 'REOPENED' | 'DIAGNOSTICS_RUN' | 'DIAGNOSTIC_EXEC' | 'GUIDANCE_STEP' | 'FEEDBACK_RECEIVED' | 'VIEWED';
+    notes: string;                            // Action description / system note
+  }>;
+}
+```
+
+### 6.3 Standard Categories, Priorities & SLA Rules
+* **Issue Categories (`TICKET_CATEGORIES`):**
+  1. `NO_INTERNET`: Default recommended priority `URGENT` (4-hour SLA window).
+  2. `SLOW_INTERNET`: Default recommended priority `HIGH` (8-hour SLA window).
+  3. `ROUTER_WIFI`: Default recommended priority `NORMAL` (24-hour SLA window).
+  4. `BILLING`: Default recommended priority `NORMAL` (24-hour SLA window).
+  5. `GENERAL`: Default recommended priority `NORMAL` (24-hour SLA window).
+* **Priorities (`TICKET_PRIORITIES`):**
+  - `URGENT`: 4h target, error pulsating indicator.
+  - `HIGH`: 8h target, amber warning indicator.
+  - `NORMAL`: 24h target, standard indicator.
+* **Auto-Recommendation:** Selecting or changing a category auto-populates the recommended priority, while allowing manual staff override.
+
+### 6.4 Validated Lifecycle State Machine
+```
+ [ OPEN ] ───────► [ IN_PROGRESS ] ───────► [ PENDING_CUSTOMER ]
+     │                    │                          │
+     │                    ▼                          ▼
+     └───────────────► [ ESCALATED ] ────────► [ RESOLVED ] ──────► [ CLOSED ]
+                                                     ▲                 │
+                                                     └─ [ REOPENED ] ◄─┘
+```
+* **Validation Guards:**
+  - Transition directly to `CLOSED` is strictly prohibited unless `status === 'RESOLVED'`.
+  - Transition to `REOPENED` is strictly prohibited unless previous status was `RESOLVED` or `CLOSED`.
+  - Re-transitioning to the current status returns `{ success: false, error }`.
+  - Every valid transition updates `updatedAt`, sets the corresponding timestamp (`resolvedAt`, `closedAt`, or `reopenedAt`), and appends a timestamped audit entry to `history`.
+
+### 6.5 Category Guided Support & Simulated Hardware Diagnostics
+* **Checklists (`getGuidedStepsForCategory`):** Dynamically provides 4 technical troubleshooting steps tailored to the issue category. Staff can check off items (`toggleGuidedStep`), updating step completion and logging audit events.
+* **Simulated Diagnostic Triggers (`runSimulatedDiagnostic`):**
+  - Remote ONT Reboot: Dispatches simulated signal, confirms ONT renegotiation in 14.2s.
+  - Optical Power Sweep: Evaluates GPON Rx dBm (nominal range -8 dBm to -27 dBm, returns -19.4 dBm).
+  - Throughput Speed Test: Confirms line speed (942 Mbps down / 918 Mbps up, 3ms core latency).
+* **Sync to Resolution (`syncGuidedStepsToResolution`):** Compiles all completed troubleshooting checklist items into a structured resolution summary for one-click documentation.
+
+### 6.6 Chat Integration & Copilot Actionable Prefill
+* **Actionable "Suggest Ticket":** When Module 02 Copilot detects a technical problem, clicking `"Suggest Ticket"` (`handleRoutingAction`) opens `#create-ticket-modal` with prefilled subscriber details:
+  - `customerId`: e.g. `CUST-8832`
+  - `customerName`: e.g. `Alex Rivera`
+  - `circuitId`: e.g. `SPN-FBR-0941`
+  - `conversationId`: e.g. `CONV-WA-8832`
+  - `sourceChannel`: e.g. `whatsapp`
+  - `subject` & `description`: derived from latest customer inquiry.
+* **Explicit Creation Confirmation:** Pre-filling does not write to in-memory state until staff explicitly confirms creation via `submitCreateTicket()`.
+* **Bi-Directional Navigation (`goToChatFromTicket`):** Ticket detail view provides an `[Open Chat]` button that auto-resets inbox filters to `'all'`, switches to Unified Inbox, and selects the exact customer conversation thread.
+
+### 6.7 Duplicate Detection & SLA Overdue Tracking
+* **Duplicate Incident Detection (`checkDuplicateTicket`):** Identifies if a customer already has an active ticket in the same category in any unresolved state (`OPEN`, `IN_PROGRESS`, `PENDING_CUSTOMER`, `ESCALATED`, `REOPENED`). Displays an alert modal offering `[View Existing Ticket]` or `[Proceed as New Incident]`.
+* **SLA Overdue Tracking (`isTicketOverdue`):** Compares `(Date.now() - createdAt)` against `slaDueHours * 3600 * 1000`. Overdue tickets display an animated `⚠️ OVERDUE by X hrs` badge. Tickets in `RESOLVED` or `CLOSED` state are excluded.
+* **Simulated Customer Status Inquiry (`simulateCustomerStatusInquiry`):** Supports looking up status by Ticket ID or Customer ID, returning structured customer, state, assigned agent, and SLA timing information.
+
+### 6.8 Resolution, Reopening & CSAT Ratings
+* **Resolution Documentation:** Captures resolution summary, sets status to `RESOLVED`, records `resolvedAt`.
+* **Simulated Customer Confirmation & Closure:** Allows simulating subscriber confirmation of restored service to transition tickets to `CLOSED` and record `closedAt`.
+* **Reopening:** If an issue recurs, staff can transition status to `REOPENED` while preserving all prior resolution summaries, customer ratings, and complete audit history.
+* **CSAT Rating:** 1–5 star rating simulator with optional feedback comment. Renders star ratings (`★★★★★`) and feedback in the ticket workspace.
+
+### 6.9 Structural Boundary Specification
+To avoid integration ambiguity across team members:
+1. **Implemented Stable Fields:** In-memory properties on `SPACE_NET_CUSTOMERS` and `tickets` (`ticketId`, `customerId`, `circuitId`, `category`, `priority`, `status`, `history`, `guidedSteps`, `feedback`, `resolutionSummary`, `relatedConversationId`).
+2. **Internal Implementation Details:** DOM IDs (`#ticket-table-body`, `#td-modal-guided-steps`), Tailwind utility classes, modal animation timers (`scale-95` to `scale-100`).
+3. **Future Proposed Integration Hooks:**
+   - **Module 06 (Sales & Leads):** Lead-to-Ticket or Onboarding provisioning ticket creation.
+   - **Module 07 (Billing & Plans):** Linkage of `BILLING` dispute tickets (e.g. `TKT-9038` Vanguard Logistics) to canonical invoices (`INV-<NUM>`).
+   - **Module 08 (Network Outages / NOC):** Outage incident linkage (`OUT-<ZONE>-<NUM>`) to correlate or mass-update `NO_INTERNET` tickets during regional fiber cuts.
+   - **Module 09 (Technician & Field Operations):** Escalated tickets (`status === 'ESCALATED'`, e.g. `TKT-9031` Marcus Vance physical line cut) providing source parameters for field technician work orders (`TASK-TECH-<NUM>`).
+
+---
+
+## 7. Customer Message Simulator (`#demo-customer-simulator-strip`)
 
 To facilitate evaluation and QA testing without live messaging networks, Module 02 provides an interactive simulation toolbar:
 * **UI Location:** Rendered directly above `#chat-message-stream`.
@@ -260,7 +431,7 @@ To facilitate evaluation and QA testing without live messaging networks, Module 
 
 ---
 
-## 7. Demo-Only Commercial & Technical Safeguards
+## 8. Demo-Only Commercial & Technical Safeguards
 
 > [!IMPORTANT]
 > **Fictional Data & Demonstration Boundaries:**
@@ -272,7 +443,7 @@ To facilitate evaluation and QA testing without live messaging networks, Module 
 
 ---
 
-## 8. Cross-Module Relationships & Integration Hooks
+## 9. Cross-Module Relationships & Integration Hooks
 
 ```mermaid
 erDiagram
@@ -280,51 +451,69 @@ erDiagram
     CUSTOMER ||--o{ TICKET : "opens"
     CUSTOMER ||--|| CIRCUIT : "subscribes to"
     CIRCUIT ||--o{ TELEMETRY : "monitored by"
-    CUSTOMER ||--o{ LEAD : "converts from"
+    CUSTOMER ||--o{ LEAD : "converts from (Module 06)"
+    CUSTOMER ||--o{ INVOICE : "billed via (Module 07)"
     TICKET ||--o| CONVERSATION : "cross-navigates via goToChatFromTicket()"
-    OUTAGE ||--o{ CIRCUIT : "impacts"
+    TICKET ||--o| TASK_TECH : "escalates to work order (Module 09)"
+    OUTAGE ||--o{ CIRCUIT : "impacts (Module 08)"
+    OUTAGE ||--o{ TICKET : "correlates to"
     CONVERSATION ||--o| CONVERSATION : "transitions (Comment to DM)"
 ```
 
-### 8.1 Active Integration Hooks (Verified in Code)
-* **Ticket → Inbox Navigation (`goToChatFromTicket`):** Resets channel and type filters to `'all'`, switches view to `#view-unified-inbox`, and selects the customer thread.
-* **Comment → DM Transition (`continueInPrivateDm`):** Opens or creates linked private conversation `${conv.conversationId}-DM` preserving origin references.
+### 9.1 Active Integration Hooks (Verified in Code)
+* **Ticket &rarr; Inbox Navigation (`goToChatFromTicket`):** Resets channel and type filters to `'all'`, switches view to `#view-unified-inbox`, and selects the customer thread.
 * **Copilot Intent Routing (`handleRoutingAction`):**
-  * `ticket_suggest`: Navigates to Module 03 (Support Tickets Desk).
-  * `sales_handoff`: Navigates to Module 06 (Sales & Leads Pipeline).
-  * `billing_guidance`: Recommends billing desk review.
+  * `ticket_suggest`: Opens `#create-ticket-modal` with prefilled subscriber details from the active conversation context.
+  * `sales_handoff`: Displays recommended sales lead creation for prospective subscribers.
+  * `billing_guidance`: Recommends billing desk review and delivers simulated invoice/payment options.
+  * `human_escalation`: Handover to Tier III NOC engineering.
+* **Comment &rarr; DM Transition (`continueInPrivateDm`):** Opens or creates linked private conversation `${conv.conversationId}-DM` preserving origin references.
 
 ---
 
-## 9. Developer Ownership & Coordination Agreement
+## 10. Developer Ownership & Coordination Agreement
 
 | Module Range | Domain Area | Lead Owner | Shared Coordination Requirement |
 | :--- | :--- | :--- | :--- |
-| **Modules 01–05** | Customer-Facing, Unified Inbox, AI Diagnostics, Tickets, UI Consistency | **Rohan** | Must not alter Adnan's Kanban or Outage markup without handoff consensus. |
-| **Modules 06–10** | Sales Pipeline, Outages, Field Dispatch, Billing, Analytics & NOC Admin | **Adnan** | Must reuse standard `CUST-<ID>`, `circuitId`, and customer records from this contract. |
+| **Modules 01–05** | Customer-Facing, Unified Inbox, AI Agent, Tickets, Customer Profiles, Diagnostics | **Rohan** | Must not alter Adnan's Kanban or Outage markup without handoff consensus. |
+| **Modules 06–10** | Sales & Leads, Billing & Plans, Network Outages / NOC, Technician & Field Operations, Admin & Analytics | **Adnan** | Must reuse standard `CUST-<ID>`, `circuitId`, and customer records from this contract. |
 
 ### Collaboration Rules:
-1. **Never Duplicate Customers:** If a customer exists in the inbox fixtures (e.g. `CUST-8832` Alex Rivera), references to that customer in Tickets, Sales, or Outages must share the same `customerId` and circuit ID.
-2. **Backward-Compatibility Protection:** Neither developer will remove `customerConversations`, legacy router keys, or change global function signatures without mutual review.
+1. **Never Duplicate Customers:** If a customer exists in the shared subscriber registry `SPACE_NET_CUSTOMERS` (e.g. `CUST-8832` Alex Rivera), references to that customer in Tickets, Sales, Billing, or Outages must share the same `customerId` and circuit ID.
+2. **Backward-Compatibility Protection:** Neither developer will remove `customerConversations`, `conversations`, `tickets`, legacy router keys, or change global function signatures without mutual review.
 
 ---
 
-## 10. Demo Data Fixture Registry (7 Base + 1 Linked DM + Voice Fixtures)
+## 11. Demo Data Fixture Registry
 
-| Customer Name | Customer ID | Conversation ID | Channel | Type | Status | Plan | Fictional Context & Features |
+### 11.1 Shared Subscriber Registry (`SPACE_NET_CUSTOMERS` — 9 Base Subscribers)
+
+| Customer Name | Customer ID | Display ID | Circuit ID | Plan | Connection Type | Zone | Active Conversation |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Alex Rivera** | `CUST-8832` | `CONV-WA-8832` | `whatsapp` | `dm` | `ai_handling` | Fiber 500M | Wi-Fi 5GHz channel optimization; **English Voice Note (`vmsg-alx-1`)** |
-| **Sarah Jenkins** | `CUST-4491` | `CONV-FB-4491` | `facebook` | `dm` | `ai_handling` | Office Pro 1G | Static IP subnet expansion; internal staff note fixture |
-| **Farhan Ahmed** | `CUST-6210` | `CONV-IG-6210` | `instagram` | `dm` | `ai_handling` | Gamer 300M | Banani esports latency inquiry; **Bangla Voice Note (`vmsg-frh-1`)** |
-| **Marcus Vance** | `CUST-1092` | `CONV-WEB-1092` | `web` | `dm` | `ai_handling` | Home Lite 100M | Bill payment inquiry & gateway speed verification |
-| **Elena Rostov** | `CUST-7721` | `CONV-TG-7721` | `telegram` | `dm` | `ai_handling` | Fiber Gigabit | bKash merchant billing payment; **Banglish Voice Note (`vmsg-eln-1`)** |
-| **Tanvir Hossain** | `CUST-5120` | `CONV-FB-5120` | `facebook` | `comment` | `ai_handling` | Home 150M | Monsoon Wi-Fi 6 upgrade post comment; internal note; **Linked DM transition target** |
-| **Tanvir Hossain (DM)** | `CUST-5120` | `CONV-FB-5120-DM` | `facebook` | `dm` | `ai_handling` | Home 150M | **Linked 1:1 Private DM** transitioned from public comment; privacy audit event |
-| **Nabila Karim** | `CUST-3340` | `CONV-IG-3340` | `instagram` | `comment` | `ai_handling` | Streamer 200M | Esports latency inquiry on IG Reel; postContext |
+| **Alex Rivera** | `CUST-8832` | `#8832` | `SPN-FBR-0941` | Fiber 500M | Fiber 1Gbps | Dhanmondi | `CONV-WA-8832` |
+| **Sarah Jenkins** | `CUST-4491` | `#4491` | `SPN-FBR-4491` | Office Pro 1G | Dedicated Leased Line | Gulshan | `CONV-FB-4491` |
+| **Farhan Ahmed** | `CUST-6210` | `#6210` | `SPN-FBR-6210` | Gamer 300M | Fiber GPON | Banani | `CONV-IG-6210` |
+| **Marcus Vance** | `CUST-1092` | `#1092` | `SPN-VDS-1092` | Home Lite 100M | VDSL 100M | Uttara | `CONV-WEB-1092` |
+| **Elena Rostov** | `CUST-7721` | `#7721` | `SPN-FBR-7721` | Fiber Gigabit | Fiber Gigabit | Bashundhara | `CONV-TG-7721` |
+| **Tanvir Hossain** | `CUST-5120` | `#5120` | `SPN-FBR-5120` | Home 150M | Fiber 150M | Dhanmondi | `CONV-FB-5120` |
+| **Nabila Karim** | `CUST-3340` | `#3340` | `SPN-FBR-3340` | Streamer 200M | Fiber 200M | Mirpur | `CONV-IG-3340` |
+| **Vanguard Logistics** | `CUST-4410` | `#4410` | `SPN-DED-4410` | Dedicated Leased Line | Dedicated Leased Line | Tejgaon | None (Portal) |
+| **Hyperion Studio** | `CUST-7719` | `#7719` | `SPN-FBR-7719` | Fiber 1Gbps | Fiber 1Gbps | Mohakhali | None (Telemetry) |
+
+### 11.2 Canonical Tickets Dataset (`tickets` — 6 Base Incidents)
+
+| Ticket ID | Display ID | Customer | Circuit | Category | Priority | Status | Source Channel | Context & Features |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `TKT-9042` | `#TKT-9042` | Alex Rivera (`CUST-8832`) | `SPN-FBR-0941` | `NO_INTERNET` | `URGENT` | `IN_PROGRESS` | `whatsapp` | Storm GPON red alarm; WhatsApp chat link (`CONV-WA-8832`); guided checks active |
+| `TKT-9038` | `#TKT-9038` | Vanguard Logistics (`CUST-4410`) | `SPN-DED-4410` | `BILLING` | `NORMAL` | `PENDING_CUSTOMER` | `portal` | 42 min downtime SLA credit inquiry; enterprise portal fixture |
+| `TKT-9035` | `#TKT-9035` | Hyperion Studio (`CUST-7719`) | `SPN-FBR-7719` | `SLOW_INTERNET` | `NORMAL` | `RESOLVED` | `web` | Wi-Fi 160MHz auto-optimization; verified speed 940/920 Mbps; 5-star CSAT review |
+| `TKT-9031` | `#TKT-9031` | Marcus Vance (`CUST-1092`) | `SPN-VDS-1092` | `NO_INTERNET` | `URGENT` | `ESCALATED` | `web` | Physical line cut near sub-node; **SLA OVERDUE**; escalated to Tier III NOC |
+| `TKT-9024` | `#TKT-9024` | Sarah Jenkins (`CUST-4491`) | `SPN-FBR-4491` | `ROUTER_WIFI` | `NORMAL` | `CLOSED` | `facebook` | Static IP subnet mapping; confirmed & closed with 5-star rating |
+| `TKT-9019` | `#TKT-9019` | Farhan Ahmed (`CUST-6210`) | `SPN-FBR-6210` | `SLOW_INTERNET` | `HIGH` | `REOPENED` | `instagram` | Banani esports tournament ping jitter; previously resolved then reopened |
 
 ---
 
-## 11. Extension Guidelines for Future Coding Agents
+## 12. Extension Guidelines for Future Coding Agents
 
 1. **Adding New Conversations:**
    * Append new items to the canonical `conversations` array inside `index.html`.
@@ -333,9 +522,16 @@ erDiagram
    * Ensure `status` is `'ai_handling'` or `'human_takeover'`.
    * Ensure `conversationId` and `customerId` follow Section 2.
    * Run `syncLegacyCustomerConversations()` or verify automatic adapter registration.
-2. **Adding Voice Messages:**
+2. **Adding New Support Tickets:**
+   * Append new ticket objects to `tickets` conforming strictly to Section 6.2 `SpaceNetTicket`.
+   * Always associate with a valid `customerId` present in `SPACE_NET_CUSTOMERS`.
+   * Ensure `category` is one of the 5 canonical keys (`NO_INTERNET`, `SLOW_INTERNET`, `ROUTER_WIFI`, `BILLING`, `GENERAL`).
+   * Ensure `status` is one of the 7 valid states (`OPEN`, `IN_PROGRESS`, `PENDING_CUSTOMER`, `ESCALATED`, `RESOLVED`, `CLOSED`, `REOPENED`).
+   * Include initial `guidedSteps` generated via `getGuidedStepsForCategory()`.
+   * Ensure `history` contains at least the initial `CREATED` action.
+3. **Adding Voice Messages:**
    * Add message object with `sender: 'voice'` conforming to Section 3 schema.
-3. **Adding Knowledge Base Answers:**
+4. **Adding Knowledge Base Answers:**
    * Extend `SPACE_NET_KNOWLEDGE_BASE` categories in `index.html` with explicit English, Bengali (`bn`), and Banglish (`banglish`) answers. Include prominent demo notices for any simulated financial numbers.
-4. **DOM Element Safety:**
-   * Do not remove established DOM target IDs: `#inbox-thread-list`, `#inbox-filter-strip`, `#inbox-type-filter-strip`, `#chat-post-context-banner`, `#comment-to-dm-banner`, `#chat-frustration-alert`, `#chat-ai-routing-banner`, `#demo-customer-simulator-strip`, `#chat-customer-name`, `#chat-customer-avatar`, `#chat-channel-badge`, `#chat-circuit-plan`, `#chat-message-stream`, `#agent-override-toggle`, `#chat-composer-container`.
+5. **DOM Element Safety:**
+   * Do not remove established DOM target IDs: `#inbox-thread-list`, `#inbox-filter-strip`, `#inbox-type-filter-strip`, `#chat-post-context-banner`, `#comment-to-dm-banner`, `#chat-frustration-alert`, `#chat-ai-routing-banner`, `#demo-customer-simulator-strip`, `#chat-customer-name`, `#chat-customer-avatar`, `#chat-channel-badge`, `#chat-circuit-plan`, `#chat-message-stream`, `#agent-override-toggle`, `#chat-composer-container`, `#ticket-table-body`, `#create-ticket-modal`, `#ticket-detail-modal`, `#status-inquiry-modal`.
