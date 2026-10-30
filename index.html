@@ -321,6 +321,18 @@
 <span class="material-symbols-outlined absolute left-2.5 top-2 text-outline text-[18px]">search</span>
 <input id="inbox-search-input" oninput="handleInboxSearch(this.value)" class="w-full pl-9 pr-3 py-1.5 bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" placeholder="Filter chats or customer ID..." type="text">
 </div>
+<!-- Conversation Type Filter (All / Direct Messages / Comments) -->
+<div id="inbox-type-filter-strip" class="flex items-center gap-1 overflow-x-auto pb-1 text-label-sm font-label-sm border-b border-surface-container">
+<button class="inbox-type-pill px-2.5 py-0.5 rounded bg-primary text-on-primary font-semibold flex items-center gap-1 whitespace-nowrap transition-colors" data-type="all" onclick="filterType('all', this)">
+  <span class="material-symbols-outlined text-[13px]">all_inbox</span> All
+</button>
+<button class="inbox-type-pill px-2.5 py-0.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-type="dm" onclick="filterType('dm', this)">
+  <span class="material-symbols-outlined text-[13px]">mail</span> Direct Messages
+</button>
+<button class="inbox-type-pill px-2.5 py-0.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-type="comment" onclick="filterType('comment', this)">
+  <span class="material-symbols-outlined text-[13px]">forum</span> Comments
+</button>
+</div>
 <!-- Channel Filter Pill Strip -->
 <div id="inbox-filter-strip" class="flex items-center gap-1 overflow-x-auto pb-1 text-label-sm font-label-sm">
 <button class="inbox-filter-pill px-2.5 py-1 rounded bg-primary text-on-primary font-semibold flex items-center gap-1 whitespace-nowrap transition-colors" data-channel="all" onclick="filterInbox('all', this)">All</button>
@@ -359,6 +371,7 @@
 <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold" id="chat-customer-name">Alex Rivera</h3>
 <span class="font-code-telemetry text-code-telemetry text-primary font-semibold">#8832</span>
 <span id="chat-channel-badge" class="px-2 py-0.2 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">WhatsApp</span>
+<span id="chat-type-badge" class="px-2 py-0.2 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">mail</span> Direct Message</span>
             <div class="flex items-center gap-1 bg-surface-container px-1 py-0.5 rounded-lg text-[11px] font-label-sm">
               <span class="text-outline px-1">AI Lang:</span>
               <button class="px-1.5 py-0.5 rounded bg-primary text-on-primary font-semibold" onclick="setAiLanguage('EN', this)">EN</button>
@@ -387,6 +400,30 @@
 <span class="font-label-sm text-label-sm text-on-surface font-semibold ml-2" id="override-label">Human Off</span>
 </label>
 </div>
+</div>
+<!-- Parent Social Post Context Banner (Rendered for Social Post Comments) -->
+<div id="chat-post-context-banner" class="hidden px-space-md py-2.5 bg-surface-container-low border-b border-surface-container flex items-start gap-space-sm text-body-sm transition-all">
+  <div id="post-context-platform-icon" class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+    FB
+  </div>
+  <div class="flex-1 min-w-0">
+    <div class="flex items-center justify-between gap-2 mb-0.5">
+      <div class="flex items-center gap-2">
+        <span id="post-context-page" class="font-headline-sm text-label-md font-semibold text-on-surface">SpaceNet Broadband</span>
+        <span class="px-2 py-0.2 rounded-full bg-surface-container-high text-outline text-[11px] font-medium flex items-center gap-1">
+          <span class="material-symbols-outlined text-[12px]">public</span> Public Post
+        </span>
+      </div>
+      <span id="post-context-time" class="font-code-telemetry text-[11px] text-outline">2 hours ago</span>
+    </div>
+    <p id="post-context-snippet" class="text-on-surface-variant text-body-sm line-clamp-2 italic">
+      "Monsoon Fiber Upgrade Campaign: Free Wi-Fi 6 router upgrades for all 100M+ subscribers..."
+    </p>
+    <div class="flex items-center gap-2 mt-1 text-[11px] text-primary font-medium">
+      <span class="material-symbols-outlined text-[13px]">mode_comment</span>
+      <span id="post-context-meta">Public customer comment on this post</span>
+    </div>
+  </div>
 </div>
 <!-- Real-Time Chat Log Stream -->
 <div class="flex-1 p-space-lg overflow-y-auto flex flex-col gap-space-md bg-surface/30" id="chat-message-stream">
@@ -467,15 +504,31 @@
             </button>
 </div>
 </div>
+<!-- Composer Mode Tabs -->
+<div class="px-space-md pt-2 pb-1 bg-surface-container-lowest flex items-center justify-between border-t border-surface-container">
+  <div class="flex items-center gap-1 text-label-sm font-label-sm">
+    <button id="composer-mode-msg-btn" onclick="setComposerMode('message')" class="composer-mode-tab px-3 py-1 rounded-md bg-primary text-on-primary font-semibold flex items-center gap-1.5 transition-colors">
+      <span class="material-symbols-outlined text-[15px]" id="composer-mode-msg-icon">chat</span>
+      <span id="composer-mode-msg-label">Customer Message</span>
+    </button>
+    <button id="composer-mode-note-btn" onclick="setComposerMode('note')" class="composer-mode-tab px-3 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-medium flex items-center gap-1.5 transition-colors">
+      <span class="material-symbols-outlined text-[15px]">lock</span>
+      <span>Internal Note (Team Only)</span>
+    </button>
+  </div>
+  <span id="composer-mode-hint" class="font-body-sm text-[11px] text-outline flex items-center gap-1">
+    <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Outgoing to customer
+  </span>
+</div>
 <!-- Chat Input Field -->
-<div class="p-space-md bg-surface-container-lowest flex items-center gap-space-sm">
+<div class="p-space-md pt-1.5 bg-surface-container-lowest flex items-center gap-space-sm">
 <button class="p-2 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface">
 <span class="material-symbols-outlined text-[20px]">add_circle</span>
 </button>
-<input class="flex-1 px-space-md py-2 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" id="chat-input" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="Type a message or trigger slash command (/reboot, /speedtest)..." type="text">
-<button class="px-space-lg py-2 bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-label-md rounded-lg flex items-center gap-1.5 shadow-sm transition-colors" onclick="sendChatMessage()">
-<span class="">Send</span>
-<span class="material-symbols-outlined text-[16px]">send</span>
+<input class="flex-1 px-space-md py-2 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs transition-all" id="chat-input" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="Type a message or trigger slash command (/reboot, /speedtest)..." type="text">
+<button id="chat-send-btn" class="px-space-lg py-2 bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-label-md rounded-lg flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer" onclick="sendChatMessage()">
+<span id="chat-send-label">Send</span>
+<span id="chat-send-icon" class="material-symbols-outlined text-[16px]">send</span>
 </button>
 </div>
 </div>
@@ -978,6 +1031,8 @@
   let currentConversationId = 'CONV-WA-8832';
   let currentCustomerKey = 'alex';
   let currentChannelFilter = 'all';
+  let currentTypeFilter = 'all';
+  let currentComposerMode = 'message';
   let currentSearchQuery = '';
   let aiLanguageMode = 'EN';
   let isSidebarCollapsed = false;
@@ -1050,7 +1105,8 @@
       messages: [
         { id: 'm-srh-1', sender: 'customer', text: 'Hello SpaceNet team, our creative agency is adding 25 new workstations next Monday. We need an upgraded Wi-Fi 6 mesh setup and dedicated IP.', time: '09:15 AM' },
         { id: 'm-srh-2', sender: 'ai', text: 'Hi Sarah! That is fantastic news on your agency expansion. Our Office Pro 1G plan includes 2 static IPv4 addresses and supports our Enterprise Wi-Fi 6 Mesh Trio with zero downtime guarantee.<br><br>Would you like me to book our commercial solutions engineer for a site survey tomorrow?', time: '09:18 AM' },
-        { id: 'm-srh-3', sender: 'customer', text: 'Yes, tomorrow morning between 10 AM and 12 PM works best for our operations director.', time: '09:22 AM' }
+        { id: 'm-srh-3', sender: 'customer', text: 'Yes, tomorrow morning between 10 AM and 12 PM works best for our operations director.', time: '09:22 AM' },
+        { id: 'note-srh-1', sender: 'note', isInternal: true, author: 'Adnan (NOC Operations)', text: 'Checked commercial fiber port capacity at Banani Substation B. 2 vacant 10G SFP+ slots ready for Sarah\'s agency expansion.', time: '09:25 AM' }
       ],
       suggestions: [
         "I have scheduled your commercial site survey for tomorrow at 10:30 AM with Lead Engineer Asif.",
@@ -1149,6 +1205,81 @@
         "Payment received and verified! TrxID 9K38LA01Z logged. Your connection is active through Nov 30.",
         "Sending official money receipt PDF and corporate VAT invoice to your registered email.",
         "Your account is set to auto-renew. Let us know if you need bandwidth throttling adjustments."
+      ]
+    },
+    {
+      conversationId: 'CONV-FB-5120',
+      customerId: 'CUST-5120',
+      key: 'tanvir',
+      displayId: '#5120',
+      customerName: 'Tanvir Hossain',
+      channel: 'facebook',
+      channelLabel: 'Facebook',
+      channelBadge: 'FB',
+      channelColor: 'bg-primary text-on-primary',
+      badgeColor: 'bg-primary-fixed text-on-primary-fixed',
+      type: 'comment',
+      status: 'ai_handling',
+      unread: false,
+      circuitId: 'SPN-FBR-5120',
+      plan: 'Fiber Home 150Mbps',
+      planBadge: 'Fiber Home 150M',
+      planBadgeColor: 'text-primary',
+      tag: { label: 'Facebook Comment', icon: 'forum', bg: 'bg-primary-fixed text-on-primary-fixed font-semibold' },
+      postContext: {
+        platform: 'Facebook',
+        pageName: 'SpaceNet Broadband',
+        postSnippet: 'Monsoon Fiber Upgrade Campaign: Free Wi-Fi 6 router upgrades for all 100M+ subscribers in Gulshan & Dhanmondi this month! Comment below to verify your eligibility.',
+        postTime: '2 hours ago',
+        permalink: 'https://facebook.com/spacenet/posts/98120341'
+      },
+      lastMessageTime: '25m ago',
+      messages: [
+        { id: 'm-tnv-1', sender: 'customer', text: 'Does this upgrade campaign include existing customers on the 150M plan in Dhanmondi Road 27?', time: '01:15 PM' },
+        { id: 'm-tnv-2', sender: 'ai', text: 'Hi Tanvir! Yes, all active Fiber Home 150M subscribers in Dhanmondi Road 27 are eligible for free ONT replacement with our Wi-Fi 6 model.<br><br>Would you like us to schedule a technician visit for your premises?', time: '01:18 PM' },
+        { id: 'note-tnv-1', sender: 'note', isInternal: true, author: 'Rohan (Tier III NOC)', text: 'Verified subscriber ONT serial SPN-ONT-8812. Ready for Wi-Fi 6 drop once customer provides phone number in DM.', time: '01:20 PM' }
+      ],
+      suggestions: [
+        "Technician slot for Dhanmondi Road 27 can be booked for tomorrow between 2 PM - 4 PM.",
+        "We can dispatch our ONT upgrade team with the dual-band Wi-Fi 6 router.",
+        "Please send us a DM with your contact phone number to confirm the booking."
+      ]
+    },
+    {
+      conversationId: 'CONV-IG-3340',
+      customerId: 'CUST-3340',
+      key: 'nabila',
+      displayId: '#3340',
+      customerName: 'Nabila Karim',
+      channel: 'instagram',
+      channelLabel: 'Instagram',
+      channelBadge: 'IG',
+      channelColor: 'bg-tertiary text-on-tertiary',
+      badgeColor: 'bg-tertiary-fixed text-on-tertiary-fixed',
+      type: 'comment',
+      status: 'ai_handling',
+      unread: false,
+      circuitId: 'SPN-GAM-3340',
+      plan: 'Fiber Streamer 200Mbps',
+      planBadge: 'Streamer 200M',
+      planBadgeColor: 'text-tertiary',
+      tag: { label: 'Instagram Reel Comment', icon: 'mode_comment', bg: 'bg-tertiary-fixed text-on-tertiary-fixed font-semibold' },
+      postContext: {
+        platform: 'Instagram',
+        pageName: '@spacenet.isp',
+        postSnippet: 'Low ping, zero lag. See how our dedicated fastpath gaming routes keep you at <5ms in competitive esports. Drop a comment for latency tests in your area!',
+        postTime: '4 hours ago',
+        permalink: 'https://instagram.com/p/C98df123/'
+      },
+      lastMessageTime: '32m ago',
+      messages: [
+        { id: 'm-nab-1', sender: 'customer', text: 'How is the ping to Singapore and Bahrain servers from Uttara Sector 4 on the 200M plan?', time: '02:30 PM' },
+        { id: 'm-nab-2', sender: 'ai', text: 'Hello Nabila! On our Fiber Streamer 200M route from Uttara Sector 4, average ping to Singapore AWS is 31ms and Bahrain is 44ms via our submarine direct peering.', time: '02:33 PM' }
+      ],
+      suggestions: [
+        "We have active fiber distribution at Uttara Sector 4 with sub-35ms routing to Singapore.",
+        "Would you like us to run a live trace-route to your preferred gaming IP address?",
+        "Feel free to DM us for a 48-hour trial connection in Uttara."
       ]
     }
   ];
@@ -1317,23 +1448,131 @@
   }
 
   function toggleAgentOverride(toggleEl) {
-    const badge = document.getElementById('agent-mode-badge');
-    const label = document.getElementById('override-label');
+    const conv = getConversation(currentConversationId) || customerConversations[currentCustomerKey];
+    if (!conv) return;
+
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     if (toggleEl.checked) {
-      badge.className = 'flex items-center gap-1.5 px-space-sm py-1 bg-surface-container text-on-surface rounded-full font-label-md text-label-md font-semibold';
-      badge.innerHTML = '<span class="material-symbols-outlined text-[14px]">person</span><span>Human Agent Override</span>';
-      label.textContent = 'Human ON';
+      if (conv.status === 'human_takeover') return;
+      conv.status = 'human_takeover';
+
+      // Cancel any pending AI reply timeout on this conversation
+      if (conv._pendingReplyTimeout) {
+        clearTimeout(conv._pendingReplyTimeout);
+        conv._pendingReplyTimeout = null;
+      }
+
+      conv.messages.push({
+        id: 'sys-' + Date.now(),
+        sender: 'system',
+        eventType: 'takeover',
+        text: 'Human Takeover: Session reassigned from AI Copilot to Support Staff (Rohan / Tier III NOC). AI auto-responses paused.',
+        time: timeStr
+      });
       showToast('Human Override Activated', 'Conversation reassigned to Tier III Support NOC.');
     } else {
-      badge.className = 'flex items-center gap-1.5 px-space-sm py-1 bg-tertiary-fixed text-on-tertiary-fixed rounded-full font-label-md text-label-md font-semibold';
-      badge.innerHTML = '<span class="material-symbols-outlined text-[14px]">auto_awesome</span><span id="agent-mode-text">AI Copilot Handling</span>';
-      label.textContent = 'Human Off';
+      if (conv.status === 'ai_handling') return;
+      conv.status = 'ai_handling';
+
+      conv.messages.push({
+        id: 'sys-' + Date.now(),
+        sender: 'system',
+        eventType: 'handback',
+        text: 'AI Handback: Human agent returned conversation control to SpaceNet AI Copilot. Automated monitoring active.',
+        time: timeStr
+      });
       showToast('AI Auto-Pilot Restored', 'Conversation handed back to SpaceNet AI Agent.');
+    }
+
+    renderCustomerConversation(conv.conversationId);
+    renderThreadList();
+  }
+
+  // 4. Unified Inbox Engine (Module 01 - Tasks 1, 2, 3, 4, 5)
+  function filterType(type, btn) {
+    currentTypeFilter = type;
+    if (!btn) {
+      btn = document.querySelector(`.inbox-type-pill[data-type="${type}"]`);
+    }
+    document.querySelectorAll('.inbox-type-pill').forEach(b => {
+      b.className = 'inbox-type-pill px-2.5 py-0.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors';
+    });
+    if (btn) {
+      btn.className = 'inbox-type-pill px-2.5 py-0.5 rounded bg-primary text-on-primary font-semibold flex items-center gap-1 whitespace-nowrap transition-colors';
+    }
+    renderThreadList();
+    const labelMap = { all: 'All Conversations', dm: 'Direct Messages', comment: 'Public Comments' };
+    showToast('Type Filter Applied', 'Showing: ' + (labelMap[type] || type));
+  }
+
+  function setComposerMode(mode) {
+    currentComposerMode = mode;
+    const conv = getConversation(currentConversationId) || customerConversations[currentCustomerKey];
+    const isComment = conv && conv.type === 'comment';
+
+    const msgBtn = document.getElementById('composer-mode-msg-btn');
+    const noteBtn = document.getElementById('composer-mode-note-btn');
+    const msgIcon = document.getElementById('composer-mode-msg-icon');
+    const msgLabel = document.getElementById('composer-mode-msg-label');
+    const hint = document.getElementById('composer-mode-hint');
+    const input = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('chat-send-btn');
+    const sendLabel = document.getElementById('chat-send-label');
+    const sendIcon = document.getElementById('chat-send-icon');
+
+    if (mode === 'note') {
+      if (msgBtn) {
+        msgBtn.className = 'composer-mode-tab px-3 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-medium flex items-center gap-1.5 transition-colors cursor-pointer';
+      }
+      if (noteBtn) {
+        noteBtn.className = 'composer-mode-tab px-3 py-1 rounded-md bg-amber-600 text-white font-semibold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer';
+      }
+      if (hint) {
+        hint.innerHTML = '<span class="material-symbols-outlined text-[13px] text-amber-700">lock</span><span class="text-amber-800 font-semibold">Internal Team Note (Private &bull; Hidden from Customer)</span>';
+      }
+      if (input) {
+        input.className = 'flex-1 px-space-md py-2 bg-amber-500/10 border border-amber-500/40 rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-amber-800/60 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-xs transition-all';
+        input.placeholder = 'Write an internal team note (only visible to NOC staff, not sent to customer)...';
+      }
+      if (sendBtn) {
+        sendBtn.className = 'px-space-lg py-2 bg-amber-600 hover:bg-amber-700 text-white font-headline-sm text-label-md rounded-lg flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer';
+      }
+      if (sendLabel) sendLabel.textContent = 'Add Note';
+      if (sendIcon) sendIcon.textContent = 'lock';
+    } else {
+      if (msgBtn) {
+        msgBtn.className = 'composer-mode-tab px-3 py-1 rounded-md bg-primary text-on-primary font-semibold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer';
+      }
+      if (noteBtn) {
+        noteBtn.className = 'composer-mode-tab px-3 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-medium flex items-center gap-1.5 transition-colors cursor-pointer';
+      }
+      if (msgIcon) {
+        msgIcon.textContent = isComment ? 'forum' : 'chat';
+      }
+      if (msgLabel) {
+        msgLabel.textContent = isComment ? 'Public Reply' : 'Customer Message';
+      }
+      if (hint) {
+        if (isComment) {
+          hint.innerHTML = '<span class="material-symbols-outlined text-[13px] text-primary">public</span><span class="text-outline">Public social reply (visible on feed)</span>';
+        } else {
+          hint.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span><span class="text-outline">Outgoing direct message to customer</span>';
+        }
+      }
+      if (input) {
+        input.className = 'flex-1 px-space-md py-2 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs transition-all';
+        input.placeholder = isComment ? 'Write a public reply to comment on social post...' : 'Type a message or trigger slash command (/reboot, /speedtest)...';
+      }
+      if (sendBtn) {
+        sendBtn.className = 'px-space-lg py-2 bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-label-md rounded-lg flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer';
+      }
+      if (sendLabel) sendLabel.textContent = isComment ? 'Post Reply' : 'Send';
+      if (sendIcon) sendIcon.textContent = isComment ? 'reply' : 'send';
     }
   }
 
-  // 4. Unified Inbox Engine (Module 01 - Task 1 & 2)
   function renderEmptyChatState() {
     const nameEl = document.getElementById('chat-customer-name');
     if (nameEl) {
@@ -1352,6 +1591,17 @@
     if (badge) {
       badge.textContent = 'None';
       badge.className = 'px-2 py-0.2 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm';
+    }
+
+    const typeBadge = document.getElementById('chat-type-badge');
+    if (typeBadge) {
+      typeBadge.innerHTML = '<span class="material-symbols-outlined text-[12px]">filter_alt</span> None';
+      typeBadge.className = 'px-2 py-0.2 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1';
+    }
+
+    const postBanner = document.getElementById('chat-post-context-banner');
+    if (postBanner) {
+      postBanner.classList.add('hidden');
     }
 
     const circuitPlanEl = document.getElementById('chat-circuit-plan');
@@ -1387,10 +1637,14 @@
 
     const filtered = conversations.filter(conv => {
       // 1. Channel filter
-      if (currentChannelFilter !== 'all') {
-        if (conv.channel !== currentChannelFilter) return false;
+      if (currentChannelFilter !== 'all' && conv.channel !== currentChannelFilter) {
+        return false;
       }
-      // 2. Search query filter
+      // 2. Type filter
+      if (currentTypeFilter !== 'all' && conv.type !== currentTypeFilter) {
+        return false;
+      }
+      // 3. Search query filter
       if (currentSearchQuery) {
         const q = currentSearchQuery.toLowerCase();
         const matchName = (conv.customerName || '').toLowerCase().includes(q);
@@ -1399,7 +1653,8 @@
         const matchCircuit = (conv.circuitId || '').toLowerCase().includes(q);
         const matchPlan = (conv.plan || '').toLowerCase().includes(q);
         const matchMessages = conv.messages && conv.messages.some(m => (m.text || '').toLowerCase().includes(q));
-        return matchName || matchCustId || matchConvId || matchCircuit || matchPlan || matchMessages;
+        const matchPost = conv.postContext && (conv.postContext.postSnippet || '').toLowerCase().includes(q);
+        return matchName || matchCustId || matchConvId || matchCircuit || matchPlan || matchMessages || matchPost;
       }
       return true;
     });
@@ -1409,7 +1664,7 @@
         <div class="p-space-xl flex flex-col items-center justify-center text-center text-on-surface-variant py-12">
           <span class="material-symbols-outlined text-[32px] text-outline mb-2">search_off</span>
           <p class="font-headline-sm text-body-md font-semibold text-on-surface">No conversations found</p>
-          <p class="font-body-sm text-label-sm text-outline mt-1">No chats match "${escapeHtml(currentSearchQuery || currentChannelFilter)}".</p>
+          <p class="font-body-sm text-label-sm text-outline mt-1">No chats match "${escapeHtml(currentSearchQuery || (currentChannelFilter !== 'all' ? currentChannelFilter : currentTypeFilter))}".</p>
         </div>
       `;
       renderEmptyChatState();
@@ -1445,11 +1700,22 @@
         ? `<span class="material-symbols-outlined text-[12px]">${escapeHtml(conv.tag.icon)}</span>`
         : '';
 
+      const isComment = conv.type === 'comment';
+      const isHuman = conv.status === 'human_takeover';
+      const typeBadge = isComment
+        ? `<span class="px-1.5 py-0.2 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-[10px] font-medium flex items-center gap-0.5"><span class="material-symbols-outlined text-[10px]">forum</span> Comment</span>`
+        : `<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-[10px] font-medium flex items-center gap-0.5"><span class="material-symbols-outlined text-[10px]">mail</span> DM</span>`;
+
+      const humanIndicator = isHuman
+        ? `<span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-900 font-label-sm text-[10px] font-semibold flex items-center gap-0.5" title="Human Agent Override Active"><span class="material-symbols-outlined text-[10px]">support_agent</span> Human</span>`
+        : '';
+
       return `
         <div class="chat-thread-item p-space-md ${activeClass} cursor-pointer transition-colors flex flex-col gap-1"
              data-conversation-id="${escapeHtml(conv.conversationId)}"
              data-customer-id="${escapeHtml(conv.customerId)}"
              data-channel="${escapeHtml(conv.channel)}"
+             data-type="${escapeHtml(conv.type)}"
              onclick="selectConversation('${escapeHtml(conv.conversationId)}')">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-space-xs">
@@ -1461,9 +1727,13 @@
           </div>
           <p class="font-body-sm text-body-sm ${isActive ? 'text-on-surface' : 'text-on-surface-variant'} truncate">"${escapeHtml(previewText)}"</p>
           <div class="flex items-center justify-between mt-1">
-            <span class="px-2 py-0.5 rounded-full ${conv.tag ? conv.tag.bg : 'bg-surface-container text-on-surface'} font-label-sm text-label-sm font-semibold flex items-center gap-1">
-              ${iconHtml} ${escapeHtml(conv.tag ? conv.tag.label : '')}
-            </span>
+            <div class="flex items-center gap-1">
+              <span class="px-2 py-0.5 rounded-full ${conv.tag ? conv.tag.bg : 'bg-surface-container text-on-surface'} font-label-sm text-label-sm font-semibold flex items-center gap-1">
+                ${iconHtml} ${escapeHtml(conv.tag ? conv.tag.label : '')}
+              </span>
+              ${typeBadge}
+              ${humanIndicator}
+            </div>
             <span class="font-code-telemetry text-[11px] ${conv.planBadgeColor} font-semibold">${escapeHtml(conv.planBadge)}</span>
           </div>
         </div>
@@ -1477,6 +1747,10 @@
 
     currentConversationId = conv.conversationId;
     currentCustomerKey = conv.key;
+
+    // Reset input draft so text does not leak across conversations
+    const input = document.getElementById('chat-input');
+    if (input) input.value = '';
 
     // Update active highlight on thread items
     document.querySelectorAll('.chat-thread-item').forEach(el => {
@@ -1532,9 +1806,80 @@
       badge.className = `px-2 py-0.2 rounded-full ${cust.badgeColor || 'bg-secondary-fixed text-on-secondary-fixed'} font-label-sm text-label-sm`;
     }
 
+    const typeBadge = document.getElementById('chat-type-badge');
+    if (typeBadge) {
+      if (cust.type === 'comment') {
+        typeBadge.className = 'px-2 py-0.2 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm flex items-center gap-1';
+        typeBadge.innerHTML = '<span class="material-symbols-outlined text-[12px]">forum</span> Public Comment';
+      } else {
+        typeBadge.className = 'px-2 py-0.2 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1';
+        typeBadge.innerHTML = '<span class="material-symbols-outlined text-[12px]">mail</span> Direct Message';
+      }
+    }
+
     const circuitPlanEl = document.getElementById('chat-circuit-plan');
     if (circuitPlanEl) {
       circuitPlanEl.innerHTML = `Circuit ID: <span class="font-code-telemetry">${escapeHtml(cust.circuitId || cust.circuit)}</span> &bull; Plan: ${escapeHtml(cust.plan)}`;
+    }
+
+    // Sync Parent Social Post Context Banner (For Public Post Comments)
+    const postBanner = document.getElementById('chat-post-context-banner');
+    if (postBanner) {
+      if (cust.type === 'comment' && cust.postContext) {
+        postBanner.classList.remove('hidden');
+        const iconEl = document.getElementById('post-context-platform-icon');
+        const pageEl = document.getElementById('post-context-page');
+        const timeEl = document.getElementById('post-context-time');
+        const snippetEl = document.getElementById('post-context-snippet');
+        const metaEl = document.getElementById('post-context-meta');
+
+        if (iconEl) {
+          iconEl.textContent = cust.channelBadge || (cust.channel === 'facebook' ? 'FB' : 'IG');
+          iconEl.className = `w-8 h-8 rounded-full ${cust.channelColor || 'bg-primary text-on-primary'} flex items-center justify-center font-bold text-xs shrink-0 mt-0.5`;
+        }
+        if (pageEl) pageEl.textContent = cust.postContext.pageName || 'SpaceNet Official';
+        if (timeEl) timeEl.textContent = cust.postContext.postTime || '';
+        if (snippetEl) snippetEl.textContent = `"${cust.postContext.postSnippet}"`;
+        if (metaEl) metaEl.textContent = `Public customer comment thread on ${cust.channelLabel || cust.channel} post`;
+      } else {
+        postBanner.classList.add('hidden');
+      }
+    }
+
+    // Sync Per-Conversation Human Takeover / AI Handback Control State
+    const copilotToggle = document.getElementById('copilot-toggle');
+    const agentBadge = document.getElementById('agent-mode-badge');
+    const overrideLabel = document.getElementById('override-label');
+    const isHuman = cust.status === 'human_takeover';
+
+    if (copilotToggle) {
+      copilotToggle.checked = isHuman;
+      const dot = copilotToggle.parentElement ? copilotToggle.parentElement.querySelector('.dot') : null;
+      const track = copilotToggle.nextElementSibling;
+      if (dot) {
+        dot.style.transform = isHuman ? 'translateX(20px)' : 'translateX(0)';
+      }
+      if (track) {
+        if (isHuman) {
+          track.classList.add('bg-primary');
+          track.classList.remove('bg-surface-container-high');
+        } else {
+          track.classList.remove('bg-primary');
+          track.classList.add('bg-surface-container-high');
+        }
+      }
+    }
+    if (agentBadge) {
+      if (isHuman) {
+        agentBadge.className = 'flex items-center gap-1.5 px-space-sm py-1 bg-surface-container text-on-surface rounded-full font-label-md text-label-md font-semibold';
+        agentBadge.innerHTML = '<span class="material-symbols-outlined text-[14px]">support_agent</span><span>Human Staff Override</span>';
+      } else {
+        agentBadge.className = 'flex items-center gap-1.5 px-space-sm py-1 bg-tertiary-fixed text-on-tertiary-fixed rounded-full font-label-md text-label-md font-semibold';
+        agentBadge.innerHTML = '<span class="material-symbols-outlined text-[14px]">auto_awesome</span><span id="agent-mode-text">AI Copilot Handling</span>';
+      }
+    }
+    if (overrideLabel) {
+      overrideLabel.textContent = isHuman ? 'Human ON' : 'Human Off';
     }
 
     // Render Messages Stream
@@ -1547,19 +1892,21 @@
         if (m.sender === 'customer') {
           const div = document.createElement('div');
           div.className = 'flex items-start gap-space-sm max-w-xl';
+          const recLabel = cust.type === 'comment' ? 'Received &bull; Public Comment' : 'Received &bull; Direct Message';
           div.innerHTML = `
             <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface font-semibold text-xs">${escapeHtml(initials)}</div>
             <div class="flex flex-col gap-1">
               <div class="bg-surface-container-lowest p-space-md rounded-2xl rounded-tl-none shadow-xs font-body-sm text-body-sm text-on-surface">
                 ${m.text}
               </div>
-              <span class="font-code-telemetry text-[10px] text-outline ml-2">${escapeHtml(m.time || '')} &bull; Received</span>
+              <span class="font-code-telemetry text-[10px] text-outline ml-2">${escapeHtml(m.time || '')} &bull; ${recLabel}</span>
             </div>
           `;
           stream.appendChild(div);
         } else if (m.sender === 'ai') {
           const div = document.createElement('div');
           div.className = 'flex items-start gap-space-sm max-w-xl self-end flex-row-reverse';
+          const aiLabel = cust.type === 'comment' ? 'AI Agent &bull; Public Reply' : 'AI Agent';
           div.innerHTML = `
             <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-semibold text-xs">
               <span class="material-symbols-outlined text-[16px]">smart_toy</span>
@@ -1568,7 +1915,53 @@
               <div class="bg-primary text-on-primary p-space-md rounded-2xl rounded-tr-none shadow-xs font-body-sm text-body-sm">
                 ${m.text}
               </div>
-              <span class="font-code-telemetry text-[10px] text-outline mr-2">${escapeHtml(m.time || '')} &bull; AI Agent</span>
+              <span class="font-code-telemetry text-[10px] text-outline mr-2">${escapeHtml(m.time || '')} &bull; ${aiLabel}</span>
+            </div>
+          `;
+          stream.appendChild(div);
+        } else if (m.sender === 'staff') {
+          const div = document.createElement('div');
+          div.className = 'flex items-start gap-space-sm max-w-xl self-end flex-row-reverse';
+          const staffLabel = cust.type === 'comment' ? 'Human Agent &bull; Public Reply' : 'Human Agent';
+          div.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-semibold text-xs border border-outline/30">
+              <span class="material-symbols-outlined text-[16px]">support_agent</span>
+            </div>
+            <div class="flex flex-col gap-1 items-end">
+              <div class="bg-surface-container-high text-on-surface p-space-md rounded-2xl rounded-tr-none shadow-xs font-body-sm text-body-sm border border-outline/20">
+                ${m.text}
+              </div>
+              <span class="font-code-telemetry text-[10px] text-outline mr-2">${escapeHtml(m.time || '')} &bull; ${staffLabel} (${escapeHtml(m.author || 'Rohan')})</span>
+            </div>
+          `;
+          stream.appendChild(div);
+        } else if (m.sender === 'system') {
+          const isTakeover = m.eventType === 'takeover';
+          const div = document.createElement('div');
+          div.className = 'self-center w-full max-w-lg my-1.5 px-space-md py-1.5 rounded-full bg-surface-container border border-surface-container-high text-on-surface-variant font-label-sm text-[11px] flex items-center justify-center gap-1.5 shadow-xs text-center';
+          div.innerHTML = `
+            <span class="material-symbols-outlined text-[15px] ${isTakeover ? 'text-amber-600' : 'text-primary'}">${isTakeover ? 'shield_person' : 'smart_toy'}</span>
+            <span>${escapeHtml(m.text)} &bull; ${escapeHtml(m.time || '')}</span>
+          `;
+          stream.appendChild(div);
+        } else if (m.sender === 'note' || m.isInternal) {
+          const div = document.createElement('div');
+          div.className = 'self-center w-full max-w-xl my-1.5 bg-amber-500/10 border border-amber-500/30 p-space-md rounded-xl shadow-xs';
+          div.innerHTML = `
+            <div class="flex items-center justify-between mb-1.5 pb-1 border-b border-amber-500/20">
+              <div class="flex items-center gap-1.5 text-amber-900 font-headline-sm text-label-md font-semibold">
+                <span class="material-symbols-outlined text-[16px] text-amber-700">lock</span>
+                <span>Internal Note (Team Only)</span>
+                <span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-900 font-label-sm text-[10px] font-bold tracking-wider">STAFF ONLY</span>
+              </div>
+              <span class="font-code-telemetry text-[11px] text-amber-800">${escapeHtml(m.time || '')}</span>
+            </div>
+            <div class="text-body-sm font-body-sm text-on-surface whitespace-pre-wrap">
+              ${escapeHtml(m.text || '')}
+            </div>
+            <div class="mt-2 pt-1 border-t border-amber-500/20 flex items-center justify-between text-[11px] text-on-surface-variant font-medium">
+              <span>Staff: <strong class="text-on-surface font-semibold">${escapeHtml(m.author || 'Rohan (Tier III Support)')}</strong></span>
+              <span class="italic text-[10px] text-outline">Private &bull; Not visible to customer</span>
             </div>
           `;
           stream.appendChild(div);
@@ -1618,6 +2011,9 @@
         chipContainer.appendChild(btn);
       });
     }
+
+    // Sync composer input mode and hints
+    setComposerMode(currentComposerMode);
   }
 
   function sendChatMessage() {
@@ -1638,10 +2034,31 @@
     const now = new Date();
     const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    // Append outbound message to conversation history
+    // Handle Internal Note Mode
+    if (currentComposerMode === 'note') {
+      conv.messages.push({
+        id: 'note-' + Date.now(),
+        sender: 'note',
+        isInternal: true,
+        author: 'Rohan (Tier III NOC)',
+        text: text,
+        time: timeStr
+      });
+      input.value = '';
+      renderCustomerConversation(conv.conversationId);
+      renderThreadList();
+      showToast('Internal Note Saved', 'Private note added to thread. Not visible to customer.');
+      return; // Absolute safety: never trigger simulated replies or customer events
+    }
+
+    // Handle Outgoing Message (Customer Message or Public Reply)
+    const isHuman = conv.status === 'human_takeover';
+    const isComment = conv.type === 'comment';
+
     conv.messages.push({
       id: 'msg-' + Date.now(),
-      sender: 'ai',
+      sender: isHuman ? 'staff' : 'ai',
+      author: isHuman ? 'Rohan (Tier III NOC)' : undefined,
       text: text,
       time: timeStr
     });
@@ -1651,10 +2068,27 @@
     renderCustomerConversation(conv.conversationId);
     renderThreadList();
 
-    showToast('Message Dispatched', `Delivered to ${conv.customerName || conv.name} via ${conv.channelLabel || conv.channel}`);
+    const dispatchTitle = isComment ? 'Public Reply Posted' : 'Message Dispatched';
+    const dispatchDetail = isComment
+      ? `Public reply posted to ${conv.customerName || conv.name} on ${conv.channelLabel || conv.channel}`
+      : `Delivered to ${conv.customerName || conv.name} via ${conv.channelLabel || conv.channel}`;
+    showToast(dispatchTitle, dispatchDetail);
 
-    // Simulated Smart Customer / AI Follow-up
-    setTimeout(() => {
+    // Cancel any previous pending response timeout
+    if (conv._pendingReplyTimeout) {
+      clearTimeout(conv._pendingReplyTimeout);
+      conv._pendingReplyTimeout = null;
+    }
+
+    // Under Human Takeover: AI auto-responses are STRICTLY PAUSED.
+    // However, the customer can still send an inbound reply simulation.
+    // In AI handling: both customer follow-up and AI auto-copilot remain active.
+    conv._pendingReplyTimeout = setTimeout(() => {
+      conv._pendingReplyTimeout = null;
+      // Re-verify current conversation still exists and status
+      const targetConv = getConversation(conv.conversationId);
+      if (!targetConv) return;
+
       let replyText = "Thank you! I just tested and everything is running perfectly now. Speed test hit 498 Mbps!";
       const lower = text.toLowerCase();
       if (lower.includes('site survey') || lower.includes('engineer')) {
@@ -1663,18 +2097,24 @@
         replyText = "Payment acknowledged! Money receipt has been received on WhatsApp. Thank you SpaceNet!";
       } else if (lower.includes('thursday') || lower.includes('installation') || lower.includes('reserve') || lower.includes('gamer') || lower.includes('3:00') || lower.includes('slot')) {
         replyText = "Thursday 3:00 PM works great! I have my NID copy ready for the connection form. See you then!";
+      } else if (isComment) {
+        if (targetConv.channel === 'facebook') {
+          replyText = "Thanks for confirming! Sending our Dhanmondi building address and my phone number via DM now.";
+        } else {
+          replyText = "Awesome! 31ms to Singapore is unbeatable for our esports team. Reaching out via DM for trial.";
+        }
       }
 
-      conv.messages.push({
+      targetConv.messages.push({
         id: 'msg-' + (Date.now() + 1),
         sender: 'customer',
         text: replyText,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       });
-      conv.lastMessageTime = 'Just now';
+      targetConv.lastMessageTime = 'Just now';
 
-      if (currentConversationId === conv.conversationId) {
-        renderCustomerConversation(conv.conversationId);
+      if (currentConversationId === targetConv.conversationId) {
+        renderCustomerConversation(targetConv.conversationId);
       }
       renderThreadList();
     }, 1000);
@@ -1732,6 +2172,7 @@
   function closeTicketModal() {
     const modal = document.getElementById('ticket-detail-modal');
     const container = document.getElementById('ticket-modal-container');
+    if (!modal || !container) return;
     modal.classList.add('opacity-0');
     container.classList.remove('scale-100');
     container.classList.add('scale-95');
@@ -1747,7 +2188,11 @@
 
   function goToChatFromTicket() {
     closeTicketModal();
+    filterType('all');
     filterInbox('all');
+    const searchInput = document.getElementById('inbox-search-input');
+    if (searchInput) searchInput.value = '';
+    currentSearchQuery = '';
     switchView('unified-inbox');
     if (currentModalTicket && currentModalTicket.cust.includes('Alex')) {
       selectCustomer('alex');
