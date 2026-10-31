@@ -632,39 +632,81 @@
 <!-- ========================================================================= -->
 <section class="app-view flex flex-col gap-space-lg hidden" id="view-tickets">
 <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<!-- Ticket Summary Metric Ribbon (Module 03 Feature Group 6) -->
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-space-sm pb-space-xs border-b border-surface-container-high/60">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Tickets</span>
+<span class="font-code-metric text-[18px] font-bold text-on-surface" id="tkt-metric-total">6</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-error uppercase tracking-wider">Urgent / High</span>
+<span class="font-code-metric text-[18px] font-bold text-error flex items-center gap-1" id="tkt-metric-urgent">3</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Investigating</span>
+<span class="font-code-metric text-[18px] font-bold text-primary" id="tkt-metric-progress">2</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider">Tier III Escalated</span>
+<span class="font-code-metric text-[18px] font-bold text-tertiary" id="tkt-metric-escalated">1</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-error uppercase tracking-wider">SLA Overdue</span>
+<span class="font-code-metric text-[18px] font-bold text-error flex items-center gap-1" id="tkt-metric-overdue">1</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Resolved Today</span>
+<span class="font-code-metric text-[18px] font-bold text-secondary" id="tkt-metric-resolved">2</span>
+</div>
+</div>
+
 <!-- Filter Toolbar -->
 <div class="flex flex-wrap items-center justify-between gap-space-md">
-<div class="flex flex-wrap items-center gap-space-sm flex-1 max-w-3xl">
+<div class="flex flex-wrap items-center gap-space-sm flex-1 max-w-4xl">
 <div class="relative flex-1 min-w-[200px]">
 <span class="material-symbols-outlined absolute left-2.5 top-2.5 text-outline text-[18px]">search</span>
-<input class="w-full pl-9 pr-3 py-1.5 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" id="ticket-search-input" onkeyup="filterTicketRows()" placeholder="Search Ticket ID, Customer, Circuit..." type="text">
+<input class="w-full pl-9 pr-3 py-1.5 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" id="ticket-search-input" onkeyup="filterTicketRows()" placeholder="Search Ticket ID, Customer, Circuit, Subject..." type="text">
 </div>
 <!-- Type filter dropdown -->
 <select class="bg-surface-container-low text-on-surface font-label-md text-label-md px-3 py-1.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" id="ticket-type-filter" onchange="filterTicketRows()">
 <option value="ALL">Issue: All Types</option>
 <option value="NO_INTERNET">No Internet</option>
+<option value="SLOW_INTERNET">Slow Internet</option>
+<option value="ROUTER_WIFI">Wi-Fi / Router</option>
 <option value="BILLING">Billing Dispute</option>
-<option value="SLOW_SPEED">Slow Speed</option>
+<option value="GENERAL">Other / General</option>
 </select>
 <!-- Priority filter dropdown -->
 <select class="bg-surface-container-low text-on-surface font-label-md text-label-md px-3 py-1.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" id="ticket-priority-filter" onchange="filterTicketRows()">
 <option value="ALL">Priority: All</option>
-<option value="URGENT">Urgent Flashing</option>
+<option value="URGENT">Urgent</option>
+<option value="HIGH">High</option>
 <option value="NORMAL">Normal</option>
 </select>
 <!-- Status filter dropdown -->
 <select class="bg-surface-container-low text-on-surface font-label-md text-label-md px-3 py-1.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" id="ticket-status-filter" onchange="filterTicketRows()">
 <option value="ALL">Status: All States</option>
-<option value="INVESTIGATING">Investigating</option>
-<option value="AWAITING">Awaiting Customer</option>
-<option value="AI_DIAG">AI Diagnostics Done</option>
+<option value="OPEN">Open</option>
+<option value="IN_PROGRESS">Investigating</option>
+<option value="PENDING_CUSTOMER">Awaiting Customer</option>
+<option value="ESCALATED">Escalated to Tier III</option>
+<option value="RESOLVED">Resolved</option>
+<option value="CLOSED">Closed</option>
+<option value="REOPENED">Reopened</option>
 </select>
 </div>
-<button class="px-space-md py-1.5 bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-label-md rounded-lg flex items-center gap-1 shadow-sm transition-colors" onclick="createNewTicketMock()">
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface font-headline-sm text-label-md rounded-lg flex items-center gap-1.5 transition-colors shadow-xs" id="btn-status-inquiry" onclick="openStatusInquiryModal()" title="Simulate customer status inquiry">
+<span class="material-symbols-outlined text-[18px] text-primary">quick_reference</span>
+<span class="">Status Inquiry</span>
+</button>
+<button class="px-space-md py-1.5 bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-label-md rounded-lg flex items-center gap-1 shadow-sm transition-colors" id="btn-create-ticket" onclick="createNewTicketMock()">
 <span class="material-symbols-outlined text-[18px]">add</span>
 <span class="">Create Ticket</span>
 </button>
 </div>
+</div>
+
 <!-- Tickets Data Table -->
 <div class="overflow-x-auto rounded-lg">
 <table class="w-full text-left font-body-sm text-body-sm">
@@ -676,125 +718,26 @@
 <th class="py-3 px-space-md">Ticket ID</th>
 <th class="py-3 px-space-md">Customer &amp; Circuit</th>
 <th class="py-3 px-space-md">Connection Type</th>
-<th class="py-3 px-space-md text-left border-b border-surface-container-high">Issue Type</th>
-<th class="py-3 px-space-md text-left border-b border-surface-container-high">Priority</th>
+<th class="py-3 px-space-md text-left">Issue Type</th>
+<th class="py-3 px-space-md text-left">Priority</th>
 <th class="py-3 px-space-md">Handling Agent</th>
-<th class="py-3 px-space-md text-left border-b border-surface-container-high">Status</th>
+<th class="py-3 px-space-md text-left">Status &amp; SLA</th>
 <th class="py-3 px-space-md text-right">Actions</th>
 </tr>
 </thead>
 <tbody class="divide-y divide-surface-container-low" id="ticket-table-body">
-<!-- Row 1 -->
-<tr class="hover:bg-surface-container-high/40 transition-colors cursor-pointer group" onclick="openTicketDetail('#TKT-9042', 'Alex Rivera', 'SPN-FBR-0941', 'Fiber 1Gbps', 'No Internet', 'URGENT', 'Investigating', 'GPON ONT reboot attempted. Optical Rx -19.2 dBm normal, checking OLT switch port')" data-priority="URGENT" data-status="INVESTIGATING" data-type="NO_INTERNET">
-<td class="py-3 px-space-md"><input class="rounded text-primary focus:ring-0" type="checkbox" onclick="event.stopPropagation()"></td>
-<td class="py-3 px-space-md font-code-metric text-primary font-semibold">#TKT-9042</td>
-<td class="py-3 px-space-md">
-<div class="flex flex-col">
-<span class="font-headline-sm text-label-md text-on-surface">Alex Rivera</span>
-<span class="font-code-telemetry text-[11px] text-outline">SPN-FBR-0941</span>
-</div>
-</td>
-<td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">Fiber 1Gbps</td>
-<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">No Internet</span></td>
-<td class="py-3 px-space-md text-center"><div class="flex items-center justify-center"><span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span> Urgent</span></div></td>
-<td class="py-3 px-space-md">
-<span class="flex items-center gap-1 font-label-sm text-tertiary">
-<span class="material-symbols-outlined text-[14px]">auto_awesome</span> AI Copilot
-                </span>
-</td>
-<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">Investigating</span></td>
-<td class="py-3 px-space-md text-right">
-<div class="flex items-center justify-end gap-1">
-<button class="p-1 hover:bg-surface-container rounded text-secondary" onclick="resolveTicketRow(this, '#TKT-9042')" title="Resolve Ticket"><span class="material-symbols-outlined text-[18px]">check</span></button>
-<button class="p-1 hover:bg-surface-container rounded text-primary" onclick="switchView('unified-inbox')" title="Open Chat"><span class="material-symbols-outlined text-[18px]">forum</span></button>
-</div>
-</td>
-</tr>
-<!-- Row 2 -->
-<tr class="hover:bg-surface-container-high/40 transition-colors cursor-pointer group" onclick="openTicketDetail('#TKT-9038', 'Vanguard Logistics', 'SPN-DED-4410', 'Dedicated Leased Line', 'Billing Dispute', 'NORMAL', 'Awaiting Customer', 'Invoice #2026-10 dispute. Pro-rated 42 min downtime SLA credit applied')" data-priority="NORMAL" data-status="AWAITING" data-type="BILLING">
-<td class="py-3 px-space-md"><input class="rounded text-primary focus:ring-0" type="checkbox" onclick="event.stopPropagation()"></td>
-<td class="py-3 px-space-md font-code-metric text-primary font-semibold">#TKT-9038</td>
-<td class="py-3 px-space-md">
-<div class="flex flex-col">
-<span class="font-headline-sm text-label-md text-on-surface">Vanguard Logistics</span>
-<span class="font-code-telemetry text-[11px] text-outline">SPN-DED-4410</span>
-</div>
-</td>
-<td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">Dedicated Leased Line</td>
-<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm font-semibold">Billing Dispute</span></td>
-<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Normal</span></td>
-<td class="py-3 px-space-md">
-<span class="font-label-sm text-on-surface">Agent: Rachel P.</span>
-</td>
-<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">Awaiting Customer</span></td>
-<td class="py-3 px-space-md text-right">
-<div class="flex items-center justify-end gap-1">
-<button class="p-1 hover:bg-surface-container rounded text-secondary" onclick="resolveTicketRow(this, '#TKT-9038')" title="Resolve"><span class="material-symbols-outlined text-[18px]">check</span></button>
-<button class="p-1 hover:bg-surface-container rounded text-primary" onclick="showToast('Invoice recalculated and resent', 'SPN-DED-4410')" title="Resend Quote"><span class="material-symbols-outlined text-[18px]">receipt_long</span></button>
-</div>
-</td>
-</tr>
-<!-- Row 3 -->
-<tr class="hover:bg-surface-container-high/40 transition-colors cursor-pointer group" onclick="openTicketDetail('#TKT-9035', 'Hyperion Studio', 'SPN-FBR-7719', 'Fiber 1Gbps', 'Slow Speed', 'NORMAL', 'AI Diagnostics Done', 'Channel band auto-optimized to 160MHz. Speed verified 940/920 Mbps')" data-priority="NORMAL" data-status="AI_DIAG" data-type="SLOW_SPEED">
-<td class="py-3 px-space-md"><input class="rounded text-primary focus:ring-0" type="checkbox" onclick="event.stopPropagation()"></td>
-<td class="py-3 px-space-md font-code-metric text-primary font-semibold">#TKT-9035</td>
-<td class="py-3 px-space-md">
-<div class="flex flex-col">
-<span class="font-headline-sm text-label-md text-on-surface">Hyperion Studio</span>
-<span class="font-code-telemetry text-[11px] text-outline">SPN-FBR-7719</span>
-</div>
-</td>
-<td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">Fiber 1Gbps</td>
-<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Slow Speed</span></td>
-<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Normal</span></td>
-<td class="py-3 px-space-md">
-<span class="flex items-center gap-1 font-label-sm text-tertiary">
-<span class="material-symbols-outlined text-[14px]">auto_awesome</span> AI Agent
-                </span>
-</td>
-<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">AI Diagnostics Done</span></td>
-<td class="py-3 px-space-md text-right">
-<div class="flex items-center justify-end gap-1">
-<button class="p-1 hover:bg-surface-container rounded text-secondary" onclick="resolveTicketRow(this, '#TKT-9035')"><span class="material-symbols-outlined text-[18px]">check</span></button>
-<button class="p-1 hover:bg-surface-container rounded text-primary" onclick="showToast('Channel band switched to 160MHz', 'SPN-FBR-7719')"><span class="material-symbols-outlined text-[18px]">tune</span></button>
-</div>
-</td>
-</tr>
-<!-- Row 4 -->
-<tr class="hover:bg-surface-container-high/40 transition-colors cursor-pointer group" onclick="openTicketDetail('#TKT-9042', 'Alex Rivera', 'SPN-FBR-0941', 'Fiber 1Gbps', 'No Internet', 'URGENT', 'Investigating', 'GPON ONT reboot attempted. Optical Rx -19.2 dBm normal, checking OLT switch port')" data-priority="URGENT" data-status="INVESTIGATING" data-type="NO_INTERNET">
-<td class="py-3 px-space-md"><input class="rounded text-primary focus:ring-0" type="checkbox" onclick="event.stopPropagation()"></td>
-<td class="py-3 px-space-md font-code-metric text-primary font-semibold">#TKT-9031</td>
-<td class="py-3 px-space-md">
-<div class="flex flex-col">
-<span class="font-headline-sm text-label-md text-on-surface">Marcus Vance</span>
-<span class="font-code-telemetry text-[11px] text-outline">SPN-VDS-1092</span>
-</div>
-</td>
-<td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">VDSL 100M</td>
-<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">No Internet</span></td>
-<td class="py-3 px-space-md text-center"><div class="flex items-center justify-center"><span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span> Urgent</span></div></td>
-<td class="py-3 px-space-md">
-<span class="font-label-sm text-on-surface">Field NOC Dispatch</span>
-</td>
-<td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">Investigating</span></td>
-<td class="py-3 px-space-md text-right">
-<div class="flex items-center justify-end gap-1">
-<button class="p-1 hover:bg-surface-container rounded text-secondary" onclick="resolveTicketRow(this, '#TKT-9031')"><span class="material-symbols-outlined text-[18px]">check</span></button>
-<button class="p-1 hover:bg-surface-container rounded text-primary" onclick="switchView('network-outages')"><span class="material-symbols-outlined text-[18px]">build</span></button>
-</div>
-</td>
-</tr>
+<!-- Populated dynamically via renderTicketTable() -->
 </tbody>
 </table>
 </div>
+
 <!-- Pagination Footer -->
 <div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs text-on-surface-variant font-label-md text-label-md">
-<span class="">Showing <strong class="text-on-surface">1 - 4</strong> of <strong class="text-on-surface">14</strong> open tickets</span>
+<span class="">Showing <strong class="text-on-surface" id="ticket-count-showing">6</strong> of <strong class="text-on-surface" id="ticket-count-total">6</strong> tickets (In-Memory Prototype)</span>
 <div class="flex items-center gap-1">
-<button class="px-2.5 py-1 bg-surface-container rounded hover:bg-surface-container-high transition-colors">Prev</button>
+<button class="px-2.5 py-1 bg-surface-container rounded hover:bg-surface-container-high transition-colors" onclick="showToast('Pagination Demo', 'Page 1 of 1 active in-memory dataset')">Prev</button>
 <button class="px-2.5 py-1 bg-primary text-on-primary rounded font-semibold">1</button>
-<button class="px-2.5 py-1 bg-surface-container rounded hover:bg-surface-container-high transition-colors">2</button>
-<button class="px-2.5 py-1 bg-surface-container rounded hover:bg-surface-container-high transition-colors">Next</button>
+<button class="px-2.5 py-1 bg-surface-container rounded hover:bg-surface-container-high transition-colors" onclick="showToast('Pagination Demo', 'Showing all simulated tickets on single page')">Next</button>
 </div>
 </div>
 </div>
@@ -1115,6 +1058,416 @@
 </div>
 </div>
 </div>
+</div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- MODAL: CREATE NEW SUPPORT TICKET (MODULE 03)                            -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="create-ticket-modal">
+<div class="bg-surface-container-lowest max-w-2xl w-full rounded-2xl shadow-2xl p-space-xl flex flex-col gap-space-md transform scale-95 transition-transform duration-200 max-h-[90vh] overflow-y-auto" id="create-ticket-container">
+  <!-- Modal Header -->
+  <div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
+    <div class="flex items-center gap-space-sm">
+      <div class="p-2 rounded-xl bg-primary-fixed text-on-primary-fixed">
+        <span class="material-symbols-outlined text-[24px]">confirmation_number</span>
+      </div>
+      <div>
+        <h3 class="font-headline-md text-headline-md text-on-surface">Create Support Ticket</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Client-side mock incident dispatch &amp; verification workflow</p>
+      </div>
+    </div>
+    <button class="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container" onclick="closeCreateTicketModal()">
+      <span class="material-symbols-outlined text-[20px]">close</span>
+    </button>
+  </div>
+
+  <!-- Customer Verification Section (Feature Group 1) -->
+  <div class="flex flex-col gap-space-xs">
+    <label class="font-label-md text-label-md text-on-surface font-semibold flex items-center justify-between">
+      <span>Customer Verification <span class="text-error">*</span></span>
+      <span class="font-label-sm text-[11px] text-outline font-normal">Search by Customer ID, Name, or Phone</span>
+    </label>
+    <div class="flex items-center gap-2">
+      <div class="relative flex-1">
+        <span class="material-symbols-outlined absolute left-2.5 top-2.5 text-outline text-[18px]">person_search</span>
+        <input class="w-full pl-9 pr-3 py-2 bg-surface-container-low rounded-lg font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" id="new-ticket-cust-search" onkeyup="if(event.key==='Enter')executeCustomerVerification()" placeholder="Enter Customer ID (#8832), Name (Alex), or Phone (+880 1711...)" type="text">
+      </div>
+      <button class="px-space-md py-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md rounded-lg flex items-center gap-1 transition-colors" type="button" onclick="executeCustomerVerification()">
+        <span class="material-symbols-outlined text-[16px]">verified</span>
+        <span>Verify</span>
+      </button>
+    </div>
+
+    <!-- Quick Preset Subscriber Chips -->
+    <div class="flex items-center gap-1.5 flex-wrap pt-1 text-label-sm">
+      <span class="text-on-surface-variant text-[11px]">Quick Select:</span>
+      <button type="button" class="px-2 py-0.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface text-[11px]" onclick="selectCustomerForTicket('CUST-8832')">Alex Rivera (#8832)</button>
+      <button type="button" class="px-2 py-0.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface text-[11px]" onclick="selectCustomerForTicket('CUST-4491')">Sarah Jenkins (#4491)</button>
+      <button type="button" class="px-2 py-0.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface text-[11px]" onclick="selectCustomerForTicket('CUST-6210')">Farhan Ahmed (#6210)</button>
+      <button type="button" class="px-2 py-0.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface text-[11px]" onclick="selectCustomerForTicket('CUST-1092')">Marcus Vance (#1092)</button>
+      <button type="button" class="px-2 py-0.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface text-[11px]" onclick="selectCustomerForTicket('CUST-5120')">Tanvir Hossain (#5120)</button>
+    </div>
+
+    <!-- Verification Feedback Card (Feature Group 1) -->
+    <div class="mt-1 p-space-sm rounded-lg bg-surface-container-low border border-surface-container-high" id="new-ticket-cust-feedback">
+      <div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-[12px]">
+        <span class="material-symbols-outlined text-[18px] text-outline">info</span>
+        <span>Select or verify a registered subscriber above to attach to this ticket.</span>
+      </div>
+    </div>
+
+    <!-- Hidden state inputs for verified customer -->
+    <input type="hidden" id="new-ticket-cust-id" value="">
+    <input type="hidden" id="new-ticket-cust-name" value="">
+    <input type="hidden" id="new-ticket-cust-circuit" value="">
+    <input type="hidden" id="new-ticket-cust-plan" value="">
+    <input type="hidden" id="new-ticket-conv-id" value="">
+    <input type="hidden" id="new-ticket-source-channel" value="">
+  </div>
+
+  <!-- Duplicate Ticket Warning Banner (Feature Group 6) -->
+  <div class="hidden p-space-sm rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-body-sm flex flex-col gap-1" id="new-ticket-duplicate-warning">
+    <div class="flex items-center gap-2 font-semibold">
+      <span class="material-symbols-outlined text-[18px] text-amber-600">warning</span>
+      <span>Potential Duplicate Incident Detected</span>
+    </div>
+    <p class="text-[12px] text-amber-800 dark:text-amber-300" id="new-ticket-duplicate-text"></p>
+    <div class="flex items-center gap-2 mt-1">
+      <button type="button" class="px-2.5 py-1 bg-amber-200 dark:bg-amber-800 text-amber-900 dark:text-amber-100 rounded text-[11px] font-semibold hover:bg-amber-300" id="btn-duplicate-view" onclick="viewExistingDuplicateTicket()">View Existing Ticket</button>
+      <button type="button" class="px-2.5 py-1 bg-surface-container text-on-surface rounded text-[11px] hover:bg-surface-container-high" onclick="dismissDuplicateWarning()">Proceed as New Incident</button>
+    </div>
+  </div>
+
+  <!-- Issue Details Section (Feature Group 2) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+    <div class="flex flex-col gap-1">
+      <label class="font-label-md text-label-md text-on-surface font-semibold" for="new-ticket-type">Issue Category <span class="text-error">*</span></label>
+      <select class="w-full p-2 bg-surface-container-low rounded-lg font-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" id="new-ticket-type" onchange="onTicketCategoryChange()">
+        <option value="NO_INTERNET">No Internet (Auto-recommends Urgent)</option>
+        <option value="SLOW_INTERNET">Slow Internet (Auto-recommends High)</option>
+        <option value="ROUTER_WIFI">Wi-Fi / Router (Auto-recommends Normal)</option>
+        <option value="BILLING">Billing Dispute (Auto-recommends Normal)</option>
+        <option value="GENERAL">Other / General Support (Auto-recommends Normal)</option>
+      </select>
+    </div>
+    <div class="flex flex-col gap-1">
+      <label class="font-label-md text-label-md text-on-surface font-semibold" for="new-ticket-prio">Priority Level <span class="text-error">*</span></label>
+      <select class="w-full p-2 bg-surface-container-low rounded-lg font-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" id="new-ticket-prio">
+        <option value="NORMAL">Normal (24h SLA Target)</option>
+        <option value="HIGH">High (8h SLA Target)</option>
+        <option value="URGENT">Urgent (4h SLA Target)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-1">
+    <label class="font-label-md text-label-md text-on-surface font-semibold" for="new-ticket-subject">Subject / Problem Title <span class="text-error">*</span></label>
+    <input class="w-full p-2 bg-surface-container-low rounded-lg font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" id="new-ticket-subject" placeholder="e.g. Total optical signal loss on GPON node" type="text">
+  </div>
+
+  <div class="flex flex-col gap-1">
+    <label class="font-label-md text-label-md text-on-surface font-semibold" for="new-ticket-desc">Detailed Description</label>
+    <textarea class="w-full h-24 p-2.5 bg-surface-container-low rounded-lg font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary resize-none shadow-xs" id="new-ticket-desc" placeholder="Customer reported symptoms, physical indicator states, router behaviors..."></textarea>
+  </div>
+
+  <!-- Related chat reference banner if prefilled from chat -->
+  <div class="hidden p-2 rounded-lg bg-surface-container font-label-sm text-label-sm flex items-center justify-between" id="new-ticket-conv-info">
+    <span class="text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-primary">link</span> Originating Chat: <strong class="text-on-surface" id="new-ticket-conv-label">CONV-WA-8832</strong></span>
+    <span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[11px] font-semibold" id="new-ticket-conv-badge">WhatsApp</span>
+  </div>
+
+  <!-- Demo Guard Notice -->
+  <div class="p-2 rounded bg-surface-container-low text-[11px] text-outline flex items-center gap-1.5">
+    <span class="material-symbols-outlined text-[14px]">shield</span>
+    <span>Demo Mode: In-memory session state. Generates canonical TKT-ID consistent with Shared Data Contract.</span>
+  </div>
+
+  <!-- Modal Footer Buttons -->
+  <div class="flex items-center justify-end gap-space-sm pt-space-xs border-t border-surface-container-high">
+    <button class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-headline-sm text-label-md transition-colors" type="button" onclick="closeCreateTicketModal()">Cancel</button>
+    <button class="px-space-lg py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-label-md flex items-center gap-1.5 shadow-sm transition-colors" type="button" onclick="submitCreateTicket()">
+      <span class="material-symbols-outlined text-[18px]">add_task</span>
+      <span>Create Ticket</span>
+    </button>
+  </div>
+</div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- MODAL: TICKET DETAILS & WORKSPACE (MODULE 03)                           -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="ticket-detail-modal">
+<div class="bg-surface-container-lowest max-w-4xl w-full rounded-2xl shadow-2xl p-space-xl flex flex-col gap-space-md transform scale-95 transition-transform duration-200 max-h-[92vh] overflow-y-auto" id="ticket-modal-container">
+  <!-- Top Header Strip -->
+  <div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-xs border-b border-surface-container-high">
+    <div class="flex items-center gap-space-sm flex-wrap">
+      <div class="p-2 rounded-xl bg-primary-fixed text-on-primary-fixed">
+        <span class="material-symbols-outlined text-[24px]">support</span>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <h3 class="font-code-metric font-bold text-primary text-[22px]" id="td-modal-id">#TKT-9042</h3>
+        <span class="px-2.5 py-0.5 rounded-full text-label-sm font-semibold" id="td-modal-status-badge">Investigating</span>
+        <span class="px-2.5 py-0.5 rounded-full text-label-sm font-semibold" id="td-modal-prio">Urgent</span>
+        <span class="hidden px-2.5 py-0.5 rounded-full bg-error-container text-on-error-container text-label-sm font-bold flex items-center gap-1" id="td-modal-overdue-badge">
+          <span class="material-symbols-outlined text-[14px]">warning</span>
+          <span id="td-modal-overdue-text">OVERDUE</span>
+        </span>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="px-space-sm py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md flex items-center gap-1 text-[12px] transition-colors" id="td-modal-chat-btn" onclick="goToChatFromTicket()" title="Open linked conversation in Unified Inbox">
+        <span class="material-symbols-outlined text-[16px] text-primary">forum</span>
+        <span>Open Chat (<span id="td-modal-source-channel">WhatsApp</span>)</span>
+      </button>
+      <button class="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container" onclick="closeTicketModal()">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SLA & Fictional Notice Bar -->
+  <div class="px-space-md py-1.5 bg-surface-container-low rounded-lg flex flex-wrap items-center justify-between text-label-sm text-[12px] gap-2">
+    <span class="text-on-surface-variant flex items-center gap-1.5">
+      <span class="material-symbols-outlined text-[16px] text-outline">timer</span>
+      <span>Simulated SLA: <strong class="text-on-surface" id="td-modal-sla-text">4 Hours</strong> (Urgent: 4h, High: 8h, Normal: 24h)</span>
+    </span>
+    <span class="text-outline text-[11px]">DEMO-ONLY SIMULATION — Not a legally binding SLA commitment</span>
+  </div>
+
+  <!-- Two-Column Workspace Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
+    <!-- Left 2 Cols: Issue, Guided Support, Resolution & History -->
+    <div class="lg:col-span-2 flex flex-col gap-space-md">
+      <!-- Issue Overview Card -->
+      <div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-2">
+        <div class="flex items-center justify-between">
+          <span class="font-label-sm uppercase tracking-wider text-outline font-semibold">Issue Details</span>
+          <span class="px-2 py-0.5 rounded-full font-label-sm font-semibold bg-surface-container text-on-surface-variant" id="td-modal-category">No Internet</span>
+        </div>
+        <h4 class="font-headline-sm text-body-md font-semibold text-on-surface" id="td-modal-subject">Problem Subject</h4>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed" id="td-modal-desc">Issue description details...</p>
+        <div class="p-2 rounded bg-surface-container text-[12px] font-code-telemetry text-primary flex items-start gap-1.5" id="td-modal-diag-box">
+          <span class="material-symbols-outlined text-[16px] mt-0.5">terminal</span>
+          <span id="td-modal-diag">Telemetry notes...</span>
+        </div>
+      </div>
+
+      <!-- Guided Support Checklist (Feature Group 4) -->
+      <div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-2 border border-surface-container-high/60">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[18px] text-primary">checklist</span>
+            <span class="font-label-md text-label-md font-semibold text-on-surface">Guided Technical Troubleshooting</span>
+          </div>
+          <button class="px-2 py-1 bg-primary/10 hover:bg-primary/20 text-primary font-label-sm rounded text-[11px] font-semibold flex items-center gap-1 transition-colors" type="button" onclick="syncGuidedStepsToResolution()">
+            <span class="material-symbols-outlined text-[14px]">sync_alt</span>
+            <span>Sync to Resolution</span>
+          </button>
+        </div>
+        <p class="font-body-sm text-[11px] text-on-surface-variant">Perform troubleshooting steps and check them off to record resolution progress:</p>
+        <div class="flex flex-col gap-1.5 mt-1" id="td-modal-guided-steps">
+          <!-- Populated dynamically via renderGuidedSteps() -->
+        </div>
+        <!-- Quick Simulated Diagnostic Tools -->
+        <div class="flex items-center gap-2 flex-wrap pt-2 border-t border-surface-container-high/50 text-[11px]">
+          <span class="text-outline">Simulate:</span>
+          <button type="button" class="px-2 py-1 bg-surface-container hover:bg-surface-container-high rounded text-on-surface transition-colors" onclick="runSimulatedDiagnostic('reboot')">ONT Remote Reboot</button>
+          <button type="button" class="px-2 py-1 bg-surface-container hover:bg-surface-container-high rounded text-on-surface transition-colors" onclick="runSimulatedDiagnostic('optical')">Sweep Optical Rx dBm</button>
+          <button type="button" class="px-2 py-1 bg-surface-container hover:bg-surface-container-high rounded text-on-surface transition-colors" onclick="runSimulatedDiagnostic('speed')">Run Speed Test</button>
+        </div>
+      </div>
+
+      <!-- Lifecycle Action Buttons Strip (Feature Group 3 & 7) -->
+      <div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-2">
+        <span class="font-label-sm uppercase tracking-wider text-outline font-semibold">Change Lifecycle State</span>
+        <div class="flex items-center gap-2 flex-wrap" id="td-modal-status-actions">
+          <button type="button" class="px-3 py-1.5 bg-primary-fixed hover:bg-primary text-on-primary-fixed hover:text-on-primary rounded-lg font-label-md text-[12px] font-semibold transition-colors flex items-center gap-1" onclick="updateTicketStatusFromModal('IN_PROGRESS')">
+            <span class="material-symbols-outlined text-[16px]">play_arrow</span>
+            <span>Investigating</span>
+          </button>
+          <button type="button" class="px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg font-label-md text-[12px] transition-colors flex items-center gap-1" onclick="updateTicketStatusFromModal('PENDING_CUSTOMER')">
+            <span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+            <span>Awaiting Customer</span>
+          </button>
+          <button type="button" class="px-3 py-1.5 bg-tertiary-fixed hover:bg-tertiary text-on-tertiary-fixed hover:text-on-tertiary rounded-lg font-label-md text-[12px] font-semibold transition-colors flex items-center gap-1" onclick="escalateCurrentTicket()">
+            <span class="material-symbols-outlined text-[16px]">support_agent</span>
+            <span>Escalate to Tier III NOC</span>
+          </button>
+          <button type="button" class="px-3 py-1.5 bg-secondary-fixed hover:bg-secondary text-on-secondary-fixed hover:text-on-secondary rounded-lg font-label-md text-[12px] font-semibold transition-colors flex items-center gap-1" onclick="resolveCurrentTicketModal()">
+            <span class="material-symbols-outlined text-[16px]">done</span>
+            <span>Mark Resolved</span>
+          </button>
+          <button type="button" class="px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface rounded-lg font-label-md text-[12px] transition-colors flex items-center gap-1" onclick="confirmCustomerClosure()">
+            <span class="material-symbols-outlined text-[16px]">done_all</span>
+            <span>Simulate Customer Close</span>
+          </button>
+          <button type="button" class="px-3 py-1.5 bg-error-container text-on-error-container hover:opacity-90 rounded-lg font-label-md text-[12px] font-semibold transition-colors flex items-center gap-1" onclick="reopenCurrentTicketModal()">
+            <span class="material-symbols-outlined text-[16px]">restart_alt</span>
+            <span>Reopen Ticket</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Resolution Summary & Customer Feedback (Feature Group 7) -->
+      <div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-2">
+        <span class="font-label-sm uppercase tracking-wider text-outline font-semibold">Resolution Summary &amp; Customer Confirmation</span>
+        <textarea class="w-full h-20 p-2.5 bg-surface-container rounded-lg font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary resize-none text-[12px]" id="td-modal-resolution-summary" placeholder="Document root cause, corrective technical steps, and restoration verification notes..."></textarea>
+
+        <!-- Customer Feedback & CSAT Display -->
+        <div class="p-space-sm bg-surface-container rounded-lg flex flex-col gap-1.5" id="td-modal-feedback-card">
+          <div class="flex items-center justify-between">
+            <span class="font-label-sm font-semibold text-on-surface">Customer Satisfaction Rating (CSAT)</span>
+            <div class="flex items-center text-amber-500 text-[14px]" id="td-modal-feedback-stars">★★★★★</div>
+          </div>
+          <p class="font-body-sm text-[12px] text-on-surface-variant italic" id="td-modal-feedback-comment">No customer review submitted yet.</p>
+        </div>
+
+        <!-- Interactive Customer Rating Simulator (Feature Group 7) -->
+        <div class="p-2 rounded bg-surface-container-lowest border border-surface-container-high flex flex-col gap-1 text-[12px]" id="td-modal-rating-sim">
+          <span class="font-semibold text-on-surface text-[11px]">Simulate Post-Resolution Customer Feedback:</span>
+          <div class="flex items-center gap-2">
+            <select class="p-1 bg-surface-container-low rounded text-on-surface text-[11px]" id="td-modal-sim-rating">
+              <option value="5">★★★★★ (5 Stars - Excellent)</option>
+              <option value="4">★★★★☆ (4 Stars - Good)</option>
+              <option value="3">★★★☆☆ (3 Stars - Average)</option>
+              <option value="2">★★☆☆☆ (2 Stars - Poor)</option>
+              <option value="1">★☆☆☆☆ (1 Star - Dissatisfied)</option>
+            </select>
+            <input class="flex-1 p-1 bg-surface-container-low rounded text-on-surface placeholder:text-outline text-[11px]" id="td-modal-sim-comment" placeholder="Optional customer comment..." type="text">
+            <button type="button" class="px-2.5 py-1 bg-primary text-on-primary rounded text-[11px] font-semibold hover:bg-primary-container" onclick="submitSimulatedCustomerFeedback()">Submit CSAT</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chronological Audit Trail & Event Timeline (Feature Group 3) -->
+      <div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-2">
+        <span class="font-label-sm uppercase tracking-wider text-outline font-semibold">Audit Trail &amp; History Log</span>
+        <div class="flex flex-col gap-2 max-h-48 overflow-y-auto pr-1" id="td-modal-history">
+          <!-- Populated dynamically via renderTicketHistory() -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Right 1 Col: Customer Identity, Circuit, & Telecom Details -->
+    <div class="flex flex-col gap-space-md">
+      <!-- Customer Card -->
+      <div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-2">
+        <span class="font-label-sm uppercase tracking-wider text-outline font-semibold">Subscriber Profile</span>
+        <div class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-body-md" id="td-modal-cust-avatar">AR</div>
+          <div class="flex flex-col">
+            <span class="font-headline-sm text-body-md font-semibold text-on-surface" id="td-modal-cust">Alex Rivera</span>
+            <span class="font-code-telemetry text-[11px] text-primary" id="td-modal-cust-id">CUST-8832</span>
+          </div>
+        </div>
+        <div class="divide-y divide-surface-container-high/60 text-[12px] font-body-sm pt-1">
+          <div class="py-1.5 flex items-center justify-between">
+            <span class="text-on-surface-variant">Circuit ID:</span>
+            <span class="font-code-telemetry font-bold text-on-surface" id="td-modal-circuit">SPN-FBR-0941</span>
+          </div>
+          <div class="py-1.5 flex items-center justify-between">
+            <span class="text-on-surface-variant">Subscription:</span>
+            <span class="font-semibold text-on-surface" id="td-modal-plan">Fiber 1Gbps</span>
+          </div>
+          <div class="py-1.5 flex items-center justify-between">
+            <span class="text-on-surface-variant">Phone:</span>
+            <span class="font-code-telemetry text-on-surface" id="td-modal-phone">+880 1711-098832</span>
+          </div>
+          <div class="py-1.5 flex items-center justify-between">
+            <span class="text-on-surface-variant">Handling Agent:</span>
+            <span class="font-semibold text-tertiary" id="td-modal-agent">AI Copilot</span>
+          </div>
+          <div class="py-1.5 flex items-center justify-between">
+            <span class="text-on-surface-variant">Logged At:</span>
+            <span class="text-on-surface" id="td-modal-created">Today 10:15 AM</span>
+          </div>
+          <div class="py-1.5 flex flex-col gap-0.5">
+            <span class="text-on-surface-variant">Installation Address:</span>
+            <span class="text-on-surface text-[11px]" id="td-modal-addr">House 14, Road 7, Dhanmondi, Dhaka</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Escalation Info Box -->
+      <div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-2 border border-surface-container-high/50 text-[12px]">
+        <div class="flex items-center gap-1.5 text-on-surface font-semibold">
+          <span class="material-symbols-outlined text-[18px] text-tertiary">hub</span>
+          <span>NOC Escalation Protocol</span>
+        </div>
+        <p class="text-on-surface-variant text-[11px] leading-relaxed">
+          Escalations alert Tier III Engineering and queue physical telemetry diagnostics. Field technician dispatch is scheduled via Module 09.
+        </p>
+        <button type="button" class="w-full py-1.5 bg-tertiary text-on-tertiary rounded-lg font-label-md text-[12px] font-semibold hover:bg-tertiary-container transition-colors flex items-center justify-center gap-1" onclick="escalateCurrentTicket()">
+          <span class="material-symbols-outlined text-[16px]">priority_high</span>
+          <span>Escalate to Tier III NOC</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Footer -->
+  <div class="flex items-center justify-between pt-space-xs border-t border-surface-container-high">
+    <div class="flex items-center gap-1.5 text-[11px] text-outline">
+      <span class="material-symbols-outlined text-[14px]">history</span>
+      <span>All transitions and actions logged to in-memory audit trail</span>
+    </div>
+    <div class="flex items-center gap-space-sm">
+      <button class="px-space-md py-1.5 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-headline-sm text-label-md transition-colors" onclick="closeTicketModal()">Close</button>
+      <button class="px-space-md py-1.5 rounded-lg bg-primary text-on-primary hover:bg-primary-container font-headline-sm text-label-md transition-colors" onclick="saveTicketModalChanges()">Save Changes</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- MODAL: SIMULATED STATUS INQUIRY (MODULE 03 FEATURE GROUP 6)              -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="status-inquiry-modal">
+<div class="bg-surface-container-lowest max-w-lg w-full rounded-2xl shadow-2xl p-space-xl flex flex-col gap-space-md transform scale-95 transition-transform duration-200" id="status-inquiry-container">
+  <div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
+    <div class="flex items-center gap-space-sm">
+      <div class="p-2 rounded-xl bg-secondary-fixed text-on-secondary-fixed">
+        <span class="material-symbols-outlined text-[24px]">quick_reference</span>
+      </div>
+      <div>
+        <h3 class="font-headline-md text-headline-md text-on-surface">Simulate Status Inquiry</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Customer inquiring about an active or closed ticket</p>
+      </div>
+    </div>
+    <button class="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container" onclick="closeStatusInquiryModal()">
+      <span class="material-symbols-outlined text-[20px]">close</span>
+    </button>
+  </div>
+
+  <div class="flex flex-col gap-space-xs">
+    <label class="font-label-md text-label-md text-on-surface font-semibold" for="status-inquiry-query">Ticket ID or Customer ID / Phone</label>
+    <div class="flex items-center gap-2">
+      <input class="w-full p-2 bg-surface-container-low rounded-lg font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" id="status-inquiry-query" onkeyup="if(event.key==='Enter')executeStatusInquiry()" placeholder="e.g. #TKT-9042, CUST-8832, or Alex Rivera" type="text">
+      <button class="px-space-md py-2 bg-primary text-on-primary font-label-md rounded-lg flex items-center gap-1 hover:bg-primary-container transition-colors" type="button" onclick="executeStatusInquiry()">
+        <span class="material-symbols-outlined text-[16px]">search</span>
+        <span>Lookup</span>
+      </button>
+    </div>
+    <div class="flex items-center gap-1.5 flex-wrap pt-1 text-[11px]">
+      <span class="text-on-surface-variant">Quick Test:</span>
+      <button type="button" class="px-2 py-0.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface" onclick="runPresetStatusInquiry('#TKT-9042')">Alex (#TKT-9042)</button>
+      <button type="button" class="px-2 py-0.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface" onclick="runPresetStatusInquiry('#TKT-9031')">Marcus (#TKT-9031 - Overdue)</button>
+      <button type="button" class="px-2 py-0.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface" onclick="runPresetStatusInquiry('#TKT-9035')">Hyperion (#TKT-9035 - Resolved)</button>
+    </div>
+  </div>
+
+  <!-- Inquiry Result Card -->
+  <div class="p-space-md rounded-xl bg-surface-container-low border border-surface-container-high min-h-[120px] flex flex-col justify-center" id="status-inquiry-result">
+    <div class="flex items-center justify-center gap-2 text-on-surface-variant text-[12px]">
+      <span class="material-symbols-outlined text-[18px] text-outline">search_check</span>
+      <span>Enter an active Ticket ID or Customer identifier to simulate an inquiry response.</span>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-end pt-space-xs border-t border-surface-container-high">
+    <button class="px-space-md py-1.5 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-headline-sm text-label-md" onclick="closeStatusInquiryModal()">Done</button>
+  </div>
 </div>
 </div>
 <!-- Vanilla JavaScript for instant client-side interaction & tab orchestration -->
@@ -1690,9 +2043,9 @@
       label: 'Support Working Hours',
       intents: ['support_hours', 'helpline_schedule'],
       keywords: {
-        en: ['hours', 'working hours', 'office hours', 'support hours', 'open', 'when can i call', 'helpline', 'schedule'],
-        bn: ['কাজের সময়', 'অফিস সময়', 'সাপোর্ট কখন খোলা', 'খোলা থাকে', 'হেল্পলাইন সময়', 'কখন ফোন দিব'],
-        banglish: ['working hours', 'office hours', 'support kokhon khola', 'helpline', 'kobe open', 'koto shomoy']
+        en: ['working hours', 'office hours', 'support hours', 'business hours', 'operating hours', 'open hours', 'when are you open', 'are you open', 'when do you open', 'office open', 'support open', 'when can i call', 'helpline schedule', 'closing time', 'what time'],
+        bn: ['কাজের সময়', 'অফিস সময়', 'সাপোর্ট কখন খোলা', 'খোলা থাকে', 'হেল্পলাইন সময়', 'কখন ফোন দিব', 'কখন বন্ধ'],
+        banglish: ['working hours', 'office hours', 'support kokhon khola', 'helpline', 'kobe open', 'koto shomoy', 'kokhon khola']
       },
       route: 'faq',
       routeLabel: 'Support Info',
@@ -1705,11 +2058,11 @@
     technical_problem: {
       category: 'Technical Troubleshooting',
       label: 'Technical Troubleshooting',
-      intents: ['slow_internet', 'connection_drop', 'pon_red_light', 'wifi_issue'],
+      intents: ['slow_internet', 'connection_drop', 'pon_red_light', 'wifi_issue', 'stopped_working', 'ticket_request'],
       keywords: {
-        en: ['slow', 'speed slow', 'drop', 'dropping', 'disconnect', 'disconnecting', 'red light', 'pon light', 'los light', 'no internet', 'not working', 'router', 'wifi', 'reboot', 'restart', 'ping', 'high ping', 'packet loss', 'buffering'],
-        bn: ['ধীরগতি', 'স্লো', 'ড্রপ', 'ডিসকানেক্ট', 'লাল বাতি', 'পন লাইট', 'এলওএস লাইট', 'কাজ করছে না', 'ইন্টারনেট নাই', 'রাউটার', 'রিস্টার্ট', 'পিং বেশি', 'প্যাকেট লস'],
-        banglish: ['slow', 'speed pacchi na', 'drop korche', 'disconnect hoy', 'red light', 'pon light', 'los light', 'kaj korche na', 'net nai', 'router', 'restart', 'ping high', 'packet loss']
+        en: ['slow', 'speed slow', 'drop', 'dropping', 'disconnect', 'disconnecting', 'red light', 'pon light', 'los light', 'no internet', 'not working', 'stopped working', 'internet stopped', 'connection dropped', 'connection lost', 'offline', 'internet down', 'line down', 'outage', 'router', 'wifi', 'reboot', 'restart', 'ping', 'high ping', 'packet loss', 'buffering', 'support ticket', 'open ticket', 'open a ticket', 'open support ticket', 'create ticket', 'create a ticket', 'raise ticket', 'raise a ticket', 'file ticket', 'file a ticket', 'issue ticket', 'helpdesk ticket'],
+        bn: ['ধীরগতি', 'স্লো', 'ড্রপ', 'ডিসকানেক্ট', 'লাল বাতি', 'পন লাইট', 'এলওএস লাইট', 'কাজ করছে না', 'ইন্টারনেট নাই', 'বন্ধ', 'ইন্টারনেট বন্ধ', 'কানেকশন বন্ধ', 'রাউটার', 'রিস্টার্ট', 'পিং বেশি', 'প্যাকেট লস', 'টিকিট খুলুন', 'টিকিট ওপেন', 'সাপোর্ট টিকিট'],
+        banglish: ['slow', 'speed pacchi na', 'drop korche', 'disconnect hoy', 'red light', 'pon light', 'los light', 'kaj korche na', 'net nai', 'stopped working', 'net stopped', 'internet bondho', 'line bondho', 'router', 'restart', 'ping high', 'packet loss', 'support ticket', 'ticket open', 'ticket khulun', 'create ticket']
       },
       route: 'ticket_suggest',
       routeLabel: 'Support Ticket Desk',
@@ -1853,7 +2206,8 @@
     const text = cleanText || '';
     const pkg = SPACE_NET_PACKAGES.find(p => p.match.test(text)) || null;
     const zone = SPACE_NET_COVERAGE_ZONES.find(z => z.match.test(text)) || null;
-    return { pkg, zone };
+    const hasTicketRequest = /(?:open|create|raise|file|need|make|log)\s+(?:a\s+)?(?:support\s+)?ticket|support\s+ticket|helpdesk\s+ticket|টিকিট\s*(?:খুলুন|করুন|কাটুন|দিন)|ticket\s*(?:khulun|koren|open)/i.test(text);
+    return { pkg, zone, hasTicketRequest };
   }
 
   function getCategoryResponse(key, outputLang, entities) {
@@ -1896,6 +2250,17 @@
       }
     }
 
+    // 4. Technical Problem with explicit Ticket Request (QA Remediation Issue 1)
+    if (key === 'technical_problem' && entities && entities.hasTicketRequest) {
+      if (outputLang === 'BN') {
+        return "আমি বুঝতে পারছি আপনার ইন্টারনেট সংযোগে সমস্যা হচ্ছে। আমি আমাদের সাপোর্ট টিকিট ডেস্কে বিষয়টি জানিয়ে একটি খসড়া সাপোর্ট টিকিট প্রস্তুত করেছি। অনাকাঙ্ক্ষিত আবেদন এড়াতে টিকিট তৈরির চূড়ান্ত অনুমোদনের প্রয়োজন রয়েছে। বিস্তারিত যাচাই করে 'Suggest Ticket' অপশন থেকে এটি নিশ্চিত করতে পারেন। ইতিমধ্যে আপনার GPON ONT মডেমের পাওয়ার ও ফাইবার ক্যাবল সংযোগ পরীক্ষা করুন।";
+      } else if (outputLang === 'Banglish') {
+        return "Ami bujhte perechi apnar internet connect hocche na. Support Ticket Desk-er jonno ekta draft ticket prefill kora hoyeche. Unintended submission bondho korte staff confirmation proyojon; apni 'Suggest Ticket' click kore verify o confirm korte paren. Er moddhe GPON ONT modem-er power cycle check korun.";
+      } else {
+        return "I understand your internet has stopped working. I have flagged this technical issue for our Support Ticket Desk and prefilled a support ticket for your GPON connection. To prevent unintended submissions, ticket creation requires staff confirmation. You can review the details and click 'Suggest Ticket' to confirm. In the meantime, please check if your GPON ONT modem power and fiber cables are secure.";
+      }
+    }
+
     // Base knowledge base responses
     return cat.responses[outputLang] || cat.responses['EN'];
   }
@@ -1917,6 +2282,11 @@
 
     // Issue 1: Outage Credit / Downtime Bill Credit Specific Compound Rule
     const hasOutageCreditIntent = /(bill credit|service credit|outage credit|downtime credit|credit.*(?:down|outage|cut|break)|(?:down|outage|cut|break).*credit|বিল ক্রেডিট|সার্ভিস ক্রেডিট|ক্ষতিপূরণ|down thakle.*credit)/i.test(clean);
+
+    // QA Remediation Issue 1: Explicit Ticket Request and Technical Stoppage Intent Detectors
+    const hasTicketCreationIntent = /(?:open|create|raise|file|need|make|log)\s+(?:a\s+)?(?:support\s+)?ticket|support\s+ticket|helpdesk\s+ticket|টিকিট\s*(?:খুলুন|করুন|কাটুন|দিন)|ticket\s*(?:khulun|koren|open)/i.test(clean);
+    const hasTechnicalIssueIntent = /(?:internet|connection|net|wifi|wi-fi|fiber|line|service|router|modem).*(?:stopped|dropped|down|dead|broken|cut|fail|issue|problem)|(?:stopped|not)\s+working|no\s+internet|offline|disrupted|কাজ\s*করছে\s*না|ইন্টারনেট\s*নাই|বন্ধ|down\s*hoyeche|cholche\s*na/i.test(clean);
+    const hasSupportHoursIntent = /(?:working hours|office hours|support hours|business hours|operating hours|closing time|what time.*(?:open|close)|when.*(?:open|close)|helpline.*hours|helpline.*schedule|support.*(?:schedule|time)|কাজের সময়|অফিস সময়|সাপোর্ট কখন খোলা|কখন খোলা|কখন বন্ধ|খোলা থাকে|office.*khola|kobe.*open|kokhon.*khola)/i.test(clean);
 
     // Score all categories
     const scoredCategories = [];
@@ -1957,6 +2327,21 @@
         score = Math.max(0, score - 8);
       }
 
+      // Priority boost for Technical Problem & Ticket Creation (QA Remediation Issue 1)
+      if (key === 'technical_problem') {
+        if (hasTicketCreationIntent) score += 12;
+        if (hasTechnicalIssueIntent) score += 8;
+      }
+
+      // Support Hours guard: Prioritize explicit ticket-creation requests and technical incidents over generic occurrences of "support"
+      if (key === 'support_hours') {
+        if (hasTicketCreationIntent || (hasTechnicalIssueIntent && !hasSupportHoursIntent)) {
+          score = 0;
+        } else if (hasSupportHoursIntent) {
+          score += 10;
+        }
+      }
+
       if (score > 0) {
         scoredCategories.push({ key, category, score });
       }
@@ -1978,9 +2363,14 @@
       }
     }
 
-    // 2. Outage credit takes precedence over generic billing
+    // 2. Outage credit takes precedence over generic billing and active troubleshooting
     if (hasOutageCreditIntent) {
-      filteredCandidates = filteredCandidates.filter(c => c.key !== 'billing_guidance');
+      filteredCandidates = filteredCandidates.filter(c => c.key !== 'billing_guidance' && c.key !== 'technical_problem');
+    }
+
+    // 3. Technical problem & ticket request takes precedence over support hours (QA Remediation Issue 1)
+    if ((hasTicketCreationIntent || hasTechnicalIssueIntent) && !hasSupportHoursIntent) {
+      filteredCandidates = filteredCandidates.filter(c => c.key !== 'support_hours');
     }
 
     // Support up to 3 distinct intents in one customer message
@@ -2130,19 +2520,25 @@
     // Issue 3: Distinguish historical frustration from CURRENT intent
     const frustration = detectCustomerFrustration(conv);
     if (frustration.isFrustrated && conv.status !== 'human_takeover') {
-      // Keep current customer intent visible, but route suggests Human NOC handover
+      // Historical customer frustration remains visible via label and churn risk indicator,
+      // but does NOT replace or suppress the current inquiry's detected intent or routing action.
       if (intentEl) intentEl.textContent = `${classification.label} (Frustration Flagged)`;
-      if (routeEl) routeEl.textContent = 'Human Tier III NOC (Urgent Handover)';
       if (confPill) confPill.textContent = 'High Churn Risk';
-      if (actionLabel) actionLabel.textContent = 'Escalate to NOC';
-      if (actionIcon) actionIcon.textContent = 'support_agent';
-      banner.setAttribute('data-active-route', 'human_escalation');
-      return;
+
+      // If the current inquiry explicitly routes to human_escalation or is unrecognized, suggest Human NOC handover
+      if (classification.route === 'human_escalation' || classification.intent === 'unknown') {
+        if (routeEl) routeEl.textContent = 'Human Tier III NOC (Urgent Handover)';
+        if (actionLabel) actionLabel.textContent = 'Escalate to NOC';
+        if (actionIcon) actionIcon.textContent = 'support_agent';
+        banner.setAttribute('data-active-route', 'human_escalation');
+        return;
+      }
+    } else {
+      if (intentEl) intentEl.textContent = classification.label;
+      if (confPill) confPill.textContent = `${Math.round(classification.confidence * 100)}% Match`;
     }
 
-    if (intentEl) intentEl.textContent = classification.label;
     if (routeEl) routeEl.textContent = classification.routeLabel;
-    if (confPill) confPill.textContent = `${Math.round(classification.confidence * 100)}% Match`;
 
     banner.setAttribute('data-active-route', classification.route);
 
@@ -2176,7 +2572,28 @@
     if (route === 'human_escalation') {
       escalateToHumanFromFrustration();
     } else if (route === 'ticket_suggest') {
-      showToast('Ticket Routing Recommendation', `Recommended creating a diagnostic ticket for Circuit ${conv.circuitId || 'SPN-FBR-0941'}.`);
+      // Module 03 Feature Group 5: Actionable Ticket Suggestion from Chat & Copilot
+      let inquiryText = '';
+      if (conv.messages && conv.messages.length) {
+        for (let i = conv.messages.length - 1; i >= 0; i--) {
+          const m = conv.messages[i];
+          if (m.sender === 'customer' || m.sender === 'voice') {
+            inquiryText = m.text || m.transcript || '';
+            break;
+          }
+        }
+      }
+      openCreateTicketModal({
+        customerId: conv.customerId,
+        customerName: conv.customerName,
+        circuitId: conv.circuitId,
+        conversationId: conv.conversationId,
+        sourceChannel: conv.channel || 'chat',
+        category: 'NO_INTERNET',
+        subject: inquiryText ? (inquiryText.length > 50 ? `${inquiryText.slice(0, 50)}...` : inquiryText) : `Optical / Connectivity issue on ${conv.circuitId}`,
+        description: inquiryText || 'Customer reported connectivity issue during chat conversation.'
+      });
+      showToast('Ticket Suggestion Actionable', `Prefilled support ticket creation for ${conv.customerName} (${conv.customerId}).`);
     } else if (route === 'sales_handoff') {
       showToast('Sales Handoff Recommendation', `Recommended creating a Sales Lead for ${conv.customerName} on ${conv.channelLabel}.`);
     } else if (route === 'billing_guidance') {
@@ -3508,26 +3925,1310 @@
     showToast('Channel Filtered', 'Showing conversations for: ' + (labelMap[ch] || ch.toUpperCase()));
   }
 
-  // 5. Tickets Management & Details
+  // 5. Tickets Management & Details (Module 03 — Complete Implementation)
   let currentModalTicket = null;
+  let allowDuplicateSubmission = false;
 
-  function openTicketDetail(id, cust, circuit, plan, type, prio, status, diag) {
-    currentModalTicket = { id, cust, circuit, plan, type, prio, status, diag };
-    document.getElementById('td-modal-id').textContent = id;
-    document.getElementById('td-modal-cust').textContent = cust;
-    document.getElementById('td-modal-circuit').textContent = circuit;
-    document.getElementById('td-modal-plan').textContent = plan;
-    document.getElementById('td-modal-prio').textContent = prio;
-    document.getElementById('td-modal-diag').textContent = diag;
+  // Shared Customer Registry (Module 03 Feature Group 1 & Shared Data Contract)
+  const SPACE_NET_CUSTOMERS = [
+    {
+      customerId: 'CUST-8832',
+      displayId: '#8832',
+      name: 'Alex Rivera',
+      phone: '+880 1711-098832',
+      email: 'alex.rivera@example.com',
+      circuitId: 'SPN-FBR-0941',
+      plan: 'Fiber 500M',
+      connectionType: 'Fiber 1Gbps',
+      address: 'House 14, Road 7, Dhanmondi, Dhaka',
+      zone: 'Dhanmondi',
+      activeConversationId: 'CONV-WA-8832'
+    },
+    {
+      customerId: 'CUST-4491',
+      displayId: '#4491',
+      name: 'Sarah Jenkins',
+      phone: '+880 1819-449102',
+      email: 'sarah.j@techcorp.com',
+      circuitId: 'SPN-FBR-4491',
+      plan: 'Office Pro 1G',
+      connectionType: 'Dedicated Leased Line',
+      address: 'Level 4, Plot 22, Gulshan-1, Dhaka',
+      zone: 'Gulshan',
+      activeConversationId: 'CONV-FB-4491'
+    },
+    {
+      customerId: 'CUST-6210',
+      displayId: '#6210',
+      name: 'Farhan Ahmed',
+      phone: '+880 1912-621034',
+      email: 'farhan.esports@gmail.com',
+      circuitId: 'SPN-FBR-6210',
+      plan: 'Gamer 300M',
+      connectionType: 'Fiber GPON',
+      address: 'Road 11, Banani, Dhaka',
+      zone: 'Banani',
+      activeConversationId: 'CONV-IG-6210'
+    },
+    {
+      customerId: 'CUST-1092',
+      displayId: '#1092',
+      name: 'Marcus Vance',
+      phone: '+880 1613-109255',
+      email: 'marcus.v@outlook.com',
+      circuitId: 'SPN-VDS-1092',
+      plan: 'Home Lite 100M',
+      connectionType: 'VDSL 100M',
+      address: 'Sector 3, Uttara, Dhaka',
+      zone: 'Uttara',
+      activeConversationId: 'CONV-WEB-1092'
+    },
+    {
+      customerId: 'CUST-7721',
+      displayId: '#7721',
+      name: 'Elena Rostov',
+      phone: '+880 1714-772188',
+      email: 'elena.rostov@nordic.io',
+      circuitId: 'SPN-FBR-7721',
+      plan: 'Fiber Gigabit',
+      connectionType: 'Fiber Gigabit',
+      address: 'Block D, Bashundhara R/A, Dhaka',
+      zone: 'Bashundhara',
+      activeConversationId: 'CONV-TG-7721'
+    },
+    {
+      customerId: 'CUST-5120',
+      displayId: '#5120',
+      name: 'Tanvir Hossain',
+      phone: '+880 1515-512099',
+      email: 'tanvir.h@bdmail.net',
+      circuitId: 'SPN-FBR-5120',
+      plan: 'Home 150M',
+      connectionType: 'Fiber 150M',
+      address: 'Road 27, Dhanmondi, Dhaka',
+      zone: 'Dhanmondi',
+      activeConversationId: 'CONV-FB-5120'
+    },
+    {
+      customerId: 'CUST-3340',
+      displayId: '#3340',
+      name: 'Nabila Karim',
+      phone: '+880 1716-334012',
+      email: 'nabila.stream@twitchbd.com',
+      circuitId: 'SPN-FBR-3340',
+      plan: 'Streamer 200M',
+      connectionType: 'Fiber 200M',
+      address: 'Avenue 5, Mirpur DOHS, Dhaka',
+      zone: 'Mirpur',
+      activeConversationId: 'CONV-IG-3340'
+    },
+    {
+      customerId: 'CUST-4410',
+      displayId: '#4410',
+      name: 'Vanguard Logistics',
+      phone: '+880 1718-441001',
+      email: 'ops@vanguard-logistics.com',
+      circuitId: 'SPN-DED-4410',
+      plan: 'Dedicated Leased Line',
+      connectionType: 'Dedicated Leased Line',
+      address: 'Tejgaon Industrial Area, Dhaka',
+      zone: 'Tejgaon',
+      activeConversationId: null
+    },
+    {
+      customerId: 'CUST-7719',
+      displayId: '#7719',
+      name: 'Hyperion Studio',
+      phone: '+880 1719-771922',
+      email: 'contact@hyperion.studio',
+      circuitId: 'SPN-FBR-7719',
+      plan: 'Fiber 1Gbps',
+      connectionType: 'Fiber 1Gbps',
+      address: 'Mohakhali DOHS, Dhaka',
+      zone: 'Mohakhali',
+      activeConversationId: null
+    }
+  ];
 
-    const modal = document.getElementById('ticket-detail-modal');
-    const container = document.getElementById('ticket-modal-container');
+  // Feature Group 1: Customer Verification Helper
+  function verifyCustomer(query) {
+    if (!query || typeof query !== 'string') {
+      return { verified: false, error: 'Customer query cannot be empty.' };
+    }
+    const cleanQ = query.trim().toLowerCase();
+    const digitsOnly = cleanQ.replace(/\D/g, '');
+
+    // 1. Match customerId (e.g. "cust-8832", "#8832", "8832")
+    let match = SPACE_NET_CUSTOMERS.find(c =>
+      c.customerId.toLowerCase() === cleanQ ||
+      c.displayId.toLowerCase() === cleanQ ||
+      c.customerId.replace(/\D/g, '') === cleanQ ||
+      (digitsOnly.length >= 4 && c.customerId.replace(/\D/g, '').endsWith(digitsOnly))
+    );
+
+    // 2. Match Name (substring)
+    if (!match) {
+      match = SPACE_NET_CUSTOMERS.find(c => c.name.toLowerCase().includes(cleanQ));
+    }
+
+    // 3. Match Phone number
+    if (!match && digitsOnly.length >= 6) {
+      match = SPACE_NET_CUSTOMERS.find(c => c.phone.replace(/\D/g, '').includes(digitsOnly));
+    }
+
+    // 4. Match Circuit ID
+    if (!match) {
+      match = SPACE_NET_CUSTOMERS.find(c => c.circuitId.toLowerCase() === cleanQ);
+    }
+
+    if (match) {
+      return { verified: true, customer: match };
+    }
+
+    return {
+      verified: false,
+      error: 'Customer record not found. Fictional verification fallback: Please verify customer phone or ID, or select from registered subscribers.'
+    };
+  }
+
+  function selectCustomerForTicket(customerId) {
+    const cust = SPACE_NET_CUSTOMERS.find(c => c.customerId === customerId);
+    if (!cust) return;
+
+    const searchInput = document.getElementById('new-ticket-cust-search');
+    if (searchInput) searchInput.value = `${cust.name} (${cust.customerId})`;
+
+    const feedback = document.getElementById('new-ticket-cust-feedback');
+    if (feedback) {
+      feedback.className = 'mt-1 p-space-sm rounded-lg bg-primary-fixed/30 border border-primary/30 flex items-center justify-between text-[12px]';
+      feedback.innerHTML = `
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[20px] text-primary">verified</span>
+          <div>
+            <div class="font-semibold text-on-surface">${cust.name} <span class="text-primary font-code-telemetry">(${cust.customerId})</span></div>
+            <div class="text-[11px] text-on-surface-variant">${cust.circuitId} &bull; ${cust.plan} &bull; ${cust.phone}</div>
+          </div>
+        </div>
+        <span class="px-2 py-0.5 rounded bg-primary text-on-primary text-[10px] font-bold">VERIFIED</span>
+      `;
+    }
+
+    const idInput = document.getElementById('new-ticket-cust-id');
+    const nameInput = document.getElementById('new-ticket-cust-name');
+    const circuitInput = document.getElementById('new-ticket-cust-circuit');
+    const planInput = document.getElementById('new-ticket-cust-plan');
+    if (idInput) idInput.value = cust.customerId;
+    if (nameInput) nameInput.value = cust.name;
+    if (circuitInput) circuitInput.value = cust.circuitId;
+    if (planInput) planInput.value = cust.connectionType || cust.plan;
+
+    // Check for potential duplicates
+    const catSelect = document.getElementById('new-ticket-type');
+    const cat = catSelect ? catSelect.value : 'NO_INTERNET';
+    checkForDuplicateWarning(cust.customerId, cat);
+  }
+
+  function executeCustomerVerification() {
+    const input = document.getElementById('new-ticket-cust-search');
+    const query = input ? input.value : '';
+    const res = verifyCustomer(query);
+
+    const feedback = document.getElementById('new-ticket-cust-feedback');
+    if (!res.verified) {
+      if (feedback) {
+        feedback.className = 'mt-1 p-space-sm rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 flex items-center gap-2 text-amber-900 dark:text-amber-200 text-[12px]';
+        feedback.innerHTML = `
+          <span class="material-symbols-outlined text-[18px] text-amber-600">warning</span>
+          <span>${res.error}</span>
+        `;
+      }
+      const idInput = document.getElementById('new-ticket-cust-id');
+      if (idInput) idInput.value = '';
+      return false;
+    }
+
+    selectCustomerForTicket(res.customer.customerId);
+    return true;
+  }
+
+  // Feature Group 2: Categories, Priorities & SLA Rules
+  const TICKET_CATEGORIES = {
+    NO_INTERNET: { label: 'No Internet', defaultPriority: 'URGENT', badgeClass: 'bg-error-container text-on-error-container' },
+    SLOW_INTERNET: { label: 'Slow Internet', defaultPriority: 'HIGH', badgeClass: 'bg-secondary-fixed text-on-secondary-fixed' },
+    ROUTER_WIFI: { label: 'Wi-Fi / Router', defaultPriority: 'NORMAL', badgeClass: 'bg-tertiary-fixed text-on-tertiary-fixed' },
+    BILLING: { label: 'Billing Dispute', defaultPriority: 'NORMAL', badgeClass: 'bg-surface-container-highest text-on-surface-variant' },
+    GENERAL: { label: 'Other / General Support', defaultPriority: 'NORMAL', badgeClass: 'bg-surface-container text-on-surface-variant' }
+  };
+
+  const TICKET_PRIORITIES = {
+    URGENT: { label: 'Urgent', slaHours: 4, badgeClass: 'bg-error-container text-on-error-container font-semibold' },
+    HIGH: { label: 'High', slaHours: 8, badgeClass: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200 font-semibold' },
+    NORMAL: { label: 'Normal', slaHours: 24, badgeClass: 'bg-surface-container text-on-surface-variant' }
+  };
+
+  const TICKET_STATUSES = {
+    OPEN: { label: 'Open', badgeClass: 'bg-surface-container text-on-surface' },
+    IN_PROGRESS: { label: 'Investigating', badgeClass: 'bg-primary-fixed text-on-primary-fixed font-semibold' },
+    PENDING_CUSTOMER: { label: 'Awaiting Customer', badgeClass: 'bg-surface-container-highest text-on-surface-variant' },
+    ESCALATED: { label: 'Escalated to Tier III', badgeClass: 'bg-tertiary-fixed text-on-tertiary-fixed font-semibold' },
+    RESOLVED: { label: 'Resolved', badgeClass: 'bg-secondary-fixed text-on-secondary-fixed font-semibold' },
+    CLOSED: { label: 'Closed', badgeClass: 'bg-surface-container-high text-outline' },
+    REOPENED: { label: 'Reopened', badgeClass: 'bg-error-container text-on-error-container font-semibold' }
+  };
+
+  function onTicketCategoryChange() {
+    const catSelect = document.getElementById('new-ticket-type');
+    const prioSelect = document.getElementById('new-ticket-prio');
+    if (!catSelect || !prioSelect) return;
+
+    const catKey = catSelect.value;
+    const catMeta = TICKET_CATEGORIES[catKey];
+    if (catMeta && catMeta.defaultPriority) {
+      prioSelect.value = catMeta.defaultPriority;
+    }
+
+    const idInput = document.getElementById('new-ticket-cust-id');
+    if (idInput && idInput.value) {
+      checkForDuplicateWarning(idInput.value, catKey);
+    }
+  }
+
+  // Feature Group 4: Dynamic Guided Troubleshooting Steps
+  function getGuidedStepsForCategory(categoryKey) {
+    switch (categoryKey) {
+      case 'NO_INTERNET':
+        return [
+          { id: 'step-1', label: 'Check router & ONT power LED indicators', completed: true, completedAt: 'Earlier today' },
+          { id: 'step-2', label: 'Check optical fiber patch cord & Rx dBm level', completed: true, completedAt: 'Earlier today' },
+          { id: 'step-3', label: 'Dispatch simulated remote ONT reboot sequence', completed: false, completedAt: null },
+          { id: 'step-4', label: 'Verify OLT PON switch port link integrity', completed: false, completedAt: null }
+        ];
+      case 'SLOW_INTERNET':
+        return [
+          { id: 'step-1', label: 'Verify connection interface (Ethernet vs 5GHz Wi-Fi)', completed: true, completedAt: 'Earlier today' },
+          { id: 'step-2', label: 'Scan connected client devices for bandwidth hogs', completed: false, completedAt: null },
+          { id: 'step-3', label: 'Execute remote ONT throughput speed test (Target: Plan Speed)', completed: false, completedAt: null },
+          { id: 'step-4', label: 'Auto-calibrate Wi-Fi channel bandwidth (160MHz)', completed: false, completedAt: null }
+        ];
+      case 'ROUTER_WIFI':
+        return [
+          { id: 'step-1', label: 'Verify Wi-Fi SSID broadcast and WPA3 credentials', completed: true, completedAt: 'Earlier today' },
+          { id: 'step-2', label: 'Analyze wireless channel RF interference', completed: false, completedAt: null },
+          { id: 'step-3', label: 'Advise customer on router height & physical placement', completed: false, completedAt: null },
+          { id: 'step-4', label: 'Power-cycle dual-band wireless radio transmitter', completed: false, completedAt: null }
+        ];
+      case 'BILLING':
+        return [
+          { id: 'step-1', label: 'Review monthly billing ledger & recent payment record', completed: true, completedAt: 'Earlier today' },
+          { id: 'step-2', label: 'Check pro-rated SLA outage credit qualification', completed: false, completedAt: null },
+          { id: 'step-3', label: 'Send itemized receipt breakdown via SMS / Email', completed: false, completedAt: null },
+          { id: 'step-4', label: 'Confirm customer balance reconciliation', completed: false, completedAt: null }
+        ];
+      default:
+        return [
+          { id: 'step-1', label: 'Review subscriber account standing & plan history', completed: true, completedAt: 'Earlier today' },
+          { id: 'step-2', label: 'Document specific customer inquiry requirements', completed: false, completedAt: null },
+          { id: 'step-3', label: 'Forward self-service FAQ & SpaceNet portal guides', completed: false, completedAt: null },
+          { id: 'step-4', label: 'Confirm inquiry satisfaction with customer', completed: false, completedAt: null }
+        ];
+    }
+  }
+
+  // Canonical Tickets Dataset (Module 03 In-Memory State)
+  const tickets = [
+    {
+      ticketId: 'TKT-9042',
+      displayId: '#TKT-9042',
+      customerId: 'CUST-8832',
+      customerName: 'Alex Rivera',
+      circuitId: 'SPN-FBR-0941',
+      connectionType: 'Fiber 1Gbps',
+      category: 'NO_INTERNET',
+      categoryLabel: 'No Internet',
+      priority: 'URGENT',
+      status: 'IN_PROGRESS',
+      statusLabel: 'Investigating',
+      subject: 'GPON ONT Red Alarm & Connection Drop',
+      description: 'Customer reports ONT PON/LOS light flashing red after storm. Power cycle did not restore link.',
+      handlingAgent: 'AI Copilot',
+      assignedStaff: 'Rohan (Tier III NOC)',
+      relatedConversationId: 'CONV-WA-8832',
+      sourceChannel: 'whatsapp',
+      createdAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(), // 2 hours ago (SLA 4h -> remaining 2h)
+      updatedAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+      slaDueHours: 4,
+      guidedSteps: [
+        { id: 'step-1', label: 'Check router & ONT power LED indicators', completed: true, completedAt: '10:20 AM' },
+        { id: 'step-2', label: 'Check optical fiber patch cord & Rx dBm level', completed: true, completedAt: '10:22 AM' },
+        { id: 'step-3', label: 'Dispatch simulated remote ONT reboot sequence', completed: true, completedAt: '10:25 AM' },
+        { id: 'step-4', label: 'Verify OLT PON switch port link integrity', completed: false, completedAt: null }
+      ],
+      resolutionSummary: null,
+      resolvedAt: null,
+      closedAt: null,
+      reopenedAt: null,
+      feedback: null,
+      history: [
+        {
+          timestamp: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
+          timeStr: '2 hours ago',
+          author: 'System / WhatsApp Chat',
+          action: 'CREATED',
+          notes: 'Ticket opened via WhatsApp conversation (CONV-WA-8832).'
+        },
+        {
+          timestamp: new Date(Date.now() - 90 * 60 * 1000).toISOString(),
+          timeStr: '1.5 hours ago',
+          author: 'AI Copilot',
+          action: 'DIAGNOSTICS_RUN',
+          notes: 'GPON ONT reboot attempted. Optical Rx -19.2 dBm normal, checking OLT switch port.'
+        }
+      ]
+    },
+    {
+      ticketId: 'TKT-9038',
+      displayId: '#TKT-9038',
+      customerId: 'CUST-4410',
+      customerName: 'Vanguard Logistics',
+      circuitId: 'SPN-DED-4410',
+      connectionType: 'Dedicated Leased Line',
+      category: 'BILLING',
+      categoryLabel: 'Billing Dispute',
+      priority: 'NORMAL',
+      status: 'PENDING_CUSTOMER',
+      statusLabel: 'Awaiting Customer',
+      subject: 'Invoice #2026-10 Downtime SLA Credit Inquiry',
+      description: 'Customer inquires on pro-rated credit for 42 minutes scheduled maintenance window.',
+      handlingAgent: 'Agent: Rachel P.',
+      assignedStaff: 'Rachel P.',
+      relatedConversationId: null,
+      sourceChannel: 'portal',
+      createdAt: new Date(Date.now() - 14 * 3600 * 1000).toISOString(),
+      updatedAt: new Date(Date.now() - 4 * 3600 * 1000).toISOString(),
+      slaDueHours: 24,
+      guidedSteps: [
+        { id: 'step-1', label: 'Review monthly billing ledger & recent payment record', completed: true, completedAt: 'Yesterday' },
+        { id: 'step-2', label: 'Check pro-rated SLA outage credit qualification', completed: true, completedAt: 'Yesterday' },
+        { id: 'step-3', label: 'Send itemized receipt breakdown via SMS / Email', completed: true, completedAt: 'Yesterday' },
+        { id: 'step-4', label: 'Confirm customer balance reconciliation', completed: false, completedAt: null }
+      ],
+      resolutionSummary: 'Pro-rated 42 min downtime SLA credit applied. Invoice resent for confirmation.',
+      resolvedAt: null,
+      closedAt: null,
+      reopenedAt: null,
+      feedback: null,
+      history: [
+        {
+          timestamp: new Date(Date.now() - 14 * 3600 * 1000).toISOString(),
+          timeStr: '14 hours ago',
+          author: 'Rachel P.',
+          action: 'CREATED',
+          notes: 'Ticket opened from Enterprise Support billing portal.'
+        },
+        {
+          timestamp: new Date(Date.now() - 4 * 3600 * 1000).toISOString(),
+          timeStr: '4 hours ago',
+          author: 'Rachel P.',
+          action: 'STATUS_CHANGE',
+          notes: 'Status changed to Awaiting Customer after sending revised pro-rated ledger.'
+        }
+      ]
+    },
+    {
+      ticketId: 'TKT-9035',
+      displayId: '#TKT-9035',
+      customerId: 'CUST-7719',
+      customerName: 'Hyperion Studio',
+      circuitId: 'SPN-FBR-7719',
+      connectionType: 'Fiber 1Gbps',
+      category: 'SLOW_INTERNET',
+      categoryLabel: 'Slow Speed',
+      priority: 'NORMAL',
+      status: 'RESOLVED',
+      statusLabel: 'Resolved',
+      subject: 'Wi-Fi Channel Congestion & Latency Variance',
+      description: 'Studio video uploads throttled due to 80MHz channel interference in dense commercial area.',
+      handlingAgent: 'AI Copilot',
+      assignedStaff: 'AI Copilot',
+      relatedConversationId: null,
+      sourceChannel: 'web',
+      createdAt: new Date(Date.now() - 20 * 3600 * 1000).toISOString(),
+      updatedAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
+      slaDueHours: 24,
+      guidedSteps: [
+        { id: 'step-1', label: 'Verify connection interface (Ethernet vs 5GHz Wi-Fi)', completed: true, completedAt: 'Yesterday' },
+        { id: 'step-2', label: 'Scan connected client devices for bandwidth hogs', completed: true, completedAt: 'Yesterday' },
+        { id: 'step-3', label: 'Execute remote ONT throughput speed test (Target: Plan Speed)', completed: true, completedAt: 'Yesterday' },
+        { id: 'step-4', label: 'Auto-calibrate Wi-Fi channel bandwidth (160MHz)', completed: true, completedAt: '2 hours ago' }
+      ],
+      resolutionSummary: 'Channel band auto-optimized to 160MHz. Speed verified 940/920 Mbps via automated ONT sweep.',
+      resolvedAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
+      closedAt: null,
+      reopenedAt: null,
+      feedback: {
+        rating: 5,
+        comment: 'Auto-optimization fixed the upload speed immediately. Full Gigabit restored!',
+        submittedAt: new Date(Date.now() - 1 * 3600 * 1000).toISOString()
+      },
+      history: [
+        {
+          timestamp: new Date(Date.now() - 20 * 3600 * 1000).toISOString(),
+          timeStr: '20 hours ago',
+          author: 'AI Copilot',
+          action: 'CREATED',
+          notes: 'Ticket opened via automated speed telemetry threshold breach.'
+        },
+        {
+          timestamp: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
+          timeStr: '2 hours ago',
+          author: 'AI Copilot',
+          action: 'RESOLVED',
+          notes: 'Channel band auto-optimized to 160MHz. Throughput confirmed 940/920 Mbps.'
+        },
+        {
+          timestamp: new Date(Date.now() - 1 * 3600 * 1000).toISOString(),
+          timeStr: '1 hour ago',
+          author: 'Hyperion Studio',
+          action: 'FEEDBACK_RECEIVED',
+          notes: 'Customer submitted 5-star satisfaction review.'
+        }
+      ]
+    },
+    {
+      ticketId: 'TKT-9031',
+      displayId: '#TKT-9031',
+      customerId: 'CUST-1092',
+      customerName: 'Marcus Vance',
+      circuitId: 'SPN-VDS-1092',
+      connectionType: 'VDSL 100M',
+      category: 'NO_INTERNET',
+      categoryLabel: 'No Internet',
+      priority: 'URGENT',
+      status: 'ESCALATED',
+      statusLabel: 'Escalated to Tier III',
+      subject: 'Physical Line Cut Near Uttara Sector 3 Sub-Node',
+      description: 'Physical DSL sync lost. High attenuation detected on loop line.',
+      handlingAgent: 'Tier III NOC Engineering',
+      assignedStaff: 'Tier III NOC Engineering',
+      relatedConversationId: 'CONV-WEB-1092',
+      sourceChannel: 'web',
+      createdAt: new Date(Date.now() - 7 * 3600 * 1000).toISOString(), // 7 hours ago (SLA 4h -> OVERDUE by 3h!)
+      updatedAt: new Date(Date.now() - 1 * 3600 * 1000).toISOString(),
+      slaDueHours: 4,
+      guidedSteps: [
+        { id: 'step-1', label: 'Check router & ONT power LED indicators', completed: true, completedAt: '7 hours ago' },
+        { id: 'step-2', label: 'Check optical fiber patch cord & Rx dBm level', completed: true, completedAt: '6.5 hours ago' },
+        { id: 'step-3', label: 'Dispatch simulated remote ONT reboot sequence', completed: true, completedAt: '6 hours ago' },
+        { id: 'step-4', label: 'Verify OLT PON switch port link integrity', completed: false, completedAt: null }
+      ],
+      resolutionSummary: null,
+      resolvedAt: null,
+      closedAt: null,
+      reopenedAt: null,
+      feedback: null,
+      history: [
+        {
+          timestamp: new Date(Date.now() - 7 * 3600 * 1000).toISOString(),
+          timeStr: '7 hours ago',
+          author: 'Web Chat',
+          action: 'CREATED',
+          notes: 'Ticket opened via Web Chat (CONV-WEB-1092).'
+        },
+        {
+          timestamp: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
+          timeStr: '5 hours ago',
+          author: 'AI Copilot',
+          action: 'ESCALATED',
+          notes: 'Escalated to Tier III NOC Engineering for physical line check / OLT inspection.'
+        }
+      ]
+    },
+    {
+      ticketId: 'TKT-9024',
+      displayId: '#TKT-9024',
+      customerId: 'CUST-4491',
+      customerName: 'Sarah Jenkins',
+      circuitId: 'SPN-FBR-4491',
+      connectionType: 'Dedicated Leased Line',
+      category: 'ROUTER_WIFI',
+      categoryLabel: 'Wi-Fi / Router',
+      priority: 'NORMAL',
+      status: 'CLOSED',
+      statusLabel: 'Closed',
+      subject: 'Static IP Subnet Gateway Reconfiguration',
+      description: 'Corporate client required secondary subnet route configured on core edge router.',
+      handlingAgent: 'Rohan (Tier III NOC)',
+      assignedStaff: 'Rohan (Tier III NOC)',
+      relatedConversationId: 'CONV-FB-4491',
+      sourceChannel: 'facebook',
+      createdAt: new Date(Date.now() - 48 * 3600 * 1000).toISOString(),
+      updatedAt: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
+      slaDueHours: 24,
+      guidedSteps: [
+        { id: 'step-1', label: 'Verify Wi-Fi SSID broadcast and WPA3 credentials', completed: true, completedAt: '2 days ago' },
+        { id: 'step-2', label: 'Analyze wireless channel RF interference', completed: true, completedAt: '2 days ago' },
+        { id: 'step-3', label: 'Advise customer on router height & physical placement', completed: true, completedAt: '2 days ago' },
+        { id: 'step-4', label: 'Power-cycle dual-band wireless radio transmitter', completed: true, completedAt: '2 days ago' }
+      ],
+      resolutionSummary: 'Secondary static subnet 103.24.110.0/29 mapped and ping verified.',
+      resolvedAt: new Date(Date.now() - 26 * 3600 * 1000).toISOString(),
+      closedAt: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
+      reopenedAt: null,
+      feedback: {
+        rating: 5,
+        comment: 'Subnet routing configured perfectly. Zero packet loss on leased line.',
+        submittedAt: new Date(Date.now() - 24 * 3600 * 1000).toISOString()
+      },
+      history: [
+        {
+          timestamp: new Date(Date.now() - 48 * 3600 * 1000).toISOString(),
+          timeStr: '2 days ago',
+          author: 'Sarah Jenkins',
+          action: 'CREATED',
+          notes: 'Ticket opened via Facebook Messenger.'
+        },
+        {
+          timestamp: new Date(Date.now() - 26 * 3600 * 1000).toISOString(),
+          timeStr: '26 hours ago',
+          author: 'Rohan (Tier III NOC)',
+          action: 'RESOLVED',
+          notes: 'Static subnet configured and routes verified.'
+        },
+        {
+          timestamp: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
+          timeStr: '24 hours ago',
+          author: 'System / Customer Confirmation',
+          action: 'CLOSED',
+          notes: 'Ticket explicitly confirmed & closed by customer with 5-star rating.'
+        }
+      ]
+    },
+    {
+      ticketId: 'TKT-9019',
+      displayId: '#TKT-9019',
+      customerId: 'CUST-6210',
+      customerName: 'Farhan Ahmed',
+      circuitId: 'SPN-FBR-6210',
+      connectionType: 'Fiber GPON',
+      category: 'SLOW_INTERNET',
+      categoryLabel: 'Slow Speed',
+      priority: 'HIGH',
+      status: 'REOPENED',
+      statusLabel: 'Reopened',
+      subject: 'Esports Gaming Packet Loss & Ping Spikes in Banani',
+      description: 'Subscriber reported ping spiked to 85ms in Singapore gaming server during evening peak hours.',
+      handlingAgent: 'AI Copilot',
+      assignedStaff: 'Rohan (Tier III NOC)',
+      relatedConversationId: 'CONV-IG-6210',
+      sourceChannel: 'instagram',
+      createdAt: new Date(Date.now() - 36 * 3600 * 1000).toISOString(),
+      updatedAt: new Date(Date.now() - 1 * 3600 * 1000).toISOString(),
+      slaDueHours: 8,
+      guidedSteps: [
+        { id: 'step-1', label: 'Verify connection interface (Ethernet vs 5GHz Wi-Fi)', completed: true, completedAt: 'Yesterday' },
+        { id: 'step-2', label: 'Scan connected client devices for bandwidth hogs', completed: true, completedAt: 'Yesterday' },
+        { id: 'step-3', label: 'Execute remote ONT throughput speed test (Target: Plan Speed)', completed: true, completedAt: 'Yesterday' },
+        { id: 'step-4', label: 'Auto-calibrate Wi-Fi channel bandwidth (160MHz)', completed: false, completedAt: null }
+      ],
+      resolutionSummary: 'Initial optical sweep reported -18.5 dBm normal.',
+      resolvedAt: new Date(Date.now() - 6 * 3600 * 1000).toISOString(),
+      closedAt: null,
+      reopenedAt: new Date(Date.now() - 1 * 3600 * 1000).toISOString(),
+      feedback: null,
+      history: [
+        {
+          timestamp: new Date(Date.now() - 36 * 3600 * 1000).toISOString(),
+          timeStr: '36 hours ago',
+          author: 'Instagram DM',
+          action: 'CREATED',
+          notes: 'Ticket opened via Instagram direct message.'
+        },
+        {
+          timestamp: new Date(Date.now() - 6 * 3600 * 1000).toISOString(),
+          timeStr: '6 hours ago',
+          author: 'AI Copilot',
+          action: 'RESOLVED',
+          notes: 'Channel re-tuned and optical Rx checked.'
+        },
+        {
+          timestamp: new Date(Date.now() - 1 * 3600 * 1000).toISOString(),
+          timeStr: '1 hour ago',
+          author: 'Farhan Ahmed',
+          action: 'REOPENED',
+          notes: 'Customer reopened ticket: Packet jitter returned during tournament match.'
+        }
+      ]
+    }
+  ];
+
+  // Feature Group 6: SLA Overdue Calculation
+  function isTicketOverdue(ticket, refTime = Date.now()) {
+    if (!ticket) return false;
+    if (ticket.status === 'RESOLVED' || ticket.status === 'CLOSED') {
+      return false;
+    }
+    const createdMs = new Date(ticket.createdAt).getTime();
+    const slaMs = (ticket.slaDueHours || 24) * 3600 * 1000;
+    return refTime > (createdMs + slaMs);
+  }
+
+  function getTicketSlaRemaining(ticket, refTime = Date.now()) {
+    if (!ticket) return 0;
+    const createdMs = new Date(ticket.createdAt).getTime();
+    const slaMs = (ticket.slaDueHours || 24) * 3600 * 1000;
+    const diffHours = ((createdMs + slaMs) - refTime) / (3600 * 1000);
+    return diffHours;
+  }
+
+  // Feature Group 6: Duplicate Incident Detection
+  function checkDuplicateTicket(customerId, categoryKey) {
+    if (!customerId) return null;
+    return tickets.find(t =>
+      t.customerId === customerId &&
+      t.category === categoryKey &&
+      ['OPEN', 'IN_PROGRESS', 'PENDING_CUSTOMER', 'ESCALATED', 'REOPENED'].includes(t.status)
+    ) || null;
+  }
+
+  function checkForDuplicateWarning(customerId, categoryKey) {
+    const dup = checkDuplicateTicket(customerId, categoryKey);
+    const warnBox = document.getElementById('new-ticket-duplicate-warning');
+    const warnText = document.getElementById('new-ticket-duplicate-text');
+    if (!warnBox) return;
+
+    if (dup) {
+      warnBox.classList.remove('hidden');
+      if (warnText) {
+        warnText.textContent = `Subscriber ${dup.customerName} (${dup.customerId}) already has an active ticket (${dup.displayId} - ${dup.categoryLabel}, Status: ${dup.statusLabel}). Logging another ticket for the same issue category will create a parallel incident.`;
+      }
+    } else {
+      warnBox.classList.add('hidden');
+    }
+  }
+
+  function viewExistingDuplicateTicket() {
+    const idInput = document.getElementById('new-ticket-cust-id');
+    const catSelect = document.getElementById('new-ticket-type');
+    const dup = checkDuplicateTicket(idInput ? idInput.value : '', catSelect ? catSelect.value : '');
+    closeCreateTicketModal();
+    if (dup) {
+      openTicketDetail(dup.ticketId);
+      showToast('Viewing Existing Ticket', `Navigated to active incident ${dup.displayId}`);
+    }
+  }
+
+  function dismissDuplicateWarning() {
+    allowDuplicateSubmission = true;
+    const warnBox = document.getElementById('new-ticket-duplicate-warning');
+    if (warnBox) warnBox.classList.add('hidden');
+    showToast('Duplicate Bypassed', 'You may now proceed to log a separate repeat ticket.');
+  }
+
+  // Dynamic Table Renderer & Counters (Feature Group 6)
+  function renderTicketTable(listToRender) {
+    const tbody = document.getElementById('ticket-table-body');
+    if (!tbody) return;
+
+    const dataset = listToRender || tickets;
+    tbody.innerHTML = '';
+
+    dataset.forEach(tkt => {
+      const isOverdue = isTicketOverdue(tkt);
+      const catMeta = TICKET_CATEGORIES[tkt.category] || { label: tkt.categoryLabel || tkt.category, badgeClass: 'bg-surface-container text-on-surface-variant' };
+      const prioMeta = TICKET_PRIORITIES[tkt.priority] || { label: tkt.priority, badgeClass: 'bg-surface-container text-on-surface-variant' };
+      const statusMeta = TICKET_STATUSES[tkt.status] || { label: tkt.statusLabel || tkt.status, badgeClass: 'bg-surface-container text-on-surface' };
+
+      const tr = document.createElement('tr');
+      tr.className = 'hover:bg-surface-container-high/40 transition-colors cursor-pointer group';
+      tr.setAttribute('data-type', tkt.category);
+      tr.setAttribute('data-priority', tkt.priority);
+      tr.setAttribute('data-status', tkt.status);
+      tr.onclick = () => openTicketDetail(tkt.ticketId);
+
+      const overdueBadge = isOverdue ? `
+        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-error-container text-on-error-container text-[10px] font-bold">
+          <span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span> OVERDUE
+        </span>
+      ` : '';
+
+      const priorityPulse = tkt.priority === 'URGENT' ? '<span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span>' : '';
+
+      tr.innerHTML = `
+        <td class="py-3 px-space-md" onclick="event.stopPropagation()">
+          <input class="rounded text-primary focus:ring-0" type="checkbox">
+        </td>
+        <td class="py-3 px-space-md font-code-metric text-primary font-semibold">${escapeHtml(tkt.displayId)}</td>
+        <td class="py-3 px-space-md">
+          <div class="flex flex-col">
+            <span class="font-headline-sm text-label-md text-on-surface">${escapeHtml(tkt.customerName)}</span>
+            <span class="font-code-telemetry text-[11px] text-outline">${escapeHtml(tkt.circuitId)}</span>
+          </div>
+        </td>
+        <td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">${escapeHtml(tkt.connectionType || 'Fiber GPON')}</td>
+        <td class="py-3 px-space-md text-left">
+          <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full ${catMeta.badgeClass} font-label-sm text-label-sm font-semibold">${escapeHtml(catMeta.label)}</span>
+        </td>
+        <td class="py-3 px-space-md text-left">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full ${prioMeta.badgeClass} font-label-sm text-label-sm font-semibold">
+            ${priorityPulse} ${escapeHtml(prioMeta.label)}
+          </span>
+        </td>
+        <td class="py-3 px-space-md">
+          <span class="flex items-center gap-1 font-label-sm ${tkt.handlingAgent.includes('AI') ? 'text-tertiary' : 'text-on-surface'}">
+            ${tkt.handlingAgent.includes('AI') ? '<span class="material-symbols-outlined text-[14px]">auto_awesome</span>' : ''}
+            ${escapeHtml(tkt.handlingAgent)}
+          </span>
+        </td>
+        <td class="py-3 px-space-md text-left">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md ${statusMeta.badgeClass} font-label-sm text-label-sm">${escapeHtml(statusMeta.label)}</span>
+            ${overdueBadge}
+          </div>
+        </td>
+        <td class="py-3 px-space-md text-right" onclick="event.stopPropagation()">
+          <div class="flex items-center justify-end gap-1">
+            <button class="p-1 hover:bg-surface-container rounded text-secondary" onclick="resolveTicketRow(this, '${tkt.ticketId}')" title="Quick Resolve">
+              <span class="material-symbols-outlined text-[18px]">check</span>
+            </button>
+            ${tkt.relatedConversationId ? `
+              <button class="p-1 hover:bg-surface-container rounded text-primary" onclick="goToChatFromTicket('${tkt.relatedConversationId}')" title="Open Source Chat">
+                <span class="material-symbols-outlined text-[18px]">forum</span>
+              </button>
+            ` : ''}
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    const showingEl = document.getElementById('ticket-count-showing');
+    const totalEl = document.getElementById('ticket-count-total');
+    if (showingEl) showingEl.textContent = dataset.length;
+    if (totalEl) totalEl.textContent = tickets.length;
+  }
+
+  function updateTicketCounts() {
+    const totalCount = tickets.length;
+    const urgentCount = tickets.filter(t => (t.priority === 'URGENT' || t.priority === 'HIGH') && t.status !== 'RESOLVED' && t.status !== 'CLOSED').length;
+    const progressCount = tickets.filter(t => t.status === 'IN_PROGRESS' || t.status === 'OPEN').length;
+    const escalatedCount = tickets.filter(t => t.status === 'ESCALATED').length;
+    const overdueCount = tickets.filter(t => isTicketOverdue(t)).length;
+    const resolvedCount = tickets.filter(t => t.status === 'RESOLVED' || t.status === 'CLOSED').length;
+
+    const elTotal = document.getElementById('tkt-metric-total');
+    const elUrgent = document.getElementById('tkt-metric-urgent');
+    const elProgress = document.getElementById('tkt-metric-progress');
+    const elEscalated = document.getElementById('tkt-metric-escalated');
+    const elOverdue = document.getElementById('tkt-metric-overdue');
+    const elResolved = document.getElementById('tkt-metric-resolved');
+
+    if (elTotal) elTotal.textContent = totalCount;
+    if (elUrgent) elUrgent.textContent = urgentCount;
+    if (elProgress) elProgress.textContent = progressCount;
+    if (elEscalated) elEscalated.textContent = escalatedCount;
+    if (elOverdue) elOverdue.textContent = overdueCount;
+    if (elResolved) elResolved.textContent = resolvedCount;
+
+    // Update nav badge in subheader
+    const navBadge = document.querySelector('#nav-btn-tickets .font-code-telemetry');
+    if (navBadge) navBadge.textContent = tickets.filter(t => t.status !== 'CLOSED').length;
+  }
+
+  function filterTicketRows() {
+    const searchInput = document.getElementById('ticket-search-input');
+    const searchVal = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const typeVal = document.getElementById('ticket-type-filter')?.value || 'ALL';
+    const prioVal = document.getElementById('ticket-priority-filter')?.value || 'ALL';
+    const statVal = document.getElementById('ticket-status-filter')?.value || 'ALL';
+
+    const filtered = tickets.filter(t => {
+      const text = `${t.ticketId} ${t.displayId} ${t.customerName} ${t.customerId} ${t.circuitId} ${t.subject} ${t.description}`.toLowerCase();
+      const matchesSearch = !searchVal || text.includes(searchVal);
+      const matchesType = (typeVal === 'ALL' || t.category === typeVal);
+      const matchesPrio = (prioVal === 'ALL' || t.priority === prioVal);
+      const matchesStat = (statVal === 'ALL' || t.status === statVal);
+      return matchesSearch && matchesType && matchesPrio && matchesStat;
+    });
+
+    renderTicketTable(filtered);
+  }
+
+  // Feature Group 1 & 5: Open Create Ticket Modal with optional pre-fill
+  function openCreateTicketModal(prefillData) {
+    allowDuplicateSubmission = false;
+    const modal = document.getElementById('create-ticket-modal');
+    const container = document.getElementById('create-ticket-container');
+    if (!modal || !container) return;
+
+    // Reset fields
+    const searchInput = document.getElementById('new-ticket-cust-search');
+    const feedback = document.getElementById('new-ticket-cust-feedback');
+    const idInput = document.getElementById('new-ticket-cust-id');
+    const nameInput = document.getElementById('new-ticket-cust-name');
+    const circuitInput = document.getElementById('new-ticket-cust-circuit');
+    const planInput = document.getElementById('new-ticket-cust-plan');
+    const convInput = document.getElementById('new-ticket-conv-id');
+    const channelInput = document.getElementById('new-ticket-source-channel');
+    const subInput = document.getElementById('new-ticket-subject');
+    const descInput = document.getElementById('new-ticket-desc');
+    const catSelect = document.getElementById('new-ticket-type');
+    const prioSelect = document.getElementById('new-ticket-prio');
+    const convInfo = document.getElementById('new-ticket-conv-info');
+    const convLabel = document.getElementById('new-ticket-conv-label');
+    const convBadge = document.getElementById('new-ticket-conv-badge');
+    const dupBox = document.getElementById('new-ticket-duplicate-warning');
+
+    if (dupBox) dupBox.classList.add('hidden');
+    if (convInfo) convInfo.classList.add('hidden');
+
+    if (prefillData && prefillData.customerId) {
+      selectCustomerForTicket(prefillData.customerId);
+      if (convInput) convInput.value = prefillData.conversationId || '';
+      if (channelInput) channelInput.value = prefillData.sourceChannel || 'chat';
+      if (subInput) subInput.value = prefillData.subject || '';
+      if (descInput) descInput.value = prefillData.description || '';
+      if (catSelect && prefillData.category) catSelect.value = prefillData.category;
+      if (prioSelect && prefillData.priority) prioSelect.value = prefillData.priority;
+      else onTicketCategoryChange();
+
+      if (convInfo && prefillData.conversationId) {
+        convInfo.classList.remove('hidden');
+        if (convLabel) convLabel.textContent = prefillData.conversationId;
+        if (convBadge) convBadge.textContent = (prefillData.sourceChannel || 'Chat').toUpperCase();
+      }
+    } else {
+      if (searchInput) searchInput.value = '';
+      if (idInput) idInput.value = '';
+      if (nameInput) nameInput.value = '';
+      if (circuitInput) circuitInput.value = '';
+      if (planInput) planInput.value = '';
+      if (convInput) convInput.value = '';
+      if (channelInput) channelInput.value = '';
+      if (subInput) subInput.value = '';
+      if (descInput) descInput.value = '';
+      if (catSelect) catSelect.value = 'NO_INTERNET';
+      if (prioSelect) prioSelect.value = 'URGENT';
+      if (feedback) {
+        feedback.className = 'mt-1 p-space-sm rounded-lg bg-surface-container-low border border-surface-container-high';
+        feedback.innerHTML = `
+          <div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-[12px]">
+            <span class="material-symbols-outlined text-[18px] text-outline">info</span>
+            <span>Select or verify a registered subscriber above to attach to this ticket.</span>
+          </div>
+        `;
+      }
+    }
+
     modal.classList.remove('hidden');
     setTimeout(() => {
       modal.classList.remove('opacity-0');
       container.classList.remove('scale-95');
       container.classList.add('scale-100');
     }, 10);
+  }
+
+  function closeCreateTicketModal() {
+    const modal = document.getElementById('create-ticket-modal');
+    const container = document.getElementById('create-ticket-container');
+    if (!modal || !container) return;
+    modal.classList.add('opacity-0');
+    container.classList.remove('scale-100');
+    container.classList.add('scale-95');
+    setTimeout(() => modal.classList.add('hidden'), 200);
+  }
+
+  function createNewTicketMock() {
+    openCreateTicketModal();
+  }
+
+  // Feature Group 1, 2 & 6: Submit Ticket with Duplicate Warning check
+  function submitCreateTicket(forceProceed = false) {
+    const idInput = document.getElementById('new-ticket-cust-id');
+    const customerId = idInput ? idInput.value.trim() : '';
+
+    if (!customerId) {
+      showToast('Validation Error', 'Please verify a registered subscriber before creating a ticket.');
+      executeCustomerVerification();
+      return;
+    }
+
+    const cust = SPACE_NET_CUSTOMERS.find(c => c.customerId === customerId) || {
+      customerId,
+      name: document.getElementById('new-ticket-cust-name')?.value || 'Customer ' + customerId,
+      circuitId: document.getElementById('new-ticket-cust-circuit')?.value || 'SPN-FBR-0000',
+      connectionType: document.getElementById('new-ticket-cust-plan')?.value || 'Fiber GPON',
+      phone: '+880 1700-000000',
+      address: 'Dhaka, Bangladesh'
+    };
+
+    const catKey = document.getElementById('new-ticket-type')?.value || 'NO_INTERNET';
+    const prioKey = document.getElementById('new-ticket-prio')?.value || 'NORMAL';
+    const subject = document.getElementById('new-ticket-subject')?.value.trim() || `Customer incident: ${TICKET_CATEGORIES[catKey]?.label || catKey}`;
+    const desc = document.getElementById('new-ticket-desc')?.value.trim() || 'No additional technical description provided.';
+    const convId = document.getElementById('new-ticket-conv-id')?.value || null;
+    const sourceChannel = document.getElementById('new-ticket-source-channel')?.value || (convId ? 'chat' : 'desk');
+
+    // Duplicate Check
+    if (!forceProceed && !allowDuplicateSubmission) {
+      const dup = checkDuplicateTicket(customerId, catKey);
+      if (dup) {
+        checkForDuplicateWarning(customerId, catKey);
+        showToast('Duplicate Alert', `Customer already has an active ticket (${dup.displayId}) for ${dup.categoryLabel}.`);
+        return;
+      }
+    }
+
+    // Generate Collision-Safe In-Memory Canonical ID (TKT-XXXX)
+    let newNum;
+    let newId;
+    do {
+      newNum = Math.floor(1000 + Math.random() * 9000);
+      newId = 'TKT-' + newNum;
+    } while (tickets.some(t => t.ticketId === newId));
+
+    const prioMeta = TICKET_PRIORITIES[prioKey] || { slaHours: 24 };
+
+    const newTicket = {
+      ticketId: newId,
+      displayId: '#' + newId,
+      customerId: cust.customerId,
+      customerName: cust.name,
+      circuitId: cust.circuitId,
+      connectionType: cust.connectionType || 'Fiber 1Gbps',
+      category: catKey,
+      categoryLabel: TICKET_CATEGORIES[catKey]?.label || catKey,
+      priority: prioKey,
+      status: 'OPEN',
+      statusLabel: 'Open',
+      subject: subject,
+      description: desc,
+      handlingAgent: 'AI Copilot',
+      assignedStaff: 'Rohan (Tier III NOC)',
+      relatedConversationId: convId,
+      sourceChannel: sourceChannel,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      slaDueHours: prioMeta.slaHours || 24,
+      guidedSteps: getGuidedStepsForCategory(catKey),
+      resolutionSummary: null,
+      resolvedAt: null,
+      closedAt: null,
+      reopenedAt: null,
+      feedback: null,
+      history: [
+        {
+          timestamp: new Date().toISOString(),
+          timeStr: 'Just now',
+          author: convId ? `Chat Handoff (${convId})` : 'Telecom Admin (Rohan)',
+          action: 'CREATED',
+          notes: `Ticket opened for ${cust.name} on Circuit ${cust.circuitId}. Category: ${TICKET_CATEGORIES[catKey]?.label}. Priority: ${prioKey}.`
+        }
+      ]
+    };
+
+    tickets.unshift(newTicket);
+    closeCreateTicketModal();
+    renderTicketTable();
+    updateTicketCounts();
+    showToast('New Ticket Logged', `${newTicket.displayId} registered for ${newTicket.customerName} with AI Copilot triaging.`);
+
+    // Automatically reveal the newly created ticket detail
+    openTicketDetail(newTicket.ticketId);
+  }
+
+  // Feature Group 3 & 7: Open Ticket Workspace / Detail Modal
+  function openTicketDetail(idOrObj, cust, circuit, plan, type, prio, status, diag) {
+    let tkt = null;
+    if (idOrObj && typeof idOrObj === 'object') {
+      tkt = idOrObj;
+    } else if (typeof idOrObj === 'string') {
+      const cleanId = idOrObj.replace('#', '');
+      tkt = tickets.find(t => t.ticketId === cleanId || t.ticketId === idOrObj || t.displayId === idOrObj);
+    }
+
+    if (!tkt) {
+      // Backward compatibility fallback for legacy 8-arg invocation
+      const fallbackId = (typeof idOrObj === 'string' && idOrObj) ? idOrObj : '#TKT-9042';
+      const cleanId = fallbackId.replace('#', '');
+      tkt = {
+        ticketId: cleanId,
+        displayId: '#' + cleanId,
+        customerId: 'CUST-8832',
+        customerName: cust || 'Alex Rivera',
+        circuitId: circuit || 'SPN-FBR-0941',
+        connectionType: plan || 'Fiber 1Gbps',
+        category: 'NO_INTERNET',
+        categoryLabel: type || 'No Internet',
+        priority: prio || 'URGENT',
+        status: (status === 'AWAITING' ? 'PENDING_CUSTOMER' : (status === 'RESOLVED' ? 'RESOLVED' : 'IN_PROGRESS')),
+        statusLabel: status || 'Investigating',
+        subject: 'Customer reported issue',
+        description: diag || 'GPON ONT reboot attempted. Optical Rx -19.2 dBm normal.',
+        handlingAgent: 'AI Copilot',
+        assignedStaff: 'Rohan (Tier III NOC)',
+        relatedConversationId: 'CONV-WA-8832',
+        sourceChannel: 'whatsapp',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        slaDueHours: 4,
+        guidedSteps: getGuidedStepsForCategory('NO_INTERNET'),
+        resolutionSummary: null,
+        resolvedAt: null,
+        closedAt: null,
+        reopenedAt: null,
+        feedback: null,
+        history: [
+          {
+            timestamp: new Date().toISOString(),
+            timeStr: 'Just now',
+            author: 'System',
+            action: 'VIEWED',
+            notes: 'Opened ticket details in workspace.'
+          }
+        ]
+      };
+    }
+
+    currentModalTicket = tkt;
+    populateTicketModalUI(tkt);
+
+    const modal = document.getElementById('ticket-detail-modal');
+    const container = document.getElementById('ticket-modal-container');
+    if (!modal || !container) return;
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      container.classList.remove('scale-95');
+      container.classList.add('scale-100');
+    }, 10);
+  }
+
+  function populateTicketModalUI(tkt) {
+    if (!tkt) return;
+
+    // Header elements
+    const idEl = document.getElementById('td-modal-id');
+    const custEl = document.getElementById('td-modal-cust');
+    const custIdEl = document.getElementById('td-modal-cust-id');
+    const circuitEl = document.getElementById('td-modal-circuit');
+    const planEl = document.getElementById('td-modal-plan');
+    const prioEl = document.getElementById('td-modal-prio');
+    const diagEl = document.getElementById('td-modal-diag');
+    const statusBadge = document.getElementById('td-modal-status-badge');
+    const overdueBadge = document.getElementById('td-modal-overdue-badge');
+    const overdueText = document.getElementById('td-modal-overdue-text');
+    const slaText = document.getElementById('td-modal-sla-text');
+    const categoryEl = document.getElementById('td-modal-category');
+    const subjectEl = document.getElementById('td-modal-subject');
+    const descEl = document.getElementById('td-modal-desc');
+    const phoneEl = document.getElementById('td-modal-phone');
+    const addrEl = document.getElementById('td-modal-addr');
+    const agentEl = document.getElementById('td-modal-agent');
+    const createdEl = document.getElementById('td-modal-created');
+    const avatarEl = document.getElementById('td-modal-cust-avatar');
+    const chatBtn = document.getElementById('td-modal-chat-btn');
+    const sourceChannelEl = document.getElementById('td-modal-source-channel');
+    const resSummaryInput = document.getElementById('td-modal-resolution-summary');
+
+    if (idEl) idEl.textContent = tkt.displayId;
+    if (custEl) custEl.textContent = tkt.customerName;
+    if (custIdEl) custIdEl.textContent = tkt.customerId;
+    if (circuitEl) circuitEl.textContent = tkt.circuitId;
+    if (planEl) planEl.textContent = tkt.connectionType || 'Fiber GPON';
+    if (diagEl) diagEl.textContent = tkt.description;
+    if (categoryEl) categoryEl.textContent = tkt.categoryLabel || tkt.category;
+    if (subjectEl) subjectEl.textContent = tkt.subject || 'Connectivity Issue';
+    if (descEl) descEl.textContent = tkt.description || 'No description logged.';
+    if (agentEl) agentEl.textContent = tkt.handlingAgent || 'AI Copilot';
+    if (createdEl) createdEl.textContent = new Date(tkt.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    if (resSummaryInput) resSummaryInput.value = tkt.resolutionSummary || '';
+
+    // Customer profile info
+    const cust = SPACE_NET_CUSTOMERS.find(c => c.customerId === tkt.customerId);
+    if (phoneEl) phoneEl.textContent = cust ? cust.phone : '+880 1700-000000';
+    if (addrEl) addrEl.textContent = cust ? cust.address : 'Dhaka, Bangladesh';
+    if (avatarEl) {
+      const parts = tkt.customerName.split(' ');
+      avatarEl.textContent = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : tkt.customerName.slice(0, 2).toUpperCase();
+    }
+
+    // Status & Priority Badges
+    const statusMeta = TICKET_STATUSES[tkt.status] || { label: tkt.statusLabel || tkt.status, badgeClass: 'bg-surface-container text-on-surface' };
+    if (statusBadge) {
+      statusBadge.className = `px-2.5 py-0.5 rounded-full text-label-sm font-semibold ${statusMeta.badgeClass}`;
+      statusBadge.textContent = statusMeta.label;
+    }
+
+    const prioMeta = TICKET_PRIORITIES[tkt.priority] || { label: tkt.priority, badgeClass: 'bg-surface-container text-on-surface-variant' };
+    if (prioEl) {
+      prioEl.className = `px-2.5 py-0.5 rounded-full text-label-sm font-semibold ${prioMeta.badgeClass}`;
+      prioEl.textContent = prioMeta.label;
+    }
+
+    // Overdue SLA Badge
+    const isOverdue = isTicketOverdue(tkt);
+    const diffHours = getTicketSlaRemaining(tkt);
+    if (overdueBadge) {
+      if (isOverdue) {
+        overdueBadge.classList.remove('hidden');
+        if (overdueText) overdueText.textContent = `OVERDUE by ${Math.abs(diffHours).toFixed(1)}h`;
+      } else {
+        overdueBadge.classList.add('hidden');
+      }
+    }
+    if (slaText) {
+      if (isOverdue) {
+        slaText.textContent = `${tkt.slaDueHours || 24}h Window (Breached ${Math.abs(diffHours).toFixed(1)}h ago)`;
+      } else {
+        slaText.textContent = `${tkt.slaDueHours || 24}h Window (${Math.max(0, diffHours).toFixed(1)}h remaining)`;
+      }
+    }
+
+    // Source Chat Button
+    if (chatBtn) {
+      if (tkt.relatedConversationId) {
+        chatBtn.classList.remove('hidden');
+        if (sourceChannelEl) sourceChannelEl.textContent = (tkt.sourceChannel || 'Chat').toUpperCase();
+      } else {
+        chatBtn.classList.add('hidden');
+      }
+    }
+
+    // Render Guided Steps
+    renderGuidedSteps(tkt);
+
+    // Render Feedback
+    renderFeedbackSection(tkt);
+
+    // Render Audit History
+    renderTicketHistory(tkt);
+  }
+
+  function renderGuidedSteps(tkt) {
+    const container = document.getElementById('td-modal-guided-steps');
+    if (!container) return;
+
+    container.innerHTML = '';
+    const steps = tkt.guidedSteps || getGuidedStepsForCategory(tkt.category);
+    steps.forEach((step, idx) => {
+      const stepRow = document.createElement('div');
+      stepRow.className = `flex items-center justify-between p-2 rounded-lg ${step.completed ? 'bg-surface-container-high/60 text-on-surface' : 'bg-surface-container text-on-surface-variant'} transition-colors`;
+      stepRow.innerHTML = `
+        <label class="flex items-center gap-2 cursor-pointer flex-1">
+          <input type="checkbox" ${step.completed ? 'checked' : ''} onchange="toggleGuidedStep(${idx}, this.checked)" class="rounded text-primary focus:ring-0">
+          <span class="text-[12px] ${step.completed ? 'line-through text-outline' : 'font-medium'}">${escapeHtml(step.label)}</span>
+        </label>
+        <span class="text-[11px] font-code-telemetry ${step.completed ? 'text-secondary font-semibold' : 'text-outline'}">
+          ${step.completed ? (step.completedAt || 'Done') : 'Pending'}
+        </span>
+      `;
+      container.appendChild(stepRow);
+    });
+  }
+
+  function toggleGuidedStep(stepIdx, isChecked) {
+    if (!currentModalTicket) return;
+    if (!currentModalTicket.guidedSteps) {
+      currentModalTicket.guidedSteps = getGuidedStepsForCategory(currentModalTicket.category);
+    }
+    const step = currentModalTicket.guidedSteps[stepIdx];
+    if (step) {
+      step.completed = isChecked;
+      step.completedAt = isChecked ? new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : null;
+      currentModalTicket.updatedAt = new Date().toISOString();
+
+      currentModalTicket.history.push({
+        timestamp: new Date().toISOString(),
+        timeStr: 'Just now',
+        author: 'Staff (Tier III NOC)',
+        action: 'GUIDANCE_STEP',
+        notes: `Step "${step.label}" marked ${isChecked ? 'COMPLETED' : 'INCOMPLETE'}.`
+      });
+
+      renderGuidedSteps(currentModalTicket);
+      renderTicketHistory(currentModalTicket);
+      showToast('Checklist Updated', `${step.label} marked ${isChecked ? 'completed' : 'pending'}.`);
+    }
+  }
+
+  function runSimulatedDiagnostic(actionType) {
+    if (!currentModalTicket) return;
+
+    let note = '';
+    if (actionType === 'reboot') {
+      note = 'Simulated remote ONT power-cycle signal dispatched. ONT link renegotiated in 14.2s.';
+      showToast('Remote Reboot Executed', note);
+    } else if (actionType === 'optical') {
+      note = 'Optical Rx power sweep complete: -19.4 dBm (Healthy GPON threshold: -8 dBm to -27 dBm).';
+      showToast('Optical Sweep Complete', note);
+    } else if (actionType === 'speed') {
+      note = 'Speed test verified: 942 Mbps Download / 918 Mbps Upload with 3ms core latency.';
+      showToast('Speed Test Verified', note);
+    }
+
+    const diagBox = document.getElementById('td-modal-diag');
+    if (diagBox) diagBox.textContent = note;
+
+    currentModalTicket.history.push({
+      timestamp: new Date().toISOString(),
+      timeStr: 'Just now',
+      author: 'AI Copilot Diagnostic Tool',
+      action: 'DIAGNOSTIC_EXEC',
+      notes: note
+    });
+
+    renderTicketHistory(currentModalTicket);
+  }
+
+  function syncGuidedStepsToResolution() {
+    if (!currentModalTicket) return;
+    const completed = (currentModalTicket.guidedSteps || []).filter(s => s.completed);
+    if (!completed.length) {
+      showToast('No Completed Steps', 'Check off completed troubleshooting steps before syncing.');
+      return;
+    }
+
+    const summaryText = 'Completed Troubleshooting Steps: ' + completed.map(s => s.label).join('; ') + '. Issue verified resolved.';
+    const input = document.getElementById('td-modal-resolution-summary');
+    if (input) input.value = summaryText;
+    currentModalTicket.resolutionSummary = summaryText;
+    showToast('Summary Synced', 'Completed steps compiled into Resolution Summary.');
+  }
+
+  function renderFeedbackSection(tkt) {
+    const card = document.getElementById('td-modal-feedback-card');
+    const starsEl = document.getElementById('td-modal-feedback-stars');
+    const commentEl = document.getElementById('td-modal-feedback-comment');
+    if (!card) return;
+
+    if (tkt.feedback) {
+      const starStr = '★'.repeat(tkt.feedback.rating) + '☆'.repeat(5 - tkt.feedback.rating);
+      if (starsEl) starsEl.textContent = starStr;
+      if (commentEl) commentEl.textContent = `"${tkt.feedback.comment || 'Issue resolved to subscriber satisfaction.'}" — Submitted by ${tkt.customerName}`;
+    } else {
+      if (starsEl) starsEl.textContent = '☆☆☆☆☆';
+      if (commentEl) commentEl.textContent = 'No post-resolution feedback submitted yet.';
+    }
+  }
+
+  function renderTicketHistory(tkt) {
+    const list = document.getElementById('td-modal-history');
+    if (!list) return;
+
+    list.innerHTML = '';
+    const history = tkt.history || [];
+    history.slice().reverse().forEach(evt => {
+      const item = document.createElement('div');
+      item.className = 'p-2 rounded bg-surface-container flex flex-col gap-0.5 text-[11px]';
+      item.innerHTML = `
+        <div class="flex items-center justify-between text-on-surface">
+          <span class="font-semibold text-primary font-code-telemetry">[${escapeHtml(evt.action)}] ${escapeHtml(evt.author)}</span>
+          <span class="text-outline text-[10px]">${escapeHtml(evt.timeStr || new Date(evt.timestamp).toLocaleTimeString())}</span>
+        </div>
+        <p class="text-on-surface-variant text-[11px] leading-tight">${escapeHtml(evt.notes)}</p>
+      `;
+      list.appendChild(item);
+    });
   }
 
   function closeTicketModal() {
@@ -3540,14 +5241,210 @@
     setTimeout(() => modal.classList.add('hidden'), 200);
   }
 
-  function markTicketModalResolved() {
+  function saveTicketModalChanges() {
+    if (!currentModalTicket) return;
+    const resSummaryInput = document.getElementById('td-modal-resolution-summary');
+    if (resSummaryInput) {
+      currentModalTicket.resolutionSummary = resSummaryInput.value.trim() || currentModalTicket.resolutionSummary;
+    }
     closeTicketModal();
-    if (currentModalTicket) {
-      showToast('Ticket Resolved', `${currentModalTicket.id} closed and customer notification SMS dispatched.`);
+    renderTicketTable();
+    updateTicketCounts();
+    showToast('Changes Saved', `${currentModalTicket.displayId} state updated.`);
+  }
+
+  // Feature Group 3: Validated Lifecycle Status Transitions
+  function updateTicketStatus(ticketId, newStatus, reason, author = 'Rohan (Tier III NOC)') {
+    const cleanId = ticketId ? ticketId.replace('#', '') : '';
+    const tkt = tickets.find(t => t.ticketId === cleanId || t.ticketId === ticketId || t.displayId === ticketId);
+    if (!tkt) {
+      return { success: false, error: 'Ticket not found.' };
+    }
+
+    if (tkt.status === newStatus) {
+      return { success: false, error: `Ticket is already in status ${newStatus}.` };
+    }
+
+    // Lifecycle transition validation rules
+    if (newStatus === 'CLOSED' && tkt.status !== 'RESOLVED') {
+      return {
+        success: false,
+        error: 'Invalid Transition: A ticket must be Marked as Resolved before it can be closed. Please resolve first.'
+      };
+    }
+
+    if (newStatus === 'REOPENED' && tkt.status !== 'RESOLVED' && tkt.status !== 'CLOSED') {
+      return {
+        success: false,
+        error: 'Invalid Transition: Only Resolved or Closed tickets can be Reopened.'
+      };
+    }
+
+    const oldStatus = tkt.status;
+    tkt.status = newStatus;
+    tkt.statusLabel = TICKET_STATUSES[newStatus]?.label || newStatus;
+    tkt.updatedAt = new Date().toISOString();
+
+    if (newStatus === 'RESOLVED') {
+      tkt.resolvedAt = new Date().toISOString();
+    } else if (newStatus === 'CLOSED') {
+      tkt.closedAt = new Date().toISOString();
+    } else if (newStatus === 'REOPENED') {
+      tkt.reopenedAt = new Date().toISOString();
+    }
+
+    let actionType = 'STATUS_CHANGE';
+    if (newStatus === 'REOPENED') actionType = 'REOPENED';
+    else if (newStatus === 'RESOLVED') actionType = 'RESOLVED';
+    else if (newStatus === 'CLOSED') actionType = 'CLOSED';
+    else if (newStatus === 'ESCALATED') actionType = 'ESCALATED';
+
+    tkt.history.push({
+      timestamp: new Date().toISOString(),
+      timeStr: 'Just now',
+      author: author,
+      action: actionType,
+      notes: reason || `Status changed from ${TICKET_STATUSES[oldStatus]?.label || oldStatus} to ${tkt.statusLabel}.`
+    });
+
+    renderTicketTable();
+    updateTicketCounts();
+    if (currentModalTicket && currentModalTicket.ticketId === tkt.ticketId) {
+      populateTicketModalUI(tkt);
+    }
+
+    return { success: true, ticket: tkt };
+  }
+
+  function updateTicketStatusFromModal(newStatus) {
+    if (!currentModalTicket) return;
+    const res = updateTicketStatus(currentModalTicket.ticketId, newStatus);
+    if (!res.success) {
+      showToast('Invalid Transition', res.error);
+    } else {
+      showToast('Status Updated', `${currentModalTicket.displayId} is now ${TICKET_STATUSES[newStatus]?.label}.`);
     }
   }
 
-  function goToChatFromTicket() {
+  // Feature Group 5: Human Technical Escalation
+  function escalateCurrentTicket() {
+    if (!currentModalTicket) return;
+    currentModalTicket.handlingAgent = 'Tier III NOC Engineering';
+    currentModalTicket.assignedStaff = 'Tier III NOC Engineering';
+
+    const res = updateTicketStatus(
+      currentModalTicket.ticketId,
+      'ESCALATED',
+      'Escalated to Tier III NOC Engineering for physical fiber line check / OLT inspection. (Future Module 09 technician dispatch integration point)',
+      'Staff Escalation'
+    );
+
+    if (res.success) {
+      showToast('Escalated to Tier III NOC', 'Logged in CRM. (Demo Mode: Field technician dispatch reserved for Module 09)');
+    } else {
+      showToast('Escalation Alert', res.error);
+    }
+  }
+
+  // Feature Group 7: Resolution & Confirmation
+  function resolveCurrentTicketModal() {
+    if (!currentModalTicket) return;
+    const input = document.getElementById('td-modal-resolution-summary');
+    const summary = input ? input.value.trim() : '';
+
+    if (!summary) {
+      syncGuidedStepsToResolution();
+    }
+    const finalSummary = (input && input.value.trim()) || 'Troubleshooting completed. Line metrics confirmed nominal.';
+    currentModalTicket.resolutionSummary = finalSummary;
+
+    const res = updateTicketStatus(
+      currentModalTicket.ticketId,
+      'RESOLVED',
+      `Resolution: ${finalSummary}`,
+      'Tier III NOC'
+    );
+
+    if (res.success) {
+      showToast('Ticket Resolved', `${currentModalTicket.displayId} marked resolved. Awaiting customer confirmation.`);
+    } else {
+      showToast('Action Failed', res.error);
+    }
+  }
+
+  function markTicketModalResolved() {
+    resolveCurrentTicketModal();
+    closeTicketModal();
+  }
+
+  function confirmCustomerClosure() {
+    if (!currentModalTicket) return;
+    if (currentModalTicket.status !== 'RESOLVED') {
+      showToast('Closure Notice', 'Ticket must be marked Resolved before customer closure confirmation.');
+      return;
+    }
+
+    const res = updateTicketStatus(
+      currentModalTicket.ticketId,
+      'CLOSED',
+      'Customer confirmed service restored. Ticket explicitly closed.',
+      'Customer Confirmation Simulation'
+    );
+
+    if (res.success) {
+      showToast('Ticket Closed', `${currentModalTicket.displayId} confirmed and closed.`);
+    }
+  }
+
+  function closeCurrentTicketModal() {
+    if (!currentModalTicket) return;
+    confirmCustomerClosure();
+  }
+
+  function reopenCurrentTicketModal() {
+    if (!currentModalTicket) return;
+    const res = updateTicketStatus(
+      currentModalTicket.ticketId,
+      'REOPENED',
+      'Customer reported issue returned after previous resolution. Ticket reopened.',
+      'Customer Support Handoff'
+    );
+
+    if (res.success) {
+      showToast('Ticket Reopened', `${currentModalTicket.displayId} reopened for investigation.`);
+    } else {
+      showToast('Reopen Notice', res.error);
+    }
+  }
+
+  function submitSimulatedCustomerFeedback() {
+    if (!currentModalTicket) return;
+    const ratingSelect = document.getElementById('td-modal-sim-rating');
+    const commentInput = document.getElementById('td-modal-sim-comment');
+    const rating = ratingSelect ? parseInt(ratingSelect.value, 10) : 5;
+    const comment = (commentInput && commentInput.value.trim()) || 'Problem resolved efficiently by SpaceNet NOC team.';
+
+    currentModalTicket.feedback = {
+      rating: rating,
+      comment: comment,
+      submittedAt: new Date().toISOString()
+    };
+
+    currentModalTicket.history.push({
+      timestamp: new Date().toISOString(),
+      timeStr: 'Just now',
+      author: currentModalTicket.customerName,
+      action: 'FEEDBACK_RECEIVED',
+      notes: `Subscriber submitted ${rating}-star CSAT review: "${comment}".`
+    });
+
+    renderFeedbackSection(currentModalTicket);
+    renderTicketHistory(currentModalTicket);
+    showToast('Feedback Logged', `Received ${rating}-star satisfaction review from ${currentModalTicket.customerName}.`);
+  }
+
+  // Feature Group 5: Ticket-to-Chat Navigation
+  function goToChatFromTicket(targetConvId) {
     closeTicketModal();
     filterType('all');
     filterInbox('all');
@@ -3555,50 +5452,55 @@
     if (searchInput) searchInput.value = '';
     currentSearchQuery = '';
     switchView('unified-inbox');
-    if (currentModalTicket && currentModalTicket.cust.includes('Alex')) {
-      selectCustomer('alex');
-    } else if (currentModalTicket && currentModalTicket.cust.includes('Marcus')) {
+
+    const convId = targetConvId || (currentModalTicket && (currentModalTicket.relatedConversationId || currentModalTicket.conversationId));
+    if (convId) {
+      const conv = getConversation(convId);
+      if (conv) {
+        selectCustomer(conv.key || conv.conversationId);
+        showToast('Chat Handoff Active', `Viewing linked conversation ${conv.conversationId} for ${conv.customerName}`);
+        return;
+      }
+    }
+
+    // Backward-compatible fallback for Module 02 test assertions
+    if (currentModalTicket && currentModalTicket.cust && currentModalTicket.cust.includes('Marcus')) {
       selectCustomer('marcus');
+    } else {
+      selectCustomer('alex');
     }
   }
 
-  function filterTicketRows() {
-    const searchVal = document.getElementById('ticket-search-input').value.toLowerCase();
-    const typeVal = document.getElementById('ticket-type-filter').value;
-    const prioVal = document.getElementById('ticket-priority-filter').value;
-    const statVal = document.getElementById('ticket-status-filter').value;
-
-    const rows = document.querySelectorAll('#ticket-table-body tr');
-    rows.forEach(r => {
-      const text = r.innerText.toLowerCase();
-      const rType = r.getAttribute('data-type');
-      const rPrio = r.getAttribute('data-priority');
-      const rStat = r.getAttribute('data-status');
-
-      const matchesSearch = text.includes(searchVal);
-      const matchesType = (typeVal === 'ALL' || rType === typeVal);
-      const matchesPrio = (prioVal === 'ALL' || rPrio === prioVal);
-      const matchesStat = (statVal === 'ALL' || rStat === statVal);
-
-      if (matchesSearch && matchesType && matchesPrio && matchesStat) {
-        r.style.display = '';
-      } else {
-        r.style.display = 'none';
-      }
-    });
-  }
-
   function resolveTicketRow(btn, ticketId) {
-    const row = btn.closest('tr');
-    row.style.opacity = '0.35';
-    btn.disabled = true;
-    btn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-secondary">done_all</span>';
-    showToast('Ticket Resolved', `${ticketId} closed and customer satisfaction survey SMS dispatched.`);
+    const cleanId = ticketId ? ticketId.replace('#', '') : '';
+    const res = updateTicketStatus(cleanId, 'RESOLVED', 'Quick-resolved via table action button.');
+    if (btn && btn.closest) {
+      const row = btn.closest('tr');
+      if (row) row.style.opacity = '0.45';
+      btn.disabled = true;
+      btn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-secondary">done_all</span>';
+    }
+    showToast('Ticket Resolved', `${ticketId} resolved and customer satisfaction survey SMS dispatched.`);
   }
 
-  function createNewTicketMock() {
-    const modal = document.getElementById('create-ticket-modal');
-    const container = document.getElementById('create-ticket-container');
+  // Feature Group 6: Simulated Status Inquiry Workflow
+  function openStatusInquiryModal() {
+    const modal = document.getElementById('status-inquiry-modal');
+    const container = document.getElementById('status-inquiry-container');
+    const input = document.getElementById('status-inquiry-query');
+    const resCard = document.getElementById('status-inquiry-result');
+    if (!modal || !container) return;
+
+    if (input) input.value = '';
+    if (resCard) {
+      resCard.innerHTML = `
+        <div class="flex items-center justify-center gap-2 text-on-surface-variant text-[12px]">
+          <span class="material-symbols-outlined text-[18px] text-outline">search_check</span>
+          <span>Enter an active Ticket ID or Customer identifier to simulate an inquiry response.</span>
+        </div>
+      `;
+    }
+
     modal.classList.remove('hidden');
     setTimeout(() => {
       modal.classList.remove('opacity-0');
@@ -3607,52 +5509,109 @@
     }, 10);
   }
 
-  function closeCreateTicketModal() {
-    const modal = document.getElementById('create-ticket-modal');
-    const container = document.getElementById('create-ticket-container');
+  function closeStatusInquiryModal() {
+    const modal = document.getElementById('status-inquiry-modal');
+    const container = document.getElementById('status-inquiry-container');
+    if (!modal || !container) return;
     modal.classList.add('opacity-0');
     container.classList.remove('scale-100');
     container.classList.add('scale-95');
     setTimeout(() => modal.classList.add('hidden'), 200);
   }
 
-  function submitCreateTicket() {
-    const cust = document.getElementById('new-ticket-cust').value || 'New Customer (#9912)';
-    const type = document.getElementById('new-ticket-type').value;
-    const prio = document.getElementById('new-ticket-prio').value;
-    closeCreateTicketModal();
+  function simulateCustomerStatusInquiry(query) {
+    if (!query || typeof query !== 'string') {
+      return { found: false, message: 'Please specify a Ticket ID or Customer ID to inquire.' };
+    }
+    const cleanQ = query.trim().toLowerCase();
+    const cleanDigits = cleanQ.replace(/\D/g, '');
 
-    const tbody = document.getElementById('ticket-table-body');
-    const tr = document.createElement('tr');
-    tr.className = 'hover:bg-surface-container-high/40 transition-colors cursor-pointer group';
-    tr.setAttribute('data-type', type);
-    tr.setAttribute('data-priority', prio);
-    tr.setAttribute('data-status', 'INVESTIGATING');
-    const tktId = '#TKT-' + Math.floor(1000 + Math.random() * 9000);
+    const tkt = tickets.find(t =>
+      t.ticketId.toLowerCase() === cleanQ ||
+      t.displayId.toLowerCase() === cleanQ ||
+      t.ticketId.replace(/\D/g, '') === cleanQ ||
+      t.customerId.toLowerCase() === cleanQ ||
+      (cleanDigits.length >= 4 && t.customerId.replace(/\D/g, '').endsWith(cleanDigits)) ||
+      t.customerName.toLowerCase().includes(cleanQ)
+    );
 
-    tr.innerHTML = `
-      <td class="py-3 px-space-md"><input class="rounded text-primary focus:ring-0" type="checkbox" onclick="event.stopPropagation()"></td>
-      <td class="py-3 px-space-md font-code-metric text-primary font-semibold">${tktId}</td>
-      <td class="py-3 px-space-md">
-        <div class="flex flex-col">
-          <span class="font-headline-sm text-label-md text-on-surface">${cust}</span>
-          <span class="font-code-telemetry text-[11px] text-outline">SPN-NEW-${Math.floor(100+Math.random()*900)}</span>
-        </div>
-      </td>
-      <td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">Fiber Gigabit</td>
-      <td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">${type}</span></td>
-      <td class="py-3 px-space-md text-center"><span class="px-2 py-0.5 rounded-full ${prio==='URGENT'?'bg-error-container text-on-error-container font-semibold':'bg-surface-container text-on-surface-variant font-label-sm'}">${prio}</span></td>
-      <td class="py-3 px-space-md"><span class="flex items-center gap-1 font-label-sm text-tertiary"><span class="material-symbols-outlined text-[14px]">auto_awesome</span> AI Copilot</span></td>
-      <td class="py-3 px-space-md text-center"><span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">Investigating</span></td>
-      <td class="py-3 px-space-md text-right">
-        <div class="flex items-center justify-end gap-1">
-          <button class="p-1 hover:bg-surface-container rounded text-secondary" onclick="event.stopPropagation(); resolveTicketRow(this, '${tktId}')"><span class="material-symbols-outlined text-[18px]">check</span></button>
-        </div>
-      </td>
-    `;
-    tbody.prepend(tr);
-    showToast('New Ticket Logged', `${tktId} registered for ${cust} with AI Copilot triaging.`);
+    if (!tkt) {
+      return {
+        found: false,
+        message: `No ticket record located matching query "${query}". Fictional verification fallback: verify ticket number.`
+      };
+    }
+
+    const isOverdue = isTicketOverdue(tkt);
+    const diffHours = getTicketSlaRemaining(tkt);
+    const lastEvent = (tkt.history && tkt.history.length) ? tkt.history[tkt.history.length - 1] : null;
+
+    let slaMessage = '';
+    if (tkt.status === 'RESOLVED' || tkt.status === 'CLOSED') {
+      slaMessage = 'Resolved successfully.';
+    } else if (isOverdue) {
+      slaMessage = `⚠️ Overdue by ${Math.abs(diffHours).toFixed(1)} hours past ${tkt.slaDueHours}h target window. High priority triage active.`;
+    } else {
+      slaMessage = `Within target SLA: ~${Math.max(0, diffHours).toFixed(1)} hours remaining.`;
+    }
+
+    return {
+      found: true,
+      ticket: tkt,
+      message: `SpaceNet Support Desk Status for ${tkt.displayId}:\n- Customer: ${tkt.customerName} (${tkt.customerId})\n- Circuit: ${tkt.circuitId}\n- State: ${tkt.statusLabel} [${tkt.status}]\n- Priority: ${tkt.priority}\n- Assigned: ${tkt.handlingAgent}\n- Latest Progress: ${lastEvent ? lastEvent.notes : 'Diagnostic in progress'}\n- SLA Timing: ${slaMessage}`
+    };
   }
+
+  function executeStatusInquiry() {
+    const input = document.getElementById('status-inquiry-query');
+    const query = input ? input.value : '';
+    const res = simulateCustomerStatusInquiry(query);
+    const card = document.getElementById('status-inquiry-result');
+    if (!card) return;
+
+    if (!res.found) {
+      card.innerHTML = `
+        <div class="p-2 rounded bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-200 text-[12px] flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">error</span>
+          <span>${escapeHtml(res.message)}</span>
+        </div>
+      `;
+      return;
+    }
+
+    const t = res.ticket;
+    const isOverdue = isTicketOverdue(t);
+    card.innerHTML = `
+      <div class="flex flex-col gap-2 text-[12px]">
+        <div class="flex items-center justify-between pb-1 border-b border-surface-container-high">
+          <div class="flex items-center gap-2">
+            <span class="font-code-metric font-bold text-primary text-[15px]">${escapeHtml(t.displayId)}</span>
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold ${TICKET_STATUSES[t.status]?.badgeClass}">${escapeHtml(t.statusLabel)}</span>
+          </div>
+          <span class="font-code-telemetry text-outline text-[11px]">${escapeHtml(t.circuitId)}</span>
+        </div>
+        <div class="text-on-surface"><strong>Subscriber:</strong> ${escapeHtml(t.customerName)} (${escapeHtml(t.customerId)})</div>
+        <div class="text-on-surface"><strong>Issue:</strong> ${escapeHtml(t.subject)}</div>
+        <div class="text-on-surface"><strong>Assigned Agent:</strong> ${escapeHtml(t.handlingAgent)}</div>
+        <div class="p-2 rounded bg-surface-container font-code-telemetry text-[11px] ${isOverdue ? 'text-error font-semibold' : 'text-on-surface-variant'}">
+          ${escapeHtml(res.message.split('\n- SLA Timing: ')[1] || 'SLA Active')}
+        </div>
+        <div class="flex items-center justify-end gap-2 pt-1">
+          <button type="button" class="px-2.5 py-1 bg-primary text-on-primary rounded text-[11px] font-semibold hover:bg-primary-container" onclick="closeStatusInquiryModal(); openTicketDetail('${t.ticketId}')">Open Workspace</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function runPresetStatusInquiry(tktId) {
+    const input = document.getElementById('status-inquiry-query');
+    if (input) input.value = tktId;
+    executeStatusInquiry();
+  }
+
+  // Initialize Ticket table & counts on startup
+  renderTicketTable();
+  updateTicketCounts();
 
   // 6. Leads & Pipeline
   function openLeadModal(cardEl) {
