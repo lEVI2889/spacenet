@@ -1,6 +1,6 @@
 # SpaceNet AI CRM — Shared Data Contract & Architecture Standard
 
-**Document Version:** 1.4.0
+**Document Version:** 1.5.0
 **Effective Date:** 2026-10-31
 **Authors & Maintainers:** Rohan (Customer-Facing & Support Lead) & Adnan (Operations & Admin Lead)
 **Repository:** `https://github.com/lEVI2889/spacenet`
@@ -27,6 +27,7 @@ SpaceNet is an intelligent Customer Relationship Management (CRM) and Network Op
 | **v1.2.0** | 2026-10-30 | Rohan | AI Conversational Intelligence, Multilingual Knowledge Base, Comment-to-DM, Voice Simulation (Module 02). |
 | **v1.3.0** | 2026-10-31 | Rohan | Support Tickets & Customer Registry Contract, 7 Lifecycle States, Category Diagnostics, SLA Overdue, CSAT Ratings & Parallel Development Integration Hooks (Module 03). |
 | **v1.4.0** | 2026-10-31 | Rohan | Customer Profiles & Unified 360° View: Multi-Connection Schema, Customer Record Extensions, Secondary Circuit Ticket Lifecycle, and Bi-Directional Cross-Navigation (Module 04). |
+| **v1.5.0** | 2026-10-31 | Rohan | AI Troubleshooting & Diagnostics: DiagnosticSession Schema, Deterministic ISP Decision Trees, Simulated ONT/Router Telemetry, Speed Test Model, Cross-Module Diagnostics Integration (Ticket DIAGNOSTIC_EXEC sync, Customer 360 & Chat return), and Circuit Isolation (Module 05). |
 
 ---
 
@@ -44,6 +45,7 @@ To guarantee seamless navigation and referential integrity across modules develo
 | **Conversation** | `CONV-<CHANNEL_KEY>-<ID>` | N/A | `CONV-WA-8832`, `CONV-FB-5120` | Module 01 (Tasks 1–5) |
 | **Linked Private DM** | `CONV-<CHANNEL_KEY>-<ID>-DM` | N/A | `CONV-FB-5120-DM` | Module 02 (Feature Group 3) |
 | **Support Ticket** | `TKT-<ID>` | `#TKT-<ID>` | `TKT-9042` (`#TKT-9042`) | Module 03 (Tickets Desk) |
+| **Diagnostic Session** | `DIAG-<YYYYMMDD>-<NUM>` | N/A | `DIAG-20261031-001`, `DIAG-20261031-004` | Module 05 (`diagnosticSessions`) |
 | **Standard Message** | `m-<CUST_ABBR>-<NUM>` or `msg-<TIMESTAMP>` | N/A | `m-alx-1`, `msg-1730301234` | Module 01 (Tasks 1–5) |
 | **Voice Note Message** | `vmsg-<CUST_ABBR>-<NUM>` | N/A | `vmsg-alx-1`, `vmsg-frh-1` | Module 02 (Feature Group 6) |
 | **System Event Log** | `sys-<TIMESTAMP>` | N/A | `sys-1730302345` | Module 01 (Task 4) |
@@ -489,7 +491,135 @@ To avoid integration ambiguity across team members:
 
 ---
 
-## 8. Customer Message Simulator (`#demo-customer-simulator-strip`)
+## 8. AI Troubleshooting & Diagnostics Contract (Module 05)
+
+Module 05 introduces an interactive, pure client-side diagnostic workbench and deterministic guided decision-tree engine for SpaceNet AI CRM.
+
+### 8.1 Pure Client-Side Demonstration Architecture & Hardware Safety
+* **Zero Backend & No Real Hardware Probing:** All troubleshooting workflows, GPON optical attenuation sweeps, WAN gateway pings, Wi-Fi channel contention scans, remote router reboots, and speed-test benchmarks execute in-memory inside client JavaScript runtime (`index.html`).
+* **Hardware Credential Protection:** The application never requests live router passwords, never establishes Telnet/SSH/SNMP sessions, and never communicates with physical customer-premises equipment (CPE) or public speed test servers.
+* **Demonstration Warnings:** All diagnostic views display explicit `SIMULATED TELEMETRY` and demonstration disclaimer badges.
+
+### 8.2 Canonical Diagnostic Session Schema (`DiagnosticSession`)
+
+Every completed or active diagnostic run is recorded in `diagnosticSessions` adhering to the following structure:
+
+```typescript
+interface DiagnosticSession {
+  sessionId: string;                          // Format: DIAG-<YYYYMMDD>-<NUM> (e.g. 'DIAG-20261031-001')
+  customerId: string;                         // Canonical ID (e.g. 'CUST-8832')
+  customerName: string;                       // e.g. 'Alex Rivera'
+  circuitId: string;                          // Specific service line (e.g. 'SPN-FBR-0941' or 'SPN-FBR-0942')
+  circuitPlan: string;                        // Subscribed plan (e.g. 'Fiber 500M')
+  isPrimaryCircuit: boolean;                  // Flag distinguishing primary vs secondary connection
+  diagnosticType: 'NO_INTERNET' | 'SLOW_INTERNET' | 'ROUTER_WIFI' | 'SPEED_TEST' | 'OPTICAL_SWEEP' | 'ONT_REBOOT' | 'WIFI_SCAN' | 'WAN_CHECK' | 'ONT_STATUS';
+  status: 'IN_PROGRESS' | 'COMPLETED' | 'ESCALATED' | 'RESOLVED';
+  severity: 'Healthy' | 'Degraded' | 'Critical' | 'Needs Human Review' | 'Resolved';
+  stageIndex: number;
+  stageName: string;
+  responses: Array<{
+    questionId: string;
+    question: string;
+    answerKey: string;
+    answerLabel: string;
+    timestamp?: string;                       // ISO 8601
+  }>;
+  telemetry: {
+    routerPower?: 'ON' | 'OFF';
+    ontPower?: 'ON' | 'OFF';
+    ponStatus?: 'Solid Green' | 'Blinking Green' | 'Off';
+    losWarning?: 'Normal (No Loss)' | 'Red Alert (Loss of Light)' | 'None';
+    opticalRx?: string;                       // e.g. '-27.4 dBm (High Attenuation Warning)'
+    opticalRxStatus?: 'Optimal' | 'Nominal' | 'Degraded' | 'Critical';
+    latency?: string;                         // e.g. '11.4 ms'
+    jitter?: string;                          // e.g. '1.8 ms'
+    packetLoss?: string;                      // e.g. '0.0%'
+    downloadSpeed?: string;                   // e.g. '482 Mbps'
+    uploadSpeed?: string;                     // e.g. '468 Mbps'
+    rebootTimeSec?: number;                   // e.g. 14.2
+    wifi24Channel?: number;                   // e.g. 6
+    wifi5Channel?: number;                    // e.g. 36
+    ipAddress?: string;                       // e.g. '103.24.110.42 (Dynamic CGNAT)'
+    macAddress?: string;                      // e.g. '00:E0:4C:88:32:01'
+    oltPort?: string;                         // e.g. 'Dhanmondi OLT-04 Port 2 (GPON Slot 3)'
+  };
+  recommendations: string[];
+  nextAction: string;
+  outcome: 'Healthy' | 'Degraded' | 'Critical' | 'Needs Human Review' | 'Resolved';
+  timestamp: string;                          // ISO 8601
+  timeStr: string;                            // e.g. 'Just now'
+  ticketId?: string | null;                   // Linked support incident (e.g. 'TKT-9042')
+  conversationId?: string | null;             // Linked omnichannel chat (e.g. 'CONV-WA-8832')
+}
+```
+
+### 8.3 Guided Troubleshooting Workflows (`SPACE_NET_DIAGNOSTIC_WORKFLOWS`)
+
+Three deterministic decision trees guide technical support agents through common ISP issues:
+
+1. **`NO_INTERNET` (5 Stages):**
+   - Stage 1: Power & Equipment State (`pwr_check`) &rarr; Checks AC adapters and LED illumination.
+   - Stage 2: GPON PON Indicator Status (`pon_check`) &rarr; Evaluates solid lock, ranging blink, or dark state.
+   - Stage 3: Optical LOS Alarm (`los_check`) &rarr; Evaluates fiber drop cut red alarm (< -30 dBm).
+   - Stage 4: Client Device Outage Scope (`device_scope`) &rarr; Isolates single-device Wi-Fi DHCP vs whole-premise loss.
+   - Stage 5: Remote Reboot & WAN Renewal (`reboot_verify`) &rarr; Verifies renegotiation or initiates ticket escalation.
+2. **`SLOW_INTERNET` (4 Stages):**
+   - Stage 1: Transmission Medium (`medium_check`) &rarr; Wi-Fi vs Gigabit Ethernet Cat6.
+   - Stage 2: Wi-Fi Band & Interference (`band_check`) &rarr; 2.4 GHz congestion vs 5 GHz migration.
+   - Stage 3: Local Network Contention (`contention_check`) &rarr; Concurrent 4K streaming, torrents, cloud sync.
+   - Stage 4: Speed Test Verification (`speed_test_step`) &rarr; Benchmark against provisioned plan tier.
+3. **`ROUTER_WIFI` (4 Stages):**
+   - Stage 1: SSID Visibility (`ssid_check`) &rarr; Radio disabled vs firmware freeze.
+   - Stage 2: WPA Authentication (`auth_check`) &rarr; Passkey mismatch vs signal drop.
+   - Stage 3: Signal Coverage & Attenuation (`signal_check`) &rarr; Structural wall loss vs repeater requirement.
+   - Stage 4: RF Channel Optimization (`channel_opt`) &rarr; 5 GHz 80MHz channel shift.
+
+### 8.4 Simulated Hardware Telemetry Operations
+
+| Diagnostic Tool | Signature | Simulated Execution Behavior | Output Telemetry |
+| :--- | :--- | :--- | :--- |
+| **ONT Status Check** | `simulateOntStatusCheck(custId?, circuitId?)` | Inspects ONT hardware, PON lock, optical Rx, and IP lease. Defaults to active workbench target. | Hardware models, MAC, OLT port, Rx power, packet loss, CGNAT IP. |
+| **Remote ONT/Router Reboot** | `simulateRouterReboot(custId?, circuitId?)` | Dispatches remote power-cycle signal, renegotiates GPON link in 14.2s, renews DHCP WAN lease. | `rebootTimeSec: 14.2`, `ponStatus: 'Solid Green'`, `outcome: 'Resolved'`. |
+| **Optical Power Sweep** | `simulateOpticalPowerSweep(custId?, circuitId?)` | Evaluates receive levels against standard ISP thresholds (-8 to -22 dBm Optimal, -27.4 dBm Degraded, < -30 dBm Critical). | `opticalRx`, `opticalRxStatus`, attenuation alerts. |
+| **WAN Connectivity Ping** | `simulateWanConnectivityCheck(custId?, circuitId?)` | Pings core gateway, resolves SpaceNet Core DNS (1.8 ms), measures latency and packet loss. | `latency`, `packetLoss`, SpaceNet Core DNS resolution time. |
+| **Wi-Fi Channel Inspection** | `simulateWifiChannelInspection(custId?, circuitId?)` | Evaluates 2.4 GHz Channel 6 (78% contention) vs 5 GHz Channel 36 (clean 80MHz spectrum). | `wifi24Channel: 6`, `wifi5Channel: 36`, recommendation to migrate. |
+| **Simulated Speed Test** | `startSimulatedSpeedTest(custId?, circuitId?)` | Simulates throughput proportional to active circuit plan tier with realistic latency and jitter. | `downloadSpeed`, `uploadSpeed`, `latency`, `jitter`, `packetLoss`. |
+
+### 8.5 Connection-Aware Targeting & Isolation Model
+* **Multi-Circuit Subscriber Support:** Supports independent testing of primary and secondary circuits for multi-connection subscribers (e.g. Alex Rivera `CUST-8832` primary `SPN-FBR-0941` vs secondary `SPN-FBR-0942`; Vanguard Logistics `CUST-4410` primary `SPN-DED-4410` vs secondary `SPN-FBR-4412`).
+* **Primary Circuit Immutability:** Selecting or diagnosing a secondary circuit dynamically targets the diagnostic workbench (`currentDiagCircuitId`), but **strictly preserves** `customer.circuitId` in `SPACE_NET_CUSTOMERS`.
+* **Telemetry Isolation:** Secondary circuit `SPN-FBR-0942` evaluates healthy optical power (-16.8 dBm) and 98 Mbps throughput, completely isolated from primary circuit `SPN-FBR-0941` (-27.4 dBm degraded attenuation).
+
+### 8.6 Cross-Module Integration Hooks
+
+| Integration Point | Source Module & Control | Implementation Detail | Behavior |
+| :--- | :--- | :--- | :--- |
+| **Customer 360° &rarr; Diagnostics** | Module 04 Hero Card `[AI Diagnostics]` | `openDiagnosticsFromProfile(customerId, circuitId)` | Opens `#view-ai-diagnostics`, targets customer & circuit, records origin context for back navigation. |
+| **Diagnostics &rarr; Customer 360°** | Module 05 `[Back to 360° Profile]` | `returnFromDiagnostics()` | Restores `#view-customer-profiles` with active customer pre-selected. |
+| **Support Ticket &rarr; Diagnostics** | Module 03 Modal `[Full AI Diagnostics]` | `openDiagnosticsFromTicket(ticketId)` | Opens diagnostics, maps ticket category to diagnostic workflow, preserves `ticketId`. |
+| **Diagnostics &rarr; Support Ticket** | Module 05 `[Back to Ticket]` | `returnFromDiagnostics()` | Restores `#view-tickets` and re-opens ticket detail modal. |
+| **Sync Diagnostic to Ticket** | Module 05 `[Sync to Ticket]` | `syncDiagnosticToLinkedTicket(ticketId, session)` | Appends audit event `action: 'DIAGNOSTIC_EXEC'` to `ticket.history` with tested circuit telemetry. |
+| **Escalate to New Ticket** | Module 05 `[Escalate to Support Ticket]` | `escalateDiagnosticToTicket(session)` | Opens `#create-ticket-modal` prefilled with tested customer, circuit, category, priority, and diagnostic findings. Requires explicit staff confirmation. |
+| **Unified Inbox &rarr; Diagnostics** | Module 01/02 Chat Header Copilot | `openDiagnosticsFromChat(conversationId)` | Opens diagnostics targeting customer linked to chat. |
+| **Diagnostics &rarr; Unified Inbox** | Module 05 `[Back to Unified Inbox]` | `returnFromDiagnostics()` | Restores `#view-unified-inbox` with thread preserved. |
+| **Human Takeover Safety** | Module 01/02 Safety Guard | `conv.status === 'human_takeover'` | Diagnostic results are never automatically sent as customer-facing messages when takeover is active. |
+
+### 8.7 History Storage & Non-Destructive Reset
+* **History Storage:** All sessions are recorded in `diagnosticSessions`. Filterable by active circuit (`filterDiagHistoryByCircuit('active')`) or all records (`filterDiagHistoryByCircuit('all')`).
+* **Non-Destructive Demo Reset (`resetDiagnosticsDemoState()`):** Restores `diagnosticSessions` to baseline fixtures (`DEFAULT_DIAGNOSTIC_SESSIONS`) without deleting tickets, customer profiles, or conversations.
+
+### 8.8 Global Window Bindings & Public API
+All diagnostic functions and states are synchronized to `window` for reliable cross-browser execution:
+* `window.currentDiagCustomerId`, `window.currentDiagCircuitId`, `window.diagnosticSessions`
+* `window.selectDiagCustomer`, `window.selectDiagCircuit`, `window.switchDiagWorkflow`
+* `window.simulateOntStatusCheck`, `window.simulateRouterReboot`, `window.simulateOpticalPowerSweep`
+* `window.simulateWanConnectivityCheck`, `window.simulateWifiChannelInspection`, `window.startSimulatedSpeedTest`
+* `window.openDiagnosticsFromProfile`, `window.openDiagnosticsFromTicket`, `window.openDiagnosticsFromChat`
+* `window.syncDiagnosticToLinkedTicket`, `window.escalateDiagnosticToTicket`, `window.resetDiagnosticsDemoState`
+
+---
+
+## 9. Customer Message Simulator (`#demo-customer-simulator-strip`)
 
 To facilitate evaluation and QA testing without live messaging networks, Module 02 provides an interactive simulation toolbar:
 * **UI Location:** Rendered directly above `#chat-message-stream`.
@@ -502,7 +632,7 @@ To facilitate evaluation and QA testing without live messaging networks, Module 
 
 ---
 
-## 9. Demo-Only Commercial & Technical Safeguards
+## 10. Demo-Only Commercial & Technical Safeguards
 
 > [!IMPORTANT]
 > **Fictional Data & Demonstration Boundaries:**
@@ -511,10 +641,11 @@ To facilitate evaluation and QA testing without live messaging networks, Module 
 > 3. **AI Determinism:** Conversational AI capabilities are executed using deterministic local rules and knowledge maps. No external LLM APIs (OpenAI, Gemini, Anthropic) or live network tokens are used.
 > 4. **Voice Transcription Simulation:** Voice messages are simulated with pre-rendered waveform graphics and mock transcript records. No microphone access, audio recording, or speech-to-text APIs are employed.
 > 5. **Privacy & Security Boundaries:** Internal staff notes and human takeover flags are maintained client-side in memory. No server-side authentication, role-based access control (RBAC), or cryptographic separation exists in this frontend demonstration prototype.
+> 6. **Simulated Telemetry Safeguards:** Router reboot renegotiation (14.2s), GPON optical power sweeps (-27.4 dBm), WAN ping latency, and speed test throughput metrics are 100% simulated client-side fixtures.
 
 ---
 
-## 10. Cross-Module Relationships & Integration Hooks
+## 11. Cross-Module Relationships & Integration Hooks
 
 ```mermaid
 erDiagram
@@ -533,10 +664,14 @@ erDiagram
     CONVERSATION ||--o| CONVERSATION : "transitions (Comment to DM)"
 ```
 
-### 10.1 Active Integration Hooks (Verified in Code)
+### 11.1 Active Integration Hooks (Verified in Code)
 * **Profile &harr; Inbox Navigation:** `goToChatFromProfile` & `goToProfileFromChat`.
 * **Profile &harr; Ticket Navigation:** `openTicketDetailFromProfile` & `goToProfileFromTicket`.
 * **Profile &rarr; Create Ticket:** `createTicketFromProfile` with target circuit prefill.
+* **Profile &harr; Diagnostics Navigation:** `openDiagnosticsFromProfile` & `returnFromDiagnostics`.
+* **Ticket &harr; Diagnostics Navigation:** `openDiagnosticsFromTicket` & `returnFromDiagnostics`.
+* **Diagnostics &rarr; Ticket History Sync:** `syncDiagnosticToLinkedTicket` appending audit event `DIAGNOSTIC_EXEC`.
+* **Diagnostics &rarr; Ticket Escalation:** `escalateDiagnosticToTicket` with circuit telemetry prefill.
 * **Copilot Intent Routing (`handleRoutingAction`):**
   * `ticket_suggest`: Opens `#create-ticket-modal` with prefilled subscriber details from the active conversation context.
   * `sales_handoff`: Displays recommended sales lead creation for prospective subscribers.
@@ -546,7 +681,7 @@ erDiagram
 
 ---
 
-## 11. Developer Ownership & Coordination Agreement
+## 12. Developer Ownership & Coordination Agreement
 
 | Module Range | Domain Area | Lead Owner | Shared Coordination Requirement |
 | :--- | :--- | :--- | :--- |
@@ -559,9 +694,9 @@ erDiagram
 
 ---
 
-## 12. Demo Data Fixture Registry
+## 13. Demo Data Fixture Registry
 
-### 12.1 Shared Subscriber Registry (`SPACE_NET_CUSTOMERS` — 9 Base Subscribers)
+### 13.1 Shared Subscriber Registry (`SPACE_NET_CUSTOMERS` — 9 Base Subscribers)
 
 | Customer Name | Customer ID | Display ID | Primary Circuit | Secondary Circuit | Plan | Status | Zone | Billing Cycle |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -575,7 +710,7 @@ erDiagram
 | **Vanguard Logistics** | `CUST-4410` | `#4410` | `SPN-DED-4410` | `SPN-FBR-4412` | Leased Line 1G | VIP Corporate Account | Tejgaon | 1st of each month |
 | **Hyperion Studio** | `CUST-7719` | `#7719` | `SPN-FBR-7719` | None | Fiber 1Gbps | Active (Good Standing) | Mohakhali | 1st of each month |
 
-### 12.2 Canonical Tickets Dataset (`tickets` — 6 Base Incidents)
+### 13.2 Canonical Tickets Dataset (`tickets` — 6 Base Incidents)
 
 | Ticket ID | Display ID | Customer | Circuit | Category | Priority | Status | Source Channel | Context & Features |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -586,9 +721,18 @@ erDiagram
 | `TKT-9024` | `#TKT-9024` | Sarah Jenkins (`CUST-4491`) | `SPN-FBR-4491` | `ROUTER_WIFI` | `NORMAL` | `CLOSED` | `facebook` | Static IP subnet mapping; confirmed & closed with 5-star rating |
 | `TKT-9019` | `#TKT-9019` | Farhan Ahmed (`CUST-6210`) | `SPN-FBR-6210` | `SLOW_INTERNET` | `HIGH` | `REOPENED` | `instagram` | Banani esports tournament ping jitter; previously resolved then reopened |
 
+### 13.3 Diagnostic Sessions Baseline Registry (`DEFAULT_DIAGNOSTIC_SESSIONS` — 4 Fixtures)
+
+| Session ID | Customer | Circuit | Type | Severity | Status | Linked Ticket | Key Telemetry / Notes |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `DIAG-20261031-001` | Alex Rivera (`CUST-8832`) | `SPN-FBR-0941` (Primary) | `NO_INTERNET` | `Degraded` | `ESCALATED` | `TKT-9042` | Optical Rx -27.4 dBm (High Attenuation Warning); Blinking PON LED; 11.4 ms latency. |
+| `DIAG-20261031-002` | Hyperion Studio (`CUST-7719`) | `SPN-FBR-7719` (Primary) | `ROUTER_WIFI` | `Resolved` | `RESOLVED` | `TKT-9035` | Channel shifted to 5GHz 160MHz Channel 36; Verified speed: 940/920 Mbps; 0% loss. |
+| `DIAG-20261031-003` | Farhan Ahmed (`CUST-6210`) | `SPN-FBR-6210` (Primary) | `SLOW_INTERNET` | `Degraded` | `IN_PROGRESS` | `TKT-9019` | Ping jitter 14.8 ms, 2.1% loss on gaming node; Throughput 112/98 Mbps; Escalated. |
+| `DIAG-20261031-004` | Alex Rivera (`CUST-8832`) | `SPN-FBR-0942` (Secondary) | `SPEED_TEST` | `Healthy` | `COMPLETED` | None | Isolated secondary link: 98.4 Mbps Down / 94.6 Mbps Up (98.4% of 100M plan); 8.2 ms ping. |
+
 ---
 
-## 13. Extension Guidelines for Future Coding Agents
+## 14. Extension Guidelines for Future Coding Agents
 
 1. **Adding New Conversations:**
    * Append new items to the canonical `conversations` array inside `index.html`.
@@ -613,5 +757,9 @@ erDiagram
    * Add message object with `sender: 'voice'` conforming to Section 3 schema.
 5. **Adding Knowledge Base Answers:**
    * Extend `SPACE_NET_KNOWLEDGE_BASE` categories in `index.html` with explicit English, Bengali (`bn`), and Banglish (`banglish`) answers. Include prominent demo notices for any simulated financial numbers.
-6. **DOM Element Safety:**
-   * Do not remove established DOM target IDs: `#inbox-thread-list`, `#inbox-filter-strip`, `#inbox-type-filter-strip`, `#chat-post-context-banner`, `#comment-to-dm-banner`, `#chat-frustration-alert`, `#chat-ai-routing-banner`, `#demo-customer-simulator-strip`, `#chat-customer-name`, `#chat-customer-avatar`, `#chat-channel-badge`, `#chat-circuit-plan`, `#chat-customer-profile-btn`, `#chat-message-stream`, `#agent-override-toggle`, `#chat-composer-container`, `#ticket-table-body`, `#create-ticket-modal`, `#ticket-detail-modal`, `#status-inquiry-modal`, `#customer-directory-list`, `#customer-search-input`, `#customer-360-workspace`, `#cust-connection-tabs`, `#cust-360-hero-card`.
+6. **Adding Diagnostic Workflows & Sessions:**
+   * Extend `SPACE_NET_DIAGNOSTIC_WORKFLOWS` with structured decision stages adhering to Section 8.3.
+   * Record new sessions using `recordDiagnosticSession()` conforming to `DiagnosticSession` (Section 8.2).
+   * Ensure `isPrimaryCircuit` is correctly flagged when testing secondary connections.
+7. **DOM Element Safety:**
+   * Do not remove established DOM target IDs: `#inbox-thread-list`, `#inbox-filter-strip`, `#inbox-type-filter-strip`, `#chat-post-context-banner`, `#comment-to-dm-banner`, `#chat-frustration-alert`, `#chat-ai-routing-banner`, `#demo-customer-simulator-strip`, `#chat-customer-name`, `#chat-customer-avatar`, `#chat-channel-badge`, `#chat-circuit-plan`, `#chat-customer-profile-btn`, `#chat-message-stream`, `#agent-override-toggle`, `#chat-composer-container`, `#ticket-table-body`, `#create-ticket-modal`, `#ticket-detail-modal`, `#status-inquiry-modal`, `#customer-directory-list`, `#customer-search-input`, `#customer-360-workspace`, `#cust-connection-tabs`, `#cust-360-hero-card`, `#view-ai-diagnostics`, `#diag-workflow-panel`, `#diag-equipment-panel`, `#diag-speedtest-panel`, `#diag-history-panel`.
