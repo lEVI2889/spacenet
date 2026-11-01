@@ -156,6 +156,8 @@ main.bg-surface { background-color: transparent; }
 }
 /* Views breathe below the fixed header and above the page end (the removed tab strip used to). */
 .app-view { padding-top: 1rem; padding-bottom: 2.5rem; }
+/* Inbox composer: the input may shrink so Send stays inside the card (setComposerMode rewrites its class list). */
+#chat-input { min-width: 0; }
 /* Header: quick action stays reachable (icon-only on phones). */
 #app-header #quick-sweep-btn { display: flex; }
 /* Browser surfaces themed from the palette. */
@@ -404,9 +406,9 @@ html { -webkit-tap-highlight-color: transparent; }
     <p class="font-body-sm text-body-sm text-inverse-on-surface/85">Every customer channel in one queue, with AI replies and staff takeover.</p>
   </div>
 </div>
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg h-[calc(100vh-140px)] min-h-[700px]">
-<!-- Left Column: Channel Filter + Chat Thread List (4 cols) -->
-<div class="lg:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col h-full overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:h-[calc(100vh-140px)] lg:min-h-[700px]">
+<!-- Left Column: Channel Filter + Chat Thread List (4 cols); stacked screens get their own bounded height -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col h-[26rem] lg:h-full overflow-hidden">
 <!-- Inbox Search & Filter Tabs -->
 <div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low/50">
 <div class="relative">
@@ -451,16 +453,16 @@ html { -webkit-tap-highlight-color: transparent; }
 </div>
 </div>
 <!-- Right Column: Active Live Chat Window & AI Copilot (8 cols) -->
-<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col h-full overflow-hidden">
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col lg:h-full overflow-hidden">
 <!-- Chat Header with Live Auto-Pilot / Human Handover Toggle -->
 <div class="p-space-md bg-surface-container-low/70 flex flex-wrap items-center justify-between gap-space-sm">
-<div class="flex items-center gap-space-md">
-<div id="chat-customer-avatar" class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm">
+<div class="flex items-center gap-space-md min-w-0">
+<div id="chat-customer-avatar" class="w-10 h-10 shrink-0 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm">
               AR
             </div>
-<div class="flex flex-col">
-<div class="flex items-center gap-space-xs">
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold" id="chat-customer-name">Alex Rivera</h3>
+<div class="flex flex-col min-w-0">
+<div class="flex flex-wrap items-center gap-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold break-words" id="chat-customer-name">Alex Rivera</h3>
 <span class="font-code-telemetry text-code-telemetry text-primary font-semibold">#8832</span>
 <span id="chat-channel-badge" class="px-2 py-0.2 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">WhatsApp</span>
 <span id="chat-type-badge" class="px-2 py-0.2 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">mail</span> Direct Message</span>
@@ -477,7 +479,7 @@ html { -webkit-tap-highlight-color: transparent; }
 </div>
 </div>
 <!-- Handover Toggle Pill & 360 Profile Action -->
-<div class="flex items-center gap-space-sm sm:gap-space-md">
+<div class="flex flex-wrap items-center gap-space-sm sm:gap-space-md">
 <button id="chat-customer-profile-btn" type="button" class="px-2.5 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-headline-sm text-label-md flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer border border-outline-variant/30" onclick="goToProfileFromChat()" title="View Unified Customer 360° Profile">
   <span class="material-symbols-outlined text-[16px]">badge</span>
   <span class="font-semibold">360° Profile</span>
@@ -612,7 +614,7 @@ html { -webkit-tap-highlight-color: transparent; }
   </div>
 </div>
 <!-- Real-Time Chat Log Stream -->
-<div class="flex-1 p-space-lg overflow-y-auto flex flex-col gap-space-md bg-surface/30" id="chat-message-stream">
+<div class="flex-1 min-h-[18rem] max-h-[60vh] lg:min-h-0 lg:max-h-none p-space-lg overflow-y-auto flex flex-col gap-space-md bg-surface/30" id="chat-message-stream">
 <!-- Customer Message -->
 <div class="flex items-start gap-space-sm max-w-xl">
 <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface font-semibold text-xs">AR</div>
