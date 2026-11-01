@@ -75,6 +75,33 @@ main.bg-surface { background-color: transparent; }
 .app-view:not(.hidden) { animation: space-view-in 200ms cubic-bezier(0.23, 1, 0.32, 1); }
 @keyframes space-view-in { from { opacity: 0; transform: translateY(6px); } }
 @keyframes space-view-fade { from { opacity: 0; } }
+/* Phone shell (<768px): the sidebar becomes an off-canvas drawer. Desktop width/offset
+   classes (w-64/w-20, pl-64/pl-20, left-64/left-20) and their collapse JS are untouched. */
+html { -webkit-tap-highlight-color: transparent; }
+@media (max-width: 767.98px) {
+  #main-content-wrapper { padding-left: 0 !important; }
+  #app-header { left: 0 !important; padding-left: .75rem; padding-right: .75rem; gap: .5rem; }
+  #app-header > div:first-child { flex: 1 1 auto; min-width: 0; gap: .5rem; }
+  #app-header > div:first-child > .relative { flex: 1 1 auto; min-width: 0; }
+  #app-header #global-search-input { width: 100%; min-width: 0; }
+  #app-header #global-search-input + div { display: none; }
+  #app-header > div:last-child > :not(:last-child), #app-header .text-right { display: none; }
+  main { padding-left: .75rem !important; padding-right: .75rem !important; }
+  #app-sidebar { width: 16rem !important; height: 100dvh; overflow-y: auto; overscroll-behavior: contain; transform: translateX(-100%); visibility: hidden;
+    transition: transform 250ms cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 250ms; }
+  body.mobile-nav-open #app-sidebar { transform: none; visibility: visible; transition: transform 250ms cubic-bezier(0.32, 0.72, 0, 1); }
+  #app-sidebar .sidebar-text.hidden { display: inline; }
+  #collapse-sidebar-btn { display: none; }
+  #mobile-nav-backdrop { position: fixed; inset: 0; z-index: 45; background: rgba(2, 6, 23, .6); }
+  /* !important: Tailwind text-size utilities on inputs would otherwise win and iOS would zoom on focus. */
+  #main-content-wrapper input, #main-content-wrapper select, #main-content-wrapper textarea { font-size: 16px !important; }
+  /* Inline toolbar pickers (label + select in one row) must not push the page wider. */
+  main .flex.items-center > select { max-width: 60vw; }
+  .space-mission-band::before { inset: -8px -12px; }
+}
+@media (max-width: 767.98px) and (prefers-reduced-motion: reduce) {
+  #app-sidebar, body.mobile-nav-open #app-sidebar { transition: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   #space-backdrop .space-nebula-glow { animation: none; }
   #space-backdrop .space-layer, #space-backdrop .space-sky { transition: none; }
@@ -82,7 +109,7 @@ main.bg-surface { background-color: transparent; }
   .app-view:not(.hidden) { animation: space-view-fade 150ms ease; }
 }
 </style>
-</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.02"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.04" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.09" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.16" data-tile="900"></div></div></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" onclick="openCmdPalette()" onfocus="openCmdPalette()" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
+</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.02"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.04" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.09" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.16" data-tile="900"></div></div></div><div id="mobile-nav-backdrop" class="hidden" aria-hidden="true" onclick="closeMobileNav()"></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><button type="button" id="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close navigation" class="md:hidden absolute top-3 right-3 z-10 p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><button type="button" id="mobile-nav-btn" onclick="openMobileNav()" aria-label="Open navigation" aria-controls="app-sidebar" aria-expanded="false" class="md:hidden shrink-0 p-1.5 rounded-lg text-inverse-on-surface hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary"><span class="material-symbols-outlined" aria-hidden="true">menu</span></button><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" onclick="openCmdPalette()" onfocus="openCmdPalette()" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
 <!-- Interactive View Switcher Sub-Header Bar & Live System Metric Ribbon -->
 <div class="sticky top-16 z-30 bg-surface/90 backdrop-blur-md px-space-md py-space-sm mb-space-lg shadow-sm flex flex-wrap items-center justify-between gap-space-md rounded-xl">
 <div class="flex items-center gap-space-xs overflow-x-auto py-1">
@@ -10757,6 +10784,96 @@ main.bg-surface { background-color: transparent; }
     paint();
   }
   initSpaceBackdrop();
+
+  // =========================================================================
+  // SHELL: phone navigation drawer (<768px). The desktop sidebar and its
+  // collapse behaviour are untouched; on desktop these functions do nothing.
+  // =========================================================================
+  const MOBILE_NAV_QUERY = '(max-width: 767.98px)';
+  let mobileNavReturnFocus = null;
+
+  function isMobileNavViewport() {
+    return !!(window.matchMedia && window.matchMedia(MOBILE_NAV_QUERY).matches);
+  }
+
+  function isMobileNavOpen() {
+    return !!(document.body && document.body.classList.contains('mobile-nav-open'));
+  }
+
+  function setMobileNavOpen(open) {
+    const sidebar = document.getElementById('app-sidebar');
+    const backdrop = document.getElementById('mobile-nav-backdrop');
+    const btn = document.getElementById('mobile-nav-btn');
+    const wrapper = document.getElementById('main-content-wrapper');
+    if (!sidebar || !backdrop || !btn || !wrapper || !document.body) return;
+    document.body.classList.toggle('mobile-nav-open', open);
+    document.body.classList.toggle('overflow-hidden', open);
+    backdrop.classList.toggle('hidden', !open);
+    btn.setAttribute('aria-expanded', String(open));
+    // Header and page sit inside the wrapper: inert removes them from focus and pointer input.
+    wrapper.inert = open;
+    if (open) {
+      sidebar.setAttribute('role', 'dialog');
+      sidebar.setAttribute('aria-modal', 'true');
+      sidebar.setAttribute('aria-label', 'Main navigation');
+    } else {
+      ['role', 'aria-modal', 'aria-label'].forEach(a => sidebar.removeAttribute(a));
+    }
+  }
+
+  function openMobileNav() {
+    if (!isMobileNavViewport() || isMobileNavOpen()) return;
+    mobileNavReturnFocus = document.activeElement;
+    setMobileNavOpen(true);
+    const close = document.getElementById('mobile-nav-close');
+    if (close) close.focus();
+  }
+
+  function closeMobileNav(restoreFocus = true) {
+    if (!isMobileNavOpen()) return false;
+    setMobileNavOpen(false);
+    // iOS does not focus tapped buttons, so the opener may be <body>; fall back to the menu button.
+    const opener = mobileNavReturnFocus && mobileNavReturnFocus !== document.body && document.contains(mobileNavReturnFocus) ? mobileNavReturnFocus : null;
+    const target = opener || document.getElementById('mobile-nav-btn');
+    if (restoreFocus && target && isMobileNavViewport()) target.focus();
+    mobileNavReturnFocus = null;
+    return true;
+  }
+
+  function initMobileNav() {
+    const sidebar = document.getElementById('app-sidebar');
+    if (!sidebar || typeof sidebar.addEventListener !== 'function' || !window.matchMedia) return;
+    // Registered before the app's DOMContentLoaded keydown handler, so Escape closes only the drawer.
+    window.addEventListener('keydown', e => {
+      if (!isMobileNavOpen()) return;
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        // The page behind the drawer is inert; don't open the command palette there.
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+      if (e.key === 'Escape') {
+        closeMobileNav();
+        e.stopImmediatePropagation();
+        return;
+      }
+      if (e.key === 'Tab') {
+        const focusables = Array.from(sidebar.querySelectorAll('a[href], button:not([disabled])')).filter(el => el.offsetParent !== null);
+        if (!focusables.length) return;
+        const first = focusables[0], last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    sidebar.addEventListener('click', e => {
+      if (e.target.closest && e.target.closest('nav a')) closeMobileNav();
+    });
+    // Growing past the breakpoint must never leave a backdrop, scroll lock or inert page behind.
+    const mq = window.matchMedia(MOBILE_NAV_QUERY);
+    const onChange = () => { if (!mq.matches) closeMobileNav(false); };
+    if (mq.addEventListener) mq.addEventListener('change', onChange); else if (mq.addListener) mq.addListener(onChange);
+  }
+  initMobileNav();
 </script>
 </body>
 </html>
