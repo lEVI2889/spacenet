@@ -1,6 +1,6 @@
 # SpaceNet AI CRM — Shared Data Contract & Architecture Standard
 
-**Document Version:** 1.10.0
+**Document Version:** 1.11.0
 **Effective Date:** 2026-10-31
 **Authors & Maintainers:** Rohan (Customer-Facing & Support Lead) & Adnan (Operations & Admin Lead)
 **Repository:** `https://github.com/lEVI2889/spacenet`
@@ -33,6 +33,7 @@ SpaceNet is an intelligent Customer Relationship Management (CRM) and Network Op
 | **v1.8.0** | 2026-11-01 | Adnan | Billing & Plans (Module 07): `SpaceNetInvoice`, `INV-<NUM>` implemented, simulated payments (`PAY-`), package-change (`PCR-`) and line-shift (`LSR-`) requests, plan-to-catalog mapping (Section 17). |
 | **v1.9.0** | 2026-11-01 | Adnan | Technician Operations (Module 09): `SpaceNetFieldJob`, `TASK-TECH-<NUM>` implemented, derived survey/repair jobs, installation-after-survey rule, eligibility and lifecycle (Section 18). |
 | **v1.10.0** | 2026-11-01 | Adnan | Admin & Analytics (Module 10): `getCrmMetrics` metric definitions, live Dashboard KPIs and navigation badges, `adminSettings` (AI per channel, working hours, role matrix, package price overrides) (Section 19). |
+| **v1.11.0** | 2026-11-01 | Adnan | Galaxy UI/UX upgrade: top tab strip removed; navigation badges live in the sidebar links (same ids); outage badge shows a plain count; sky layers; dialog focus return (Section 20). |
 
 ---
 
@@ -892,7 +893,7 @@ interface SpaceNetInvoice {
 
 ### 17.3 Integration hooks
 
-* Router: `'billing'` added to both view lists; sidebar link `data-path="billing"` and top-bar tab `#nav-btn-billing`.
+* Router: `'billing'` added to both view lists; sidebar link `data-path="billing"` and top-bar tab `#nav-btn-billing` (top tabs removed in v1.11.0, see Section 20).
 * Global Escape handler: `closeBillingDialogs()`.
 * Reuses Module 06 `showLeadDialog`, `hideLeadDialog`, `renderLeadBadge`, `getLeadPackage`, `resolveLeadCoverage`, `leadTimestamp`, and Module 04's `goToProfileFromChat`.
 * **Shared scope:** all modules share one script scope. Module 05 owns `getCustomerConnection`; billing uses `findBillingConnection`. `test_module_07.mjs` fails on any duplicate top-level function, `const` or `let` name.
@@ -932,7 +933,7 @@ interface SpaceNetFieldJob {
 
 ### 18.3 Integration hooks
 
-* Router: `'technicians'` added to both view lists; sidebar link `data-path="technicians"`; top tab `#nav-btn-technicians`; own sky region.
+* Router: `'technicians'` added to both view lists; sidebar link `data-path="technicians"`; top tab `#nav-btn-technicians` (removed in v1.11.0, see Section 20); own sky region.
 * Global Escape handler: `closeTechJobModal()`. A `hashchange` listener re-syncs jobs when `#technicians` opens.
 * Reuses Module 06 dialog, badge and field helpers plus `leadTimestamp`, and Module 08 `getOutageZones` / `getTicketZone`.
 
@@ -969,4 +970,24 @@ The Dashboard tiles, navigation badges and Analytics all read this one function.
 * `getCrmMetrics()` calls the idempotent `syncTechJobs()` first, so job counts match the Technicians view.
 * `showToast` ends with `refreshNavBadges()` (plus the Dashboard tiles while the Dashboard is open) once `window.__spacenetAdminReady` is set, so it never runs before Module 10 has initialised.
 * `executeSimulateCustomerMessage`: AI-channel guard after the human-takeover check.
-* Router: `'analytics'` in both view lists; sidebar link `data-path="analytics"`; top tab `#nav-btn-analytics`; own sky region. A `hashchange` listener re-renders the Dashboard and Analytics.
+* Router: `'analytics'` in both view lists; sidebar link `data-path="analytics"`; top tab `#nav-btn-analytics` (removed in v1.11.0, see Section 20); own sky region. A `hashchange` listener re-renders the Dashboard and Analytics.
+
+---
+
+## 20. Shell Navigation & Galaxy Theme Contract (v1.11.0)
+
+### 20.1 Navigation
+* The sidebar (desktop) and the phone drawer are the only full navigation. The former 10-tab top strip (`.view-switch-btn`, `#nav-btn-*`) is removed; nothing may reference those ids.
+* `switchView(viewId)` styles the sidebar links and sets `aria-current="page"` on the active one.
+* Module 03's old tab-badge write (non-CLOSED tickets) is removed, so `nav-badge-tickets` has one writer: Module 10 (open = not RESOLVED/CLOSED).
+* Badges keep their ids and owners but live inside the sidebar links: `nav-badge-inbox|tickets|customers|sales|billing|technicians|outages` (Module 10 `refreshNavBadges`) and `nav-diag-count` (Module 05). Every badge is a plain count; billing and outages use the alert style and hide at 0.
+* Quick ONT Sweep is the header button `#quick-sweep-btn` (`triggerGlobalDiagnostics()`), icon-only on narrow screens.
+* Adding a view: both router lists, a sidebar link `data-path="<view>"`, an `h1` inside the view, and a `#space-backdrop[data-view="<view>"] .space-sky` region rule.
+
+### 20.2 Galaxy backdrop
+* `#space-backdrop` layers (each `.space-layer` with `data-depth`; `data-tile` for repeating stars, `data-max` caps untiled layers, default 150px): nebula, Milky Way band, far/mid/near stars, planet.
+* `initSpaceBackdrop()` follows the window scroll with an eased requestAnimationFrame loop that stops when settled; page height is measured on resize, view change and body resize only. Transform and opacity only. Reduced motion: no scroll listener, no drift, twinkle, pulse or tile lift.
+* Content surfaces stay opaque; the sky shows around them. Phones drop the Milky Way band and the twinkle layer.
+
+### 20.3 Dialogs
+* `showLeadDialog` / `hideLeadDialog` (used by Modules 06–09) return focus to the opener; if the list re-rendered, to the new element with the same `onclick`; otherwise to the active view's heading (`restoreLeadDialogFocus`).

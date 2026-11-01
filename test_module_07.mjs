@@ -81,7 +81,7 @@ const m07Code = appScript.slice(m07Start, m07End);
 const literalIds = [...new Set([...m07Code.matchAll(/getElementById\('([a-z0-9-]+)'\)/g)].map(m => m[1]))];
 assert(m07Start > 0 && m07End > m07Start, 'Module 07 code section located');
 assert(literalIds.length > 10 && literalIds.every(idInMarkup), `Every literal id looked up by Module 07 exists in markup (${literalIds.length} ids)`);
-assert(/data-path="billing"/.test(markup) && idInMarkup('nav-btn-billing'), 'Sidebar link and top switcher tab for Billing exist');
+assert(/data-path="billing"[^>]*>(?:(?!<\/a>)[\s\S])*id="nav-badge-billing"/.test(markup), 'Sidebar link for Billing exists and carries its live badge');
 assert((appScript.match(/(validViews|availableViews) = \[[^\]]*'billing'[^\]]*\]/g) || []).length === 2, 'Router accepts #billing in both view lists');
 const escBlock = appScript.slice(appScript.indexOf("e.key === 'Escape'"), appScript.indexOf("e.key === 'Escape'") + 450);
 assert(/closeBillingDialogs\(\);/.test(escBlock), 'Escape handler closes the billing dialogs');

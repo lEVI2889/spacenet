@@ -7,61 +7,99 @@
    Motion = scroll parallax (transform only, JS below) + a slow nebula drift; both off under reduced motion. */
 body.bg-background { background-color: #060a1c; }
 main.bg-surface { background-color: transparent; }
-#space-backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: radial-gradient(140% 90% at 50% 0%, #0d1433 0%, #060a1c 60%); }
-#space-backdrop .space-sky { position: absolute; inset: -12% -10%; transition: transform 900ms cubic-bezier(0.77, 0, 0.175, 1); }
-#space-backdrop .space-layer { position: absolute; left: 0; right: 0; top: 0; will-change: transform; transition: opacity 300ms ease; }
+#space-backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: radial-gradient(140% 90% at 50% 0%, #131b4a 0%, #080c26 52%, #04061a 100%); }
+#space-backdrop .space-sky { position: absolute; inset: -14% -12%; transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1); }
+#space-backdrop .space-layer { position: absolute; left: 0; right: 0; top: 0; will-change: transform; transition: opacity 600ms ease; }
 #space-backdrop .space-nebula { inset: -15% -10%; }
 #space-backdrop .space-nebula-glow { position: absolute; inset: 0;
   background:
-    radial-gradient(38% 32% at 18% 22%, rgba(110,38,223,.38), transparent 70%),
-    radial-gradient(34% 30% at 82% 30%, rgba(0,102,255,.32), transparent 70%),
-    radial-gradient(30% 26% at 60% 82%, rgba(91,184,254,.20), transparent 70%);
-  animation: space-nebula-drift 48s cubic-bezier(0.77, 0, 0.175, 1) infinite alternate; }
+    radial-gradient(42% 36% at 16% 20%, rgba(124,58,237,.62), transparent 70%),
+    radial-gradient(38% 34% at 84% 24%, rgba(37,99,235,.56), transparent 70%),
+    radial-gradient(30% 28% at 64% 80%, rgba(34,211,238,.32), transparent 70%),
+    radial-gradient(26% 22% at 36% 62%, rgba(219,39,119,.36), transparent 70%);
+  animation: space-nebula-drift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate; }
+/* Scroll-linked second nebula: fades in as the page is scrolled (opacity only). */
 #space-backdrop .space-nebula-shift { position: absolute; inset: 0; opacity: 0;
   background:
-    radial-gradient(36% 30% at 75% 70%, rgba(230,80,170,.20), transparent 70%),
-    radial-gradient(40% 34% at 25% 75%, rgba(40,200,190,.16), transparent 70%); }
+    radial-gradient(34% 30% at 76% 70%, rgba(236,72,153,.32), transparent 70%),
+    radial-gradient(38% 32% at 22% 78%, rgba(34,211,238,.24), transparent 70%),
+    radial-gradient(30% 26% at 52% 36%, rgba(139,92,246,.22), transparent 70%); }
+/* Milky Way band: rotated inner element (the layer itself carries the parallax transform). */
+#space-backdrop .space-galaxy { inset: -10% -20%; }
+#space-backdrop .space-galaxy-band { position: absolute; left: -10%; right: -10%; top: 26%; height: 46%; transform: rotate(-14deg);
+  background:
+    radial-gradient(46% 7% at 52% 52%, rgba(4,6,26,.55), transparent 72%),
+    radial-gradient(1px 1px at 12px 18px, rgba(255,255,255,.85) 50%, transparent 51%) 0 0 / 46px 46px,
+    radial-gradient(1px 1px at 31px 7px, rgba(220,230,255,.55) 50%, transparent 51%) 0 0 / 46px 46px,
+    radial-gradient(1px 1px at 5px 37px, rgba(255,232,245,.5) 50%, transparent 51%) 0 0 / 46px 46px,
+    radial-gradient(50% 50% at 50% 50%, rgba(220,206,255,.34), rgba(150,118,255,.16) 45%, transparent 72%);
+  -webkit-mask-image: radial-gradient(50% 50% at 50% 50%, #000 25%, transparent 75%); mask-image: radial-gradient(50% 50% at 50% 50%, #000 25%, transparent 75%); }
 #space-backdrop .space-stars { background-repeat: repeat; }
 #space-backdrop .space-stars-far { height: calc(100% + 320px); background-size: 320px 320px;
   background-image:
-    radial-gradient(1px 1px at 20px 40px, rgba(255,255,255,.55) 50%, transparent 51%),
-    radial-gradient(1px 1px at 140px 90px, rgba(255,255,255,.40) 50%, transparent 51%),
-    radial-gradient(1px 1px at 260px 30px, rgba(200,215,255,.50) 50%, transparent 51%),
-    radial-gradient(1px 1px at 90px 210px, rgba(255,255,255,.35) 50%, transparent 51%),
-    radial-gradient(1px 1px at 230px 260px, rgba(255,255,255,.45) 50%, transparent 51%),
-    radial-gradient(1px 1px at 300px 170px, rgba(200,215,255,.35) 50%, transparent 51%); }
+    radial-gradient(1px 1px at 20px 40px, rgba(255,255,255,.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 140px 90px, rgba(255,255,255,.45) 50%, transparent 51%),
+    radial-gradient(1px 1px at 260px 30px, rgba(200,215,255,.55) 50%, transparent 51%),
+    radial-gradient(1px 1px at 90px 210px, rgba(255,255,255,.4) 50%, transparent 51%),
+    radial-gradient(1px 1px at 230px 260px, rgba(255,255,255,.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 300px 170px, rgba(200,215,255,.4) 50%, transparent 51%),
+    radial-gradient(1px 1px at 60px 300px, rgba(255,240,250,.45) 50%, transparent 51%),
+    radial-gradient(1px 1px at 180px 150px, rgba(255,255,255,.35) 50%, transparent 51%),
+    radial-gradient(1px 1px at 310px 300px, rgba(210,225,255,.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 120px 20px, rgba(255,255,255,.4) 50%, transparent 51%); }
 #space-backdrop .space-stars-mid { height: calc(100% + 540px); background-size: 540px 540px;
   background-image:
-    radial-gradient(1.5px 1.5px at 60px 120px, rgba(255,255,255,.70) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 400px 60px, rgba(190,210,255,.65) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 260px 380px, rgba(255,255,255,.55) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 480px 470px, rgba(255,230,240,.55) 50%, transparent 51%); }
+    radial-gradient(1.5px 1.5px at 60px 120px, rgba(255,255,255,.8) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 400px 60px, rgba(190,210,255,.75) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 260px 380px, rgba(255,255,255,.65) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 480px 470px, rgba(255,230,240,.65) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 150px 470px, rgba(200,235,255,.6) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 340px 220px, rgba(255,255,255,.55) 50%, transparent 51%); }
 #space-backdrop .space-stars-near { height: calc(100% + 900px); background-size: 900px 900px;
   background-image:
-    radial-gradient(2px 2px at 150px 200px, rgba(255,255,255,.85) 50%, transparent 51%),
-    radial-gradient(2.5px 2.5px at 700px 520px, rgba(200,220,255,.75) 50%, transparent 51%),
-    radial-gradient(2px 2px at 420px 780px, rgba(255,255,255,.65) 50%, transparent 51%); }
+    radial-gradient(2px 2px at 150px 200px, rgba(255,255,255,.9) 50%, transparent 51%),
+    radial-gradient(2.5px 2.5px at 700px 520px, rgba(200,220,255,.8) 50%, transparent 51%),
+    radial-gradient(2px 2px at 420px 780px, rgba(255,255,255,.7) 50%, transparent 51%),
+    radial-gradient(2px 2px at 820px 120px, rgba(255,225,240,.7) 50%, transparent 51%); }
+/* A few bright stars with a soft halo; slow opacity twinkle (off under reduced motion). */
+#space-backdrop .space-stars-near::before { content: ''; position: absolute; inset: 0; background-size: 900px 900px; background-repeat: repeat;
+  background-image:
+    radial-gradient(2.5px 2.5px at 300px 120px, #fff 45%, transparent 60%),
+    radial-gradient(18px 18px at 300px 120px, rgba(147,204,255,.35), transparent 70%),
+    radial-gradient(2.5px 2.5px at 610px 660px, #fff 45%, transparent 60%),
+    radial-gradient(16px 16px at 610px 660px, rgba(236,160,255,.3), transparent 70%);
+  animation: space-twinkle 7s ease-in-out infinite alternate; }
+/* Distant ringed planet, lower right, on its own near-depth layer. */
+#space-backdrop .space-planet { left: auto; top: auto; right: -4vmin; bottom: -16vmin; width: 44vmin; height: 44vmin; }
+#space-backdrop .space-planet-body { position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle at 30% 28%, #4a5fc4 0%, #232c75 34%, #0d1240 66%, #05071a 100%);
+  box-shadow: inset 10px 12px 26px rgba(147,204,255,.28), inset -26px -30px 60px rgba(0,0,0,.7), 0 0 70px rgba(91,130,255,.22); }
+#space-backdrop .space-planet-ring { position: absolute; left: -32%; right: -32%; top: 41%; height: 18%; border-radius: 50%; transform: rotate(-16deg);
+  border: 2px solid rgba(179,197,255,.30); box-shadow: 0 0 14px rgba(179,197,255,.16), inset 0 0 10px rgba(179,197,255,.10); }
 /* Working screens: quieter sky so content leads; the dashboard gets the full atmosphere. */
-#space-backdrop:not([data-view="dashboard"]) .space-nebula { opacity: .55; }
-#space-backdrop:not([data-view="dashboard"]) .space-stars-near { opacity: .35; }
-#space-backdrop:not([data-view="dashboard"]) .space-stars-mid { opacity: .7; }
+#space-backdrop:not([data-view="dashboard"]) .space-nebula { opacity: .7; }
+#space-backdrop:not([data-view="dashboard"]) .space-galaxy { opacity: .6; }
+#space-backdrop:not([data-view="dashboard"]) .space-planet { opacity: .55; }
+#space-backdrop:not([data-view="dashboard"]) .space-stars-near { opacity: .5; }
+#space-backdrop:not([data-view="dashboard"]) .space-stars-mid { opacity: .8; }
 /* Each view sits in its own region of the sky; switching views glides between them. */
-#space-backdrop[data-view="unified-inbox"] .space-sky { transform: translate3d(-4%, -3%, 0); }
-#space-backdrop[data-view="tickets"] .space-sky { transform: translate3d(4%, -5%, 0); }
-#space-backdrop[data-view="customer-profiles"] .space-sky { transform: translate3d(-6%, 4%, 0); }
-#space-backdrop[data-view="ai-diagnostics"] .space-sky { transform: translate3d(5%, 5%, 0); }
-#space-backdrop[data-view="sales-leads"] .space-sky { transform: translate3d(-2%, 7%, 0); }
-#space-backdrop[data-view="network-outages"] .space-sky { transform: translate3d(7%, -1%, 0); }
-#space-backdrop[data-view="billing"] .space-sky { transform: translate3d(-5%, -6%, 0); }
-#space-backdrop[data-view="technicians"] .space-sky { transform: translate3d(6%, 3%, 0); }
-#space-backdrop[data-view="analytics"] .space-sky { transform: translate3d(-7%, 5%, 0); }
+#space-backdrop[data-view="unified-inbox"] .space-sky { transform: translate3d(-6%, -4%, 0); }
+#space-backdrop[data-view="tickets"] .space-sky { transform: translate3d(6%, -7%, 0); }
+#space-backdrop[data-view="customer-profiles"] .space-sky { transform: translate3d(-8%, 5%, 0); }
+#space-backdrop[data-view="ai-diagnostics"] .space-sky { transform: translate3d(7%, 7%, 0); }
+#space-backdrop[data-view="sales-leads"] .space-sky { transform: translate3d(-3%, 9%, 0); }
+#space-backdrop[data-view="network-outages"] .space-sky { transform: translate3d(9%, -2%, 0); }
+#space-backdrop[data-view="billing"] .space-sky { transform: translate3d(-7%, -8%, 0); }
+#space-backdrop[data-view="technicians"] .space-sky { transform: translate3d(8%, 4%, 0); }
+#space-backdrop[data-view="analytics"] .space-sky { transform: translate3d(-9%, 6%, 0); }
 /* Header joins the dark frame; its search box and pills keep their own light surfaces. */
 #app-header { background-color: rgba(6, 10, 28, .72); box-shadow: 0 1px 0 rgba(179, 197, 255, .10); }
 #app-header .text-right .text-on-surface { color: #eef0ff; }
 #app-header .text-right .text-on-surface-variant { color: #aab4d6; }
-@keyframes space-nebula-drift { to { transform: translate3d(3%, 2%, 0) scale(1.04); } }
+@keyframes space-nebula-drift { to { transform: translate3d(3%, 2%, 0) scale(1.05); } }
+@keyframes space-twinkle { from { opacity: .35; } to { opacity: 1; } }
 /* Dark mission-control sidebar; content cards stay on their existing opaque surfaces. */
-#app-sidebar.bg-surface-container-low { background-color: rgba(8, 12, 32, .88); border-right: 1px solid rgba(179, 197, 255, .10); }
+#app-sidebar.bg-surface-container-low { background-color: rgba(8, 12, 34, .78); border-right: 1px solid rgba(179, 197, 255, .10); }
 #app-sidebar .bg-surface-container-low { background-color: transparent; }
 #app-sidebar .bg-surface-container { background-color: rgba(179, 197, 255, .07); }
 #app-sidebar .text-on-surface { color: #eef0ff; }
@@ -72,10 +110,60 @@ main.bg-surface { background-color: transparent; }
 #app-sidebar nav a:not(.bg-primary-container):hover, #app-sidebar button:hover { background-color: rgba(179, 197, 255, .10); color: #ffffff; }
 #app-sidebar nav a.bg-primary-container { box-shadow: 0 0 0 1px rgba(179, 197, 255, .25), 0 4px 18px rgba(0, 102, 255, .35); }
 /* Dashboard title band sits on the sky; a soft scrim keeps its text readable over stars. */
-.space-mission-band::before { content: ''; position: absolute; inset: -8px -16px; border-radius: 1.5rem; background: radial-gradient(70% 120% at 20% 60%, rgba(6, 10, 28, .55), transparent 75%); }
+.space-mission-band::before { content: ''; position: absolute; inset: -24px -12px; pointer-events: none; background: radial-gradient(closest-side at 30% 55%, rgba(6, 10, 28, .6), transparent); }
 /* View switch: brief fade-up so screens don't teleport. */
-.app-view:not(.hidden) { animation: space-view-in 200ms cubic-bezier(0.23, 1, 0.32, 1); }
-@keyframes space-view-in { from { opacity: 0; transform: translateY(6px); } }
+.app-view:not(.hidden) { animation: space-view-in 320ms cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes space-view-in { from { opacity: 0; transform: translateY(12px); } }
+/* View titles on the sky (Inbox, Tickets, Customers) share the dashboard band's scrim. */
+.space-view-title::before { content: ''; position: absolute; inset: -20px -12px; pointer-events: none; background: radial-gradient(closest-side at 25% 50%, rgba(6, 10, 28, .6), transparent); }
+/* Module heroes (06-10): one deep-space panel instead of flat slate. */
+.sales-hero.bg-inverse-surface { background: radial-gradient(60% 140% at 100% 0%, rgba(124,58,237,.32), transparent 60%), radial-gradient(50% 120% at 0% 100%, rgba(34,211,238,.14), transparent 60%), linear-gradient(135deg, #121a46, #0b1030); border: 1px solid rgba(179,197,255,.14); box-shadow: 0 18px 40px -18px rgba(2,6,23,.85); }
+/* Content cards lift off the sky with a real offset shadow; they stay opaque for readability. */
+.app-view > .rounded-xl, .app-view > .grid > .rounded-xl, .app-view > .grid > div > .rounded-xl { box-shadow: 0 14px 34px -14px rgba(2,6,23,.75), 0 2px 6px rgba(2,6,23,.3); }
+/* Dashboard instrument tiles (rendered by renderDashboardKpis). */
+.kpi-tile { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: .25rem; text-align: left; padding: 1rem 1.125rem; border-radius: .75rem; color: #eef0ff;
+  background: radial-gradient(120% 90% at 100% 0%, var(--tone-soft), transparent 55%), linear-gradient(160deg, #141c46, #0b1132);
+  border: 1px solid rgba(179,197,255,.14); box-shadow: 0 16px 34px -16px rgba(2,6,23,.9);
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), border-color 200ms ease, box-shadow 200ms ease; }
+.kpi-tile::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, var(--tone), transparent 80%); }
+.kpi-tile:hover { transform: translateY(-2px); border-color: rgba(179,197,255,.32); box-shadow: 0 22px 40px -16px rgba(2,6,23,.95); }
+.kpi-tile:focus-visible { outline: 2px solid #93ccff; outline-offset: 2px; }
+.kpi-tile[data-tone="blue"] { --tone: #5b8cff; --tone-soft: rgba(91,140,255,.22); }
+.kpi-tile[data-tone="violet"] { --tone: #a78bfa; --tone-soft: rgba(167,139,250,.22); }
+.kpi-tile[data-tone="cyan"] { --tone: #22d3ee; --tone-soft: rgba(34,211,238,.18); }
+.kpi-tile[data-tone="magenta"] { --tone: #f472b6; --tone-soft: rgba(244,114,182,.18); }
+.kpi-tile[data-tone="alert"] { --tone: #ff8a80; --tone-soft: rgba(255,138,128,.22); }
+.kpi-tile-label { font: 500 12px/16px Geist, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #b8c2e6; }
+.kpi-tile-icon { display: inline-flex; padding: .3rem; border-radius: .5rem; color: var(--tone); background: var(--tone-soft); font-size: 20px; }
+.kpi-tile-value { font: 600 34px/40px Geist, sans-serif; letter-spacing: -.025em; color: #ffffff; font-variant-numeric: tabular-nums; }
+.kpi-tile-sub { font: 400 13px/18px Geist, sans-serif; color: #cdd5f3; }
+.kpi-tile-src { font: 500 11px/14px Geist, sans-serif; color: #9aa6cf; }
+.kpi-tile-pulse { width: .5rem; height: .5rem; border-radius: 9999px; background: var(--tone); animation: kpi-pulse 2.4s ease-out infinite; }
+@keyframes kpi-pulse { 0% { box-shadow: 0 0 0 0 var(--tone); } 70%, 100% { box-shadow: 0 0 0 7px transparent; } }
+/* Sidebar badges (moved from the removed top tab strip; same ids, owned by Module 10). */
+#app-sidebar nav a { position: relative; }
+.side-badge { margin-left: auto; display: inline-flex; align-items: center; justify-content: center; min-width: 1.375rem; height: 1.25rem; padding: 0 .375rem; border-radius: 9999px;
+  font: 600 11px/1 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; white-space: nowrap; background: rgba(179,197,255,.14); color: #dbe4ff; }
+.side-badge.hidden { display: none; }
+.side-badge-alert { background: #ffb4ab; color: #690005; }
+#app-sidebar nav a.bg-primary-container .side-badge:not(.side-badge-alert) { background: rgba(255,255,255,.22); color: #fff; }
+/* Collapsed (icon) sidebar: hide every text label, not only those tagged .sidebar-text. */
+@media (min-width: 768px) {
+  #app-sidebar.w-20 nav a > span:not(.material-symbols-outlined):not(.side-badge), #app-sidebar.w-20 .h-16 > .flex-col,
+  #app-sidebar.w-20 > div:last-child .font-label-sm, #app-sidebar.w-20 > div:last-child .font-code-telemetry, #app-sidebar.w-20 #collapse-sidebar-btn .font-label-md { display: none; }
+  #app-sidebar.w-20 nav a, #app-sidebar.w-20 > div:last-child > div { justify-content: center; }
+  #app-sidebar.w-20 .side-badge { position: absolute; top: 2px; left: 34px; height: 1rem; min-width: 1rem; padding: 0 .25rem; font-size: 9px; }
+}
+/* Views breathe below the fixed header and above the page end (the removed tab strip used to). */
+.app-view { padding-top: 1rem; padding-bottom: 2.5rem; }
+/* Header: quick action stays reachable (icon-only on phones). */
+#app-header #quick-sweep-btn { display: flex; }
+/* Browser surfaces themed from the palette. */
+::selection { background: rgba(91,184,254,.35); }
+#app-sidebar :focus-visible, #app-header :focus-visible { outline: 2px solid #5bb8fe; outline-offset: 2px; }
+/* Content sits on light cards: primary blue keeps the ring above 3:1. */
+main button:focus-visible, main a:focus-visible { outline: 2px solid #0050cb; outline-offset: 2px; }
+.font-code-metric, .font-code-telemetry, main td { font-variant-numeric: tabular-nums; }
 @keyframes space-view-fade { from { opacity: 0; } }
 /* Phone shell (<768px): the sidebar becomes an off-canvas drawer. Desktop width/offset
    classes (w-64/w-20, pl-64/pl-20, left-64/left-20) and their collapse JS are untouched. */
@@ -99,83 +187,32 @@ html { -webkit-tap-highlight-color: transparent; }
   #main-content-wrapper input, #main-content-wrapper select, #main-content-wrapper textarea { font-size: 16px !important; }
   /* Inline toolbar pickers (label + select in one row) must not push the page wider. */
   main .flex.items-center > select { max-width: 60vw; }
-  .space-mission-band::before { inset: -8px -12px; }
+}
+/* Tablet widths: the header keeps search, Quick ONT Sweep and the avatar; status pills and the name step aside. */
+@media (max-width: 1279.98px) { #app-header .text-right { display: none; } }
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  #app-header > div:last-child > div:not(:last-child) { display: none; }
+  #app-header #global-search-input { width: 16rem; }
+}
+/* Phones: lighter sky (no Milky Way band, no twinkle layer); nebula, stars and planet remain. */
+@media (max-width: 767.98px) {
+  #space-backdrop .space-galaxy, #space-backdrop .space-stars-near::before { display: none; }
+  /* As a drawer it sits over page content, so it must be opaque. */
+  #app-sidebar.bg-surface-container-low { background-color: #080c22; }
 }
 @media (max-width: 767.98px) and (prefers-reduced-motion: reduce) {
   #app-sidebar, body.mobile-nav-open #app-sidebar { transition: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  #space-backdrop .space-nebula-glow { animation: none; }
+  #space-backdrop .space-nebula-glow, #space-backdrop .space-stars-near::before, .kpi-tile-pulse { animation: none; }
+  .kpi-tile { transition: none; }
+  .kpi-tile:hover { transform: none; }
   #space-backdrop .space-layer, #space-backdrop .space-sky { transition: none; }
   #space-backdrop .space-layer { will-change: auto; }
   .app-view:not(.hidden) { animation: space-view-fade 150ms ease; }
 }
 </style>
-</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.02"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.04" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.09" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.16" data-tile="900"></div></div></div><div id="mobile-nav-backdrop" class="hidden" aria-hidden="true" onclick="closeMobileNav()"></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><button type="button" id="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close navigation" class="md:hidden absolute top-3 right-3 z-10 p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="technicians" href="#"><span class="material-symbols-outlined text-[20px]">engineering</span><span class="font-body-md text-body-md sidebar-text">Technician Ops</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="analytics" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="font-body-md text-body-md sidebar-text">Admin &amp; Analytics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><button type="button" id="mobile-nav-btn" onclick="openMobileNav()" aria-label="Open navigation" aria-controls="app-sidebar" aria-expanded="false" class="md:hidden shrink-0 p-1.5 rounded-lg text-inverse-on-surface hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary"><span class="material-symbols-outlined" aria-hidden="true">menu</span></button><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" onclick="openCmdPalette()" onfocus="openCmdPalette()" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
-<!-- Interactive View Switcher Sub-Header Bar & Live System Metric Ribbon -->
-<div class="sticky top-16 z-30 bg-surface/90 backdrop-blur-md px-space-md py-space-sm mb-space-lg shadow-sm flex flex-wrap items-center justify-between gap-space-md rounded-xl">
-<div class="flex items-center gap-space-xs overflow-x-auto py-1">
-<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-headline-sm text-label-md transition-all bg-primary-container text-on-primary-container shadow-sm" id="nav-btn-dashboard" onclick="switchView('dashboard')">
-<span class="material-symbols-outlined text-[18px]">dashboard</span>
-<span class="">Dashboard</span>
-</button>
-<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-unified-inbox" onclick="switchView('unified-inbox')">
-<span class="material-symbols-outlined text-[18px]">inbox</span>
-<span class="">Unified Inbox</span>
-<span id="nav-badge-inbox" class="ml-1 px-1.5 py-0.2 bg-primary text-on-primary text-[10px] font-code-telemetry rounded-full"></span>
-</button>
-<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-tickets" onclick="switchView('tickets')">
-<span class="material-symbols-outlined text-[18px]">confirmation_number</span>
-<span class="">Tickets</span>
-<span id="nav-badge-tickets" class="ml-1 px-1.5 py-0.2 bg-surface-container-highest text-on-surface-variant text-[10px] font-code-telemetry rounded-full"></span>
-</button>
-<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-customer-profiles" onclick="switchView('customer-profiles')">
-<span class="material-symbols-outlined text-[18px]">badge</span>
-<span class="">Customer Profiles</span>
-<span id="nav-badge-customers" class="ml-1 px-1.5 py-0.2 bg-secondary-fixed text-on-secondary-fixed text-[10px] font-code-telemetry rounded-full"></span>
-</button>
-<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-ai-diagnostics" onclick="switchView('ai-diagnostics')">
-<span class="material-symbols-outlined text-[18px]">troubleshoot</span>
-<span class="">AI Diagnostics</span>
-<span class="ml-1 px-1.5 py-0.2 bg-primary-fixed text-on-primary-fixed text-[10px] font-code-telemetry rounded-full" id="nav-diag-count">4</span>
-</button>
-<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-sales-leads" onclick="switchView('sales-leads')">
-<span class="material-symbols-outlined text-[18px]">trending_up</span>
-<span class="">Sales / Leads</span>
-<span id="nav-badge-sales" class="ml-1 px-1.5 py-0.2 bg-tertiary-container text-on-tertiary-container text-[10px] font-code-telemetry rounded-full"></span>
-</button>
-<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-billing" onclick="switchView('billing')">
-<span class="material-symbols-outlined text-[18px]">receipt_long</span>
-<span class="">Billing</span>
-<span id="nav-badge-billing" class="hidden ml-1 px-1.5 py-0.2 bg-error-container text-on-error-container text-[10px] font-code-telemetry rounded-full"></span>
-</button>
-<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-technicians" onclick="switchView('technicians')">
-<span class="material-symbols-outlined text-[18px]">engineering</span>
-<span class="">Technicians</span>
-<span id="nav-badge-technicians" class="ml-1 px-1.5 py-0.2 bg-surface-container-highest text-on-surface-variant text-[10px] font-code-telemetry rounded-full"></span>
-</button>
-<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-analytics" onclick="switchView('analytics')">
-<span class="material-symbols-outlined text-[18px]">monitoring</span>
-<span class="">Analytics</span>
-</button>
-<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-network-outages" onclick="switchView('network-outages')">
-<span class="material-symbols-outlined text-[18px]">router</span>
-<span class="">Network Outages</span>
-<span id="nav-badge-outages" class="hidden ml-1 px-2 py-0.2 bg-error-container text-on-error-container text-[10px] font-semibold rounded-full"></span>
-</button>
-</div>
-<!-- Right Quick Controls -->
-<div class="flex items-center gap-space-sm">
-<div class="hidden lg:flex items-center gap-space-xs bg-surface-container-low px-space-sm py-1 rounded-lg">
-<span class="material-symbols-outlined text-[16px] text-primary">psychology</span>
-<span class="font-code-telemetry text-code-telemetry text-on-surface">Auto-Pilot: <strong class="text-primary font-semibold">Active</strong></span>
-</div>
-<button class="px-space-md py-1.5 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded-lg flex items-center gap-space-xs transition-colors" onclick="triggerGlobalDiagnostics()">
-<span class="material-symbols-outlined text-[16px]">bolt</span>
-<span class="">Quick ONT Sweep</span>
-</button>
-</div>
-</div>
+</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.03"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-galaxy" data-depth="0.05"><div class="space-galaxy-band"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.06" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.12" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.2" data-tile="900"></div><div class="space-layer space-planet" data-depth="0.3" data-max="260"><div class="space-planet-body"></div><div class="space-planet-ring"></div></div></div></div><div id="mobile-nav-backdrop" class="hidden" aria-hidden="true" onclick="closeMobileNav()"></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><button type="button" id="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close navigation" class="md:hidden absolute top-3 right-3 z-10 p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span><span id="nav-badge-inbox" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span><span id="nav-badge-tickets" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span><span id="nav-badge-customers" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span><span id="nav-diag-count" class="side-badge">4</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span><span id="nav-badge-sales" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span><span id="nav-badge-billing" class="hidden side-badge side-badge-alert"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="technicians" href="#"><span class="material-symbols-outlined text-[20px]">engineering</span><span class="font-body-md text-body-md sidebar-text">Technician Ops</span><span id="nav-badge-technicians" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="analytics" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="font-body-md text-body-md sidebar-text">Admin &amp; Analytics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span><span id="nav-badge-outages" class="hidden side-badge side-badge-alert"></span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><button type="button" id="mobile-nav-btn" onclick="openMobileNav()" aria-label="Open navigation" aria-controls="app-sidebar" aria-expanded="false" class="md:hidden shrink-0 p-1.5 rounded-lg text-inverse-on-surface hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary"><span class="material-symbols-outlined" aria-hidden="true">menu</span></button><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" onclick="openCmdPalette()" onfocus="openCmdPalette()" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><button type="button" id="quick-sweep-btn" onclick="triggerGlobalDiagnostics()" aria-label="Quick ONT Sweep" class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest text-primary font-label-sm text-label-sm font-semibold hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">bolt</span><span class="hidden lg:inline">Quick ONT Sweep</span></button><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
 <!-- Notification Toast Layer -->
 <div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-space-sm px-space-lg py-space-md bg-inverse-surface text-inverse-on-surface rounded-xl shadow-xl" id="toast-notification">
 <span class="material-symbols-outlined text-secondary-container" id="toast-icon">check_circle</span>
@@ -189,13 +226,12 @@ html { -webkit-tap-highlight-color: transparent; }
 <!-- ========================================================================= -->
 <section class="app-view flex flex-col gap-space-xl" id="view-dashboard">
 <!-- Mission Control band: no card behind it, so the galaxy backdrop shows through -->
-<div class="space-mission-band relative flex flex-wrap items-end justify-between gap-space-md px-space-xs pt-space-xl pb-space-sm">
+<div class="space-mission-band relative flex flex-wrap items-end justify-between gap-space-md px-space-xs pt-10 pb-space-lg">
   <div class="relative flex flex-col gap-1">
-    <span class="font-code-telemetry text-code-telemetry uppercase tracking-[0.2em] text-inverse-primary">SpaceNet &middot; Mission Control</span>
-    <h1 class="font-headline-xl text-headline-xl text-inverse-on-surface">Network &amp; Customer Operations</h1>
-    <p class="font-body-sm text-body-sm text-inverse-on-surface/75">Overview figures on this screen are fictional demo data.</p>
+    <h1 class="text-[40px] leading-[48px] font-semibold tracking-[-0.025em] text-inverse-on-surface">Mission Control</h1>
+    <p class="font-body-md text-body-md text-inverse-on-surface/85">Network &amp; customer operations. Overview figures on this screen are fictional demo data.</p>
   </div>
-  <svg class="relative hidden md:block w-40 h-16 text-inverse-primary" viewBox="0 0 160 64" aria-hidden="true">
+  <svg class="relative hidden xl:block w-60 h-24 text-inverse-primary" viewBox="0 0 160 64" aria-hidden="true">
     <ellipse cx="80" cy="32" rx="74" ry="22" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-dasharray="2 5"></ellipse>
     <ellipse cx="80" cy="32" rx="44" ry="13" fill="none" stroke="currentColor" stroke-opacity=".22"></ellipse>
     <circle cx="80" cy="32" r="7" fill="#0066ff" fill-opacity=".55"></circle>
@@ -362,6 +398,12 @@ html { -webkit-tap-highlight-color: transparent; }
 <!-- VIEW 2: UNIFIED INBOX VIEW                                              -->
 <!-- ========================================================================= -->
 <section class="app-view flex flex-col gap-space-lg hidden" id="view-unified-inbox">
+<div class="space-view-title relative px-space-xs pt-space-sm">
+  <div class="relative flex flex-col gap-1">
+    <h1 class="font-headline-lg text-headline-lg text-inverse-on-surface">Unified Inbox</h1>
+    <p class="font-body-sm text-body-sm text-inverse-on-surface/85">Every customer channel in one queue, with AI replies and staff takeover.</p>
+  </div>
+</div>
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg h-[calc(100vh-140px)] min-h-[700px]">
 <!-- Left Column: Channel Filter + Chat Thread List (4 cols) -->
 <div class="lg:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col h-full overflow-hidden">
@@ -685,6 +727,12 @@ html { -webkit-tap-highlight-color: transparent; }
 <!-- VIEW 3: TICKETS VIEW                                                    -->
 <!-- ========================================================================= -->
 <section class="app-view flex flex-col gap-space-lg hidden" id="view-tickets">
+<div class="space-view-title relative px-space-xs pt-space-sm">
+  <div class="relative flex flex-col gap-1">
+    <h1 class="font-headline-lg text-headline-lg text-inverse-on-surface">Support Tickets</h1>
+    <p class="font-body-sm text-body-sm text-inverse-on-surface/85">Complaints, SLA timers and escalations across all connections.</p>
+  </div>
+</div>
 <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
 <!-- Ticket Summary Metric Ribbon (Module 03 Feature Group 6) -->
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-space-sm pb-space-xs border-b border-surface-container-high/60">
@@ -800,6 +848,12 @@ html { -webkit-tap-highlight-color: transparent; }
 <!-- VIEW: CUSTOMER PROFILES & UNIFIED 360° VIEW (MODULE 04)                  -->
 <!-- ========================================================================= -->
 <section class="app-view flex flex-col gap-space-lg hidden" id="view-customer-profiles">
+<div class="space-view-title relative px-space-xs pt-space-sm">
+  <div class="relative flex flex-col gap-1">
+    <h1 class="font-headline-lg text-headline-lg text-inverse-on-surface">Customer Profiles</h1>
+    <p class="font-body-sm text-body-sm text-inverse-on-surface/85">Subscriber accounts, connections and service history.</p>
+  </div>
+</div>
   <!-- Top Metric Summary Ribbon -->
   <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-space-sm pb-space-xs border-b border-surface-container-high/60">
@@ -1057,7 +1111,7 @@ html { -webkit-tap-highlight-color: transparent; }
         </div>
         <div class="flex flex-col">
           <div class="flex items-center gap-2">
-            <h2 class="font-headline-md text-headline-md text-on-surface">AI Troubleshooting & Diagnostics Workbench</h2>
+            <h1 class="font-headline-md text-headline-md text-on-surface">AI Troubleshooting & Diagnostics Workbench</h1>
             <span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[11px] font-code-telemetry font-bold">Module 05</span>
           </div>
           <p class="font-body-sm text-body-sm text-on-surface-variant">Interactive ISP diagnostic decision trees, simulated ONT telemetry, and connection-aware speed verification</p>
@@ -1453,7 +1507,6 @@ html { -webkit-tap-highlight-color: transparent; }
   </svg>
   <div class="relative flex flex-wrap items-end justify-between gap-space-md">
     <div class="flex flex-col gap-1 max-w-2xl">
-      <span class="font-code-telemetry text-code-telemetry uppercase tracking-wider text-inverse-primary">Module 06 &middot; Sales Mission Board</span>
       <h1 id="sales-heading" class="font-headline-lg text-headline-lg">New-Connection Pipeline</h1>
       <p class="font-body-sm text-body-sm text-inverse-on-surface/80">Leads captured by the AI agent from chats and comments, auto-routed to Residential or Corporate Sales. All leads, names and numbers are fictional demo data.</p>
     </div>
@@ -1543,7 +1596,6 @@ html { -webkit-tap-highlight-color: transparent; }
 <div class="sales-hero relative overflow-hidden rounded-xl bg-inverse-surface text-inverse-on-surface p-space-lg shadow-sm">
   <div class="relative flex flex-wrap items-end justify-between gap-space-md">
     <div class="flex flex-col gap-1 max-w-2xl">
-      <span class="font-code-telemetry text-code-telemetry uppercase tracking-wider text-inverse-primary">Module 08 &middot; NOC Watch</span>
       <h1 id="noc-heading" class="font-headline-lg text-headline-lg">Network Outages</h1>
       <p class="font-body-sm text-body-sm text-inverse-on-surface/80">Area outages and planned maintenance, with the customers and complaints in each zone. Outages, causes and notifications are fictional demo data.</p>
     </div>
@@ -1619,7 +1671,6 @@ html { -webkit-tap-highlight-color: transparent; }
 <div class="sales-hero relative overflow-hidden rounded-xl bg-inverse-surface text-inverse-on-surface p-space-lg shadow-sm">
   <div class="relative flex flex-wrap items-end justify-between gap-space-md">
     <div class="flex flex-col gap-1 max-w-2xl">
-      <span class="font-code-telemetry text-code-telemetry uppercase tracking-wider text-inverse-primary">Module 07 &middot; Billing &amp; Plans</span>
       <h1 id="billing-heading" class="font-headline-lg text-headline-lg">Billing &amp; Plans</h1>
       <p class="font-body-sm text-body-sm text-inverse-on-surface/80">Invoices are built from each customer's connections and the BDT package catalog. All invoices, payments and requests are fictional demo data; no payment is ever taken.</p>
     </div>
@@ -1713,7 +1764,6 @@ html { -webkit-tap-highlight-color: transparent; }
 <section class="app-view flex flex-col gap-space-lg hidden" id="view-analytics" aria-labelledby="analytics-heading">
 <div class="sales-hero relative overflow-hidden rounded-xl bg-inverse-surface text-inverse-on-surface p-space-lg shadow-sm">
   <div class="relative flex flex-col gap-1 max-w-2xl">
-    <span class="font-code-telemetry text-code-telemetry uppercase tracking-wider text-inverse-primary">Module 10 &middot; Admin &amp; Analytics</span>
     <h1 id="analytics-heading" class="font-headline-lg text-headline-lg">Mission Analytics</h1>
     <p class="font-body-sm text-body-sm text-inverse-on-surface/80">Every figure here is calculated from the demo records in this session (customers, chats, tickets, leads, outages, jobs, invoices). Anything the demo data cannot support is marked as not available. Settings below are demo settings only.</p>
   </div>
@@ -1766,7 +1816,6 @@ html { -webkit-tap-highlight-color: transparent; }
 <section class="app-view flex flex-col gap-space-lg hidden" id="view-technicians" aria-labelledby="tech-heading">
 <div class="sales-hero relative overflow-hidden rounded-xl bg-inverse-surface text-inverse-on-surface p-space-lg shadow-sm">
   <div class="relative flex flex-col gap-1 max-w-2xl">
-    <span class="font-code-telemetry text-code-telemetry uppercase tracking-wider text-inverse-primary">Module 09 &middot; Field Operations</span>
     <h1 id="tech-heading" class="font-headline-lg text-headline-lg">Technician Operations</h1>
     <p class="font-body-sm text-body-sm text-inverse-on-surface/80">Field jobs come from existing site-survey requests and escalated connectivity tickets. Technicians, schedules and notifications are fictional demo data; nobody is actually dispatched.</p>
   </div>
@@ -2571,18 +2620,10 @@ html { -webkit-tap-highlight-color: transparent; }
       target.classList.remove('hidden');
     }
 
-    // Update Top Navigation Switcher Pills
-    document.querySelectorAll('.view-switch-btn').forEach(btn => {
-      btn.className = 'view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all';
-    });
-    const activeTopBtn = document.getElementById('nav-btn-' + viewId);
-    if (activeTopBtn) {
-      activeTopBtn.className = 'view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-headline-sm text-label-md transition-all bg-primary-container text-on-primary-container shadow-sm';
-    }
-
     // Sync Shell Left Sidebar Navigation links
     document.querySelectorAll('aside nav a').forEach(link => {
       const linkPath = link.getAttribute('data-path');
+      if (link.setAttribute) { if (linkPath === viewId) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); }
       if (linkPath === viewId) {
         link.className = 'flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors';
       } else {
@@ -5877,9 +5918,6 @@ html { -webkit-tap-highlight-color: transparent; }
     if (elOverdue) elOverdue.textContent = overdueCount;
     if (elResolved) elResolved.textContent = resolvedCount;
 
-    // Update nav badge in subheader
-    const navBadge = document.querySelector('#nav-btn-tickets .font-code-telemetry');
-    if (navBadge) navBadge.textContent = tickets.filter(t => t.status !== 'CLOSED').length;
   }
 
   function filterTicketRows() {
@@ -7875,12 +7913,16 @@ html { -webkit-tap-highlight-color: transparent; }
 
   // --- Dialogs (same open/close transition as the other modals, plus focus return) ---
   let leadDialogReturnFocus = null;
+  let leadDialogReturnKey = null;
 
   function showLeadDialog(modalId, containerId, focusSelector) {
     const modal = document.getElementById(modalId);
     const container = document.getElementById(containerId);
     if (!modal || !container) return;
-    if (modal.classList.contains('hidden')) leadDialogReturnFocus = document.activeElement;
+    if (modal.classList.contains('hidden')) {
+      leadDialogReturnFocus = document.activeElement;
+      leadDialogReturnKey = leadDialogReturnFocus && leadDialogReturnFocus.getAttribute ? leadDialogReturnFocus.getAttribute('onclick') : null;
+    }
     modal.classList.remove('hidden');
     setTimeout(() => {
       modal.classList.remove('opacity-0');
@@ -7899,8 +7941,23 @@ html { -webkit-tap-highlight-color: transparent; }
     container.classList.remove('scale-100');
     container.classList.add('scale-95');
     setTimeout(() => modal.classList.add('hidden'), 200);
-    if (leadDialogReturnFocus && document.contains(leadDialogReturnFocus)) leadDialogReturnFocus.focus();
+    restoreLeadDialogFocus(leadDialogReturnFocus, leadDialogReturnKey);
     leadDialogReturnFocus = null;
+    leadDialogReturnKey = null;
+  }
+
+  // The opener may have been re-rendered while the dialog was open: fall back to its
+  // replacement (same onclick), then to the current view's heading, never a removed node.
+  function restoreLeadDialogFocus(opener, key) {
+    if (opener && document.contains(opener)) { opener.focus(); return; }
+    const twin = key ? Array.from(document.querySelectorAll('[onclick]')).find(el => el.getAttribute('onclick') === key && el.offsetParent !== null) : null;
+    if (twin) { twin.focus(); return; }
+    const heading = document.querySelector('.app-view:not(.hidden) h1, .app-view:not(.hidden) h2');
+    if (heading && !heading.hasAttribute('tabindex')) {
+      heading.setAttribute('tabindex', '-1');
+      heading.addEventListener('blur', () => heading.removeAttribute('tabindex'), { once: true });
+    }
+    if (heading) heading.focus();
   }
 
   let currentLeadId = null;
@@ -9368,20 +9425,20 @@ html { -webkit-tap-highlight-color: transparent; }
     const m = getCrmMetrics();
     const pct = v => (v === null ? 'n/a' : `${Math.round(v * 100)}%`);
     const tiles = [
-      { label: 'Conversations', value: m.conversations, sub: `${m.aiHandled} AI-handled · ${m.humanHandled} with staff`, icon: 'forum', view: 'unified-inbox' },
-      { label: 'Open tickets', value: m.openTickets, sub: `${m.escalatedTickets} escalated · ${m.overdueTickets} past SLA`, icon: 'confirmation_number', view: 'tickets' },
-      { label: 'Active leads', value: m.activeLeads, sub: `${m.newLeads} new · ${m.connectedLeads} connected (${pct(m.conversionRate)} conversion)`, icon: 'trending_up', view: 'sales-leads' },
-      { label: 'Active outages', value: m.activeOutages, sub: `${m.plannedOutages} planned · ${m.nocSpikes} NOC spike alert${m.nocSpikes === 1 ? '' : 's'}`, icon: 'router', view: 'network-outages' },
-      { label: 'Field jobs open', value: m.openJobs, sub: `${m.unassignedJobs} unassigned · ${m.completedJobs} completed`, icon: 'engineering', view: 'technicians' },
-      { label: 'Outstanding', value: formatBdt(m.outstanding), sub: `${m.overdueInvoices} overdue invoice${m.overdueInvoices === 1 ? '' : 's'} · ${m.paidInvoices}/${m.invoices} paid`, icon: 'receipt_long', view: 'billing' },
-      { label: 'Customers', value: SPACE_NET_CUSTOMERS.length, sub: `${SPACE_NET_CUSTOMERS.reduce((s, c) => s + c.connections.length, 0)} connections on record`, icon: 'badge', view: 'customer-profiles' },
-      { label: 'Customer rating', value: m.csatAverage === null ? 'n/a' : `${m.csatAverage.toFixed(1)} / 5`, sub: `${m.csatCount} rated ticket${m.csatCount === 1 ? '' : 's'}`, icon: 'star', view: 'analytics' }
+      { label: 'Conversations', value: m.conversations, sub: `${m.aiHandled} AI-handled · ${m.humanHandled} with staff`, icon: 'forum', view: 'unified-inbox', tone: 'blue' },
+      { label: 'Open tickets', value: m.openTickets, sub: `${m.escalatedTickets} escalated · ${m.overdueTickets} past SLA`, icon: 'confirmation_number', view: 'tickets', tone: m.overdueTickets ? 'alert' : 'violet' },
+      { label: 'Active leads', value: m.activeLeads, sub: `${m.newLeads} new · ${m.connectedLeads} connected (${pct(m.conversionRate)} conversion)`, icon: 'trending_up', view: 'sales-leads', tone: 'magenta' },
+      { label: 'Active outages', value: m.activeOutages, sub: `${m.plannedOutages} planned · ${m.nocSpikes} NOC spike alert${m.nocSpikes === 1 ? '' : 's'}`, icon: 'router', view: 'network-outages', tone: m.activeOutages ? 'alert' : 'cyan', live: m.activeOutages > 0 },
+      { label: 'Field jobs open', value: m.openJobs, sub: `${m.unassignedJobs} unassigned · ${m.completedJobs} completed`, icon: 'engineering', view: 'technicians', tone: 'cyan' },
+      { label: 'Outstanding', value: formatBdt(m.outstanding), sub: `${m.overdueInvoices} overdue invoice${m.overdueInvoices === 1 ? '' : 's'} · ${m.paidInvoices}/${m.invoices} paid`, icon: 'receipt_long', view: 'billing', tone: m.overdueInvoices ? 'alert' : 'blue' },
+      { label: 'Customers', value: SPACE_NET_CUSTOMERS.length, sub: `${SPACE_NET_CUSTOMERS.reduce((s, c) => s + c.connections.length, 0)} connections on record`, icon: 'badge', view: 'customer-profiles', tone: 'violet' },
+      { label: 'Customer rating', value: m.csatAverage === null ? 'n/a' : `${m.csatAverage.toFixed(1)} / 5`, sub: `${m.csatCount} rated ticket${m.csatCount === 1 ? '' : 's'}`, icon: 'star', view: 'analytics', tone: 'magenta' }
     ];
-    box.innerHTML = tiles.map(t => `<button type="button" onclick="switchView('${t.view}')" class="text-left bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary transition-shadow flex flex-col gap-space-xs">
-        <span class="flex items-center justify-between"><span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">${t.label}</span><span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">${t.icon}</span></span>
-        <span class="font-headline-xl text-headline-xl text-on-surface font-semibold tracking-tight">${escapeHtml(String(t.value))}</span>
-        <span class="font-body-sm text-body-sm text-on-surface-variant">${escapeHtml(t.sub)}</span>
-        <span class="font-label-sm text-label-sm text-outline">Live from demo records</span>
+    box.innerHTML = tiles.map(t => `<button type="button" onclick="switchView('${t.view}')" class="kpi-tile" data-tone="${t.tone}">
+        <span class="flex items-center justify-between gap-space-sm"><span class="kpi-tile-label">${t.label}</span><span class="flex items-center gap-space-sm">${t.live ? '<span class="kpi-tile-pulse" aria-hidden="true"></span>' : ''}<span class="material-symbols-outlined kpi-tile-icon" aria-hidden="true">${t.icon}</span></span></span>
+        <span class="kpi-tile-value">${escapeHtml(String(t.value))}</span>
+        <span class="kpi-tile-sub">${escapeHtml(t.sub)}</span>
+        <span class="kpi-tile-src">Live from demo records</span>
       </button>`).join('');
   }
 
@@ -9400,7 +9457,7 @@ html { -webkit-tap-highlight-color: transparent; }
     setNavBadge('nav-badge-sales', m.activeLeads);
     setNavBadge('nav-badge-billing', m.overdueInvoices);
     setNavBadge('nav-badge-technicians', m.openJobs);
-    setNavBadge('nav-badge-outages', m.activeOutages, `${m.activeOutages} Active`);
+    setNavBadge('nav-badge-outages', m.activeOutages);
   }
 
   function renderBarList(rows, emptyText) {
@@ -11393,14 +11450,15 @@ html { -webkit-tap-highlight-color: transparent; }
 
   // =========================================================================
   // SPACENET THEME: galaxy backdrop parallax + per-view intensity
-  // Window is the scroll container. One passive scroll listener, one rAF per frame,
-  // reads before writes, transform/opacity only. Skipped entirely under reduced motion.
+  // Window is the scroll container. One passive scroll listener drives an eased rAF loop
+  // that stops when settled; transform/opacity only. Skipped entirely under reduced motion.
   // =========================================================================
   function initSpaceBackdrop() {
     const backdrop = document.getElementById('space-backdrop');
     if (!backdrop || typeof backdrop.querySelectorAll !== 'function') return;
     const layers = Array.from(backdrop.querySelectorAll('[data-depth]')).map(el => ({
-      el, depth: parseFloat(el.getAttribute('data-depth')) || 0, tile: parseFloat(el.getAttribute('data-tile')) || 0
+      el, depth: parseFloat(el.getAttribute('data-depth')) || 0, tile: parseFloat(el.getAttribute('data-tile')) || 0,
+      max: parseFloat(el.getAttribute('data-max')) || 150
     }));
     const nebulaShift = document.getElementById('space-nebula-shift');
 
@@ -11414,24 +11472,38 @@ html { -webkit-tap-highlight-color: transparent; }
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion || typeof window.requestAnimationFrame !== 'function') return;
 
-    let ticking = false;
-    const paint = () => {
-      ticking = false;
-      const y = window.scrollY || 0;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    // Eased follow: layers glide toward the scroll position instead of jumping per wheel step.
+    // Page height is measured on resize/view change only, never inside the frame loop.
+    let maxScroll = 0;
+    const measure = () => { maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight); };
+    let target = window.scrollY || 0;
+    let current = target;
+    let frame = 0;
+    const apply = y => {
       layers.forEach(layer => {
         const shift = y * layer.depth;
         // Star layers repeat every `tile` px, so wrapping keeps the movement seamless and bounded.
-        // Untiled nebula is capped so it never slides past its overscan on very long views.
-        layer.el.style.transform = `translate3d(0, ${-(layer.tile ? shift % layer.tile : Math.min(shift, 150)).toFixed(1)}px, 0)`;
+        // Untiled layers are capped so they never slide past their overscan on very long views.
+        layer.el.style.transform = `translate3d(0, ${-(layer.tile ? shift % layer.tile : Math.min(shift, layer.max)).toFixed(1)}px, 0)`;
       });
       if (nebulaShift) nebulaShift.style.opacity = maxScroll > 0 ? Math.min(1, y / maxScroll).toFixed(3) : '0';
     };
-    window.addEventListener('scroll', () => {
-      if (!ticking) { ticking = true; window.requestAnimationFrame(paint); }
-    }, { passive: true });
-    window.addEventListener('hashchange', () => window.requestAnimationFrame(paint));
-    paint();
+    const step = () => {
+      current += (target - current) * 0.14;
+      if (Math.abs(target - current) < 0.4) current = target;
+      apply(current);
+      frame = current === target ? 0 : window.requestAnimationFrame(step);
+    };
+    const follow = () => {
+      target = window.scrollY || 0;
+      if (!frame) frame = window.requestAnimationFrame(step);
+    };
+    window.addEventListener('scroll', follow, { passive: true });
+    window.addEventListener('resize', measure, { passive: true });
+    window.addEventListener('hashchange', () => window.requestAnimationFrame(() => { measure(); follow(); }));
+    if (typeof ResizeObserver === 'function' && document.body) new ResizeObserver(measure).observe(document.body);
+    measure();
+    apply(current);
   }
   initSpaceBackdrop();
 

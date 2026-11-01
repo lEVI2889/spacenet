@@ -72,7 +72,8 @@ const snapshot = () => JSON.stringify({ c: ctx.SPACE_NET_CUSTOMERS, t: ctx.ticke
 // -------------------------------------------------------------------------
 console.log('--- GROUP 1: Static markup integrity (real HTML) ---');
 ['view-technicians', 'tech-stats', 'tech-status-filter', 'tech-job-list', 'tech-roster', 'tech-job-modal', 'tech-job-modal-container',
-  'tech-job-modal-id', 'tech-job-modal-title', 'tech-job-modal-sub', 'tech-job-modal-body', 'tech-job-error', 'nav-btn-technicians'].forEach(id => assert(idInMarkup(id), `Static element #${id} exists`));
+  'tech-job-modal-id', 'tech-job-modal-title', 'tech-job-modal-sub', 'tech-job-modal-body', 'tech-job-error'].forEach(id => assert(idInMarkup(id), `Static element #${id} exists`));
+assert(/data-path="technicians"[^>]*>(?:(?!<\/a>)[\s\S])*id="nav-badge-technicians"/.test(markup), 'Sidebar link for Technicians exists and carries its live badge');
 const m09Start = appScript.indexOf('MODULE 09: TECHNICIAN OPERATIONS');
 const m09End = appScript.indexOf('MODULE 10: ADMIN & ANALYTICS');
 const m09Code = appScript.slice(m09Start, m09End);
