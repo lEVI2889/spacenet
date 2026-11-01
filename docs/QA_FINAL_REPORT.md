@@ -38,6 +38,7 @@ No blockers. Every module's core demo workflow works through real controls. Two 
 | D10 | LOW | Contrast, mainly M02–M05 | small grey captions and amber telemetry | ≥ 4.5:1 | `text-outline` captions 4.09:1; amber dBm values 2.89:1 | no | darker colour for small caption text (owner decision: shared token) |
 | D11 | LOW | Reduced motion | reduced-motion setting on | no decorative motion | three Tailwind status dots still ping/pulse | no | `.animate-ping, .animate-pulse { animation: none }` under reduced motion |
 | D12 | LOW | M06 lead form | submit the same name and phone twice | warning or reuse | second lead created (AI capture dedupe works) | no | optional duplicate-phone warning (not in the approved scope) |
+| D13 | LOW | M04 Inbox header | open a conversation | one 360° Profile action | the header shows a "360° Profile" link in the circuit line and a "360° Profile" button (existing; seen during the D3/D4 fix, left unchanged) | no | keep one of the two |
 
 **Observation for Rohan (not counted as a defect):** in an AI-handled conversation, a staff message from the composer is stored as an AI message and the knowledge base then answers it, giving two AI messages per Send.
 
@@ -56,6 +57,10 @@ No blockers. Every module's core demo workflow works through real controls. Two 
 3. `fix/qa-honesty-a11y` — D5–D11 (small, mostly Rohan's modules).
 
 Order approved by the owner; each branch needs its own authorization.
+
+## Fix status
+
+* D3, D4 — fixed on `fix/mobile-inbox-layout`: the Inbox height lock applies only from `lg` (1024 px); on narrower screens the thread list has its own height and the message stream gets a minimum height (506 px measured at 375/390/768, was 32 px) and scrolls internally; header rows wrap; the composer input may shrink. Guarded by `test_inbox_layout.mjs`.
 
 ## Limitations
 

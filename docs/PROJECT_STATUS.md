@@ -49,6 +49,8 @@ SpaceNet/
 ├── test_module_10.mjs                  # Module 10 Admin & Analytics suite incl. metric-consistency checks (75 tests)
 ├── test_mobile_shell.mjs               # Responsive shell / phone drawer suite (22 tests)
 ├── test_galaxy_ui.mjs                  # Galaxy UI suite: navigation, backdrop motion, dialog focus (23 tests)
+├── test_markup_integrity.mjs           # Every literal id lookup exists in the real markup (4 tests)
+├── test_inbox_layout.mjs               # Inbox responsive layout invariants, QA D3/D4 (9 tests)
 └── .gitignore                          # Standard git ignore definitions
 ```
 
