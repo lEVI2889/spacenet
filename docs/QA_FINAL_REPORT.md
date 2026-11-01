@@ -61,6 +61,7 @@ Order approved by the owner; each branch needs its own authorization.
 ## Fix status
 
 * D3, D4 — fixed on `fix/mobile-inbox-layout`: the Inbox height lock applies only from `lg` (1024 px); on narrower screens the thread list has its own height and the message stream gets a minimum height (506 px measured at 375/390/768, was 32 px) and scrolls internally; header rows wrap; the composer input may shrink. Guarded by `test_inbox_layout.mjs`.
+* D1, D2 — fixed on `fix/ai-channel-pending-reply`: one rule (`aiAutoReplyBlockReason`) for takeover and channel-off; switching a channel off cancels its queued AI replies immediately (lead capture still runs) and the timer re-checks at delivery, so re-enabling resurrects nothing; composer messages are always staff-authored and never trigger AI replies (this was also the attribution problem in the observation above). Guarded by `test_ai_channel.mjs` (deterministic fake clock). Recorded, unchanged: the staff label reads "Human Agent (Rohan (Tier III NOC))" (candidate for the wording cleanup); a second customer message within 0.8 s replaces the first one's queued reply (existing behaviour); escalating from the frustration banner sets takeover without clearing the timer, but the reply is still blocked at delivery.
 
 ## Limitations
 

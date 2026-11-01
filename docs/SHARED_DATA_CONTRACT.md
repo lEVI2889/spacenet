@@ -1,6 +1,6 @@
 # SpaceNet AI CRM — Shared Data Contract & Architecture Standard
 
-**Document Version:** 1.11.0
+**Document Version:** 1.11.1
 **Effective Date:** 2026-10-31
 **Authors & Maintainers:** Rohan (Customer-Facing & Support Lead) & Adnan (Operations & Admin Lead)
 **Repository:** `https://github.com/lEVI2889/spacenet`
@@ -34,6 +34,7 @@ SpaceNet is an intelligent Customer Relationship Management (CRM) and Network Op
 | **v1.9.0** | 2026-11-01 | Adnan | Technician Operations (Module 09): `SpaceNetFieldJob`, `TASK-TECH-<NUM>` implemented, derived survey/repair jobs, installation-after-survey rule, eligibility and lifecycle (Section 18). |
 | **v1.10.0** | 2026-11-01 | Adnan | Admin & Analytics (Module 10): `getCrmMetrics` metric definitions, live Dashboard KPIs and navigation badges, `adminSettings` (AI per channel, working hours, role matrix, package price overrides) (Section 19). |
 | **v1.11.0** | 2026-11-01 | Adnan | Galaxy UI/UX upgrade: top tab strip removed; navigation badges live in the sidebar links (same ids); outage badge shows a plain count; sky layers; dialog focus return (Section 20). |
+| **v1.11.1** | 2026-11-01 | Adnan | QA D1/D2: switching a channel's AI off cancels its queued replies immediately (lead capture still runs); composer messages are always staff-authored and never trigger AI replies (Section 19.2). |
 
 ---
 
@@ -960,7 +961,8 @@ The Dashboard tiles, navigation badges and Analytics all read this one function.
 
 ### 19.2 `adminSettings` (demo state)
 
-* `aiChannels[channel]` (boolean): when `false`, `executeSimulateCustomerMessage` adds the customer message but schedules no AI reply and cancels a reply already queued. It still runs Module 06 lead capture. Conversation records and human takeover are not changed.
+* `aiChannels[channel]` (boolean): when `false`, `executeSimulateCustomerMessage` adds the customer message but schedules no AI reply. Switching a channel off (`setAiChannelEnabled`) immediately cancels every queued AI reply on that channel (`cancelPendingAiReply`), and the reply timer re-checks `aiAutoReplyBlockReason(conv)` at delivery, so re-enabling never resurrects a cancelled reply. Module 06 lead capture still runs for those customer messages. Conversation records and human takeover are not changed.
+* Composer messages (`sendChatMessage`) are always stored as `sender: 'staff'` (author `Rohan (Tier III NOC)`) and never schedule an automatic AI reply; a queued AI reply on that conversation is cancelled (its lead capture still runs). Under human takeover the simulated customer acknowledgement is unchanged.
 * `workingHours { start, end, days }`: validated (end after start, at least one day). **Configuration only**; it does not change routing.
 * `permissions[role][permission]`: illustrative matrix only. There is no login, and nothing is restricted.
 * `priceChanges[]`: `setPackagePrice(key, amount)` (whole BDT, 500–20,000) updates `price`, `banglishPrice` and `bnPrice` in `SPACE_NET_PACKAGES` for future quotes. Invoices keep their recorded line amounts and payments are unchanged.
