@@ -2546,6 +2546,7 @@
         closeLeadModal();
         closeCreateTicketModal();
         closeMaintenanceModal();
+        closeStatusInquiryModal();
       }
     });
   });
@@ -7453,6 +7454,7 @@
   function closeLeadModal() {
     const modal = document.getElementById('lead-modal');
     const container = document.getElementById('lead-modal-container');
+    if (!modal || !container) return;
     modal.classList.add('opacity-0');
     container.classList.remove('scale-100');
     container.classList.add('scale-95');
@@ -7504,6 +7506,11 @@
     const modal = document.getElementById('cmd-palette-modal');
     const container = document.getElementById('cmd-palette-container');
     const input = document.getElementById('cmd-palette-input');
+    if (!modal || !container || !input) {
+      // Palette markup is not part of this demo build; say so instead of throwing.
+      showToast('Global Search Unavailable', 'The command palette is not included in this demo build yet. Use the sidebar to navigate.');
+      return;
+    }
     modal.classList.remove('hidden');
     setTimeout(() => {
       modal.classList.remove('opacity-0');
@@ -7517,6 +7524,7 @@
   function closeCmdPalette() {
     const modal = document.getElementById('cmd-palette-modal');
     const container = document.getElementById('cmd-palette-container');
+    if (!modal || !container) return;
     modal.classList.add('opacity-0');
     container.classList.remove('scale-100');
     container.classList.add('scale-95');
