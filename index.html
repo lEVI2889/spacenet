@@ -360,13 +360,7 @@ main.bg-surface { background-color: transparent; }
 </div>
 <span class="font-code-telemetry text-primary font-semibold">9ms RTT</span>
 </div>
-<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
-<div class="flex items-center gap-space-xs">
-<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
-<span class="text-on-surface">North Sector Substation</span>
-</div>
-<span class="font-code-telemetry text-error font-semibold">Severe Fiber Sever</span>
-</div>
+<div id="dash-outage-row" class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg"></div>
 </div>
 <button class="mt-space-md w-full py-2 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-space-xs transition-colors" onclick="switchView('network-outages')">
 <span class="">Inspect Outage Matrix</span>
@@ -1592,194 +1586,78 @@ main.bg-surface { background-color: transparent; }
 <!-- ========================================================================= -->
 <!-- VIEW 5: NETWORK OUTAGES VIEW                                            -->
 <!-- ========================================================================= -->
-<section class="app-view flex flex-col gap-space-lg hidden" id="view-network-outages">
-<!-- Prominent Alert Banner -->
-<div class="bg-error-container text-on-error-container p-space-lg rounded-xl shadow-md flex flex-wrap items-center justify-between gap-space-md">
-<div class="flex items-start gap-space-md">
-<span class="p-2.5 rounded-xl bg-error text-on-error material-symbols-outlined text-[28px] animate-pulse">crisis_alert</span>
-<div class="flex flex-col">
-<div class="flex items-center gap-2">
-<h2 class="font-headline-md text-headline-md font-bold">CRITICAL OUTAGE: North Sector Substation Sever</h2>
-<span class="px-2 py-0.5 bg-error text-on-error font-code-telemetry text-label-sm rounded-full font-bold uppercase tracking-wider">Severity Level 1</span>
+<section class="app-view flex flex-col gap-space-lg hidden" id="view-network-outages" aria-labelledby="noc-heading">
+<!-- Module 08: NOC outage board (rendered from the in-memory `outages` collection) -->
+<div class="sales-hero relative overflow-hidden rounded-xl bg-inverse-surface text-inverse-on-surface p-space-lg shadow-sm">
+  <div class="relative flex flex-wrap items-end justify-between gap-space-md">
+    <div class="flex flex-col gap-1 max-w-2xl">
+      <span class="font-code-telemetry text-code-telemetry uppercase tracking-wider text-inverse-primary">Module 08 &middot; NOC Watch</span>
+      <h1 id="noc-heading" class="font-headline-lg text-headline-lg">Network Outages</h1>
+      <p class="font-body-sm text-body-sm text-inverse-on-surface/80">Area outages and planned maintenance, with the customers and complaints in each zone. Outages, causes and notifications are fictional demo data.</p>
+    </div>
+    <button type="button" id="noc-report-btn" onclick="openOutageReportModal()" class="flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-semibold hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverse-primary transition">
+      <span class="material-symbols-outlined text-[18px]" aria-hidden="true">add_alert</span>Report outage
+    </button>
+  </div>
+  <dl id="noc-stats" class="relative mt-space-lg grid grid-cols-2 sm:grid-cols-5 gap-space-sm"></dl>
 </div>
-<p class="font-body-md text-body-md mt-1 opacity-90">
-            Physical 96-core trunk severed by third-party municipal excavation. 3 GPON Distribution Nodes offline. 1,420 impacted customers.
-          </p>
-</div>
-</div>
-<!-- Action Button that triggers interactive modal -->
-<button class="px-space-xl py-space-sm bg-on-error-container text-on-primary hover:bg-black font-headline-sm text-body-md rounded-lg flex items-center gap-2 shadow-lg transition-transform active:scale-95" onclick="openMaintenanceModal()">
-<span class="material-symbols-outlined text-[20px]">send_time_extension</span>
-<span class="">⚡ Send Maintenance Notice</span>
-</button>
-</div>
-<!-- Outage Area Breakdown & Restoration Matrix Table -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
-<div class="flex items-center justify-between">
-<div>
-<h3 class="font-headline-md text-headline-md text-on-surface">Active Fiber Segment Incidents</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Live telemetry synced with Field Service Management (FSM) GPS squads</p>
-</div>
-<button class="px-space-md py-1.5 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded-lg flex items-center gap-1 transition-colors" onclick="showToast('Telemetry Poll Complete', 'All 18 OLT switches queried successfully')">
-<span class="material-symbols-outlined text-[16px]">sync</span> Refresh Signals
-        </button>
-</div>
-<div class="overflow-x-auto rounded-lg">
-<table class="w-full text-left font-body-sm text-body-sm">
-<thead class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
-<tr>
-<th class="py-3 px-space-md">District / Fiber Ring</th>
-<th class="py-3 px-space-md">Fault Classification</th>
-<th class="py-3 px-space-md">Complaints / Impact</th>
-<th class="py-3 px-space-md">Estimated Restoration</th>
-<th class="py-3 px-space-md">Field Crew Assigned</th>
-<th class="py-3 px-space-md text-left">Actions</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-surface-container-low">
-<tr class="hover:bg-surface-container-low/40 transition-colors">
-<td class="py-3 px-space-md">
-<div class="flex items-center gap-2">
-<span class="w-2.5 h-2.5 rounded-full bg-error animate-ping"></span>
-<div class="flex flex-col">
-<span class="font-headline-sm text-body-md text-on-surface font-semibold">North Downtown District</span>
-<span class="font-code-telemetry text-[11px] text-outline">Hub: N-DWT-OLT-03</span>
-</div>
-</div>
-</td>
-<td class="py-3 px-space-md text-center">
-<span class="inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">Full Fiber Sever</span>
-</td>
-<td class="py-3 px-space-md font-code-telemetry">
-<strong class="text-error font-semibold">142 complaints</strong> / 1,420 users
-              </td>
-<td class="py-3 px-space-md">
-<div class="flex items-center gap-1 font-code-telemetry font-bold text-on-surface">
-<span class="material-symbols-outlined text-[16px] text-error">timer</span>
-<span class="">ETA: 45 mins</span>
-</div>
-</td>
-<td class="py-3 px-space-md">
-<div class="flex items-center gap-1.5 font-label-md text-on-surface">
-<span class="w-2 h-2 rounded-full bg-secondary"></span>
-<span class="">Team Delta-4 (On Site Splicing)</span>
-</div>
-</td>
-<td class="py-3 px-space-md text-right">
-<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded" onclick="openMaintenanceModal()">
-                  Broadcast Update
-                </button>
-</td>
-</tr>
-<tr class="hover:bg-surface-container-low/40 transition-colors">
-<td class="py-3 px-space-md">
-<div class="flex items-center gap-2">
-<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
-<div class="flex flex-col">
-<span class="font-headline-sm text-body-md text-on-surface font-semibold">Highland Park Hub</span>
-<span class="font-code-telemetry text-[11px] text-outline">Hub: HLP-OLT-01</span>
-</div>
-</div>
-</td>
-<td class="py-3 px-space-md text-center">
-<span class="inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm font-semibold">Degraded Optical Signal</span>
-</td>
-<td class="py-3 px-space-md font-code-telemetry">
-<strong class="text-on-surface font-semibold">18 complaints</strong> / 320 users
-              </td>
-<td class="py-3 px-space-md">
-<div class="flex items-center gap-1 font-code-telemetry font-bold text-on-surface">
-<span class="material-symbols-outlined text-[16px] text-primary">timer</span>
-<span class="">ETA: 2h 15m</span>
-</div>
-</td>
-<td class="py-3 px-space-md">
-<div class="flex items-center gap-1.5 font-label-md text-on-surface">
-<span class="w-2 h-2 rounded-full bg-outline"></span>
-<span class="">Squad Alpha-2 (En Route)</span>
-</div>
-</td>
-<td class="py-3 px-space-md text-right">
-<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded" onclick="showToast('Diagnostics Dispatched', 'Automated SFP optical loopback test running')">
-                  Run Loopback
-                </button>
-</td>
-</tr>
-<tr class="hover:bg-surface-container-low/40 transition-colors">
-<td class="py-3 px-space-md">
-<div class="flex items-center gap-2">
-<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
-<div class="flex flex-col">
-<span class="font-headline-sm text-body-md text-on-surface font-semibold">Harbor Industrial Park</span>
-<span class="font-code-telemetry text-[11px] text-outline">Hub: HBR-CORE-02</span>
-</div>
-</div>
-</td>
-<td class="py-3 px-space-md text-center">
-<span class="inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Hardware Fault (PDU)</span>
-</td>
-<td class="py-3 px-space-md font-code-telemetry">
-<span class="text-secondary font-semibold">0 active complaints</span>
-</td>
-<td class="py-3 px-space-md">
-<span class="font-code-telemetry text-secondary font-semibold">Restored 10m ago</span>
-</td>
-<td class="py-3 px-space-md">
-<span class="font-label-md text-on-surface-variant">Cleared by NOC Chief</span>
-</td>
-<td class="py-3 px-space-md text-right">
-<span class="px-2.5 py-1 text-outline font-label-sm text-label-sm">Archived</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<div id="noc-spike-panel" aria-live="polite"></div>
+<div id="noc-outage-list" class="grid grid-cols-1 lg:grid-cols-2 gap-space-md" aria-label="Outages and maintenance"></div>
 </section>
-<!-- ========================================================================= -->
-<!-- MODAL: BROADCAST MAINTENANCE NOTICE                                     -->
-<!-- ========================================================================= -->
-<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="maintenance-modal">
-<div class="bg-surface-container-lowest max-w-xl w-full rounded-2xl shadow-2xl p-space-xl flex flex-col gap-space-lg transform scale-95 transition-transform duration-200" id="modal-container">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<div class="p-2 rounded-xl bg-error-container text-on-error-container">
-<span class="material-symbols-outlined text-[24px]">crisis_alert</span>
-</div>
-<div>
-<h3 class="font-headline-md text-headline-md text-on-surface">Emergency SMS / Push Broadcast</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Targeted Subscriber Incident Notification</p>
-</div>
-</div>
-<button class="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container" onclick="closeMaintenanceModal()">
-<span class="material-symbols-outlined text-[20px]">close</span>
-</button>
-</div>
-<div class="flex flex-col gap-space-sm font-body-sm text-body-sm">
-<div class="p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
-<span class="text-on-surface-variant">Target Audience Scope:</span>
-<span class="font-code-telemetry font-bold text-on-surface">1,420 Subscribers (North District OLT)</span>
-</div>
-<label class="font-label-md text-label-md text-on-surface font-semibold">Message Copy Preview (AI Optimized for Churn Prevention):</label>
-<textarea class="w-full h-28 p-space-md bg-surface-container-low rounded-xl text-on-surface font-body-sm focus:outline-none focus:ring-2 focus:ring-primary resize-none leading-relaxed" id="notice-copy">SpaceNet Advisory: We have identified a physical fiber break affecting North Downtown. Crew Delta-4 is splicing lines now. Est. restoration: 45 minutes. An automatic 24-hour service credit has been credited to your bill.</textarea>
-</div>
-<div class="flex items-center justify-between pt-space-xs">
-<div class="flex items-center gap-2 text-label-sm font-label-sm text-on-surface-variant">
-<span class="w-2 h-2 rounded-full bg-secondary"></span>
-<span class="">WhatsApp, SMS, App Push</span>
-</div>
-<div class="flex items-center gap-space-sm">
-<button class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-headline-sm text-label-md" onclick="closeMaintenanceModal()">
-            Cancel
-          </button>
-<button class="px-space-lg py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-label-md flex items-center gap-1.5 shadow-md" onclick="executeBroadcastSend()">
-<span class="material-symbols-outlined text-[16px]">campaign</span>
-<span class="">Authorize &amp; Broadcast</span>
-</button>
+<!-- Module 08: outage detail dialog -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="outage-modal" onclick="if (event.target === this) closeOutageModal()">
+<div class="bg-surface-container-lowest max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-space-lg sm:p-space-xl flex flex-col gap-space-md transform scale-95 transition-transform duration-200" id="outage-modal-container" role="dialog" aria-modal="true" aria-labelledby="outage-modal-title">
+  <div class="flex items-start justify-between gap-space-md pb-space-xs border-b border-surface-container-high">
+    <div class="flex flex-col gap-0.5">
+      <span id="outage-modal-id" class="font-code-telemetry text-code-telemetry text-primary"></span>
+      <h2 id="outage-modal-title" class="font-headline-md text-headline-md text-on-surface"></h2>
+      <span id="outage-modal-sub" class="font-body-sm text-body-sm text-on-surface-variant"></span>
+    </div>
+    <button type="button" onclick="closeOutageModal()" aria-label="Close outage details" class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
+  </div>
+  <div id="outage-modal-body" class="flex flex-col gap-space-md"></div>
 </div>
 </div>
-</div>
-</div>
+<!-- Module 08: report outage dialog -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="outage-report-modal" onclick="if (event.target === this) closeOutageReportModal()">
+<form class="bg-surface-container-lowest max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-space-lg sm:p-space-xl flex flex-col gap-space-md transform scale-95 transition-transform duration-200" id="outage-report-container" role="dialog" aria-modal="true" aria-labelledby="outage-report-title" onsubmit="submitOutageReportForm(event)" novalidate>
+  <div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
+    <h2 id="outage-report-title" class="font-headline-md text-headline-md text-on-surface">Report outage or maintenance</h2>
+    <button type="button" onclick="closeOutageReportModal()" aria-label="Close report form" class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+    <label class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant">Zone
+      <select id="outage-form-zone" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary"></select>
+    </label>
+    <label class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant">Type
+      <select id="outage-form-type" onchange="updateOutageFormFields()" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary">
+        <option value="unplanned">Unplanned outage</option>
+        <option value="planned">Planned maintenance</option>
+      </select>
+    </label>
+    <label class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant sm:col-span-2">Title *
+      <input id="outage-form-title" type="text" autocomplete="off" placeholder="e.g. Fibre cut on the Road 27 feeder" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary">
+    </label>
+    <label id="outage-form-severity-wrap" class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant">Severity
+      <select id="outage-form-severity" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary">
+        <option value="critical">Critical</option>
+        <option value="major" selected>Major</option>
+        <option value="minor">Minor</option>
+      </select>
+    </label>
+    <label id="outage-form-window-wrap" class="hidden flex-col gap-1 font-label-md text-label-md text-on-surface-variant">Maintenance window start *
+      <input id="outage-form-window" type="datetime-local" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary">
+    </label>
+    <label class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant sm:col-span-2">Cause / notes
+      <input id="outage-form-cause" type="text" autocomplete="off" placeholder="Optional" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary">
+    </label>
+  </div>
+  <p id="outage-form-error" class="hidden font-body-sm text-body-sm text-error" role="alert"></p>
+  <div class="flex justify-end gap-space-sm">
+    <button type="button" onclick="closeOutageReportModal()" class="px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md">Cancel</button>
+    <button type="submit" class="px-space-md py-space-xs rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Record outage</button>
+  </div>
+</form>
 </div>
 
 <!-- ========================================================================= -->
@@ -2631,7 +2509,7 @@ main.bg-surface { background-color: transparent; }
         closeTicketModal();
         closeLeadModal();
         closeCreateTicketModal();
-        closeMaintenanceModal();
+        closeOutageDialogs();
         closeStatusInquiryModal();
         closeLeadCreateModal();
       }
@@ -8093,40 +7971,392 @@ main.bg-surface { background-color: transparent; }
 
   renderSalesPipeline();
 
-  // 7. Network Outage & Maintenance Modal
-  function openMaintenanceModal() {
-    const modal = document.getElementById('maintenance-modal');
-    const container = document.getElementById('modal-container');
-    modal.classList.remove('hidden');
-    setTimeout(() => {
-      modal.classList.remove('opacity-0');
-      container.classList.remove('scale-95');
-      container.classList.add('scale-100');
-    }, 10);
+  // =========================================================================
+  // MODULE 08: NETWORK OUTAGES / NOC (fictional demo outages, in-memory only)
+  // Affected customers and complaints are derived from SPACE_NET_CUSTOMERS and
+  // `tickets`; outage actions never modify customer or ticket records.
+  // =========================================================================
+
+  const OUTAGE_FLOWS = {
+    unplanned: [
+      { key: 'investigating', label: 'Investigating', cls: 'bg-error-container text-on-error-container' },
+      { key: 'identified', label: 'Identified', cls: 'bg-tertiary-fixed text-on-tertiary-fixed' },
+      { key: 'monitoring', label: 'Monitoring', cls: 'bg-secondary-fixed text-on-secondary-fixed' },
+      { key: 'resolved', label: 'Resolved', cls: 'bg-surface-container-high text-on-surface-variant' }
+    ],
+    planned: [
+      { key: 'scheduled', label: 'Scheduled', cls: 'bg-tertiary-fixed text-on-tertiary-fixed' },
+      { key: 'in_progress', label: 'In progress', cls: 'bg-primary-fixed text-on-primary-fixed' },
+      { key: 'completed', label: 'Completed', cls: 'bg-surface-container-high text-on-surface-variant' }
+    ]
+  };
+  const OUTAGE_CLOSED_STATUSES = ['resolved', 'completed'];
+  const OUTAGE_SEVERITIES = {
+    critical: { label: 'Critical', cls: 'bg-error text-on-error' },
+    major: { label: 'Major', cls: 'bg-error-container text-on-error-container' },
+    minor: { label: 'Minor', cls: 'bg-surface-container-highest text-on-surface-variant' }
+  };
+  // A zone with this many open no-internet / slow-internet complaints raises a NOC alert.
+  const NOC_SPIKE_THRESHOLD = 2;
+  const COMPLAINT_CATEGORIES = ['NO_INTERNET', 'SLOW_INTERNET'];
+  const OPEN_TICKET_EXCLUDED = ['RESOLVED', 'CLOSED'];
+  const SIMULATED_NOTICE = 'Simulated — no messages sent';
+
+  // Zones = demo coverage zones plus any zone an existing customer connection sits in.
+  function getOutageZones() {
+    const names = SPACE_NET_COVERAGE_ZONES.map(z => z.name);
+    SPACE_NET_CUSTOMERS.forEach(c => c.connections.forEach(conn => { if (!names.includes(conn.zone)) names.push(conn.zone); }));
+    return names.sort();
   }
 
-  function closeMaintenanceModal() {
-    const modal = document.getElementById('maintenance-modal');
-    const container = document.getElementById('modal-container');
-    modal.classList.add('opacity-0');
-    container.classList.remove('scale-100');
-    container.classList.add('scale-95');
-    setTimeout(() => {
-      modal.classList.add('hidden');
-    }, 200);
+  function getOutageFlow(outage) {
+    return OUTAGE_FLOWS[outage.type] || OUTAGE_FLOWS.unplanned;
   }
 
-  function executeBroadcastSend() {
-    closeMaintenanceModal();
-    showToast('🚨 Maintenance Broadcast Dispatched', '1,420 subscribers notified via SMS, WhatsApp & Push. 24-hr credit credited.');
-    
-    // Update active incident status badge in outages table
-    const tableBadge = document.querySelector('#view-network-outages tbody tr:first-child button');
-    if (tableBadge) {
-      tableBadge.className = 'px-2.5 py-1 bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md rounded font-semibold';
-      tableBadge.textContent = 'Broadcasted (1,420 notified)';
+  function getOutageStatusMeta(outage) {
+    return getOutageFlow(outage).find(s => s.key === outage.status) || getOutageFlow(outage)[0];
+  }
+
+  function isOutageOpen(outage) {
+    return !OUTAGE_CLOSED_STATUSES.includes(outage.status);
+  }
+
+  function nextOutageId(zone) {
+    const max = outages.reduce((m, o) => Math.max(m, parseInt(o.outageId.slice(-4), 10) || 0), 100);
+    return `OUT-${zone.replace(/[^a-z]/gi, '').slice(0, 3).toUpperCase()}-${String(max + 1).padStart(4, '0')}`;
+  }
+
+  function getOutageAffectedCustomers(outage) {
+    return SPACE_NET_CUSTOMERS
+      .map(c => ({ customer: c, circuits: c.connections.filter(conn => conn.zone === outage.zone).map(conn => conn.circuitId) }))
+      .filter(x => x.circuits.length);
+  }
+
+  function getTicketZone(ticket) {
+    const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === ticket.customerId);
+    if (!customer) return null;
+    const conn = customer.connections.find(k => k.circuitId === ticket.circuitId);
+    return conn ? conn.zone : customer.zone;
+  }
+
+  function isOpenComplaint(ticket) {
+    return COMPLAINT_CATEGORIES.includes(ticket.category) && !OPEN_TICKET_EXCLUDED.includes(ticket.status);
+  }
+
+  // Connectivity complaints in the outage zone (open and closed), newest first as stored.
+  function getOutageRelatedTickets(outage) {
+    return tickets.filter(t => COMPLAINT_CATEGORIES.includes(t.category) && getTicketZone(t) === outage.zone);
+  }
+
+  function getNocSpikes() {
+    const counts = {};
+    tickets.filter(isOpenComplaint).forEach(t => {
+      const zone = getTicketZone(t);
+      if (zone) counts[zone] = (counts[zone] || []).concat(t.ticketId);
+    });
+    return Object.keys(counts)
+      .filter(zone => counts[zone].length >= NOC_SPIKE_THRESHOLD)
+      .map(zone => ({ zone, ticketIds: counts[zone], outage: outages.find(o => o.zone === zone && o.type === 'unplanned' && isOutageOpen(o)) || null }));
+  }
+
+  const outages = [
+    { outageId: 'OUT-UTT-0107', zone: 'Uttara', type: 'unplanned', severity: 'critical', status: 'identified',
+      title: 'Fibre cut on the Sector 7 feeder', cause: 'Roadworks severed the distribution fibre (demo scenario).',
+      startedAt: '2026-11-01 08:40', window: null, resolvedAt: null, notifications: [], isDemo: true,
+      history: [
+        { at: '2026-11-01 08:40', action: 'REPORTED', by: 'NOC on-call (demo)', note: 'Outage reported · Investigating' },
+        { at: '2026-11-01 09:15', action: 'STATUS_CHANGED', by: 'NOC on-call (demo)', note: 'Investigating → Identified' }
+      ] },
+    { outageId: 'OUT-GUL-0108', zone: 'Gulshan', type: 'planned', severity: null, status: 'scheduled',
+      title: 'OLT firmware maintenance', cause: 'Planned firmware upgrade on the Gulshan OLT (demo scenario).',
+      startedAt: '2026-11-02 02:00', window: '2026-11-02 02:00 – 04:00', resolvedAt: null, notifications: [], isDemo: true,
+      history: [{ at: '2026-10-31 16:00', action: 'SCHEDULED', by: 'NOC planning (demo)', note: 'Maintenance window scheduled' }] },
+    { outageId: 'OUT-MOH-0101', zone: 'Mohakhali', type: 'unplanned', severity: 'minor', status: 'resolved',
+      title: 'Throughput drop after core router change', cause: 'Misconfigured QoS profile, rolled back (demo scenario).',
+      startedAt: '2026-10-29 19:10', window: null, resolvedAt: '2026-10-29 21:05', isDemo: true,
+      notifications: [
+        { kind: 'start', at: '2026-10-29 19:30', recipients: 1, note: SIMULATED_NOTICE },
+        { kind: 'restored', at: '2026-10-29 21:10', recipients: 1, note: SIMULATED_NOTICE }
+      ],
+      history: [
+        { at: '2026-10-29 19:10', action: 'REPORTED', by: 'NOC on-call (demo)', note: 'Outage reported · Investigating' },
+        { at: '2026-10-29 21:05', action: 'STATUS_CHANGED', by: 'NOC on-call (demo)', note: 'Monitoring → Resolved' }
+      ] }
+  ];
+
+  function getOutageById(outageId) {
+    return outages.find(o => o.outageId === outageId) || null;
+  }
+
+  function createOutage(input) {
+    const zone = getOutageZones().includes(input && input.zone) ? input.zone : null;
+    const type = input && input.type === 'planned' ? 'planned' : 'unplanned';
+    const title = ((input && input.title) || '').trim();
+    if (!zone || !title || (type === 'planned' && !input.window)) return null;
+    const at = leadTimestamp();
+    const outage = {
+      outageId: nextOutageId(zone), zone, type,
+      severity: type === 'planned' ? null : (OUTAGE_SEVERITIES[input.severity] ? input.severity : 'major'),
+      status: OUTAGE_FLOWS[type][0].key,
+      title, cause: (input.cause || '').trim(),
+      startedAt: type === 'planned' ? input.window : at,
+      window: type === 'planned' ? input.window : null,
+      resolvedAt: null, notifications: [], isDemo: true,
+      history: [{ at, action: type === 'planned' ? 'SCHEDULED' : 'REPORTED', by: 'NOC staff', note: type === 'planned' ? `Maintenance scheduled for ${input.window}` : 'Outage reported · Investigating' }]
+    };
+    outages.unshift(outage);
+    return outage;
+  }
+
+  function advanceOutageStatus(outageId) {
+    const outage = getOutageById(outageId);
+    if (!outage) return false;
+    const flow = getOutageFlow(outage);
+    const idx = flow.findIndex(s => s.key === outage.status);
+    if (idx < 0 || idx >= flow.length - 1) return false;
+    const next = flow[idx + 1];
+    outage.history.push({ at: leadTimestamp(), action: 'STATUS_CHANGED', by: 'NOC staff', note: `${flow[idx].label} → ${next.label}` });
+    outage.status = next.key;
+    if (!isOutageOpen(outage)) outage.resolvedAt = leadTimestamp();
+    return true;
+  }
+
+  // Records a demo notification only. Nothing is sent and no customer or ticket record changes.
+  function recordOutageNotification(outageId, kind) {
+    const outage = getOutageById(outageId);
+    if (!outage || !['start', 'restored', 'maintenance_notice'].includes(kind)) return null;
+    if (kind === 'restored' && isOutageOpen(outage)) return null;
+    const entry = { kind, at: leadTimestamp(), recipients: getOutageAffectedCustomers(outage).length, note: SIMULATED_NOTICE };
+    outage.notifications.push(entry);
+    const label = { start: 'Outage notice', restored: 'Restoration announcement', maintenance_notice: 'Maintenance notice' }[kind];
+    outage.history.push({ at: entry.at, action: 'NOTIFICATION_SIMULATED', by: 'NOC staff', note: `${label} for ${entry.recipients} affected customer(s) · ${SIMULATED_NOTICE}` });
+    return entry;
+  }
+
+  // --- NOC view rendering ---
+  function renderOutageBadge(cls, icon, text) {
+    return `<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded font-label-sm text-label-sm ${cls}">${icon ? `<span class="material-symbols-outlined text-[13px]" aria-hidden="true">${icon}</span>` : ''}${escapeHtml(text)}</span>`;
+  }
+
+  function renderOutageTypeBadge(outage) {
+    if (outage.type === 'planned') return renderOutageBadge('bg-tertiary-fixed text-on-tertiary-fixed', 'event', 'Planned maintenance');
+    const sev = OUTAGE_SEVERITIES[outage.severity] || OUTAGE_SEVERITIES.major;
+    return renderOutageBadge(sev.cls, 'bolt', `${sev.label} outage`);
+  }
+
+  function renderNocView() {
+    const stats = document.getElementById('noc-stats');
+    const spikePanel = document.getElementById('noc-spike-panel');
+    const list = document.getElementById('noc-outage-list');
+    if (!stats || !spikePanel || !list) return;
+    const activeUnplanned = outages.filter(o => o.type === 'unplanned' && isOutageOpen(o));
+
+    // Dashboard "NOC Core Health" row mirrors the newest open outage instead of static prototype text.
+    const dashRow = document.getElementById('dash-outage-row');
+    if (dashRow) {
+      const top = activeUnplanned[0];
+      dashRow.innerHTML = top
+        ? `<span class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-error animate-ping motion-reduce:animate-none" aria-hidden="true"></span><span class="text-on-surface">${escapeHtml(top.zone)} · ${escapeHtml(top.outageId)}</span></span><span class="font-code-telemetry text-error font-semibold">${escapeHtml(getOutageStatusMeta(top).label)}</span>`
+        : '<span class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-secondary" aria-hidden="true"></span><span class="text-on-surface">Outages</span></span><span class="font-code-telemetry text-secondary font-semibold">None active</span>';
     }
+    const affectedIds = new Set();
+    activeUnplanned.forEach(o => getOutageAffectedCustomers(o).forEach(x => affectedIds.add(x.customer.customerId)));
+    const spikes = getNocSpikes();
+    const tiles = [
+      ['Active outages', activeUnplanned.length],
+      ['Planned maintenance', outages.filter(o => o.type === 'planned' && isOutageOpen(o)).length],
+      ['Resolved', outages.filter(o => !isOutageOpen(o)).length],
+      ['Customers affected', affectedIds.size],
+      ['NOC spike alerts', spikes.length]
+    ];
+    stats.innerHTML = tiles.map(([label, value]) => `<div class="rounded-lg bg-white/5 ring-1 ring-inverse-primary/20 px-space-sm py-space-xs">
+        <dt class="font-label-sm text-label-sm text-inverse-on-surface/75">${label}</dt>
+        <dd class="font-code-metric text-code-metric text-inverse-on-surface">${value}</dd></div>`).join('');
+
+    spikePanel.innerHTML = spikes.length
+      ? spikes.map(s => `<div class="flex flex-wrap items-center justify-between gap-space-sm rounded-xl bg-error-container text-on-error-container p-space-md" role="alert">
+          <span class="flex items-center gap-space-xs font-body-md text-body-md"><span class="material-symbols-outlined" aria-hidden="true">warning</span>
+            <span><strong>NOC alert · ${escapeHtml(s.zone)}:</strong> ${s.ticketIds.length} open connectivity complaints (${s.ticketIds.map(escapeHtml).join(', ')}). ${s.outage ? `Linked to ${escapeHtml(s.outage.outageId)}.` : 'No outage recorded for this zone yet.'}</span></span>
+          ${s.outage ? `<button type="button" onclick="openOutageModal('${s.outage.outageId}')" class="px-space-sm py-1 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md">Open ${escapeHtml(s.outage.outageId)}</button>`
+            : `<button type="button" onclick="openOutageReportModal('${escapeHtml(s.zone)}')" class="px-space-sm py-1 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md">Report outage in ${escapeHtml(s.zone)}</button>`}
+        </div>`).join('')
+      : `<p class="flex items-center gap-space-xs rounded-xl bg-surface-container-lowest p-space-md font-body-sm text-body-sm text-on-surface-variant"><span class="material-symbols-outlined text-[18px] text-secondary" aria-hidden="true">verified</span>No complaint spikes: no zone has ${NOC_SPIKE_THRESHOLD} or more open connectivity complaints.</p>`;
+
+    list.innerHTML = outages.map(o => {
+      const status = getOutageStatusMeta(o);
+      const flow = getOutageFlow(o);
+      const idx = flow.findIndex(s => s.key === o.status);
+      const customers = getOutageAffectedCustomers(o).length;
+      const openComplaints = getOutageRelatedTickets(o).filter(isOpenComplaint).length;
+      return `<button type="button" onclick="openOutageModal('${o.outageId}')" class="outage-card text-left w-full rounded-xl bg-surface-container-lowest p-space-md flex flex-col gap-space-xs shadow-[0_1px_2px_rgba(15,23,42,0.06)] hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary transition ${isOutageOpen(o) ? '' : 'opacity-80'}">
+          <span class="flex items-center justify-between gap-2"><span class="font-code-telemetry text-code-telemetry text-primary">${o.outageId}</span>${renderOutageBadge(status.cls, '', status.label)}</span>
+          <span class="font-headline-sm text-headline-sm text-on-surface">${escapeHtml(o.title)}</span>
+          <span class="flex flex-wrap items-center gap-1">${renderOutageTypeBadge(o)}${renderOutageBadge('bg-surface-container text-on-surface', 'location_on', o.zone)}</span>
+          <span class="flex items-center gap-1" aria-label="Lifecycle step ${idx + 1} of ${flow.length}">${flow.map((s, i) => `<span class="h-1.5 flex-1 rounded-full ${i <= idx ? 'bg-primary' : 'bg-surface-container-high'}"></span>`).join('')}</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">${o.type === 'planned' ? `Window ${escapeHtml(o.window)}` : `Since ${escapeHtml(o.startedAt)}`} · ${customers} customer${customers === 1 ? '' : 's'} in zone · ${openComplaints} open complaint${openComplaints === 1 ? '' : 's'}</span>
+        </button>`;
+    }).join('');
   }
+
+  // --- Outage dialogs (reuse the Module 06 dialog helpers) ---
+  let currentOutageId = null;
+
+  function openOutageModal(outageId) {
+    const outage = getOutageById(outageId);
+    if (!outage) {
+      showToast('Outage Not Found', `No demo outage with ID ${outageId}.`);
+      return;
+    }
+    currentOutageId = outageId;
+    renderOutageModal(outage);
+    showLeadDialog('outage-modal', 'outage-modal-container', 'button');
+  }
+
+  function closeOutageModal() {
+    hideLeadDialog('outage-modal', 'outage-modal-container');
+  }
+
+  function renderOutageModal(outage) {
+    const body = document.getElementById('outage-modal-body');
+    if (!body) return;
+    document.getElementById('outage-modal-id').textContent = `${outage.outageId} · demo record`;
+    document.getElementById('outage-modal-title').textContent = outage.title;
+    document.getElementById('outage-modal-sub').textContent = `${outage.zone} · ${outage.type === 'planned' ? `window ${outage.window}` : `since ${outage.startedAt}`}${outage.resolvedAt ? ` · closed ${outage.resolvedAt}` : ''}`;
+
+    const flow = getOutageFlow(outage);
+    const idx = flow.findIndex(s => s.key === outage.status);
+    const next = flow[idx + 1];
+    const affected = getOutageAffectedCustomers(outage);
+    const related = getOutageRelatedTickets(outage);
+    const open = isOutageOpen(outage);
+    const btn = 'px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition';
+
+    body.innerHTML = `
+      <div class="flex flex-wrap items-center gap-1">${renderOutageTypeBadge(outage)}${renderOutageBadge(getOutageStatusMeta(outage).cls, '', getOutageStatusMeta(outage).label)}</div>
+      ${outage.cause ? `<p class="font-body-sm text-body-sm text-on-surface">${escapeHtml(outage.cause)}</p>` : ''}
+      <div class="flex flex-col gap-space-xs">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">Lifecycle</h3>
+        <ol class="flex flex-wrap items-center gap-1" aria-label="Lifecycle">${flow.map((s, i) => `<li class="flex items-center gap-1 font-label-md text-label-md ${i <= idx ? 'text-on-surface' : 'text-outline'}"><span class="material-symbols-outlined text-[16px] ${i <= idx ? 'text-primary' : ''}" aria-hidden="true">${i < idx ? 'check_circle' : (i === idx ? 'radio_button_checked' : 'radio_button_unchecked')}</span>${s.label}${i < flow.length - 1 ? '<span class="text-outline mx-1" aria-hidden="true">→</span>' : ''}</li>`).join('')}</ol>
+        ${next ? `<button type="button" onclick="advanceOutageFromModal()" class="${btn} self-start bg-primary text-on-primary font-semibold">Move to ${next.label}</button>` : '<p class="font-body-sm text-body-sm text-on-surface-variant">Lifecycle complete.</p>'}
+      </div>
+      <div class="flex flex-col gap-space-xs">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">Customer notifications</h3>
+        <div class="flex flex-wrap gap-space-xs">
+          ${outage.type === 'planned'
+            ? `<button type="button" onclick="notifyOutageFromModal('maintenance_notice')" class="${btn} bg-surface-container text-on-surface hover:bg-surface-container-high">Send maintenance notice</button>`
+            : `<button type="button" onclick="notifyOutageFromModal('start')" class="${btn} bg-surface-container text-on-surface hover:bg-surface-container-high">Notify Affected Customers</button>`}
+          <button type="button" onclick="notifyOutageFromModal('restored')" ${open ? 'disabled aria-disabled="true" title="Available once the outage is resolved"' : ''} class="${btn} bg-surface-container text-on-surface hover:bg-surface-container-high disabled:opacity-50 disabled:cursor-not-allowed">Announce Restoration</button>
+        </div>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">${SIMULATED_NOTICE}. Actions are recorded on this demo outage only.</p>
+        ${outage.notifications.length ? `<ul class="flex flex-col gap-1">${outage.notifications.map(n => `<li class="font-body-sm text-body-sm text-on-surface"><span class="font-code-telemetry text-code-telemetry text-on-surface-variant">${escapeHtml(n.at)}</span> · ${escapeHtml({ start: 'Outage notice', restored: 'Restoration announcement', maintenance_notice: 'Maintenance notice' }[n.kind])} · ${n.recipients} customer(s) · <em>${escapeHtml(n.note)}</em></li>`).join('')}</ul>` : ''}
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+        <div class="flex flex-col gap-space-xs">
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">Customers in ${escapeHtml(outage.zone)} (${affected.length})</h3>
+          ${affected.length ? `<ul class="flex flex-col gap-1">${affected.map(x => `<li><button type="button" onclick="openOutageCustomer('${x.customer.customerId}')" class="text-left font-body-sm text-body-sm text-primary underline">${escapeHtml(x.customer.name)} · ${escapeHtml(x.customer.customerId)}</button><span class="block font-label-sm text-label-sm text-on-surface-variant">${x.circuits.map(escapeHtml).join(', ')}</span></li>`).join('')}</ul>` : '<p class="font-body-sm text-body-sm text-on-surface-variant">No demo customers have a connection in this zone.</p>'}
+        </div>
+        <div class="flex flex-col gap-space-xs">
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">Connectivity complaints (${related.length})</h3>
+          ${related.length ? `<ul class="flex flex-col gap-1">${related.map(t => `<li><button type="button" onclick="openOutageTicket('${t.ticketId}')" class="text-left font-body-sm text-body-sm text-primary underline">${escapeHtml(t.ticketId)} · ${escapeHtml(t.customerName)}</button><span class="block font-label-sm text-label-sm text-on-surface-variant">${escapeHtml(t.categoryLabel || t.category)} · ${escapeHtml(t.statusLabel || t.status)}${isOpenComplaint(t) ? ' · open' : ''}</span></li>`).join('')}</ul>` : '<p class="font-body-sm text-body-sm text-on-surface-variant">No connectivity tickets from this zone.</p>'}
+        </div>
+      </div>
+      <div class="flex flex-col gap-space-xs">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">History</h3>
+        <ol class="flex flex-col gap-1.5 border-l border-surface-container-high pl-space-md">
+          ${outage.history.slice().reverse().map(h => `<li class="font-body-sm text-body-sm text-on-surface"><span class="font-code-telemetry text-code-telemetry text-on-surface-variant">${escapeHtml(h.at)}</span> · ${escapeHtml(h.note)} <span class="text-on-surface-variant">(${escapeHtml(h.by)})</span></li>`).join('')}
+        </ol>
+      </div>`;
+  }
+
+  function refreshOutageViews() {
+    renderNocView();
+    const outage = getOutageById(currentOutageId);
+    if (outage) renderOutageModal(outage);
+  }
+
+  function advanceOutageFromModal() {
+    if (!advanceOutageStatus(currentOutageId)) return;
+    refreshOutageViews();
+    const outage = getOutageById(currentOutageId);
+    showToast('Outage Status Updated', `${outage.outageId} is now ${getOutageStatusMeta(outage).label} (demo record).`);
+  }
+
+  function notifyOutageFromModal(kind) {
+    const entry = recordOutageNotification(currentOutageId, kind);
+    if (!entry) {
+      showToast('Not Available Yet', 'Restoration can be announced once the outage is resolved.');
+      return;
+    }
+    refreshOutageViews();
+    showToast('Notification Simulated', `${SIMULATED_NOTICE}. Recorded for ${entry.recipients} affected demo customer(s).`);
+  }
+
+  function openOutageCustomer(customerId) {
+    closeOutageModal();
+    goToProfileFromChat(customerId);
+  }
+
+  function openOutageTicket(ticketId) {
+    closeOutageModal();
+    switchView('tickets');
+    openTicketDetail(ticketId);
+  }
+
+  // --- Report outage form ---
+  function updateOutageFormFields() {
+    const planned = ((document.getElementById('outage-form-type') || {}).value) === 'planned';
+    const sev = document.getElementById('outage-form-severity-wrap');
+    const win = document.getElementById('outage-form-window-wrap');
+    if (sev) sev.classList.toggle('hidden', planned);
+    if (win) { win.classList.toggle('hidden', !planned); win.classList.toggle('flex', planned); }
+  }
+
+  function openOutageReportModal(zone) {
+    const zoneSelect = document.getElementById('outage-form-zone');
+    if (zoneSelect) {
+      zoneSelect.innerHTML = getOutageZones().map(z => `<option value="${escapeHtml(z)}">${escapeHtml(z)}</option>`).join('');
+      if (zone) zoneSelect.value = zone;
+    }
+    ['outage-form-title', 'outage-form-cause', 'outage-form-window'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    const type = document.getElementById('outage-form-type');
+    if (type) type.value = 'unplanned';
+    const err = document.getElementById('outage-form-error');
+    if (err) err.classList.add('hidden');
+    updateOutageFormFields();
+    showLeadDialog('outage-report-modal', 'outage-report-container');
+  }
+
+  function closeOutageReportModal() {
+    hideLeadDialog('outage-report-modal', 'outage-report-container');
+  }
+
+  function closeOutageDialogs() {
+    closeOutageModal();
+    closeOutageReportModal();
+  }
+
+  function submitOutageReportForm(event) {
+    if (event) event.preventDefault();
+    const val = id => ((document.getElementById(id) || {}).value || '').trim();
+    const input = { zone: val('outage-form-zone'), type: val('outage-form-type'), title: val('outage-form-title'), severity: val('outage-form-severity'), cause: val('outage-form-cause'), window: val('outage-form-window').replace('T', ' ') };
+    const outage = createOutage(input);
+    if (!outage) {
+      const err = document.getElementById('outage-form-error');
+      const problem = !input.title ? 'Enter a short title.' : 'Choose the maintenance window start.';
+      if (err) { err.textContent = problem; err.classList.remove('hidden'); }
+      const el = document.getElementById(!input.title ? 'outage-form-title' : 'outage-form-window');
+      if (el) el.focus();
+      return null;
+    }
+    closeOutageReportModal();
+    renderNocView();
+    showToast(outage.type === 'planned' ? 'Maintenance Scheduled' : 'Outage Recorded', `${outage.outageId} in ${outage.zone} (demo record). No customers were contacted.`);
+    return outage;
+  }
+
+  renderNocView();
+  // Complaint counts come from live ticket state, so refresh whenever the NOC view is opened.
+  window.addEventListener('hashchange', () => { if (window.location.hash === '#network-outages') renderNocView(); });
 
   // 8. Command Palette
   function openCmdPalette() {
