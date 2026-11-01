@@ -1,6 +1,6 @@
 # SpaceNet AI CRM — Shared Data Contract & Architecture Standard
 
-**Document Version:** 1.6.0
+**Document Version:** 1.7.0
 **Effective Date:** 2026-10-31
 **Authors & Maintainers:** Rohan (Customer-Facing & Support Lead) & Adnan (Operations & Admin Lead)
 **Repository:** `https://github.com/lEVI2889/spacenet`
@@ -29,6 +29,7 @@ SpaceNet is an intelligent Customer Relationship Management (CRM) and Network Op
 | **v1.4.0** | 2026-10-31 | Rohan | Customer Profiles & Unified 360° View: Multi-Connection Schema, Customer Record Extensions, Secondary Circuit Ticket Lifecycle, and Bi-Directional Cross-Navigation (Module 04). |
 | **v1.5.0** | 2026-10-31 | Rohan | AI Troubleshooting & Diagnostics: DiagnosticSession Schema, Deterministic ISP Decision Trees, Simulated ONT/Router Telemetry, Speed Test Model, Cross-Module Diagnostics Integration (Ticket DIAGNOSTIC_EXEC sync, Customer 360 & Chat return), and Circuit Isolation (Module 05). |
 | **v1.6.0** | 2026-11-01 | Adnan | Sales & Leads (Module 06): `SpaceNetLead` schema, `LEAD-<NUM>` implemented, coverage tri-state, team routing, idempotent AI lead capture from `sales_handoff` (Section 15). |
+| **v1.7.0** | 2026-11-01 | Adnan | Network Outages (Module 08): `SpaceNetOutage` schema, `OUT-<ZONE>-<NUM>` implemented, derived affected customers/complaints, NOC spike rule, simulated notifications (Section 16). |
 
 ---
 
@@ -48,6 +49,7 @@ To guarantee seamless navigation and referential integrity across modules develo
 | **Support Ticket** | `TKT-<ID>` | `#TKT-<ID>` | `TKT-9042` (`#TKT-9042`) | Module 03 (Tickets Desk) |
 | **Diagnostic Session** | `DIAG-<YYYYMMDD>-<NUM>` | N/A | `DIAG-20261031-001`, `DIAG-20261031-004` | Module 05 (`diagnosticSessions`) |
 | **Sales Lead** | `LEAD-<NUM>` | `LEAD-<NUM>` | `LEAD-3001` | Module 06 (`leads`) |
+| **Network Outage** | `OUT-<ZONE>-<NUM>` | `OUT-<ZONE>-<NUM>` | `OUT-UTT-0107` | Module 08 (`outages`) |
 | **Standard Message** | `m-<CUST_ABBR>-<NUM>` or `msg-<TIMESTAMP>` | N/A | `m-alx-1`, `msg-1730301234` | Module 01 (Tasks 1–5) |
 | **Voice Note Message** | `vmsg-<CUST_ABBR>-<NUM>` | N/A | `vmsg-alx-1`, `vmsg-frh-1` | Module 02 (Feature Group 6) |
 | **System Event Log** | `sys-<TIMESTAMP>` | N/A | `sys-1730302345` | Module 01 (Task 4) |
@@ -58,7 +60,6 @@ To guarantee seamless navigation and referential integrity across modules develo
 
 | Entity | Current Format in DOM | Planned Canonical Format | Notes |
 | :--- | :--- | :--- | :--- |
-| **Network Outages** | Static banner & modal text | `OUT-<ZONE>-<NUM>` (e.g. `OUT-DAC-0104`) | Module 08 (Network Outages / NOC) severity alert banners. |
 
 ### 2.3 Proposed Identifiers — Requires Adnan's Review & Agreement
 
@@ -813,3 +814,43 @@ interface SpaceNetLead {
 * Global Escape handler: also calls `closeLeadCreateModal()`.
 * New DOM ids: `#sales-pipeline`, `#sales-stage-strip`, `#sales-search`, `#sales-team-filter`, `#sales-coverage-filter`, `#lead-modal`, `#lead-modal-container`, `#lead-modal-body`, `#lead-create-modal`, `#lead-create-container`, `#lead-form-*`.
 * Module 09: `surveyRequest` is the hand-off point for a future `TASK-TECH-<NUM>` job.
+
+---
+
+## 16. Network Outages Contract (Module 08)
+
+All outages, causes and notifications are fictional, in-memory demo records (`isDemo: true`).
+
+### 16.1 `SpaceNetOutage` (collection `outages`, newest first)
+
+```typescript
+interface SpaceNetOutage {
+  outageId: string;               // 'OUT-<first 3 letters of zone>-<NUM>', e.g. 'OUT-UTT-0107'
+  zone: string;                   // a SPACE_NET_COVERAGE_ZONES name or a zone used by an existing customer connection
+  type: 'unplanned' | 'planned';
+  severity: 'critical' | 'major' | 'minor' | null;   // null for planned maintenance
+  status: 'investigating' | 'identified' | 'monitoring' | 'resolved'   // unplanned
+        | 'scheduled' | 'in_progress' | 'completed';                  // planned
+  title: string; cause: string;
+  startedAt: string; window: string | null; resolvedAt: string | null;
+  notifications: { kind: 'start' | 'restored' | 'maintenance_notice'; at: string; recipients: number; note: 'Simulated — no messages sent' }[];
+  history: { at: string; action: string; by: string; note: string }[];
+  isDemo: true;
+}
+```
+
+### 16.2 Rules
+
+1. **Derived, never stored:** affected customers = `SPACE_NET_CUSTOMERS` with a connection whose `zone` equals the outage zone. Related complaints = `tickets` in `NO_INTERNET` / `SLOW_INTERNET` whose circuit (or, if the circuit is unknown, the customer) is in that zone.
+2. **No side effects:** outage actions never modify customers or tickets.
+3. **Lifecycle:** status only moves to the next step of its flow; the final step stamps `resolvedAt`.
+4. **NOC spike:** a zone with `NOC_SPIKE_THRESHOLD` (2) or more open (not `RESOLVED` / `CLOSED`) connectivity complaints raises an alert, linked to an open unplanned outage in that zone if one exists.
+5. **Notifications:** recorded only, labelled "Simulated — no messages sent"; restoration only after the outage is closed.
+
+### 16.3 Integration hooks
+
+* Global Escape handler: `closeOutageDialogs()` replaces the removed prototype `closeMaintenanceModal()`.
+* A `hashchange` listener re-renders the NOC view when `#network-outages` opens, so complaint counts reflect live ticket state.
+* Links: customers open through `goToProfileFromChat`, complaints through `openTicketDetail`.
+* New DOM ids: `#noc-stats`, `#noc-spike-panel`, `#noc-outage-list`, `#noc-report-btn`, `#outage-modal*`, `#outage-report-modal`, `#outage-report-container`, `#outage-form-*`. The prototype `#maintenance-modal` and `#modal-container` were removed.
+* Deferred: Module 02 telling customers about a known outage in chat (client #47).

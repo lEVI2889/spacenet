@@ -75,7 +75,7 @@ const requiredIds = ['view-sales-leads', 'sales-pipeline', 'sales-stage-strip', 
   'lead-form-package', 'lead-form-preview', 'lead-form-error'];
 requiredIds.forEach(id => assert(idInMarkup(id), `Static element #${id} exists in index.html`));
 const m06Start = appScript.indexOf('MODULE 06: SALES & LEADS');
-const m06End = appScript.indexOf('// 7. Network Outage');
+const m06End = appScript.indexOf('MODULE 08: NETWORK OUTAGES');
 const m06Code = appScript.slice(m06Start, m06End);
 const dynamicIds = ['lead-followup-date', 'lead-followup-note', 'lead-survey-slot'];
 const literalIds = [...new Set([...m06Code.matchAll(/getElementById\('([a-z0-9-]+)'\)/g)].map(m => m[1]))].filter(id => !dynamicIds.includes(id));
