@@ -74,7 +74,7 @@ console.log('--- GROUP 1: Static markup integrity (real HTML) ---');
 ['view-technicians', 'tech-stats', 'tech-status-filter', 'tech-job-list', 'tech-roster', 'tech-job-modal', 'tech-job-modal-container',
   'tech-job-modal-id', 'tech-job-modal-title', 'tech-job-modal-sub', 'tech-job-modal-body', 'tech-job-error', 'nav-btn-technicians'].forEach(id => assert(idInMarkup(id), `Static element #${id} exists`));
 const m09Start = appScript.indexOf('MODULE 09: TECHNICIAN OPERATIONS');
-const m09End = appScript.indexOf('// 8. Command Palette');
+const m09End = appScript.indexOf('MODULE 10: ADMIN & ANALYTICS');
 const m09Code = appScript.slice(m09Start, m09End);
 const dynamicIds = ['tech-job-when', 'tech-job-tech'];
 const literalIds = [...new Set([...m09Code.matchAll(/getElementById\('([a-z0-9-]+)'\)/g)].map(m => m[1]))].filter(id => !dynamicIds.includes(id));

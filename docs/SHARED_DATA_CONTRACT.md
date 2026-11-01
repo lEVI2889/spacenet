@@ -1,6 +1,6 @@
 # SpaceNet AI CRM — Shared Data Contract & Architecture Standard
 
-**Document Version:** 1.9.0
+**Document Version:** 1.10.0
 **Effective Date:** 2026-10-31
 **Authors & Maintainers:** Rohan (Customer-Facing & Support Lead) & Adnan (Operations & Admin Lead)
 **Repository:** `https://github.com/lEVI2889/spacenet`
@@ -32,6 +32,7 @@ SpaceNet is an intelligent Customer Relationship Management (CRM) and Network Op
 | **v1.7.0** | 2026-11-01 | Adnan | Network Outages (Module 08): `SpaceNetOutage` schema, `OUT-<ZONE>-<NUM>` implemented, derived affected customers/complaints, NOC spike rule, simulated notifications (Section 16). |
 | **v1.8.0** | 2026-11-01 | Adnan | Billing & Plans (Module 07): `SpaceNetInvoice`, `INV-<NUM>` implemented, simulated payments (`PAY-`), package-change (`PCR-`) and line-shift (`LSR-`) requests, plan-to-catalog mapping (Section 17). |
 | **v1.9.0** | 2026-11-01 | Adnan | Technician Operations (Module 09): `SpaceNetFieldJob`, `TASK-TECH-<NUM>` implemented, derived survey/repair jobs, installation-after-survey rule, eligibility and lifecycle (Section 18). |
+| **v1.10.0** | 2026-11-01 | Adnan | Admin & Analytics (Module 10): `getCrmMetrics` metric definitions, live Dashboard KPIs and navigation badges, `adminSettings` (AI per channel, working hours, role matrix, package price overrides) (Section 19). |
 
 ---
 
@@ -934,3 +935,38 @@ interface SpaceNetFieldJob {
 * Router: `'technicians'` added to both view lists; sidebar link `data-path="technicians"`; top tab `#nav-btn-technicians`; own sky region.
 * Global Escape handler: `closeTechJobModal()`. A `hashchange` listener re-syncs jobs when `#technicians` opens.
 * Reuses Module 06 dialog, badge and field helpers plus `leadTimestamp`, and Module 08 `getOutageZones` / `getTicketZone`.
+
+---
+
+## 19. Admin & Analytics Contract (Module 10)
+
+### 19.1 Metric definitions (`getCrmMetrics()`, computed on demand, never stored)
+
+| Metric | Definition (source) |
+|---|---|
+| Conversations / AI-handled / with staff | `conversations.length`; `status === 'ai_handling'`; `status === 'human_takeover'` |
+| Open tickets | `tickets` not `RESOLVED` / `CLOSED` (also the Tickets badge) |
+| Escalated / past SLA | `status === 'ESCALATED'`; `isTicketOverdue(t)` (Module 03) |
+| Avg resolution time | Mean of `resolvedAt − createdAt` over tickets that have both (no first-response timestamps exist, so that metric is "not available") |
+| CSAT | Mean of `feedback.rating` over rated tickets, with the count shown |
+| Active leads / conversion | `new` + `contacted` + `interested` (also the Sales badge); `connected ÷ all leads` |
+| Complaints by zone | `NO_INTERNET` / `SLOW_INTERNET` tickets grouped by `getTicketZone` (Module 08) |
+| Active / planned outages, NOC spikes | Open unplanned (also the Outages badge); open planned; `getNocSpikes().length` |
+| Field jobs | Open = not `completed` (also the Technicians badge); unassigned; completed |
+| Billing | Outstanding = sum of unpaid invoice totals; overdue = `getInvoiceStatus === 'overdue'` (also the Billing badge); collected = sum of recorded simulated payments |
+
+The Dashboard tiles, navigation badges and Analytics all read this one function. Badges refresh after every toast (each action ends in one) and on navigation. The remaining static Dashboard chart and AI-actions feed are labelled "Illustrative sample".
+
+### 19.2 `adminSettings` (demo state)
+
+* `aiChannels[channel]` (boolean): when `false`, `executeSimulateCustomerMessage` adds the customer message but schedules no AI reply and cancels a reply already queued. It still runs Module 06 lead capture. Conversation records and human takeover are not changed.
+* `workingHours { start, end, days }`: validated (end after start, at least one day). **Configuration only**; it does not change routing.
+* `permissions[role][permission]`: illustrative matrix only. There is no login, and nothing is restricted.
+* `priceChanges[]`: `setPackagePrice(key, amount)` (whole BDT, 500–20,000) updates `price`, `banglishPrice` and `bnPrice` in `SPACE_NET_PACKAGES` for future quotes. Invoices keep their recorded line amounts and payments are unchanged.
+
+### 19.3 Integration hooks
+
+* `getCrmMetrics()` calls the idempotent `syncTechJobs()` first, so job counts match the Technicians view.
+* `showToast` ends with `refreshNavBadges()` (plus the Dashboard tiles while the Dashboard is open) once `window.__spacenetAdminReady` is set, so it never runs before Module 10 has initialised.
+* `executeSimulateCustomerMessage`: AI-channel guard after the human-takeover check.
+* Router: `'analytics'` in both view lists; sidebar link `data-path="analytics"`; top tab `#nav-btn-analytics`; own sky region. A `hashchange` listener re-renders the Dashboard and Analytics.

@@ -54,6 +54,7 @@ main.bg-surface { background-color: transparent; }
 #space-backdrop[data-view="network-outages"] .space-sky { transform: translate3d(7%, -1%, 0); }
 #space-backdrop[data-view="billing"] .space-sky { transform: translate3d(-5%, -6%, 0); }
 #space-backdrop[data-view="technicians"] .space-sky { transform: translate3d(6%, 3%, 0); }
+#space-backdrop[data-view="analytics"] .space-sky { transform: translate3d(-7%, 5%, 0); }
 /* Header joins the dark frame; its search box and pills keep their own light surfaces. */
 #app-header { background-color: rgba(6, 10, 28, .72); box-shadow: 0 1px 0 rgba(179, 197, 255, .10); }
 #app-header .text-right .text-on-surface { color: #eef0ff; }
@@ -110,7 +111,7 @@ html { -webkit-tap-highlight-color: transparent; }
   .app-view:not(.hidden) { animation: space-view-fade 150ms ease; }
 }
 </style>
-</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.02"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.04" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.09" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.16" data-tile="900"></div></div></div><div id="mobile-nav-backdrop" class="hidden" aria-hidden="true" onclick="closeMobileNav()"></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><button type="button" id="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close navigation" class="md:hidden absolute top-3 right-3 z-10 p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="technicians" href="#"><span class="material-symbols-outlined text-[20px]">engineering</span><span class="font-body-md text-body-md sidebar-text">Technician Ops</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><button type="button" id="mobile-nav-btn" onclick="openMobileNav()" aria-label="Open navigation" aria-controls="app-sidebar" aria-expanded="false" class="md:hidden shrink-0 p-1.5 rounded-lg text-inverse-on-surface hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary"><span class="material-symbols-outlined" aria-hidden="true">menu</span></button><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" onclick="openCmdPalette()" onfocus="openCmdPalette()" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
+</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.02"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.04" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.09" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.16" data-tile="900"></div></div></div><div id="mobile-nav-backdrop" class="hidden" aria-hidden="true" onclick="closeMobileNav()"></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><button type="button" id="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close navigation" class="md:hidden absolute top-3 right-3 z-10 p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="technicians" href="#"><span class="material-symbols-outlined text-[20px]">engineering</span><span class="font-body-md text-body-md sidebar-text">Technician Ops</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="analytics" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="font-body-md text-body-md sidebar-text">Admin &amp; Analytics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><button type="button" id="mobile-nav-btn" onclick="openMobileNav()" aria-label="Open navigation" aria-controls="app-sidebar" aria-expanded="false" class="md:hidden shrink-0 p-1.5 rounded-lg text-inverse-on-surface hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary"><span class="material-symbols-outlined" aria-hidden="true">menu</span></button><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" onclick="openCmdPalette()" onfocus="openCmdPalette()" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
 <!-- Interactive View Switcher Sub-Header Bar & Live System Metric Ribbon -->
 <div class="sticky top-16 z-30 bg-surface/90 backdrop-blur-md px-space-md py-space-sm mb-space-lg shadow-sm flex flex-wrap items-center justify-between gap-space-md rounded-xl">
 <div class="flex items-center gap-space-xs overflow-x-auto py-1">
@@ -121,17 +122,17 @@ html { -webkit-tap-highlight-color: transparent; }
 <button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-unified-inbox" onclick="switchView('unified-inbox')">
 <span class="material-symbols-outlined text-[18px]">inbox</span>
 <span class="">Unified Inbox</span>
-<span class="ml-1 px-1.5 py-0.2 bg-primary text-on-primary text-[10px] font-code-telemetry rounded-full">3</span>
+<span id="nav-badge-inbox" class="ml-1 px-1.5 py-0.2 bg-primary text-on-primary text-[10px] font-code-telemetry rounded-full"></span>
 </button>
 <button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-tickets" onclick="switchView('tickets')">
 <span class="material-symbols-outlined text-[18px]">confirmation_number</span>
 <span class="">Tickets</span>
-<span class="ml-1 px-1.5 py-0.2 bg-surface-container-highest text-on-surface-variant text-[10px] font-code-telemetry rounded-full">14</span>
+<span id="nav-badge-tickets" class="ml-1 px-1.5 py-0.2 bg-surface-container-highest text-on-surface-variant text-[10px] font-code-telemetry rounded-full"></span>
 </button>
 <button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-customer-profiles" onclick="switchView('customer-profiles')">
 <span class="material-symbols-outlined text-[18px]">badge</span>
 <span class="">Customer Profiles</span>
-<span class="ml-1 px-1.5 py-0.2 bg-secondary-fixed text-on-secondary-fixed text-[10px] font-code-telemetry rounded-full">9</span>
+<span id="nav-badge-customers" class="ml-1 px-1.5 py-0.2 bg-secondary-fixed text-on-secondary-fixed text-[10px] font-code-telemetry rounded-full"></span>
 </button>
 <button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-ai-diagnostics" onclick="switchView('ai-diagnostics')">
 <span class="material-symbols-outlined text-[18px]">troubleshoot</span>
@@ -141,22 +142,26 @@ html { -webkit-tap-highlight-color: transparent; }
 <button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-sales-leads" onclick="switchView('sales-leads')">
 <span class="material-symbols-outlined text-[18px]">trending_up</span>
 <span class="">Sales / Leads</span>
-<span class="ml-1 px-1.5 py-0.2 bg-tertiary-container text-on-tertiary-container text-[10px] font-code-telemetry rounded-full">8</span>
+<span id="nav-badge-sales" class="ml-1 px-1.5 py-0.2 bg-tertiary-container text-on-tertiary-container text-[10px] font-code-telemetry rounded-full"></span>
 </button>
 <button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-billing" onclick="switchView('billing')">
 <span class="material-symbols-outlined text-[18px]">receipt_long</span>
 <span class="">Billing</span>
+<span id="nav-badge-billing" class="hidden ml-1 px-1.5 py-0.2 bg-error-container text-on-error-container text-[10px] font-code-telemetry rounded-full"></span>
 </button>
 <button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-technicians" onclick="switchView('technicians')">
 <span class="material-symbols-outlined text-[18px]">engineering</span>
 <span class="">Technicians</span>
+<span id="nav-badge-technicians" class="ml-1 px-1.5 py-0.2 bg-surface-container-highest text-on-surface-variant text-[10px] font-code-telemetry rounded-full"></span>
+</button>
+<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-analytics" onclick="switchView('analytics')">
+<span class="material-symbols-outlined text-[18px]">monitoring</span>
+<span class="">Analytics</span>
 </button>
 <button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-network-outages" onclick="switchView('network-outages')">
 <span class="material-symbols-outlined text-[18px]">router</span>
 <span class="">Network Outages</span>
-<span class="ml-1 px-2 py-0.2 bg-error-container text-on-error-container text-[10px] font-semibold rounded-full flex items-center gap-1">
-<span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span>1 Active
-        </span>
+<span id="nav-badge-outages" class="hidden ml-1 px-2 py-0.2 bg-error-container text-on-error-container text-[10px] font-semibold rounded-full"></span>
 </button>
 </div>
 <!-- Right Quick Controls -->
@@ -197,98 +202,8 @@ html { -webkit-tap-highlight-color: transparent; }
     <circle cx="154" cy="32" r="2.5" fill="#5bb8fe"></circle>
   </svg>
 </div>
-<!-- Top Hero KPI Metric Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-lg">
-<!-- Total Chats -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
-<div class="absolute -right-4 -top-4 w-20 h-20 bg-primary/5 rounded-full pointer-events-none"></div>
-<div class="flex items-center justify-between mb-space-sm">
-<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Inbound Volume</span>
-<span class="p-1.5 bg-surface-container rounded-lg text-primary">
-<span class="material-symbols-outlined text-[20px]">forum</span>
-</span>
-</div>
-<div>
-<div class="flex items-baseline gap-space-sm">
-<span class="font-headline-xl text-headline-xl text-on-surface font-semibold tracking-tight">4,829</span>
-<span class="font-code-telemetry text-code-telemetry text-secondary font-semibold flex items-center">
-<span class="material-symbols-outlined text-[16px]">arrow_upward</span> +18.4%
-            </span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Across WhatsApp, FB, Instagram, Web, Telegram</p>
-</div>
-<div class="mt-space-md pt-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
-<span class="">7-day rolling window</span>
-<span class="text-primary font-semibold">99.4% uptime</span>
-</div>
-</div>
-<!-- AI-Handled Chats -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
-<div class="absolute -right-4 -top-4 w-20 h-20 bg-tertiary/5 rounded-full pointer-events-none"></div>
-<div class="flex items-center justify-between mb-space-sm">
-<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">AI Automation Rate</span>
-<span class="p-1.5 bg-tertiary-fixed text-on-tertiary-fixed rounded-lg">
-<span class="material-symbols-outlined text-[20px]">smart_toy</span>
-</span>
-</div>
-<div>
-<div class="flex items-baseline gap-space-sm">
-<span class="font-headline-xl text-headline-xl text-tertiary font-semibold tracking-tight">3,912</span>
-<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed font-code-telemetry text-label-sm text-on-tertiary-fixed font-semibold">81.0% Auto</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Avg AI response latency: <strong class="text-on-surface font-code-metric">3.2s</strong></p>
-</div>
-<div class="mt-space-md pt-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
-<span class="">Target: 75.0%</span>
-<span class="text-secondary font-semibold">+6.0% over SLA</span>
-</div>
-</div>
-<!-- Open Tickets -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
-<div class="flex items-center justify-between mb-space-sm">
-<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Escalated Tickets</span>
-<span class="p-1.5 bg-surface-container rounded-lg text-primary">
-<span class="material-symbols-outlined text-[20px]">confirmation_number</span>
-</span>
-</div>
-<div>
-<div class="flex items-baseline gap-space-sm">
-<span class="font-headline-xl text-headline-xl text-on-surface font-semibold tracking-tight">14</span>
-<span class="font-code-telemetry text-code-telemetry text-secondary font-semibold flex items-center">
-<span class="material-symbols-outlined text-[16px]">arrow_downward</span> -5 vs ystd
-            </span>
-</div>
-<div class="flex items-center gap-space-xs mt-1">
-<span class="px-2 py-0.5 bg-error-container text-on-error-container font-label-sm text-label-sm rounded-md font-semibold">8 Critical</span>
-<span class="px-2 py-0.5 bg-surface-container text-on-surface-variant font-label-sm text-label-sm rounded-md">6 Normal</span>
-</div>
-</div>
-<div class="mt-space-md pt-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
-<span class="">Mean Resolution Time</span>
-<span class="font-code-metric text-on-surface">34 mins</span>
-</div>
-</div>
-<!-- Sales Pipeline Leads -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
-<div class="flex items-center justify-between mb-space-sm">
-<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">New Sales Inbound</span>
-<span class="p-1.5 bg-secondary-fixed text-on-secondary-fixed rounded-lg">
-<span class="material-symbols-outlined text-[20px]">attach_money</span>
-</span>
-</div>
-<div>
-<div class="flex items-baseline gap-space-sm">
-<span class="font-headline-xl text-headline-xl text-on-surface font-semibold tracking-tight">142</span>
-<span class="font-code-telemetry text-code-telemetry text-secondary font-semibold">+22 today</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Est. Pipeline: <strong class="text-on-surface font-semibold">$38,400 MRR</strong></p>
-</div>
-<div class="mt-space-md pt-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
-<span class="">AI Lead Qualification</span>
-<span class="text-primary font-semibold">91% accuracy</span>
-</div>
-</div>
-</div>
+<!-- Top KPI cards: rendered from live demo records by Module 10 (renderDashboardKpis) -->
+<div id="dash-kpis" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-lg" aria-live="polite"></div>
 <!-- Complaint & Incident Trends Visualization + Live Diagnostics -->
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
 <!-- Main Line Chart Card (8 cols) -->
@@ -297,7 +212,7 @@ html { -webkit-tap-highlight-color: transparent; }
 <div>
 <div class="flex items-center gap-space-xs">
 <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
-<h2 class="font-headline-md text-headline-md text-on-surface">Weekly Complaint &amp; Incident Velocity</h2>
+<h2 class="font-headline-md text-headline-md text-on-surface">Weekly Complaint &amp; Incident Velocity <span class="align-middle ml-1 px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">Illustrative sample</span></h2>
 </div>
 <p class="font-body-sm text-body-sm text-on-surface-variant">Live telemetry comparing automated AI resolutions against field dispatches</p>
 </div>
@@ -409,7 +324,7 @@ html { -webkit-tap-highlight-color: transparent; }
 <div class="flex items-center justify-between mb-space-md">
 <div class="flex items-center gap-space-xs">
 <span class="material-symbols-outlined text-tertiary text-[20px]">auto_awesome</span>
-<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent AI Agent Actions</h3>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent AI Agent Actions <span class="align-middle ml-1 px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">Illustrative sample</span></h3>
 </div>
 <span class="font-code-telemetry text-[11px] text-on-surface-variant">Live stream</span>
 </div>
@@ -1793,6 +1708,59 @@ html { -webkit-tap-highlight-color: transparent; }
 </div>
 
 <!-- ========================================================================= -->
+<!-- VIEW: ADMIN & ANALYTICS (MODULE 10)                                        -->
+<!-- ========================================================================= -->
+<section class="app-view flex flex-col gap-space-lg hidden" id="view-analytics" aria-labelledby="analytics-heading">
+<div class="sales-hero relative overflow-hidden rounded-xl bg-inverse-surface text-inverse-on-surface p-space-lg shadow-sm">
+  <div class="relative flex flex-col gap-1 max-w-2xl">
+    <span class="font-code-telemetry text-code-telemetry uppercase tracking-wider text-inverse-primary">Module 10 &middot; Admin &amp; Analytics</span>
+    <h1 id="analytics-heading" class="font-headline-lg text-headline-lg">Mission Analytics</h1>
+    <p class="font-body-sm text-body-sm text-inverse-on-surface/80">Every figure here is calculated from the demo records in this session (customers, chats, tickets, leads, outages, jobs, invoices). Anything the demo data cannot support is marked as not available. Settings below are demo settings only.</p>
+  </div>
+</div>
+<div id="analytics-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-space-md" aria-live="polite"></div>
+<h2 class="font-headline-md text-headline-md text-inverse-on-surface mt-space-sm">Admin settings (demo)</h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+  <section class="rounded-xl bg-surface-container-lowest p-space-lg flex flex-col gap-space-sm" aria-labelledby="admin-ai-heading">
+    <h3 id="admin-ai-heading" class="font-headline-sm text-headline-sm text-on-surface">AI auto-reply per channel</h3>
+    <p class="font-body-sm text-body-sm text-on-surface-variant">When a channel is off, simulated inbound messages on that channel get no automatic AI reply (staff reply instead); new-connection inquiries are still captured as leads. Existing conversations and human takeover are not changed.</p>
+    <div id="admin-ai-channels" class="flex flex-col gap-space-xs"></div>
+  </section>
+  <section class="rounded-xl bg-surface-container-lowest p-space-lg flex flex-col gap-space-sm" aria-labelledby="admin-hours-heading">
+    <h3 id="admin-hours-heading" class="font-headline-sm text-headline-sm text-on-surface">Working hours</h3>
+    <p class="font-body-sm text-body-sm text-on-surface-variant">Configuration only: saved in this demo session, but it does not change routing or AI behaviour.</p>
+    <form id="admin-hours-form" class="flex flex-col gap-space-sm" onsubmit="saveWorkingHoursFromForm(event)" novalidate>
+      <div class="flex flex-wrap items-end gap-space-sm">
+        <label class="flex flex-col gap-1 font-label-sm text-label-sm text-on-surface-variant">Opens
+          <input id="admin-hours-start" type="time" class="px-space-sm py-1 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary">
+        </label>
+        <label class="flex flex-col gap-1 font-label-sm text-label-sm text-on-surface-variant">Closes
+          <input id="admin-hours-end" type="time" class="px-space-sm py-1 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary">
+        </label>
+      </div>
+      <fieldset class="flex flex-wrap gap-space-xs" id="admin-hours-days"><legend class="sr-only">Working days</legend></fieldset>
+      <p id="admin-hours-error" class="hidden font-body-sm text-body-sm text-error" role="alert"></p>
+      <div class="flex flex-wrap items-center gap-space-sm">
+        <button type="submit" class="self-start px-space-md py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold">Save hours</button>
+        <span id="admin-hours-summary" class="font-body-sm text-body-sm text-on-surface-variant"></span>
+      </div>
+    </form>
+  </section>
+  <section class="rounded-xl bg-surface-container-lowest p-space-lg flex flex-col gap-space-sm" aria-labelledby="admin-roles-heading">
+    <h3 id="admin-roles-heading" class="font-headline-sm text-headline-sm text-on-surface">Roles &amp; permissions</h3>
+    <p class="font-body-sm text-body-sm text-on-surface-variant">Illustrative matrix only. This frontend demo has no login, so these switches do not restrict access or provide security.</p>
+    <div class="overflow-x-auto relative"><table class="w-full min-w-[480px] text-left font-body-sm text-body-sm text-on-surface"><caption class="sr-only">Role permissions (demo)</caption><thead id="admin-roles-head"></thead><tbody id="admin-roles-body"></tbody></table></div>
+  </section>
+  <section class="rounded-xl bg-surface-container-lowest p-space-lg flex flex-col gap-space-sm" aria-labelledby="admin-pricing-heading">
+    <h3 id="admin-pricing-heading" class="font-headline-sm text-headline-sm text-on-surface">Package prices</h3>
+    <p class="font-body-sm text-body-sm text-on-surface-variant">Changes apply to new AI quotes, lead recommendations and package-change previews. Invoices already issued keep their recorded amounts.</p>
+    <div id="admin-pricing" class="flex flex-col gap-space-xs"></div>
+    <p id="admin-pricing-error" class="hidden font-body-sm text-body-sm text-error" role="alert"></p>
+  </section>
+</div>
+</section>
+
+<!-- ========================================================================= -->
 <!-- VIEW: TECHNICIAN OPERATIONS (MODULE 09)                                    -->
 <!-- ========================================================================= -->
 <section class="app-view flex flex-col gap-space-lg hidden" id="view-technicians" aria-labelledby="tech-heading">
@@ -2653,7 +2621,7 @@ html { -webkit-tap-highlight-color: transparent; }
     }
 
     const hash = window.location.hash.replace('#', '');
-    const validViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'billing', 'technicians', 'network-outages'];
+    const validViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'billing', 'technicians', 'analytics', 'network-outages'];
     if (validViews.includes(hash)) {
       switchView(hash);
     } else {
@@ -2663,7 +2631,7 @@ html { -webkit-tap-highlight-color: transparent; }
     // Hash change event listener for SPA navigation
     window.addEventListener('hashchange', () => {
       const currentHash = window.location.hash.replace('#', '');
-      const availableViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'billing', 'technicians', 'network-outages'];
+      const availableViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'billing', 'technicians', 'analytics', 'network-outages'];
       if (availableViews.includes(currentHash) && currentActiveView !== currentHash) {
         switchView(currentHash);
       }
@@ -2715,6 +2683,8 @@ html { -webkit-tap-highlight-color: transparent; }
       toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
       toast.classList.remove('translate-y-0', 'opacity-100');
     }, 4000);
+    // Module 10: every action ends in a toast, so badges refresh here (only once its data exists).
+    if (window.__spacenetAdminReady) { refreshNavBadges(); if (window.location.hash === '#dashboard' || !window.location.hash) renderDashboardKpis(); }
   }
 
   // 3. Sidebar Collapse / Expand
@@ -3821,6 +3791,14 @@ html { -webkit-tap-highlight-color: transparent; }
     // Issue 7: Human Takeover strictly pauses automatic AI responses
     if (conv.status === 'human_takeover') {
       showToast('Inbound Customer Message', 'Human Override Active: AI auto-reply paused. Copilot suggestions updated for staff review.');
+      return;
+    }
+
+    // Module 10 demo setting: AI auto-reply switched off for this channel.
+    if (!isAiChannelEnabled(conv.channel)) {
+      if (conv._pendingReplyTimeout) { clearTimeout(conv._pendingReplyTimeout); conv._pendingReplyTimeout = null; }
+      captureLeadFromInquiry(conv, classifyCustomerIntent(text, aiLanguageMode), text); // Module 06 lead capture still applies
+      showToast('Inbound Customer Message', `AI auto-reply is off for ${conv.channelLabel || conv.channel} (demo setting). Staff can reply manually.`);
       return;
     }
 
@@ -9248,6 +9226,288 @@ html { -webkit-tap-highlight-color: transparent; }
   renderTechView();
   // New survey requests or escalations appear when the view is opened.
   window.addEventListener('hashchange', () => { if (window.location.hash === '#technicians') { syncTechJobs(); renderTechView(); } });
+
+  // =========================================================================
+  // MODULE 10: ADMIN & ANALYTICS
+  // Every metric is computed on demand from the live demo collections (no stored
+  // copies, so nothing can drift). Admin settings are demo state; only the AI
+  // channel switch and package prices change behaviour elsewhere.
+  // =========================================================================
+
+  const ADMIN_CHANNELS = [
+    { key: 'whatsapp', label: 'WhatsApp' }, { key: 'facebook', label: 'Facebook' }, { key: 'instagram', label: 'Instagram' },
+    { key: 'telegram', label: 'Telegram' }, { key: 'web', label: 'Website chat' }
+  ];
+  const ADMIN_DAYS = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  const ADMIN_ROLES = ['Support', 'Technical', 'Sales', 'Technician'];
+  const ADMIN_PERMISSIONS = [
+    { key: 'chats', label: 'Reply to chats' }, { key: 'tickets', label: 'Manage tickets' }, { key: 'leads', label: 'Manage leads' },
+    { key: 'jobs', label: 'Update field jobs' }, { key: 'billing', label: 'View billing' }
+  ];
+  const ADMIN_PRICE_MIN = 500;
+  const ADMIN_PRICE_MAX = 20000;
+  const BN_DIGITS = '০১২৩৪৫৬৭৮৯';
+
+  const adminSettings = {
+    aiChannels: Object.fromEntries(ADMIN_CHANNELS.map(c => [c.key, true])),
+    workingHours: { start: '09:00', end: '21:00', days: ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu'] },
+    permissions: {
+      Support: { chats: true, tickets: true, leads: false, jobs: false, billing: true },
+      Technical: { chats: true, tickets: true, leads: false, jobs: true, billing: false },
+      Sales: { chats: true, tickets: false, leads: true, jobs: false, billing: true },
+      Technician: { chats: false, tickets: false, leads: false, jobs: true, billing: false }
+    },
+    priceChanges: [],
+    history: []
+  };
+
+  function isAiChannelEnabled(channel) {
+    return adminSettings.aiChannels[channel] !== false;
+  }
+
+  function setAiChannelEnabled(channel, enabled) {
+    if (!(channel in adminSettings.aiChannels)) return false;
+    adminSettings.aiChannels[channel] = !!enabled;
+    adminSettings.history.push({ at: leadTimestamp(), note: `AI auto-reply ${enabled ? 'on' : 'off'} for ${channel}` });
+    return true;
+  }
+
+  function setWorkingHours(start, end, days) {
+    const valid = /^([01]\d|2[0-3]):[0-5]\d$/;
+    if (!valid.test(start || '') || !valid.test(end || '')) return { error: 'Enter opening and closing times.' };
+    if (end <= start) return { error: 'Closing time must be after opening time.' };
+    const picked = ADMIN_DAYS.filter(d => (days || []).includes(d));
+    if (!picked.length) return { error: 'Choose at least one working day.' };
+    adminSettings.workingHours = { start, end, days: picked };
+    adminSettings.history.push({ at: leadTimestamp(), note: `Working hours ${start}–${end}, ${picked.join(', ')}` });
+    return { hours: adminSettings.workingHours };
+  }
+
+  function setRolePermission(role, permission, allowed) {
+    if (!adminSettings.permissions[role] || !(permission in adminSettings.permissions[role])) return false;
+    adminSettings.permissions[role][permission] = !!allowed;
+    return true;
+  }
+
+  function toBanglaDigits(text) {
+    return String(text).replace(/\d/g, d => BN_DIGITS[d]);
+  }
+
+  // Updates the catalog used for new quotes. Invoices store their own line amounts, so they are unaffected.
+  function setPackagePrice(packageKey, amount) {
+    const pkg = getLeadPackage(packageKey);
+    const value = Number(amount);
+    if (!pkg) return { error: 'Unknown package.' };
+    if (!Number.isInteger(value) || value < ADMIN_PRICE_MIN || value > ADMIN_PRICE_MAX) return { error: `Enter a whole BDT amount between ${ADMIN_PRICE_MIN} and ${ADMIN_PRICE_MAX}.` };
+    const previous = getPackagePrice(pkg);
+    if (value === previous) return { error: 'That is already the current price.' };
+    const formatted = value.toLocaleString('en-US');
+    pkg.price = `${formatted} BDT/mo`;
+    pkg.banglishPrice = `${formatted} BDT/mo`;
+    pkg.bnPrice = `${toBanglaDigits(formatted)} টাকা/মাস`;
+    const change = { at: leadTimestamp(), packageKey, from: previous, to: value };
+    adminSettings.priceChanges.push(change);
+    adminSettings.history.push({ at: change.at, note: `${pkg.name}: ৳${previous.toLocaleString('en-US')} → ৳${formatted}` });
+    return { change };
+  }
+
+  // Single source for Dashboard tiles, navigation badges and Analytics.
+  function getCrmMetrics() {
+    syncTechJobs(); // idempotent; keeps job counts equal to what the Technicians view will show
+    const openTickets = tickets.filter(t => !['RESOLVED', 'CLOSED'].includes(t.status));
+    const resolvedWithTimes = tickets.filter(t => t.resolvedAt && t.createdAt && !isNaN(Date.parse(t.resolvedAt)) && !isNaN(Date.parse(t.createdAt)));
+    const ratings = tickets.filter(t => t.feedback && typeof t.feedback.rating === 'number').map(t => t.feedback.rating);
+    const activeLeads = leads.filter(l => ['new', 'contacted', 'interested'].includes(l.status));
+    const connected = leads.filter(l => l.status === 'connected').length;
+    const unpaid = invoices.filter(i => i.status !== 'paid');
+    return {
+      conversations: conversations.length,
+      aiHandled: conversations.filter(c => c.status === 'ai_handling').length,
+      humanHandled: conversations.filter(c => c.status === 'human_takeover').length,
+      byChannel: ADMIN_CHANNELS.map(c => ({ label: c.label, value: conversations.filter(x => x.channel === c.key).length })),
+      tickets: tickets.length,
+      openTickets: openTickets.length,
+      escalatedTickets: tickets.filter(t => t.status === 'ESCALATED').length,
+      overdueTickets: tickets.filter(t => isTicketOverdue(t)).length,
+      resolvedTickets: tickets.filter(t => ['RESOLVED', 'CLOSED'].includes(t.status)).length,
+      ticketsByStatus: Object.keys(TICKET_STATUSES).map(k => ({ label: TICKET_STATUSES[k].label, value: tickets.filter(t => t.status === k).length })),
+      avgResolutionHours: resolvedWithTimes.length ? resolvedWithTimes.reduce((s, t) => s + (Date.parse(t.resolvedAt) - Date.parse(t.createdAt)), 0) / resolvedWithTimes.length / 3600000 : null,
+      resolutionSample: resolvedWithTimes.length,
+      csatAverage: ratings.length ? ratings.reduce((a, b) => a + b, 0) / ratings.length : null,
+      csatCount: ratings.length,
+      leads: leads.length,
+      newLeads: leads.filter(l => l.status === 'new').length,
+      activeLeads: activeLeads.length,
+      connectedLeads: connected,
+      conversionRate: leads.length ? connected / leads.length : null,
+      leadsByStage: LEAD_STAGES.map(s => ({ label: s.label, value: leads.filter(l => l.status === s.key).length })),
+      complaintsByZone: (() => {
+        const counts = {};
+        tickets.filter(t => COMPLAINT_CATEGORIES.includes(t.category)).forEach(t => { const z = getTicketZone(t) || 'Unknown'; counts[z] = (counts[z] || 0) + 1; });
+        return Object.keys(counts).sort().map(z => ({ label: z, value: counts[z] }));
+      })(),
+      activeOutages: outages.filter(o => o.type === 'unplanned' && isOutageOpen(o)).length,
+      plannedOutages: outages.filter(o => o.type === 'planned' && isOutageOpen(o)).length,
+      closedOutages: outages.filter(o => !isOutageOpen(o)).length,
+      nocSpikes: getNocSpikes().length,
+      openJobs: techJobs.filter(j => j.status !== 'completed').length,
+      unassignedJobs: techJobs.filter(j => j.status === 'unassigned').length,
+      completedJobs: techJobs.filter(j => j.status === 'completed').length,
+      jobsByTech: TECH_ROSTER.map(t => ({ label: t.name, value: techJobs.filter(j => j.technicianId === t.techId && j.status !== 'completed').length })),
+      outstanding: unpaid.reduce((s, i) => s + i.total, 0),
+      overdueInvoices: invoices.filter(i => getInvoiceStatus(i) === 'overdue').length,
+      collected: invoices.reduce((s, i) => s + i.payments.reduce((p, x) => p + x.amount, 0), 0),
+      paidInvoices: invoices.filter(i => i.status === 'paid').length,
+      invoices: invoices.length
+    };
+  }
+
+  function renderDashboardKpis() {
+    const box = document.getElementById('dash-kpis');
+    if (!box) return;
+    const m = getCrmMetrics();
+    const pct = v => (v === null ? 'n/a' : `${Math.round(v * 100)}%`);
+    const tiles = [
+      { label: 'Conversations', value: m.conversations, sub: `${m.aiHandled} AI-handled · ${m.humanHandled} with staff`, icon: 'forum', view: 'unified-inbox' },
+      { label: 'Open tickets', value: m.openTickets, sub: `${m.escalatedTickets} escalated · ${m.overdueTickets} past SLA`, icon: 'confirmation_number', view: 'tickets' },
+      { label: 'Active leads', value: m.activeLeads, sub: `${m.newLeads} new · ${m.connectedLeads} connected (${pct(m.conversionRate)} conversion)`, icon: 'trending_up', view: 'sales-leads' },
+      { label: 'Active outages', value: m.activeOutages, sub: `${m.plannedOutages} planned · ${m.nocSpikes} NOC spike alert${m.nocSpikes === 1 ? '' : 's'}`, icon: 'router', view: 'network-outages' },
+      { label: 'Field jobs open', value: m.openJobs, sub: `${m.unassignedJobs} unassigned · ${m.completedJobs} completed`, icon: 'engineering', view: 'technicians' },
+      { label: 'Outstanding', value: formatBdt(m.outstanding), sub: `${m.overdueInvoices} overdue invoice${m.overdueInvoices === 1 ? '' : 's'} · ${m.paidInvoices}/${m.invoices} paid`, icon: 'receipt_long', view: 'billing' },
+      { label: 'Customers', value: SPACE_NET_CUSTOMERS.length, sub: `${SPACE_NET_CUSTOMERS.reduce((s, c) => s + c.connections.length, 0)} connections on record`, icon: 'badge', view: 'customer-profiles' },
+      { label: 'Customer rating', value: m.csatAverage === null ? 'n/a' : `${m.csatAverage.toFixed(1)} / 5`, sub: `${m.csatCount} rated ticket${m.csatCount === 1 ? '' : 's'}`, icon: 'star', view: 'analytics' }
+    ];
+    box.innerHTML = tiles.map(t => `<button type="button" onclick="switchView('${t.view}')" class="text-left bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary transition-shadow flex flex-col gap-space-xs">
+        <span class="flex items-center justify-between"><span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">${t.label}</span><span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">${t.icon}</span></span>
+        <span class="font-headline-xl text-headline-xl text-on-surface font-semibold tracking-tight">${escapeHtml(String(t.value))}</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">${escapeHtml(t.sub)}</span>
+        <span class="font-label-sm text-label-sm text-outline">Live from demo records</span>
+      </button>`).join('');
+  }
+
+  function setNavBadge(id, value, text) {
+    const badge = document.getElementById(id);
+    if (!badge) return;
+    badge.textContent = text === undefined ? String(value) : text;
+    if (value) badge.classList.remove('hidden'); else badge.classList.add('hidden');
+  }
+
+  function refreshNavBadges() {
+    const m = getCrmMetrics();
+    setNavBadge('nav-badge-inbox', m.conversations);
+    setNavBadge('nav-badge-tickets', m.openTickets);
+    setNavBadge('nav-badge-customers', SPACE_NET_CUSTOMERS.length);
+    setNavBadge('nav-badge-sales', m.activeLeads);
+    setNavBadge('nav-badge-billing', m.overdueInvoices);
+    setNavBadge('nav-badge-technicians', m.openJobs);
+    setNavBadge('nav-badge-outages', m.activeOutages, `${m.activeOutages} Active`);
+  }
+
+  function renderBarList(rows, emptyText) {
+    const max = Math.max(1, ...rows.map(r => r.value));
+    if (!rows.length) return `<p class="font-body-sm text-body-sm text-on-surface-variant">${emptyText}</p>`;
+    return `<ul class="flex flex-col gap-1.5">${rows.map(r => `<li class="grid grid-cols-[minmax(0,7.5rem)_1fr_2rem] items-center gap-2 font-body-sm text-body-sm text-on-surface">
+        <span class="truncate">${escapeHtml(r.label)}</span>
+        <span class="h-2 rounded-full bg-surface-container-high overflow-hidden" aria-hidden="true"><span class="block h-full rounded-full bg-primary" style="width:${Math.round((r.value / max) * 100)}%"></span></span>
+        <span class="text-right font-code-telemetry text-code-telemetry">${r.value}</span></li>`).join('')}</ul>`;
+  }
+
+  function renderAnalyticsCard(title, summary, body) {
+    return `<section class="rounded-xl bg-surface-container-lowest p-space-lg flex flex-col gap-space-sm">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">${title}</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">${summary}</p>${body}</section>`;
+  }
+
+  function renderAnalyticsView() {
+    const grid = document.getElementById('analytics-grid');
+    if (!grid) return;
+    const m = getCrmMetrics();
+    const na = 'Not available in demo data';
+    grid.innerHTML = [
+      renderAnalyticsCard('Conversations', `${m.conversations} chats · ${m.aiHandled} AI-handled, ${m.humanHandled} with staff`, renderBarList(m.byChannel, 'No chats.')),
+      renderAnalyticsCard('Tickets', `${m.openTickets} open of ${m.tickets} · avg resolution ${m.avgResolutionHours === null ? na.toLowerCase() : `${m.avgResolutionHours.toFixed(1)} h (${m.resolutionSample} resolved tickets)`} · first response time: ${na.toLowerCase()}`, renderBarList(m.ticketsByStatus.filter(r => r.value), 'No tickets.')),
+      renderAnalyticsCard('Leads', `${m.leads} leads · ${m.connectedLeads} connected · conversion ${m.conversionRate === null ? 'n/a' : `${Math.round(m.conversionRate * 100)}%`}`, renderBarList(m.leadsByStage, 'No leads.')),
+      renderAnalyticsCard('Complaints by zone', 'No-internet and slow-internet tickets, by the zone of the affected connection', renderBarList(m.complaintsByZone, 'No connectivity complaints.')),
+      renderAnalyticsCard('Network outages', `${m.activeOutages} active · ${m.plannedOutages} planned · ${m.closedOutages} closed · ${m.nocSpikes} NOC spike alert${m.nocSpikes === 1 ? '' : 's'}`, renderBarList([{ label: 'Active', value: m.activeOutages }, { label: 'Planned', value: m.plannedOutages }, { label: 'Closed', value: m.closedOutages }], 'No outages.')),
+      renderAnalyticsCard('Technician workload', `${m.openJobs} open jobs · ${m.unassignedJobs} unassigned · ${m.completedJobs} completed`, renderBarList(m.jobsByTech, 'No technicians.')),
+      renderAnalyticsCard('Billing', `${formatBdt(m.outstanding)} outstanding · ${m.overdueInvoices} overdue · ${formatBdt(m.collected)} recorded as paid (simulated)`, renderBarList([{ label: 'Paid', value: m.paidInvoices }, { label: 'Unpaid', value: m.invoices - m.paidInvoices - m.overdueInvoices }, { label: 'Overdue', value: m.overdueInvoices }], 'No invoices.')),
+      renderAnalyticsCard('Customer satisfaction', m.csatAverage === null ? `${na}: no rated tickets yet.` : `${m.csatAverage.toFixed(1)} / 5 average from ${m.csatCount} rated ticket${m.csatCount === 1 ? '' : 's'}. No other survey data exists in the demo.`, ''),
+      renderAnalyticsCard('Team response times', `${na}: the demo records no first-response timestamps or per-agent performance history.`, '')
+    ].join('');
+    renderAdminControls();
+  }
+
+  function renderAdminControls() {
+    const ai = document.getElementById('admin-ai-channels');
+    if (ai) ai.innerHTML = ADMIN_CHANNELS.map(c => `<label class="flex items-center justify-between gap-space-sm rounded-lg bg-surface-container-low px-space-sm py-1.5 font-body-sm text-body-sm text-on-surface">
+        <span>${c.label}</span>
+        <span class="flex items-center gap-1.5"><span class="font-label-sm text-label-sm ${isAiChannelEnabled(c.key) ? 'text-primary' : 'text-on-surface-variant'}">${isAiChannelEnabled(c.key) ? 'AI on' : 'AI off'}</span>
+        <input type="checkbox" role="switch" class="h-4 w-4 accent-primary" ${isAiChannelEnabled(c.key) ? 'checked' : ''} onchange="toggleAiChannelFromAdmin('${c.key}', this.checked)" aria-label="AI auto-reply on ${c.label}"></span></label>`).join('');
+    const h = adminSettings.workingHours;
+    const start = document.getElementById('admin-hours-start'), end = document.getElementById('admin-hours-end');
+    if (start) start.value = h.start;
+    if (end) end.value = h.end;
+    const days = document.getElementById('admin-hours-days');
+    if (days) days.innerHTML = '<legend class="sr-only">Working days</legend>' + ADMIN_DAYS.map(d => `<label class="flex items-center gap-1 px-space-sm py-1 rounded-lg bg-surface-container-low font-label-md text-label-md text-on-surface"><input type="checkbox" name="admin-hours-day" value="${d}" ${h.days.includes(d) ? 'checked' : ''}>${d}</label>`).join('');
+    const summary = document.getElementById('admin-hours-summary');
+    if (summary) summary.textContent = `Saved: ${h.start}–${h.end}, ${h.days.join(', ')}`;
+    const head = document.getElementById('admin-roles-head'), body = document.getElementById('admin-roles-body');
+    if (head) head.innerHTML = `<tr class="text-on-surface-variant font-label-md text-label-md"><th scope="col" class="py-1 pr-2">Role</th>${ADMIN_PERMISSIONS.map(p => `<th scope="col" class="py-1 px-1">${p.label}</th>`).join('')}</tr>`;
+    if (body) body.innerHTML = ADMIN_ROLES.map(r => `<tr class="border-t border-surface-container-high"><th scope="row" class="py-1.5 pr-2 font-semibold">${r}</th>${ADMIN_PERMISSIONS.map(p => `<td class="py-1.5 px-1"><input type="checkbox" class="h-4 w-4 accent-primary" ${adminSettings.permissions[r][p.key] ? 'checked' : ''} onchange="setRolePermission('${r}', '${p.key}', this.checked)" aria-label="${r}: ${p.label}"></td>`).join('')}</tr>`).join('');
+    const pricing = document.getElementById('admin-pricing');
+    if (pricing) pricing.innerHTML = SPACE_NET_PACKAGES.map(p => `<div class="flex flex-wrap items-center justify-between gap-space-sm rounded-lg bg-surface-container-low px-space-sm py-1.5">
+        <span class="font-body-sm text-body-sm text-on-surface">${escapeHtml(p.name)}</span>
+        <span class="flex items-center gap-1.5"><label class="sr-only" for="admin-price-${p.key}">Monthly price for ${escapeHtml(p.name)}</label>
+        <input id="admin-price-${p.key}" type="number" min="${ADMIN_PRICE_MIN}" max="${ADMIN_PRICE_MAX}" step="50" value="${getPackagePrice(p)}" class="w-24 px-space-sm py-1 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary">
+        <button type="button" onclick="savePackagePriceFromAdmin('${p.key}')" class="px-space-sm py-1 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high">Save</button></span></div>`).join('');
+  }
+
+  function toggleAiChannelFromAdmin(channel, enabled) {
+    if (!setAiChannelEnabled(channel, enabled)) return;
+    renderAdminControls();
+    showToast('AI Setting Updated', `AI auto-reply ${enabled ? 'on' : 'off'} for ${channel} (demo setting).`);
+  }
+
+  function saveWorkingHoursFromForm(event) {
+    if (event) event.preventDefault();
+    const days = Array.from(document.querySelectorAll('input[name="admin-hours-day"]:checked')).map(i => i.value);
+    const result = setWorkingHours((document.getElementById('admin-hours-start') || {}).value, (document.getElementById('admin-hours-end') || {}).value, days);
+    const err = document.getElementById('admin-hours-error');
+    if (result.error) {
+      if (err) { err.textContent = result.error; err.classList.remove('hidden'); }
+      return null;
+    }
+    if (err) err.classList.add('hidden');
+    renderAdminControls();
+    showToast('Working Hours Saved', 'Saved for this demo session (configuration only).');
+    return result.hours;
+  }
+
+  function savePackagePriceFromAdmin(packageKey) {
+    const input = document.getElementById(`admin-price-${packageKey}`);
+    const result = setPackagePrice(packageKey, input ? input.value : '');
+    const err = document.getElementById('admin-pricing-error');
+    if (result.error) {
+      if (err) { err.textContent = result.error; err.classList.remove('hidden'); }
+      return null;
+    }
+    if (err) err.classList.add('hidden');
+    renderAdminControls();
+    showToast('Package Price Updated', `${getLeadPackage(packageKey).name} now ${getLeadPackage(packageKey).price} for new quotes. Existing invoices unchanged.`);
+    return result.change;
+  }
+
+  function refreshAdminViews() {
+    refreshNavBadges();
+    if (window.location.hash === '#dashboard' || !window.location.hash) renderDashboardKpis();
+    if (window.location.hash === '#analytics') renderAnalyticsView();
+  }
+
+  renderDashboardKpis();
+  renderAnalyticsView();
+  refreshNavBadges();
+  window.__spacenetAdminReady = true;
+  window.addEventListener('hashchange', refreshAdminViews);
 
   // 8. Command Palette
   function openCmdPalette() {
