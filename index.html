@@ -3831,15 +3831,16 @@ html { -webkit-tap-highlight-color: transparent; }
     renderCustomerConversation(conv.conversationId);
     renderThreadList();
 
+    const blockReason = aiAutoReplyBlockReason(conv);
     // Issue 7: Human Takeover strictly pauses automatic AI responses
-    if (conv.status === 'human_takeover') {
+    if (blockReason === 'takeover') {
       showToast('Inbound Customer Message', 'Human Override Active: AI auto-reply paused. Copilot suggestions updated for staff review.');
       return;
     }
 
     // Module 10 demo setting: AI auto-reply switched off for this channel.
-    if (!isAiChannelEnabled(conv.channel)) {
-      if (conv._pendingReplyTimeout) { clearTimeout(conv._pendingReplyTimeout); conv._pendingReplyTimeout = null; }
+    if (blockReason === 'channel_off') {
+      cancelPendingAiReply(conv);
       captureLeadFromInquiry(conv, classifyCustomerIntent(text, aiLanguageMode), text); // Module 06 lead capture still applies
       showToast('Inbound Customer Message', `AI auto-reply is off for ${conv.channelLabel || conv.channel} (demo setting). Staff can reply manually.`);
       return;
@@ -3853,10 +3854,17 @@ html { -webkit-tap-highlight-color: transparent; }
       conv._pendingReplyTimeout = null;
     }
 
+    const pendingAi = { text };
     conv._pendingReplyTimeout = setTimeout(() => {
       conv._pendingReplyTimeout = null;
+      if (conv._pendingAiReply === pendingAi) conv._pendingAiReply = null;
       const targetConv = getConversation(conv.conversationId);
       if (!targetConv || targetConv.status === 'human_takeover') return;
+      // Settings may have changed while the reply was queued: re-check at delivery time.
+      if (aiAutoReplyBlockReason(targetConv) === 'channel_off') {
+        captureLeadFromInquiry(targetConv, classifyCustomerIntent(text, aiLanguageMode), text);
+        return;
+      }
 
       const classification = classifyCustomerIntent(text, aiLanguageMode);
 
@@ -3875,6 +3883,28 @@ html { -webkit-tap-highlight-color: transparent; }
       renderThreadList();
       showToast('AI Response Dispatched', `Classified as ${classification.label}`);
     }, 800);
+    pendingAi.timer = conv._pendingReplyTimeout;
+    conv._pendingAiReply = pendingAi;
+  }
+
+  // One rule for automatic AI replies: human takeover or a channel switched off (Module 10) blocks them.
+  function aiAutoReplyBlockReason(conv) {
+    if (conv.status === 'human_takeover') return 'takeover';
+    if (!isAiChannelEnabled(conv.channel)) return 'channel_off';
+    return null;
+  }
+
+  // Cancels this conversation's queued AI reply (only if the pending timer is that reply) and still
+  // runs lead capture for the customer message it was answering. Returns true if one was cancelled.
+  function cancelPendingAiReply(conv) {
+    const pending = conv && conv._pendingAiReply;
+    conv && (conv._pendingAiReply = null);
+    if (!pending || !conv._pendingReplyTimeout || pending.timer !== conv._pendingReplyTimeout) return false;
+    clearTimeout(conv._pendingReplyTimeout);
+    conv._pendingReplyTimeout = null;
+    captureLeadFromInquiry(conv, classifyCustomerIntent(pending.text, aiLanguageMode), pending.text);
+    if (currentConversationId === conv.conversationId) renderCustomerConversation(conv.conversationId); // show any lead note now
+    return true;
   }
 
   function handleSimPresetChange(selectEl) {
@@ -4671,14 +4701,14 @@ html { -webkit-tap-highlight-color: transparent; }
       return;
     }
 
-    // Handle Outgoing Message (Customer Message or Public Reply)
+    // Handle Outgoing Message (Customer Message or Public Reply): always written by staff.
     const isHuman = conv.status === 'human_takeover';
     const isComment = conv.type === 'comment';
 
     conv.messages.push({
       id: 'msg-' + Date.now(),
-      sender: isHuman ? 'staff' : 'ai',
-      author: isHuman ? 'Rohan (Tier III NOC)' : undefined,
+      sender: 'staff',
+      author: 'Rohan (Tier III NOC)',
       text: text,
       time: timeStr
     });
@@ -4694,6 +4724,8 @@ html { -webkit-tap-highlight-color: transparent; }
       : `Delivered to ${conv.customerName || conv.name} via ${conv.channelLabel || conv.channel}`;
     showToast(dispatchTitle, dispatchDetail);
 
+    // Staff answered: a queued AI reply is no longer needed (its lead capture still runs).
+    cancelPendingAiReply(conv);
     // Cancel any previous pending response timeout
     if (conv._pendingReplyTimeout) {
       clearTimeout(conv._pendingReplyTimeout);
@@ -4729,28 +4761,7 @@ html { -webkit-tap-highlight-color: transparent; }
       return;
     }
 
-    // AI Handling Mode: Process query through Deterministic Knowledge Base & Intent Classifier
-    const classification = classifyCustomerIntent(text, aiLanguageMode);
-
-    conv._pendingReplyTimeout = setTimeout(() => {
-      conv._pendingReplyTimeout = null;
-      const targetConv = getConversation(conv.conversationId);
-      if (!targetConv || targetConv.status === 'human_takeover') return;
-
-      // Add AI Response from Knowledge Base
-      targetConv.messages.push({
-        id: 'msg-ai-' + Date.now(),
-        sender: 'ai',
-        text: classification.response.replace(/\n/g, '<br>'),
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      });
-      targetConv.lastMessageTime = 'Just now';
-
-      if (currentConversationId === targetConv.conversationId) {
-        renderCustomerConversation(targetConv.conversationId);
-      }
-      renderThreadList();
-    }, 800);
+    // Staff messages are not customer queries: no automatic AI reply is scheduled for them.
   }
 
   function filterInbox(ch, btn) {
@@ -9327,6 +9338,7 @@ html { -webkit-tap-highlight-color: transparent; }
   function setAiChannelEnabled(channel, enabled) {
     if (!(channel in adminSettings.aiChannels)) return false;
     adminSettings.aiChannels[channel] = !!enabled;
+    if (!enabled) conversations.filter(c => c.channel === channel).forEach(cancelPendingAiReply);
     adminSettings.history.push({ at: leadTimestamp(), note: `AI auto-reply ${enabled ? 'on' : 'off'} for ${channel}` });
     return true;
   }

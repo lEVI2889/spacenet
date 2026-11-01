@@ -51,6 +51,7 @@ SpaceNet/
 ├── test_galaxy_ui.mjs                  # Galaxy UI suite: navigation, backdrop motion, dialog focus (23 tests)
 ├── test_markup_integrity.mjs           # Every literal id lookup exists in the real markup (4 tests)
 ├── test_inbox_layout.mjs               # Inbox responsive layout invariants, QA D3/D4 (9 tests)
+├── test_ai_channel.mjs                 # AI-channel enforcement, queued replies, staff attribution; fake clock, QA D1/D2 (22 tests)
 └── .gitignore                          # Standard git ignore definitions
 ```
 
