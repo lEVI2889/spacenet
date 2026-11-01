@@ -52,6 +52,7 @@ main.bg-surface { background-color: transparent; }
 #space-backdrop[data-view="ai-diagnostics"] .space-sky { transform: translate3d(5%, 5%, 0); }
 #space-backdrop[data-view="sales-leads"] .space-sky { transform: translate3d(-2%, 7%, 0); }
 #space-backdrop[data-view="network-outages"] .space-sky { transform: translate3d(7%, -1%, 0); }
+#space-backdrop[data-view="billing"] .space-sky { transform: translate3d(-5%, -6%, 0); }
 /* Header joins the dark frame; its search box and pills keep their own light surfaces. */
 #app-header { background-color: rgba(6, 10, 28, .72); box-shadow: 0 1px 0 rgba(179, 197, 255, .10); }
 #app-header .text-right .text-on-surface { color: #eef0ff; }
@@ -81,7 +82,7 @@ main.bg-surface { background-color: transparent; }
   .app-view:not(.hidden) { animation: space-view-fade 150ms ease; }
 }
 </style>
-</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.02"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.04" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.09" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.16" data-tile="900"></div></div></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" onclick="openCmdPalette()" onfocus="openCmdPalette()" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
+</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.02"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.04" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.09" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.16" data-tile="900"></div></div></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" onclick="openCmdPalette()" onfocus="openCmdPalette()" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
 <!-- Interactive View Switcher Sub-Header Bar & Live System Metric Ribbon -->
 <div class="sticky top-16 z-30 bg-surface/90 backdrop-blur-md px-space-md py-space-sm mb-space-lg shadow-sm flex flex-wrap items-center justify-between gap-space-md rounded-xl">
 <div class="flex items-center gap-space-xs overflow-x-auto py-1">
@@ -113,6 +114,10 @@ main.bg-surface { background-color: transparent; }
 <span class="material-symbols-outlined text-[18px]">trending_up</span>
 <span class="">Sales / Leads</span>
 <span class="ml-1 px-1.5 py-0.2 bg-tertiary-container text-on-tertiary-container text-[10px] font-code-telemetry rounded-full">8</span>
+</button>
+<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-billing" onclick="switchView('billing')">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span class="">Billing</span>
 </button>
 <button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-network-outages" onclick="switchView('network-outages')">
 <span class="material-symbols-outlined text-[18px]">router</span>
@@ -1661,6 +1666,101 @@ main.bg-surface { background-color: transparent; }
 </div>
 
 <!-- ========================================================================= -->
+<!-- VIEW: BILLING & PLANS (MODULE 07)                                          -->
+<!-- ========================================================================= -->
+<section class="app-view flex flex-col gap-space-lg hidden" id="view-billing" aria-labelledby="billing-heading">
+<div class="sales-hero relative overflow-hidden rounded-xl bg-inverse-surface text-inverse-on-surface p-space-lg shadow-sm">
+  <div class="relative flex flex-wrap items-end justify-between gap-space-md">
+    <div class="flex flex-col gap-1 max-w-2xl">
+      <span class="font-code-telemetry text-code-telemetry uppercase tracking-wider text-inverse-primary">Module 07 &middot; Billing &amp; Plans</span>
+      <h1 id="billing-heading" class="font-headline-lg text-headline-lg">Billing &amp; Plans</h1>
+      <p class="font-body-sm text-body-sm text-inverse-on-surface/80">Invoices are built from each customer's connections and the BDT package catalog. All invoices, payments and requests are fictional demo data; no payment is ever taken.</p>
+    </div>
+    <div class="flex flex-wrap gap-space-sm">
+      <button type="button" id="billing-package-btn" onclick="openPackageChangeModal()" class="flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-semibold hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverse-primary transition">
+        <span class="material-symbols-outlined text-[18px]" aria-hidden="true">swap_vert</span>Package change
+      </button>
+      <button type="button" id="billing-shift-btn" onclick="openLineShiftModal()" class="flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-white/10 text-inverse-on-surface ring-1 ring-inverse-primary/30 font-label-md text-label-md font-semibold hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverse-primary transition">
+        <span class="material-symbols-outlined text-[18px]" aria-hidden="true">move_location</span>Line shift
+      </button>
+    </div>
+  </div>
+  <dl id="billing-stats" class="relative mt-space-lg grid grid-cols-2 sm:grid-cols-4 gap-space-sm"></dl>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+  <label class="relative flex items-center flex-1 min-w-[200px]">
+    <span class="sr-only">Search invoices</span>
+    <span class="material-symbols-outlined absolute left-space-sm text-outline text-[18px]" aria-hidden="true">search</span>
+    <input id="billing-search" type="search" oninput="renderBillingView()" placeholder="Search customer, ID or invoice" class="w-full pl-9 pr-space-sm py-space-xs rounded-lg bg-surface-container-lowest font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+  </label>
+  <label class="sr-only" for="billing-status-filter">Invoice status</label>
+  <select id="billing-status-filter" onchange="renderBillingView()" class="py-space-xs px-space-sm rounded-lg bg-surface-container-lowest font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
+    <option value="ALL">Status: All</option>
+    <option value="unpaid">Unpaid</option>
+    <option value="overdue">Overdue</option>
+    <option value="paid">Paid</option>
+  </select>
+  <span class="px-space-sm py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">Demo data &middot; simulated</span>
+</div>
+<div class="relative rounded-xl bg-surface-container-lowest shadow-sm overflow-x-auto">
+  <table class="w-full min-w-[720px] text-left font-body-sm text-body-sm text-on-surface">
+    <caption class="sr-only">Customer invoices</caption>
+    <thead class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+      <tr><th scope="col" class="px-space-md py-space-sm">Invoice</th><th scope="col" class="px-space-md py-space-sm">Customer</th><th scope="col" class="px-space-md py-space-sm">Package(s)</th><th scope="col" class="px-space-md py-space-sm text-right">Amount</th><th scope="col" class="px-space-md py-space-sm">Due</th><th scope="col" class="px-space-md py-space-sm">Status</th><th scope="col" class="px-space-md py-space-sm"><span class="sr-only">Actions</span></th></tr>
+    </thead>
+    <tbody id="billing-invoice-body"></tbody>
+  </table>
+</div>
+<div class="flex flex-col gap-space-sm">
+  <h2 class="font-headline-sm text-headline-sm text-inverse-on-surface">Service requests</h2>
+  <div id="billing-requests" class="grid grid-cols-1 lg:grid-cols-2 gap-space-md"></div>
+</div>
+</section>
+<!-- Module 07: invoice dialog -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="invoice-modal" onclick="if (event.target === this) closeInvoiceModal()">
+<div class="bg-surface-container-lowest max-w-xl w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-space-lg sm:p-space-xl flex flex-col gap-space-md transform scale-95 transition-transform duration-200" id="invoice-modal-container" role="dialog" aria-modal="true" aria-labelledby="invoice-modal-title">
+  <div class="flex items-start justify-between gap-space-md pb-space-xs border-b border-surface-container-high">
+    <div class="flex flex-col gap-0.5">
+      <span id="invoice-modal-id" class="font-code-telemetry text-code-telemetry text-primary"></span>
+      <h2 id="invoice-modal-title" class="font-headline-md text-headline-md text-on-surface"></h2>
+      <span id="invoice-modal-sub" class="font-body-sm text-body-sm text-on-surface-variant"></span>
+    </div>
+    <button type="button" onclick="closeInvoiceModal()" aria-label="Close invoice" class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
+  </div>
+  <div id="invoice-modal-body" class="flex flex-col gap-space-md"></div>
+</div>
+</div>
+<!-- Module 07: package change / line shift request dialog -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="billing-request-modal" onclick="if (event.target === this) closeBillingRequestModal()">
+<form class="bg-surface-container-lowest max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-space-lg sm:p-space-xl flex flex-col gap-space-md transform scale-95 transition-transform duration-200" id="billing-request-container" role="dialog" aria-modal="true" aria-labelledby="billing-request-title" onsubmit="submitBillingRequestForm(event)" novalidate>
+  <div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
+    <h2 id="billing-request-title" class="font-headline-md text-headline-md text-on-surface"></h2>
+    <button type="button" onclick="closeBillingRequestModal()" aria-label="Close request form" class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+    <label class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant">Customer
+      <select id="billing-req-customer" onchange="onBillingRequestCustomerChange()" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary"></select>
+    </label>
+    <label class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant">Connection
+      <select id="billing-req-circuit" onchange="updateBillingRequestPreview()" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary"></select>
+    </label>
+    <label id="billing-req-package-wrap" class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant sm:col-span-2">New package
+      <select id="billing-req-package" onchange="updateBillingRequestPreview()" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary"></select>
+    </label>
+    <label id="billing-req-address-wrap" class="hidden flex-col gap-1 font-label-md text-label-md text-on-surface-variant sm:col-span-2">New address *
+      <input id="billing-req-address" type="text" autocomplete="off" oninput="updateBillingRequestPreview()" placeholder="e.g. House 5, Road 3, Banani" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary">
+    </label>
+  </div>
+  <div id="billing-req-preview" class="rounded-xl bg-surface-container-low p-space-md font-body-sm text-body-sm text-on-surface" aria-live="polite"></div>
+  <p id="billing-req-error" class="hidden font-body-sm text-body-sm text-error" role="alert"></p>
+  <div class="flex justify-end gap-space-sm">
+    <button type="button" onclick="closeBillingRequestModal()" class="px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md">Cancel</button>
+    <button type="submit" class="px-space-md py-space-xs rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Submit request</button>
+  </div>
+</form>
+</div>
+
+<!-- ========================================================================= -->
 <!-- MODAL: CREATE NEW SUPPORT TICKET (MODULE 03)                            -->
 <!-- ========================================================================= -->
 <div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="create-ticket-modal">
@@ -2473,7 +2573,7 @@ main.bg-surface { background-color: transparent; }
     }
 
     const hash = window.location.hash.replace('#', '');
-    const validViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'network-outages'];
+    const validViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'billing', 'network-outages'];
     if (validViews.includes(hash)) {
       switchView(hash);
     } else {
@@ -2483,7 +2583,7 @@ main.bg-surface { background-color: transparent; }
     // Hash change event listener for SPA navigation
     window.addEventListener('hashchange', () => {
       const currentHash = window.location.hash.replace('#', '');
-      const availableViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'network-outages'];
+      const availableViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'billing', 'network-outages'];
       if (availableViews.includes(currentHash) && currentActiveView !== currentHash) {
         switchView(currentHash);
       }
@@ -2510,6 +2610,7 @@ main.bg-surface { background-color: transparent; }
         closeLeadModal();
         closeCreateTicketModal();
         closeOutageDialogs();
+        closeBillingDialogs();
         closeStatusInquiryModal();
         closeLeadCreateModal();
       }
@@ -8357,6 +8458,379 @@ main.bg-surface { background-color: transparent; }
   renderNocView();
   // Complaint counts come from live ticket state, so refresh whenever the NOC view is opened.
   window.addEventListener('hashchange', () => { if (window.location.hash === '#network-outages') renderNocView(); });
+
+  // =========================================================================
+  // MODULE 07: BILLING & PLANS (fictional invoices, requests and payments)
+  // Invoices are built once from SPACE_NET_CUSTOMERS connections and the BDT
+  // SPACE_NET_PACKAGES catalog. Nothing here changes a customer record, and
+  // no payment or message ever leaves the browser.
+  // =========================================================================
+
+  const BILLING_PERIOD = '2026-11';
+  const BILLING_ISSUED_AT = '2026-10-25';
+  const NO_PAYMENT_NOTICE = 'Simulated — no payment taken';
+  const NO_MESSAGE_NOTICE = 'Simulated — no message sent';
+  const PAYMENT_METHODS = { bkash: 'bKash', nagad: 'Nagad', card: 'Card' };
+
+  function getPackagePrice(pkg) {
+    return pkg ? parseInt(String(pkg.price).replace(/[^\d]/g, ''), 10) || 0 : 0;
+  }
+
+  function formatBdt(amount) {
+    return `৳${Number(amount).toLocaleString('en-US')}`;
+  }
+
+  // Customer plan names are free text; bill each connection at the catalog package with
+  // the same speed (demo mapping: 1G / Gigabit / leased line → Office Pro 1G).
+  function mapPlanToPackageKey(planText) {
+    const text = String(planText || '');
+    if (/\b1\s*g(bps)?\b|gigabit|1000/i.test(text)) return 'office_1g';
+    const speed = parseInt((text.match(/(\d{3})\s*m/i) || [])[1], 10);
+    const pkg = SPACE_NET_PACKAGES.find(p => p.speed === speed);
+    return pkg ? pkg.key : null;
+  }
+
+  function getDueDate(period, billingCycle) {
+    const day = parseInt(String(billingCycle || '').replace(/\D/g, ''), 10) || 1;
+    return `${period}-${String(day).padStart(2, '0')}`;
+  }
+
+  function buildInvoice(invoiceId, customer, period, status) {
+    const lines = customer.connections.map(conn => {
+      const pkg = getLeadPackage(mapPlanToPackageKey(conn.plan));
+      return { circuitId: conn.circuitId, plan: conn.plan, packageKey: pkg ? pkg.key : null, packageName: pkg ? pkg.name : 'Not in demo catalog', amount: getPackagePrice(pkg) };
+    });
+    return {
+      invoiceId, customerId: customer.customerId, period,
+      issuedAt: period === BILLING_PERIOD ? BILLING_ISSUED_AT : `${period}-01`,
+      dueDate: getDueDate(period, customer.billingCycle),
+      lines, total: lines.reduce((sum, l) => sum + l.amount, 0),
+      status, payments: [], reminders: [], isDemo: true
+    };
+  }
+
+  // Deterministic demo billing state for the existing customers (fixture data, not derived).
+  const BILLING_SEED = [
+    ['CUST-8832', 'unpaid'], ['CUST-4491', 'paid', 'card'], ['CUST-6210', 'unpaid'], ['CUST-1092', 'unpaid'],
+    ['CUST-7721', 'unpaid'], ['CUST-5120', 'paid', 'bkash'], ['CUST-3340', 'unpaid'], ['CUST-4410', 'unpaid'], ['CUST-7719', 'paid', 'nagad']
+  ];
+
+  const invoices = (() => {
+    const list = [];
+    BILLING_SEED.forEach(([customerId, status, method], i) => {
+      const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === customerId);
+      if (!customer) return;
+      const inv = buildInvoice(`INV-${11001 + i}`, customer, BILLING_PERIOD, status);
+      if (method) inv.payments.push({ paymentId: `PAY-${5001 + list.filter(x => x.payments.length).length}`, method, amount: inv.total, at: '2026-10-28 11:00', note: NO_PAYMENT_NOTICE });
+      list.push(inv);
+    });
+    // Two October invoices still unpaid: Vanguard (open billing dispute TKT-9038) and Marcus (outage-affected line).
+    ['CUST-4410', 'CUST-1092'].forEach((customerId, i) => {
+      list.push(buildInvoice(`INV-1090${i + 1}`, SPACE_NET_CUSTOMERS.find(c => c.customerId === customerId), '2026-10', 'unpaid'));
+    });
+    return list;
+  })();
+
+  const packageChangeRequests = [];
+  const lineShiftRequests = [];
+
+  function getInvoiceById(invoiceId) {
+    return invoices.find(i => i.invoiceId === invoiceId) || null;
+  }
+
+  function getInvoiceStatus(invoice, today) {
+    if (invoice.status === 'paid') return 'paid';
+    return invoice.dueDate < (today || leadTimestamp().slice(0, 10)) ? 'overdue' : 'unpaid';
+  }
+
+  const INVOICE_STATUS_META = {
+    paid: { label: 'Paid', icon: 'check_circle', cls: 'bg-secondary-fixed text-on-secondary-fixed' },
+    unpaid: { label: 'Unpaid', icon: 'schedule', cls: 'bg-surface-container-highest text-on-surface-variant' },
+    overdue: { label: 'Overdue', icon: 'error', cls: 'bg-error-container text-on-error-container' }
+  };
+
+  function recordSimulatedPayment(invoiceId, method) {
+    const invoice = getInvoiceById(invoiceId);
+    if (!invoice || !PAYMENT_METHODS[method] || invoice.status === 'paid') return null;
+    const allPayments = invoices.reduce((n, i) => n + i.payments.length, 0);
+    const payment = { paymentId: `PAY-${5001 + allPayments}`, method, amount: invoice.total, at: leadTimestamp(), note: NO_PAYMENT_NOTICE };
+    invoice.payments.push(payment);
+    invoice.status = 'paid';
+    return payment;
+  }
+
+  function recordPaymentReminder(invoiceId) {
+    const invoice = getInvoiceById(invoiceId);
+    if (!invoice || invoice.status === 'paid') return null;
+    const reminder = { at: leadTimestamp(), note: NO_MESSAGE_NOTICE };
+    invoice.reminders.push(reminder);
+    return reminder;
+  }
+
+  function findBillingConnection(customerId, circuitId) {
+    const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === customerId);
+    return customer ? customer.connections.find(c => c.circuitId === circuitId) || null : null;
+  }
+
+  function createPackageChangeRequest(customerId, circuitId, toPackageKey) {
+    const conn = findBillingConnection(customerId, circuitId);
+    const toPkg = getLeadPackage(toPackageKey);
+    if (!conn || !toPkg) return { error: 'Choose a customer, connection and catalog package.' };
+    const fromKey = mapPlanToPackageKey(conn.plan);
+    if (fromKey === toPackageKey) return { error: 'That is already the current package.' };
+    if (packageChangeRequests.some(r => r.circuitId === circuitId && r.status === 'submitted')) return { error: `A package change for ${circuitId} is already pending.` };
+    const fromPkg = getLeadPackage(fromKey);
+    const request = {
+      requestId: `PCR-${3001 + packageChangeRequests.length}`, customerId, circuitId,
+      fromPackageKey: fromKey, toPackageKey,
+      kind: getPackagePrice(toPkg) >= getPackagePrice(fromPkg) ? 'upgrade' : 'downgrade',
+      priceDiff: getPackagePrice(toPkg) - getPackagePrice(fromPkg),
+      status: 'submitted', createdAt: leadTimestamp(), isDemo: true
+    };
+    packageChangeRequests.unshift(request);
+    return { request };
+  }
+
+  function createLineShiftRequest(customerId, circuitId, toAddress) {
+    const conn = findBillingConnection(customerId, circuitId);
+    const address = (toAddress || '').trim();
+    if (!conn || !address) return { error: 'Choose a connection and enter the new address.' };
+    if (lineShiftRequests.some(r => r.circuitId === circuitId && r.status === 'submitted')) return { error: `A line shift for ${circuitId} is already pending.` };
+    const coverage = resolveLeadCoverage(address);
+    const request = {
+      requestId: `LSR-${4001 + lineShiftRequests.length}`, customerId, circuitId,
+      fromAddress: conn.address, toAddress: address, coverageStatus: coverage.status, areaName: coverage.areaName,
+      status: 'submitted', createdAt: leadTimestamp(), isDemo: true
+    };
+    lineShiftRequests.unshift(request);
+    return { request };
+  }
+
+  // --- Billing view rendering ---
+  function getFilteredInvoices() {
+    const q = ((document.getElementById('billing-search') || {}).value || '').trim().toLowerCase();
+    const status = (document.getElementById('billing-status-filter') || {}).value || 'ALL';
+    return invoices.filter(inv => {
+      const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === inv.customerId);
+      const hay = [inv.invoiceId, inv.customerId, customer ? customer.name : ''].join(' ').toLowerCase();
+      return (status === 'ALL' || getInvoiceStatus(inv) === status) && (!q || hay.includes(q));
+    });
+  }
+
+  function renderBillingView() {
+    const stats = document.getElementById('billing-stats');
+    const body = document.getElementById('billing-invoice-body');
+    const reqs = document.getElementById('billing-requests');
+    if (!stats || !body || !reqs) return;
+    const unpaid = invoices.filter(i => i.status !== 'paid');
+    const tiles = [
+      ['Outstanding', formatBdt(unpaid.reduce((s, i) => s + i.total, 0))],
+      ['Overdue invoices', invoices.filter(i => getInvoiceStatus(i) === 'overdue').length],
+      ['Paid this cycle', invoices.filter(i => i.period === BILLING_PERIOD && i.status === 'paid').length + ' / ' + invoices.filter(i => i.period === BILLING_PERIOD).length],
+      ['Open requests', packageChangeRequests.concat(lineShiftRequests).filter(r => r.status === 'submitted').length]
+    ];
+    stats.innerHTML = tiles.map(([label, value]) => `<div class="rounded-lg bg-white/5 ring-1 ring-inverse-primary/20 px-space-sm py-space-xs">
+        <dt class="font-label-sm text-label-sm text-inverse-on-surface/75">${label}</dt>
+        <dd class="font-code-metric text-code-metric text-inverse-on-surface">${escapeHtml(String(value))}</dd></div>`).join('');
+
+    const rows = getFilteredInvoices();
+    body.innerHTML = rows.length ? rows.map(inv => {
+      const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === inv.customerId);
+      const meta = INVOICE_STATUS_META[getInvoiceStatus(inv)];
+      return `<tr class="border-t border-surface-container-high hover:bg-surface-container-low">
+          <td class="px-space-md py-space-sm font-code-telemetry text-code-telemetry text-primary">${inv.invoiceId}<span class="block text-on-surface-variant">${inv.period}</span></td>
+          <td class="px-space-md py-space-sm"><span class="font-semibold">${escapeHtml(customer.name)}</span><span class="block text-on-surface-variant">${escapeHtml(inv.customerId)}</span></td>
+          <td class="px-space-md py-space-sm">${inv.lines.map(l => escapeHtml(l.packageName)).join('<br>')}</td>
+          <td class="px-space-md py-space-sm text-right font-code-metric text-code-metric">${formatBdt(inv.total)}</td>
+          <td class="px-space-md py-space-sm">${inv.dueDate}</td>
+          <td class="px-space-md py-space-sm">${renderLeadBadge(meta.cls, meta.icon, meta.label)}</td>
+          <td class="px-space-md py-space-sm text-right"><button type="button" onclick="openInvoiceModal('${inv.invoiceId}')" class="px-space-sm py-1 rounded-lg bg-surface-container text-primary font-label-md text-label-md hover:bg-surface-container-high">View</button></td>
+        </tr>`;
+    }).join('') : '<tr><td colspan="7" class="px-space-md py-space-lg text-center text-outline">No invoices match these filters.</td></tr>';
+
+    const requestCards = packageChangeRequests.map(r => {
+      const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === r.customerId);
+      const from = getLeadPackage(r.fromPackageKey), to = getLeadPackage(r.toPackageKey);
+      return `<div class="rounded-xl bg-surface-container-lowest p-space-md flex flex-col gap-1">
+          <span class="flex items-center justify-between gap-2"><span class="font-code-telemetry text-code-telemetry text-primary">${r.requestId}</span>${renderLeadBadge('bg-tertiary-fixed text-on-tertiary-fixed', r.kind === 'upgrade' ? 'trending_up' : 'trending_down', `Package ${r.kind} · submitted`)}</span>
+          <span class="font-headline-sm text-headline-sm text-on-surface">${escapeHtml(customer.name)} · ${escapeHtml(r.circuitId)}</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">${escapeHtml(from ? from.name : 'Current plan')} → ${escapeHtml(to.name)} (${r.priceDiff >= 0 ? '+' : '−'}${formatBdt(Math.abs(r.priceDiff))}/mo) · ${r.createdAt}</span>
+        </div>`;
+    }).concat(lineShiftRequests.map(r => {
+      const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === r.customerId);
+      const cov = LEAD_COVERAGE_META[r.coverageStatus];
+      return `<div class="rounded-xl bg-surface-container-lowest p-space-md flex flex-col gap-1">
+          <span class="flex items-center justify-between gap-2"><span class="font-code-telemetry text-code-telemetry text-primary">${r.requestId}</span>${renderLeadBadge('bg-tertiary-fixed text-on-tertiary-fixed', 'move_location', 'Line shift · submitted')}</span>
+          <span class="font-headline-sm text-headline-sm text-on-surface">${escapeHtml(customer.name)} · ${escapeHtml(r.circuitId)}</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">To ${escapeHtml(r.toAddress)} ${renderLeadBadge(cov.cls, cov.icon, cov.label)} · ${r.createdAt}</span>
+        </div>`;
+    }));
+    reqs.innerHTML = requestCards.length ? requestCards.join('') : '<p class="rounded-xl bg-surface-container-lowest p-space-md font-body-sm text-body-sm text-on-surface-variant">No package-change or line-shift requests yet.</p>';
+  }
+
+  // --- Invoice dialog ---
+  let currentInvoiceId = null;
+
+  function openInvoiceModal(invoiceId) {
+    const invoice = getInvoiceById(invoiceId);
+    if (!invoice) {
+      showToast('Invoice Not Found', `No demo invoice with ID ${invoiceId}.`);
+      return;
+    }
+    currentInvoiceId = invoiceId;
+    renderInvoiceModal(invoice);
+    showLeadDialog('invoice-modal', 'invoice-modal-container', 'button');
+  }
+
+  function closeInvoiceModal() {
+    hideLeadDialog('invoice-modal', 'invoice-modal-container');
+  }
+
+  function renderInvoiceModal(invoice) {
+    const body = document.getElementById('invoice-modal-body');
+    if (!body) return;
+    const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === invoice.customerId);
+    const status = getInvoiceStatus(invoice);
+    const meta = INVOICE_STATUS_META[status];
+    document.getElementById('invoice-modal-id').textContent = `${invoice.invoiceId} · demo invoice`;
+    document.getElementById('invoice-modal-title').textContent = customer.name;
+    document.getElementById('invoice-modal-sub').textContent = `${invoice.customerId} · period ${invoice.period} · issued ${invoice.issuedAt} · due ${invoice.dueDate}`;
+    const btn = 'px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition';
+    body.innerHTML = `
+      <div class="flex flex-wrap items-center gap-1">${renderLeadBadge(meta.cls, meta.icon, meta.label)}</div>
+      <table class="w-full font-body-sm text-body-sm text-on-surface">
+        <caption class="sr-only">Invoice lines</caption>
+        <tbody>${invoice.lines.map(l => `<tr class="border-b border-surface-container-high"><td class="py-1.5"><span class="font-semibold">${escapeHtml(l.packageName)}</span><span class="block text-on-surface-variant">${escapeHtml(l.circuitId)} · plan on file: ${escapeHtml(l.plan)}</span></td><td class="py-1.5 text-right font-code-metric text-code-metric">${formatBdt(l.amount)}</td></tr>`).join('')}
+          <tr><td class="pt-2 font-semibold">Total (demo pricing)</td><td class="pt-2 text-right font-code-metric text-code-metric">${formatBdt(invoice.total)}</td></tr></tbody>
+      </table>
+      ${status === 'paid'
+        ? `<p class="rounded-lg bg-secondary-fixed text-on-secondary-fixed p-space-sm font-body-sm text-body-sm">Paid. Further payment is not needed.</p>`
+        : `<fieldset class="flex flex-col gap-space-xs">
+            <legend class="font-headline-sm text-headline-sm text-on-surface mb-1">Simulated payment</legend>
+            <div class="flex flex-wrap gap-space-sm">${Object.entries(PAYMENT_METHODS).map(([key, label], i) => `<label class="flex items-center gap-1 px-space-sm py-1 rounded-lg bg-surface-container font-label-md text-label-md text-on-surface"><input type="radio" name="invoice-pay-method" value="${key}" ${i === 0 ? 'checked' : ''}>${label}</label>`).join('')}</div>
+            <div class="flex flex-wrap gap-space-xs">
+              <button type="button" onclick="payInvoiceFromModal()" class="${btn} bg-primary text-on-primary font-semibold">Confirm simulated payment of ${formatBdt(invoice.total)}</button>
+              <button type="button" onclick="remindInvoiceFromModal()" class="${btn} bg-surface-container text-on-surface hover:bg-surface-container-high">Send payment reminder</button>
+            </div>
+            <p class="font-label-sm text-label-sm text-on-surface-variant">${NO_PAYMENT_NOTICE}. Payment guidance shown to customers uses demo merchant details only.</p>
+          </fieldset>`}
+      ${invoice.payments.length ? `<div class="flex flex-col gap-1"><h3 class="font-headline-sm text-headline-sm text-on-surface">Payments</h3>${invoice.payments.map(p => `<p class="font-body-sm text-body-sm"><span class="font-code-telemetry text-code-telemetry text-primary">${p.paymentId}</span> · ${PAYMENT_METHODS[p.method]} · ${formatBdt(p.amount)} · ${escapeHtml(p.at)} · <em>${escapeHtml(p.note)}</em></p>`).join('')}</div>` : ''}
+      ${invoice.reminders.length ? `<div class="flex flex-col gap-1"><h3 class="font-headline-sm text-headline-sm text-on-surface">Reminders</h3>${invoice.reminders.map(r => `<p class="font-body-sm text-body-sm">${escapeHtml(r.at)} · <em>${escapeHtml(r.note)}</em></p>`).join('')}</div>` : ''}
+      <button type="button" onclick="openBillingCustomer('${invoice.customerId}')" class="self-start text-primary underline font-body-sm text-body-sm">Open ${escapeHtml(customer.name)}'s 360° profile</button>`;
+  }
+
+  function refreshBillingViews() {
+    renderBillingView();
+    const invoice = getInvoiceById(currentInvoiceId);
+    if (invoice) renderInvoiceModal(invoice);
+  }
+
+  function payInvoiceFromModal() {
+    const checked = document.querySelector('input[name="invoice-pay-method"]:checked');
+    const payment = recordSimulatedPayment(currentInvoiceId, checked ? checked.value : 'bkash');
+    if (!payment) {
+      showToast('Already Paid', 'This demo invoice is already marked paid.');
+      return;
+    }
+    refreshBillingViews();
+    showToast('Payment Simulated', `${payment.paymentId} via ${PAYMENT_METHODS[payment.method]} · ${formatBdt(payment.amount)}. ${NO_PAYMENT_NOTICE}.`);
+  }
+
+  function remindInvoiceFromModal() {
+    if (!recordPaymentReminder(currentInvoiceId)) return;
+    refreshBillingViews();
+    showToast('Reminder Simulated', `${NO_MESSAGE_NOTICE}. Logged on ${currentInvoiceId}.`);
+  }
+
+  function openBillingCustomer(customerId) {
+    closeInvoiceModal();
+    goToProfileFromChat(customerId);
+  }
+
+  // --- Package change / line shift form (one dialog, two modes) ---
+  let billingRequestMode = 'package';
+
+  function openBillingRequestModal(mode) {
+    billingRequestMode = mode;
+    const title = document.getElementById('billing-request-title');
+    if (title) title.textContent = mode === 'package' ? 'Package change request' : 'Line shifting request';
+    const pkgWrap = document.getElementById('billing-req-package-wrap');
+    const addrWrap = document.getElementById('billing-req-address-wrap');
+    if (pkgWrap) pkgWrap.classList.toggle('hidden', mode !== 'package');
+    if (addrWrap) { addrWrap.classList.toggle('hidden', mode === 'package'); addrWrap.classList.toggle('flex', mode !== 'package'); }
+    const custSelect = document.getElementById('billing-req-customer');
+    if (custSelect) custSelect.innerHTML = SPACE_NET_CUSTOMERS.map(c => `<option value="${c.customerId}">${escapeHtml(c.name)} · ${c.customerId}</option>`).join('');
+    const pkgSelect = document.getElementById('billing-req-package');
+    if (pkgSelect) pkgSelect.innerHTML = SPACE_NET_PACKAGES.map(p => `<option value="${p.key}">${escapeHtml(p.name)} · ${escapeHtml(p.price)}</option>`).join('');
+    const addr = document.getElementById('billing-req-address');
+    if (addr) addr.value = '';
+    const err = document.getElementById('billing-req-error');
+    if (err) err.classList.add('hidden');
+    onBillingRequestCustomerChange();
+    showLeadDialog('billing-request-modal', 'billing-request-container');
+  }
+
+  function openPackageChangeModal() { openBillingRequestModal('package'); }
+  function openLineShiftModal() { openBillingRequestModal('shift'); }
+
+  function closeBillingRequestModal() {
+    hideLeadDialog('billing-request-modal', 'billing-request-container');
+  }
+
+  function closeBillingDialogs() {
+    closeInvoiceModal();
+    closeBillingRequestModal();
+  }
+
+  function onBillingRequestCustomerChange() {
+    const customerId = (document.getElementById('billing-req-customer') || {}).value;
+    const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === customerId);
+    const circuitSelect = document.getElementById('billing-req-circuit');
+    if (circuitSelect) circuitSelect.innerHTML = customer ? customer.connections.map(conn => `<option value="${conn.circuitId}">${escapeHtml(conn.circuitId)} · ${escapeHtml(conn.plan)}</option>`).join('') : '';
+    updateBillingRequestPreview();
+  }
+
+  function updateBillingRequestPreview() {
+    const preview = document.getElementById('billing-req-preview');
+    if (!preview) return;
+    const staleError = document.getElementById('billing-req-error');
+    if (staleError) staleError.classList.add('hidden');
+    const val = id => ((document.getElementById(id) || {}).value || '').trim();
+    const conn = findBillingConnection(val('billing-req-customer'), val('billing-req-circuit'));
+    if (!conn) { preview.innerHTML = 'Select a customer and connection.'; return; }
+    if (billingRequestMode === 'package') {
+      const current = getLeadPackage(mapPlanToPackageKey(conn.plan));
+      const next = getLeadPackage(val('billing-req-package'));
+      const diff = getPackagePrice(next) - getPackagePrice(current);
+      preview.innerHTML = `<p>Current: <strong>${escapeHtml(current ? current.name : conn.plan)}</strong>${current ? ` · ${formatBdt(getPackagePrice(current))}/mo` : ''}</p>
+        <p class="mt-1">Requested: <strong>${escapeHtml(next ? next.name : '—')}</strong>${next ? ` · ${formatBdt(getPackagePrice(next))}/mo (${diff >= 0 ? '+' : '−'}${formatBdt(Math.abs(diff))})` : ''}</p>
+        <p class="mt-1 text-on-surface-variant">Recorded as a request only; the subscription is not changed.</p>`;
+    } else {
+      const coverage = resolveLeadCoverage(val('billing-req-address'));
+      const cov = LEAD_COVERAGE_META[coverage.status];
+      preview.innerHTML = `<p>From: ${escapeHtml(conn.address)}</p><p class="mt-1">New area coverage: ${renderLeadBadge(cov.cls, cov.icon, cov.label)}${coverage.areaName ? ` ${escapeHtml(coverage.areaName)}` : ''}</p>
+        <p class="mt-1 text-on-surface-variant">Recorded as a request only; the customer address is not changed.</p>`;
+    }
+  }
+
+  function submitBillingRequestForm(event) {
+    if (event) event.preventDefault();
+    const val = id => ((document.getElementById(id) || {}).value || '').trim();
+    const result = billingRequestMode === 'package'
+      ? createPackageChangeRequest(val('billing-req-customer'), val('billing-req-circuit'), val('billing-req-package'))
+      : createLineShiftRequest(val('billing-req-customer'), val('billing-req-circuit'), val('billing-req-address'));
+    if (result.error) {
+      const err = document.getElementById('billing-req-error');
+      if (err) { err.textContent = result.error; err.classList.remove('hidden'); }
+      return null;
+    }
+    closeBillingRequestModal();
+    renderBillingView();
+    showToast('Request Recorded', `${result.request.requestId} submitted (demo record). No account change was made.`);
+    return result.request;
+  }
+
+  renderBillingView();
 
   // 8. Command Palette
   function openCmdPalette() {

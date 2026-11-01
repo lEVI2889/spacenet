@@ -1,6 +1,6 @@
 # SpaceNet AI CRM — Shared Data Contract & Architecture Standard
 
-**Document Version:** 1.7.0
+**Document Version:** 1.8.0
 **Effective Date:** 2026-10-31
 **Authors & Maintainers:** Rohan (Customer-Facing & Support Lead) & Adnan (Operations & Admin Lead)
 **Repository:** `https://github.com/lEVI2889/spacenet`
@@ -30,6 +30,7 @@ SpaceNet is an intelligent Customer Relationship Management (CRM) and Network Op
 | **v1.5.0** | 2026-10-31 | Rohan | AI Troubleshooting & Diagnostics: DiagnosticSession Schema, Deterministic ISP Decision Trees, Simulated ONT/Router Telemetry, Speed Test Model, Cross-Module Diagnostics Integration (Ticket DIAGNOSTIC_EXEC sync, Customer 360 & Chat return), and Circuit Isolation (Module 05). |
 | **v1.6.0** | 2026-11-01 | Adnan | Sales & Leads (Module 06): `SpaceNetLead` schema, `LEAD-<NUM>` implemented, coverage tri-state, team routing, idempotent AI lead capture from `sales_handoff` (Section 15). |
 | **v1.7.0** | 2026-11-01 | Adnan | Network Outages (Module 08): `SpaceNetOutage` schema, `OUT-<ZONE>-<NUM>` implemented, derived affected customers/complaints, NOC spike rule, simulated notifications (Section 16). |
+| **v1.8.0** | 2026-11-01 | Adnan | Billing & Plans (Module 07): `SpaceNetInvoice`, `INV-<NUM>` implemented, simulated payments (`PAY-`), package-change (`PCR-`) and line-shift (`LSR-`) requests, plan-to-catalog mapping (Section 17). |
 
 ---
 
@@ -50,6 +51,8 @@ To guarantee seamless navigation and referential integrity across modules develo
 | **Diagnostic Session** | `DIAG-<YYYYMMDD>-<NUM>` | N/A | `DIAG-20261031-001`, `DIAG-20261031-004` | Module 05 (`diagnosticSessions`) |
 | **Sales Lead** | `LEAD-<NUM>` | `LEAD-<NUM>` | `LEAD-3001` | Module 06 (`leads`) |
 | **Network Outage** | `OUT-<ZONE>-<NUM>` | `OUT-<ZONE>-<NUM>` | `OUT-UTT-0107` | Module 08 (`outages`) |
+| **Invoice** | `INV-<NUM>` | `INV-<NUM>` | `INV-11001` | Module 07 (`invoices`) |
+| **Payment / Requests** | `PAY-<NUM>`, `PCR-<NUM>`, `LSR-<NUM>` | same | `PAY-5004`, `PCR-3001`, `LSR-4001` | Module 07 |
 | **Standard Message** | `m-<CUST_ABBR>-<NUM>` or `msg-<TIMESTAMP>` | N/A | `m-alx-1`, `msg-1730301234` | Module 01 (Tasks 1–5) |
 | **Voice Note Message** | `vmsg-<CUST_ABBR>-<NUM>` | N/A | `vmsg-alx-1`, `vmsg-frh-1` | Module 02 (Feature Group 6) |
 | **System Event Log** | `sys-<TIMESTAMP>` | N/A | `sys-1730302345` | Module 01 (Task 4) |
@@ -65,7 +68,6 @@ To guarantee seamless navigation and referential integrity across modules develo
 
 | Entity | Proposed Format | Description | Target Module |
 | :--- | :--- | :--- | :--- |
-| **Invoice / Billing** | `INV-<NUM>` | Billing statement and charge record ID | Module 07 (Billing & Plans) |
 | **Technician Task** | `TASK-TECH-<NUM>` | Field dispatch assignment ID | Module 09 (Technician & Field Operations) |
 | **ONT Hardware MAC** | `00:E0:4C:<HEX>` | Physical hardware address identifier | Telemetry & Diagnostics |
 
@@ -854,3 +856,41 @@ interface SpaceNetOutage {
 * Links: customers open through `goToProfileFromChat`, complaints through `openTicketDetail`.
 * New DOM ids: `#noc-stats`, `#noc-spike-panel`, `#noc-outage-list`, `#noc-report-btn`, `#outage-modal*`, `#outage-report-modal`, `#outage-report-container`, `#outage-form-*`. The prototype `#maintenance-modal` and `#modal-container` were removed.
 * Deferred: Module 02 telling customers about a known outage in chat (client #47).
+
+---
+
+## 17. Billing & Plans Contract (Module 07)
+
+All invoices, payments and requests are fictional, in-memory demo records (`isDemo: true`). No payment is taken and no message is sent.
+
+### 17.1 Records
+
+```typescript
+interface SpaceNetInvoice {
+  invoiceId: string;              // 'INV-<NUM>'; current cycle INV-11001..11009, October carry-overs INV-10901/10902
+  customerId: string;             // existing SPACE_NET_CUSTOMERS id
+  period: 'YYYY-MM'; issuedAt: string; dueDate: 'YYYY-MM-DD';   // due day from customer.billingCycle
+  lines: { circuitId: string; plan: string; packageKey: string | null; packageName: string; amount: number }[];  // one per connection
+  total: number;                  // BDT, sum of lines
+  status: 'paid' | 'unpaid';      // 'overdue' is derived: unpaid and dueDate < today
+  payments: { paymentId: string; method: 'bkash' | 'nagad' | 'card'; amount: number; at: string; note: 'Simulated — no payment taken' }[];
+  reminders: { at: string; note: 'Simulated — no message sent' }[];
+  isDemo: true;
+}
+// packageChangeRequests: { requestId 'PCR-<NUM>', customerId, circuitId, fromPackageKey, toPackageKey, kind 'upgrade'|'downgrade', priceDiff, status 'submitted', createdAt }
+// lineShiftRequests:     { requestId 'LSR-<NUM>', customerId, circuitId, fromAddress, toAddress, coverageStatus, areaName, status 'submitted', createdAt }
+```
+
+### 17.2 Rules
+
+1. **Pricing:** each connection is billed at the catalog package matching its plan speed (`mapPlanToPackageKey`). 1G, Gigabit and leased lines map to Office Pro 1G; this is a demo mapping, since customer plan names are free text.
+2. **Invoices are built once at load.** Re-rendering never creates invoices.
+3. **Payments:** a paid invoice refuses further payments. Reminders only apply to unpaid invoices.
+4. **Requests never change customers.** No same-package change; at most one pending request of each kind per circuit. Line-shift coverage uses `resolveLeadCoverage` (unknown area = `unverified`).
+
+### 17.3 Integration hooks
+
+* Router: `'billing'` added to both view lists; sidebar link `data-path="billing"` and top-bar tab `#nav-btn-billing`.
+* Global Escape handler: `closeBillingDialogs()`.
+* Reuses Module 06 `showLeadDialog`, `hideLeadDialog`, `renderLeadBadge`, `getLeadPackage`, `resolveLeadCoverage`, `leadTimestamp`, and Module 04's `goToProfileFromChat`.
+* **Shared scope:** all modules share one script scope. Module 05 owns `getCustomerConnection`; billing uses `findBillingConnection`. `test_module_07.mjs` fails on any duplicate top-level function, `const` or `let` name.
