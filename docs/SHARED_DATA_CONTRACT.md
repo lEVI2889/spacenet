@@ -1,6 +1,6 @@
 # SpaceNet AI CRM — Shared Data Contract & Architecture Standard
 
-**Document Version:** 1.5.0
+**Document Version:** 1.6.0
 **Effective Date:** 2026-10-31
 **Authors & Maintainers:** Rohan (Customer-Facing & Support Lead) & Adnan (Operations & Admin Lead)
 **Repository:** `https://github.com/lEVI2889/spacenet`
@@ -28,6 +28,7 @@ SpaceNet is an intelligent Customer Relationship Management (CRM) and Network Op
 | **v1.3.0** | 2026-10-31 | Rohan | Support Tickets & Customer Registry Contract, 7 Lifecycle States, Category Diagnostics, SLA Overdue, CSAT Ratings & Parallel Development Integration Hooks (Module 03). |
 | **v1.4.0** | 2026-10-31 | Rohan | Customer Profiles & Unified 360° View: Multi-Connection Schema, Customer Record Extensions, Secondary Circuit Ticket Lifecycle, and Bi-Directional Cross-Navigation (Module 04). |
 | **v1.5.0** | 2026-10-31 | Rohan | AI Troubleshooting & Diagnostics: DiagnosticSession Schema, Deterministic ISP Decision Trees, Simulated ONT/Router Telemetry, Speed Test Model, Cross-Module Diagnostics Integration (Ticket DIAGNOSTIC_EXEC sync, Customer 360 & Chat return), and Circuit Isolation (Module 05). |
+| **v1.6.0** | 2026-11-01 | Adnan | Sales & Leads (Module 06): `SpaceNetLead` schema, `LEAD-<NUM>` implemented, coverage tri-state, team routing, idempotent AI lead capture from `sales_handoff` (Section 15). |
 
 ---
 
@@ -46,6 +47,7 @@ To guarantee seamless navigation and referential integrity across modules develo
 | **Linked Private DM** | `CONV-<CHANNEL_KEY>-<ID>-DM` | N/A | `CONV-FB-5120-DM` | Module 02 (Feature Group 3) |
 | **Support Ticket** | `TKT-<ID>` | `#TKT-<ID>` | `TKT-9042` (`#TKT-9042`) | Module 03 (Tickets Desk) |
 | **Diagnostic Session** | `DIAG-<YYYYMMDD>-<NUM>` | N/A | `DIAG-20261031-001`, `DIAG-20261031-004` | Module 05 (`diagnosticSessions`) |
+| **Sales Lead** | `LEAD-<NUM>` | `LEAD-<NUM>` | `LEAD-3001` | Module 06 (`leads`) |
 | **Standard Message** | `m-<CUST_ABBR>-<NUM>` or `msg-<TIMESTAMP>` | N/A | `m-alx-1`, `msg-1730301234` | Module 01 (Tasks 1–5) |
 | **Voice Note Message** | `vmsg-<CUST_ABBR>-<NUM>` | N/A | `vmsg-alx-1`, `vmsg-frh-1` | Module 02 (Feature Group 6) |
 | **System Event Log** | `sys-<TIMESTAMP>` | N/A | `sys-1730302345` | Module 01 (Task 4) |
@@ -56,7 +58,6 @@ To guarantee seamless navigation and referential integrity across modules develo
 
 | Entity | Current Format in DOM | Planned Canonical Format | Notes |
 | :--- | :--- | :--- | :--- |
-| **Sales Leads** | Stored in Kanban cards without primary key | `LEAD-<NUM>` (e.g. `LEAD-3012`) | Module 06 (Sales & Leads) |
 | **Network Outages** | Static banner & modal text | `OUT-<ZONE>-<NUM>` (e.g. `OUT-DAC-0104`) | Module 08 (Network Outages / NOC) severity alert banners. |
 
 ### 2.3 Proposed Identifiers — Requires Adnan's Review & Agreement
@@ -763,3 +764,52 @@ erDiagram
    * Ensure `isPrimaryCircuit` is correctly flagged when testing secondary connections.
 7. **DOM Element Safety:**
    * Do not remove established DOM target IDs: `#inbox-thread-list`, `#inbox-filter-strip`, `#inbox-type-filter-strip`, `#chat-post-context-banner`, `#comment-to-dm-banner`, `#chat-frustration-alert`, `#chat-ai-routing-banner`, `#demo-customer-simulator-strip`, `#chat-customer-name`, `#chat-customer-avatar`, `#chat-channel-badge`, `#chat-circuit-plan`, `#chat-customer-profile-btn`, `#chat-message-stream`, `#agent-override-toggle`, `#chat-composer-container`, `#ticket-table-body`, `#create-ticket-modal`, `#ticket-detail-modal`, `#status-inquiry-modal`, `#customer-directory-list`, `#customer-search-input`, `#customer-360-workspace`, `#cust-connection-tabs`, `#cust-360-hero-card`, `#view-ai-diagnostics`, `#diag-workflow-panel`, `#diag-equipment-panel`, `#diag-speedtest-panel`, `#diag-history-panel`.
+
+---
+
+## 15. Sales & Leads Contract (Module 06)
+
+All leads are fictional, in-memory demo records (`isDemo: true`); nothing persists across reloads.
+
+### 15.1 `SpaceNetLead` (collection `leads`)
+
+```typescript
+interface SpaceNetLead {
+  leadId: string;                 // 'LEAD-<NUM>', next id = max + 1 (seeds LEAD-3001..3006)
+  name: string; phone: string;    // prospects use the fictional '+880 1000-xxxxxx' range
+  locationText: string;
+  zoneKey: string | null;         // SPACE_NET_COVERAGE_ZONES.key when covered
+  areaName: string | null;
+  coverageStatus: 'covered' | 'not_covered' | 'unverified';
+  connectionType: 'home' | 'office';
+  segment: 'residential' | 'corporate';
+  requestedPackageKey: string | null;   // SPACE_NET_PACKAGES.key
+  recommendedPackageKey: string | null; // null when not_covered
+  status: 'new' | 'contacted' | 'interested' | 'connected' | 'lost';
+  assignedTeam: 'RESIDENTIAL_SALES' | 'CORPORATE_SALES';
+  assignedTo: string;             // fictional demo rep
+  source: { channel: string; conversationId: string | null; type: 'dm' | 'comment' | 'manual' };
+  customerId: string | null;      // existing SPACE_NET_CUSTOMERS id only; leads never create customers
+  followUp: { dueAt: 'YYYY-MM-DD'; note: string; done: boolean } | null;
+  surveyRequest: { preferredSlot: string; status: 'requested'; requestedAt: string } | null; // Module 09 handoff
+  createdAt: string;
+  history: { at: string; action: string; by: string; note: string }[];
+  isDemo: true;
+}
+```
+
+### 15.2 Rules
+
+1. **Coverage:** `covered` = matches a `SPACE_NET_COVERAGE_ZONES` entry (regex or Bangla name). `not_covered` = matches the documented fictional `SALES_UNSUPPORTED_AREAS` (Savar, Keraniganj, Narayanganj). Everything else, including no location, is `unverified`. Tejgaon (Vanguard Logistics, `CUST-4410`) is therefore `unverified`, not unsupported.
+2. **Routing:** `office` → `CORPORATE_SALES`, otherwise `RESIDENTIAL_SALES`.
+3. **Package:** requested catalog package if given, else `office_1g` (office) or `home_150m` (home); none when `not_covered`.
+4. **AI capture:** `captureLeadFromInquiry(conv, classification, text)` creates a lead only when the classification's intents include `coverage_availability` or `installation_procedure` and none of `technical_problem`, `billing_guidance` or `package_changes` (so a support complaint that names an area never creates a lead). Customers whose `accountStatus` says corporate or enterprise route to Corporate Sales. One lead per `conversationId`; repeat inquiries append an `AI_UPDATED` history entry. A `sender: 'system'`, `eventType: 'lead'` line is added to the chat.
+5. **Connected:** marking a prospect `connected` records a simulated conversion; it links to an existing `customerId` when present and never creates a customer record.
+
+### 15.3 Integration hooks (shared code, review with Rohan)
+
+* `executeSimulateCustomerMessage`: calls `captureLeadFromInquiry` after the AI reply (AI-handled chats only; human takeover skips it).
+* `handleRoutingAction`, `sales_handoff` branch: calls `openLeadFromConversation(conv)`, which opens the conversation's lead or captures it first.
+* Global Escape handler: also calls `closeLeadCreateModal()`.
+* New DOM ids: `#sales-pipeline`, `#sales-stage-strip`, `#sales-search`, `#sales-team-filter`, `#sales-coverage-filter`, `#lead-modal`, `#lead-modal-container`, `#lead-modal-body`, `#lead-create-modal`, `#lead-create-container`, `#lead-form-*`.
+* Module 09: `surveyRequest` is the hand-off point for a future `TASK-TECH-<NUM>` job.

@@ -1380,129 +1380,121 @@
 <!-- ========================================================================= -->
 <!-- VIEW 4: SALES LEADS VIEW                                                -->
 <!-- ========================================================================= -->
-<section class="app-view flex flex-col gap-space-lg hidden" id="view-sales-leads">
-<!-- Header Summary Ribbon -->
-<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-wrap items-center justify-between gap-space-md">
-<div class="flex items-center gap-space-md">
-<span class="p-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed material-symbols-outlined text-[24px]">monetization_on</span>
-<div>
-<h2 class="font-headline-md text-headline-md text-on-surface">Inbound ISP Expansion Pipeline</h2>
-<p class="font-body-sm text-body-sm text-on-surface-variant">AI leads scored via chatbot qualifications &amp; business registration lookups</p>
+<style>
+/* Module 06 space accents: static starfield + one slow orbit. Reusable later for the theme pass. */
+.sales-hero {
+  background-image:
+    radial-gradient(1px 1px at 12% 30%, rgba(255,255,255,.55) 50%, transparent 51%),
+    radial-gradient(1px 1px at 34% 72%, rgba(255,255,255,.35) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 58% 18%, rgba(255,255,255,.45) 50%, transparent 51%),
+    radial-gradient(1px 1px at 76% 64%, rgba(255,255,255,.30) 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 40%, rgba(255,255,255,.40) 50%, transparent 51%),
+    radial-gradient(1px 1px at 22% 86%, rgba(255,255,255,.30) 50%, transparent 51%),
+    radial-gradient(120% 140% at 100% 0%, rgba(110,38,223,.32), transparent 55%),
+    radial-gradient(90% 120% at 0% 100%, rgba(0,102,255,.22), transparent 60%);
+}
+.sales-orbit { color: #b3c5ff; }
+.sales-orbit-spin { transform-origin: 210px 210px; animation: sales-orbit-spin 60s linear infinite; }
+@keyframes sales-orbit-spin { to { transform: rotate(360deg); } }
+.sales-stage-strip::before { content: ''; position: absolute; left: 10%; right: 10%; top: 1.4rem; height: 1px; background: linear-gradient(90deg, transparent, rgba(179,197,255,.55), transparent); }
+@media (prefers-reduced-motion: reduce) {
+  .sales-orbit-spin { animation: none; }
+  .lead-card, #lead-modal, #lead-modal-container, #lead-create-modal, #lead-create-container { transition: none !important; }
+}
+</style>
+<section class="app-view flex flex-col gap-space-lg hidden" id="view-sales-leads" aria-labelledby="sales-heading">
+<!-- Module 06: Sales Mission Board (rendered from the in-memory `leads` collection) -->
+<div class="sales-hero relative overflow-hidden rounded-xl bg-inverse-surface text-inverse-on-surface p-space-lg shadow-sm">
+  <svg class="sales-orbit absolute -right-16 -top-24 w-[420px] h-[420px] pointer-events-none" viewBox="0 0 420 420" aria-hidden="true">
+    <circle cx="210" cy="210" r="120" fill="none" stroke="currentColor" stroke-opacity="0.14" stroke-dasharray="2 6"></circle>
+    <circle cx="210" cy="210" r="180" fill="none" stroke="currentColor" stroke-opacity="0.10"></circle>
+    <g class="sales-orbit-spin"><circle cx="390" cy="210" r="4" fill="#5bb8fe"></circle></g>
+    <circle cx="210" cy="210" r="34" fill="#0066ff" fill-opacity="0.18"></circle>
+  </svg>
+  <div class="relative flex flex-wrap items-end justify-between gap-space-md">
+    <div class="flex flex-col gap-1 max-w-2xl">
+      <span class="font-code-telemetry text-code-telemetry uppercase tracking-wider text-inverse-primary">Module 06 &middot; Sales Mission Board</span>
+      <h1 id="sales-heading" class="font-headline-lg text-headline-lg">New-Connection Pipeline</h1>
+      <p class="font-body-sm text-body-sm text-inverse-on-surface/80">Leads captured by the AI agent from chats and comments, auto-routed to Residential or Corporate Sales. All leads, names and numbers are fictional demo data.</p>
+    </div>
+    <button type="button" id="sales-new-lead-btn" onclick="openLeadCreateModal()" class="flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-semibold hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverse-primary transition">
+      <span class="material-symbols-outlined text-[18px]" aria-hidden="true">person_add</span>New lead
+    </button>
+  </div>
+  <ol id="sales-stage-strip" class="sales-stage-strip relative mt-space-lg grid grid-cols-5 gap-1 sm:gap-space-sm" aria-label="Leads per stage"></ol>
 </div>
+<div class="flex flex-wrap items-center gap-space-sm">
+  <label class="relative flex items-center flex-1 min-w-[200px]">
+    <span class="sr-only">Search leads</span>
+    <span class="material-symbols-outlined absolute left-space-sm text-outline text-[18px]" aria-hidden="true">search</span>
+    <input id="sales-search" type="search" oninput="renderSalesPipeline()" placeholder="Search name, phone, area or LEAD ID" class="w-full pl-9 pr-space-sm py-space-xs rounded-lg bg-surface-container-lowest font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+  </label>
+  <label class="sr-only" for="sales-team-filter">Sales team</label>
+  <select id="sales-team-filter" onchange="renderSalesPipeline()" class="py-space-xs px-space-sm rounded-lg bg-surface-container-lowest font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
+    <option value="ALL">Team: All</option>
+    <option value="RESIDENTIAL_SALES">Residential Sales</option>
+    <option value="CORPORATE_SALES">Corporate Sales</option>
+  </select>
+  <label class="sr-only" for="sales-coverage-filter">Coverage</label>
+  <select id="sales-coverage-filter" onchange="renderSalesPipeline()" class="py-space-xs px-space-sm rounded-lg bg-surface-container-lowest font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
+    <option value="ALL">Coverage: All</option>
+    <option value="covered">Covered</option>
+    <option value="unverified">Unverified</option>
+    <option value="not_covered">Not covered</option>
+  </select>
+  <span class="px-space-sm py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">Demo data &middot; simulated</span>
 </div>
-<div class="flex items-center gap-space-sm">
-<button class="px-space-md py-1.5 bg-tertiary-container hover:bg-tertiary text-on-tertiary-container font-headline-sm text-label-md rounded-lg flex items-center gap-1 transition-colors" onclick="showToast('AI Dialing Bot Queued', 'Running 8 automated qualification calls')">
-<span class="material-symbols-outlined text-[16px]">smart_toy</span>
-<span class="">Run Auto-Prospector</span>
-</button>
-</div>
-</div>
-<!-- 3-Column Kanban Board -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
-<!-- Column 1: New Leads -->
-<div class="bg-surface-container-low/70 rounded-xl p-space-md flex flex-col gap-space-sm">
-<div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
-<div class="flex items-center gap-2">
-<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
-<span class="font-headline-sm text-headline-sm text-on-surface">New Leads</span>
-</div>
-<span class="px-2 py-0.5 rounded-full bg-surface-container font-code-telemetry text-label-sm font-semibold">4</span>
-</div>
-<!-- Lead Card 1 -->
-<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer border border-transparent hover:border-primary/20 flex flex-col gap-space-xs" onclick="openLeadModal(this)">
-<div class="flex items-center justify-between">
-<span class="px-2 py-0.5 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Office Dedicated</span>
-<span class="font-code-telemetry text-code-telemetry font-bold text-primary">$399/mo</span>
-</div>
-<h4 class="font-headline-sm text-body-md text-on-surface font-semibold mt-1">Apex Media Production</h4>
-<p class="font-body-sm text-[12px] text-on-surface-variant">North Downtown Harbor, Suite 400</p>
-<div class="p-1.5 rounded bg-surface-container flex items-center justify-between my-1">
-<span class="font-label-sm text-[11px] text-on-surface-variant">AI Intent Score:</span>
-<span class="font-code-metric text-[12px] text-secondary font-bold">96/100 🔥 High</span>
-</div>
-<div class="flex items-center gap-1 mt-1">
-<button class="w-full py-1.5 bg-primary text-on-primary font-label-md text-label-md rounded hover:bg-primary-container transition-colors flex items-center justify-center gap-1" onclick="showToast('AI Outreach Call Dispatched', 'Calling Apex Media rep via AI Telephony')">
-<span class="material-symbols-outlined text-[14px]">call</span> AI Outreach
-            </button>
-</div>
-</div>
-<!-- Lead Card 2 -->
-<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer border border-transparent hover:border-primary/20 flex flex-col gap-space-xs" onclick="openLeadModal(this)">
-<div class="flex items-center justify-between">
-<span class="px-2 py-0.5 rounded-md bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">Home Gigabit</span>
-<span class="font-code-telemetry text-code-telemetry font-bold text-on-surface">$89/mo</span>
-</div>
-<h4 class="font-headline-sm text-body-md text-on-surface font-semibold mt-1">Dr. Julian Scott</h4>
-<p class="font-body-sm text-[12px] text-on-surface-variant">Highland Park Estates, Unit 12B</p>
-<div class="p-1.5 rounded bg-surface-container flex items-center justify-between my-1">
-<span class="font-label-sm text-[11px] text-on-surface-variant">AI Intent Score:</span>
-<span class="font-code-metric text-[12px] text-on-surface font-bold">88/100 • Ready</span>
-</div>
-<div class="flex items-center gap-1 mt-1">
-<button class="w-full py-1.5 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded transition-colors flex items-center justify-center gap-1" onclick="showToast('Custom Quote Sent', 'SMS with e-sign link delivered to +1-555-0192')">
-<span class="material-symbols-outlined text-[14px]">send</span> Send Quote
-            </button>
-</div>
-</div>
-</div>
-<!-- Column 2: Contacted -->
-<div class="bg-surface-container-low/70 rounded-xl p-space-md flex flex-col gap-space-sm">
-<div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
-<div class="flex items-center gap-2">
-<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
-<span class="font-headline-sm text-headline-sm text-on-surface">Contacted</span>
-</div>
-<span class="px-2 py-0.5 rounded-full bg-surface-container font-code-telemetry text-label-sm font-semibold">3</span>
-</div>
-<!-- Lead Card 3 -->
-<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer border border-transparent hover:border-primary/20 flex flex-col gap-space-xs" onclick="openLeadModal(this)">
-<div class="flex items-center justify-between">
-<span class="px-2 py-0.5 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Office 10G Ring</span>
-<span class="font-code-telemetry text-code-telemetry font-bold text-primary">$1,200/mo</span>
-</div>
-<h4 class="font-headline-sm text-body-md text-on-surface font-semibold mt-1">BlueStone Financial Group</h4>
-<p class="font-body-sm text-[12px] text-on-surface-variant">Financial Core Tower, Floors 18-20</p>
-<div class="p-1.5 rounded bg-surface-container flex items-center justify-between my-1">
-<span class="font-label-sm text-[11px] text-on-surface-variant">Status:</span>
-<span class="font-code-metric text-[12px] text-secondary font-bold">Bot Call Answered</span>
-</div>
-<div class="flex items-center gap-1 mt-1">
-<button class="w-full py-1.5 bg-primary text-on-primary font-label-md text-label-md rounded hover:bg-primary-container transition-colors flex items-center justify-center gap-1" onclick="showToast('SLA Spec Packet Transmitted', 'Delivered 99.999% SLA architecture schematic')">
-<span class="material-symbols-outlined text-[14px]">description</span> Deliver SLA Pack
-            </button>
-</div>
-</div>
-</div>
-<!-- Column 3: Interested / Pending Contract -->
-<div class="bg-surface-container-low/70 rounded-xl p-space-md flex flex-col gap-space-sm">
-<div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
-<div class="flex items-center gap-2">
-<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
-<span class="font-headline-sm text-headline-sm text-on-surface">Pending Contract</span>
-</div>
-<span class="px-2 py-0.5 rounded-full bg-surface-container font-code-telemetry text-label-sm font-semibold">2</span>
-</div>
-<!-- Lead Card 4 -->
-<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer border border-transparent hover:border-primary/20 flex flex-col gap-space-xs" onclick="openLeadModal(this)">
-<div class="flex items-center justify-between">
-<span class="px-2 py-0.5 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Dark Fiber Pair</span>
-<span class="font-code-telemetry text-code-telemetry font-bold text-primary">$2,450/mo</span>
-</div>
-<h4 class="font-headline-sm text-body-md text-on-surface font-semibold mt-1">Harbor Regional Health</h4>
-<p class="font-body-sm text-[12px] text-on-surface-variant">Medical Campus Substation B</p>
-<div class="p-1.5 rounded bg-surface-container flex items-center justify-between my-1">
-<span class="font-label-sm text-[11px] text-on-surface-variant">DocuSign:</span>
-<span class="font-code-metric text-[12px] text-tertiary font-bold">Awaiting CIO Sign</span>
-</div>
-<div class="flex items-center gap-1 mt-1">
-<button class="w-full py-1.5 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded transition-colors flex items-center justify-center gap-1" onclick="showToast('Automated SMS Reminder Sent', 'Notified CIO Dr. Kim of pending signature')">
-<span class="material-symbols-outlined text-[14px]">notification_important</span> Send Reminder
-            </button>
-</div>
-</div>
-</div>
-</div>
+<div id="sales-pipeline" class="flex gap-space-md overflow-x-auto snap-x snap-mandatory pb-space-sm -mx-1 px-1" aria-label="Lead pipeline by stage"></div>
 </section>
+<!-- Module 06: Lead detail dialog -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="lead-modal" onclick="if (event.target === this) closeLeadModal()">
+<div class="bg-surface-container-lowest max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-space-lg sm:p-space-xl flex flex-col gap-space-md transform scale-95 transition-transform duration-200" id="lead-modal-container" role="dialog" aria-modal="true" aria-labelledby="lead-modal-title">
+  <div class="flex items-start justify-between gap-space-md pb-space-xs border-b border-surface-container-high">
+    <div class="flex flex-col gap-0.5">
+      <span id="lead-modal-id" class="font-code-telemetry text-code-telemetry text-primary"></span>
+      <h2 id="lead-modal-title" class="font-headline-md text-headline-md text-on-surface"></h2>
+      <span id="lead-modal-sub" class="font-body-sm text-body-sm text-on-surface-variant"></span>
+    </div>
+    <button type="button" onclick="closeLeadModal()" aria-label="Close lead details" class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
+  </div>
+  <div id="lead-modal-body" class="flex flex-col gap-space-md"></div>
+</div>
+</div>
+<!-- Module 06: New lead dialog -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="lead-create-modal" onclick="if (event.target === this) closeLeadCreateModal()">
+<form class="bg-surface-container-lowest max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-space-lg sm:p-space-xl flex flex-col gap-space-md transform scale-95 transition-transform duration-200" id="lead-create-container" role="dialog" aria-modal="true" aria-labelledby="lead-create-title" onsubmit="submitLeadCreateForm(event)" novalidate>
+  <div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
+    <h2 id="lead-create-title" class="font-headline-md text-headline-md text-on-surface">New connection lead</h2>
+    <button type="button" onclick="closeLeadCreateModal()" aria-label="Close new lead form" class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+    <label class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant">Full name *
+      <input id="lead-form-name" type="text" required autocomplete="off" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary">
+    </label>
+    <label class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant">Phone (fictional) *
+      <input id="lead-form-phone" type="tel" required autocomplete="off" placeholder="+880 1000-000000" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary">
+    </label>
+    <label class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant sm:col-span-2">Location / area
+      <input id="lead-form-location" type="text" autocomplete="off" placeholder="e.g. Road 12, Banani" oninput="updateLeadFormPreview()" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary">
+    </label>
+    <label class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant">Connection for
+      <select id="lead-form-type" onchange="updateLeadFormPreview()" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary">
+        <option value="home">Home</option>
+        <option value="office">Office / corporate</option>
+      </select>
+    </label>
+    <label class="flex flex-col gap-1 font-label-md text-label-md text-on-surface-variant">Requested service
+      <select id="lead-form-package" onchange="updateLeadFormPreview()" class="px-space-sm py-space-xs rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary"></select>
+    </label>
+  </div>
+  <div id="lead-form-preview" class="rounded-xl bg-surface-container-low p-space-md font-body-sm text-body-sm text-on-surface" aria-live="polite"></div>
+  <p id="lead-form-error" class="hidden font-body-sm text-body-sm text-error" role="alert"></p>
+  <div class="flex justify-end gap-space-sm">
+    <button type="button" onclick="closeLeadCreateModal()" class="px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md">Cancel</button>
+    <button type="submit" class="px-space-md py-space-xs rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Create lead</button>
+  </div>
+</form>
+</div>
 <!-- ========================================================================= -->
 <!-- VIEW 5: NETWORK OUTAGES VIEW                                            -->
 <!-- ========================================================================= -->
@@ -2547,6 +2539,7 @@
         closeCreateTicketModal();
         closeMaintenanceModal();
         closeStatusInquiryModal();
+        closeLeadCreateModal();
       }
     });
   });
@@ -3274,7 +3267,7 @@
       });
       showToast('Ticket Suggestion Actionable', `Prefilled support ticket creation for ${conv.customerName} (${conv.customerId}).`);
     } else if (route === 'sales_handoff') {
-      showToast('Sales Handoff Recommendation', `Recommended creating a Sales Lead for ${conv.customerName} on ${conv.channelLabel}.`);
+      openLeadFromConversation(conv); // Module 06
     } else if (route === 'billing_guidance') {
       const billAns = SPACE_NET_KNOWLEDGE_BASE.billing_guidance.responses[aiLanguageMode] || SPACE_NET_KNOWLEDGE_BASE.billing_guidance.responses['EN'];
       insertAiReply(billAns.replace(/\n/g, ' '));
@@ -3699,6 +3692,7 @@
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       });
       targetConv.lastMessageTime = 'Just now';
+      captureLeadFromInquiry(targetConv, classification, text); // Module 06: auto-create/update sales lead
 
       if (currentConversationId === targetConv.conversationId) {
         renderCustomerConversation(targetConv.conversationId);
@@ -7431,40 +7425,579 @@
   // Initialize Customer Profiles
   initCustomerProfiles();
 
-  // 6. Leads & Pipeline
-  function openLeadModal(cardEl) {
-    const title = cardEl.querySelector('h4')?.textContent || 'Commercial Lead';
-    const plan = cardEl.querySelector('.font-code-telemetry')?.textContent || '$399/mo';
-    const addr = cardEl.querySelector('p')?.textContent || 'Downtown Harbor';
+  // =========================================================================
+  // MODULE 06: SALES & LEADS (fictional demo pipeline, in-memory only)
+  // =========================================================================
 
-    document.getElementById('lead-modal-title').textContent = title;
-    document.getElementById('lead-modal-plan').textContent = plan + ' Dedicated Fiber Package';
-    document.getElementById('lead-modal-addr').textContent = addr;
+  const LEAD_STAGES = [
+    { key: 'new', label: 'New', icon: 'fiber_new' },
+    { key: 'contacted', label: 'Contacted', icon: 'call' },
+    { key: 'interested', label: 'Interested', icon: 'thumb_up' },
+    { key: 'connected', label: 'Connected', icon: 'check_circle' },
+    { key: 'lost', label: 'Lost', icon: 'block' }
+  ];
 
-    const modal = document.getElementById('lead-modal');
-    const container = document.getElementById('lead-modal-container');
+  const SALES_TEAMS = {
+    RESIDENTIAL_SALES: { label: 'Residential Sales', rep: 'Imran Chowdhury (demo rep)' },
+    CORPORATE_SALES: { label: 'Corporate Sales', rep: 'Farzana Kabir (demo rep)' }
+  };
+
+  // Fictional areas outside the simulated fiber footprint. A location found neither here
+  // nor in SPACE_NET_COVERAGE_ZONES stays 'unverified'; unknown never means unsupported.
+  const SALES_UNSUPPORTED_AREAS = [
+    { key: 'savar', match: /\bsavar\b|সাভার/i, name: 'Savar' },
+    { key: 'keraniganj', match: /\bkeraniganj\b|কেরানীগঞ্জ/i, name: 'Keraniganj' },
+    { key: 'narayanganj', match: /\bnarayanganj\b|নারায়ণগঞ্জ/i, name: 'Narayanganj' }
+  ];
+
+  const LEAD_COVERAGE_META = {
+    covered: { label: 'Covered', icon: 'check_circle', cls: 'bg-secondary-fixed text-on-secondary-fixed' },
+    unverified: { label: 'Unverified', icon: 'help', cls: 'bg-surface-container-highest text-on-surface-variant' },
+    not_covered: { label: 'Not covered', icon: 'block', cls: 'bg-error-container text-on-error-container' }
+  };
+
+  // Only these intents mean "wants a new connection". A message that also carries a support,
+  // billing or package-change intent comes from an existing service request, so no lead.
+  const NEW_CONNECTION_INTENTS = ['coverage_availability', 'installation_procedure'];
+  const NON_LEAD_INTENTS = ['technical_problem', 'billing_guidance', 'package_changes'];
+
+  function leadTimestamp() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  function resolveLeadCoverage(locationText) {
+    const text = (locationText || '').trim();
+    if (!text) return { status: 'unverified', zoneKey: null, areaName: null };
+    // bnName check: the zone regexes end in \b, which never matches after a Bangla letter.
+    const zone = SPACE_NET_COVERAGE_ZONES.find(z => z.match.test(text) || text.includes(z.bnName.split(' ')[0]));
+    if (zone) return { status: 'covered', zoneKey: zone.key, areaName: zone.name };
+    const outside = SALES_UNSUPPORTED_AREAS.find(a => a.match.test(text));
+    if (outside) return { status: 'not_covered', zoneKey: null, areaName: outside.name };
+    return { status: 'unverified', zoneKey: null, areaName: null };
+  }
+
+  function getLeadPackage(key) {
+    return SPACE_NET_PACKAGES.find(p => p.key === key) || null;
+  }
+
+  // Recomputes everything derived from location, connection type and requested service.
+  function refreshLeadDerivedFields(lead) {
+    const coverage = resolveLeadCoverage(lead.locationText);
+    lead.coverageStatus = coverage.status;
+    lead.zoneKey = coverage.zoneKey;
+    lead.areaName = coverage.areaName;
+    lead.segment = lead.connectionType === 'office' ? 'corporate' : 'residential';
+    lead.assignedTeam = lead.connectionType === 'office' ? 'CORPORATE_SALES' : 'RESIDENTIAL_SALES';
+    lead.assignedTo = SALES_TEAMS[lead.assignedTeam].rep;
+    if (coverage.status === 'not_covered') {
+      lead.recommendedPackageKey = null;
+    } else if (getLeadPackage(lead.requestedPackageKey)) {
+      lead.recommendedPackageKey = lead.requestedPackageKey;
+    } else {
+      lead.recommendedPackageKey = lead.connectionType === 'office' ? 'office_1g' : 'home_150m';
+    }
+    return lead;
+  }
+
+  function getLeadMissingFields(lead) {
+    const missing = [];
+    if (!lead.name) missing.push('name');
+    if (!lead.phone) missing.push('phone');
+    if (!lead.locationText) missing.push('location');
+    if (!lead.requestedPackageKey) missing.push('requested service');
+    return missing;
+  }
+
+  function nextLeadId() {
+    const max = leads.reduce((m, l) => Math.max(m, parseInt(l.leadId.replace(/\D/g, ''), 10) || 0), 3000);
+    return 'LEAD-' + (max + 1);
+  }
+
+  function buildLead(input) {
+    const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === input.customerId) || null;
+    const lead = {
+      leadId: input.leadId || nextLeadId(),
+      name: (input.name || '').trim(),
+      phone: (input.phone || (customer ? customer.phone : '')).trim(),
+      locationText: (input.locationText || '').trim(),
+      connectionType: input.connectionType === 'office' ? 'office' : 'home',
+      requestedPackageKey: getLeadPackage(input.requestedPackageKey) ? input.requestedPackageKey : null,
+      status: LEAD_STAGES.some(s => s.key === input.status) ? input.status : 'new',
+      source: input.source || { channel: 'manual', conversationId: null, type: 'manual' },
+      customerId: customer ? customer.customerId : null,
+      followUp: input.followUp || null,
+      surveyRequest: input.surveyRequest || null,
+      createdAt: input.createdAt || leadTimestamp(),
+      history: input.history || [],
+      isDemo: true
+    };
+    refreshLeadDerivedFields(lead);
+    if (!lead.history.length) {
+      lead.history.push({ at: lead.createdAt, action: 'CREATED', by: input.createdBy || 'Sales staff', note: `Assigned to ${SALES_TEAMS[lead.assignedTeam].label}` });
+    }
+    return lead;
+  }
+
+  // Seed pipeline: fictional Dhaka-area prospects, fictional +880 1000-xxxxxx numbers.
+  const leads = [
+    buildLead({ leadId: 'LEAD-3001', name: 'Rafiq Islam', phone: '+880 1000-000301', locationText: 'Section 10, Mirpur', connectionType: 'home', requestedPackageKey: 'home_150m', status: 'new', source: { channel: 'facebook', conversationId: null, type: 'comment' }, createdAt: '2026-10-31 18:20', createdBy: 'AI Agent' }),
+    buildLead({ leadId: 'LEAD-3002', name: 'Nusrat Jahan', phone: '+880 1000-000302', locationText: 'Sector 7, Uttara', connectionType: 'home', requestedPackageKey: 'streamer_200m', status: 'contacted', followUp: { dueAt: '2026-10-31', note: 'Call back after 6 PM to fix an installation date', done: false }, source: { channel: 'whatsapp', conversationId: null, type: 'dm' }, createdAt: '2026-10-30 11:05', createdBy: 'AI Agent' }),
+    buildLead({ leadId: 'LEAD-3003', name: 'Orbit Apparels Ltd. (Kamal Hossain)', phone: '+880 1000-000303', locationText: 'Tejgaon Industrial Area', connectionType: 'office', requestedPackageKey: 'office_1g', status: 'interested', surveyRequest: { preferredSlot: '2026-11-03 10:00', status: 'requested', requestedAt: '2026-10-31 15:40' }, source: { channel: 'web', conversationId: null, type: 'dm' }, createdAt: '2026-10-29 09:30', createdBy: 'AI Agent' }),
+    buildLead({ leadId: 'LEAD-3004', name: 'Shapla Akter', phone: '+880 1000-000304', locationText: 'Hemayetpur, Savar', connectionType: 'home', status: 'lost', source: { channel: 'instagram', conversationId: null, type: 'dm' }, createdAt: '2026-10-28 16:10', createdBy: 'AI Agent' }),
+    buildLead({ leadId: 'LEAD-3005', name: 'Tanvir Hossain', customerId: 'CUST-5120', locationText: 'Road 9, Dhanmondi', connectionType: 'home', requestedPackageKey: 'lite_100m', status: 'connected', source: { channel: 'manual', conversationId: null, type: 'manual' }, createdAt: '2026-10-27 12:00', history: [
+      { at: '2026-10-27 12:00', action: 'CREATED', by: 'Sales staff', note: 'Second connection for home office · Assigned to Residential Sales' },
+      { at: '2026-10-28 10:15', action: 'STATUS_CHANGED', by: 'Imran Chowdhury (demo rep)', note: 'New → Interested' },
+      { at: '2026-10-30 17:45', action: 'STATUS_CHANGED', by: 'Imran Chowdhury (demo rep)', note: 'Interested → Connected · linked to CUST-5120' }
+    ] }),
+    buildLead({ leadId: 'LEAD-3006', name: 'Meghna Fintech Ltd. (Sadia Rahman)', phone: '+880 1000-000306', locationText: 'Gulshan 2', connectionType: 'office', requestedPackageKey: 'office_1g', status: 'new', source: { channel: 'web', conversationId: null, type: 'dm' }, createdAt: '2026-11-01 09:10', createdBy: 'AI Agent' })
+  ];
+
+  function getLeadById(leadId) {
+    return leads.find(l => l.leadId === leadId) || null;
+  }
+
+  function getLeadStageLabel(key) {
+    const stage = LEAD_STAGES.find(s => s.key === key);
+    return stage ? stage.label : key;
+  }
+
+  function createLead(input) {
+    if (!input || !(input.name || '').trim() || !(input.phone || '').trim()) return null;
+    const lead = buildLead(input);
+    leads.push(lead);
+    return lead;
+  }
+
+  function updateLeadStatus(leadId, status, by) {
+    const lead = getLeadById(leadId);
+    if (!lead || !LEAD_STAGES.some(s => s.key === status) || lead.status === status) return false;
+    let note = `${getLeadStageLabel(lead.status)} → ${getLeadStageLabel(status)}`;
+    if (status === 'connected') {
+      note += lead.customerId ? ` · linked to ${lead.customerId}` : ' · simulated conversion; no customer profile created';
+    }
+    lead.status = status;
+    lead.history.push({ at: leadTimestamp(), action: 'STATUS_CHANGED', by: by || 'Sales staff', note });
+    return true;
+  }
+
+  function isLeadFollowUpOverdue(lead, today) {
+    const day = today || leadTimestamp().slice(0, 10);
+    return !!(lead && lead.followUp && !lead.followUp.done && lead.followUp.dueAt < day);
+  }
+
+  function setLeadFollowUp(leadId, dueAt, note) {
+    const lead = getLeadById(leadId);
+    if (!lead || !/^\d{4}-\d{2}-\d{2}$/.test(dueAt || '')) return false;
+    lead.followUp = { dueAt, note: (note || '').trim() || 'Follow up with prospect', done: false };
+    lead.history.push({ at: leadTimestamp(), action: 'FOLLOW_UP_SET', by: 'Sales staff', note: `Reminder for ${dueAt}: ${lead.followUp.note}` });
+    return true;
+  }
+
+  function completeLeadFollowUp(leadId) {
+    const lead = getLeadById(leadId);
+    if (!lead || !lead.followUp || lead.followUp.done) return false;
+    lead.followUp.done = true;
+    lead.history.push({ at: leadTimestamp(), action: 'FOLLOW_UP_DONE', by: 'Sales staff', note: `Reminder for ${lead.followUp.dueAt} completed` });
+    return true;
+  }
+
+  function requestLeadSiteSurvey(leadId, preferredSlot) {
+    const lead = getLeadById(leadId);
+    if (!lead || lead.coverageStatus === 'not_covered' || !preferredSlot) return false;
+    lead.surveyRequest = { preferredSlot, status: 'requested', requestedAt: leadTimestamp() };
+    lead.history.push({ at: leadTimestamp(), action: 'SURVEY_REQUESTED', by: 'Sales staff', note: `Site survey requested for ${preferredSlot} (simulated; no technician dispatched)` });
+    return true;
+  }
+
+  function isNewConnectionInquiry(classification) {
+    if (!classification) return false;
+    const intents = classification.intents || [classification.intent];
+    return intents.some(i => NEW_CONNECTION_INTENTS.includes(i)) && !intents.some(i => NON_LEAD_INTENTS.includes(i));
+  }
+
+  // Simulated AI-to-lead capture. Idempotent per conversation: a repeat inquiry updates the
+  // existing lead instead of creating a duplicate.
+  function captureLeadFromInquiry(conv, classification, text) {
+    if (!conv || !isNewConnectionInquiry(classification)) return null;
+    const entities = classification.entities || {};
+    const existing = leads.find(l => l.source.conversationId === conv.conversationId);
+    if (existing) {
+      const filled = [];
+      if (!existing.locationText && entities.zone) { existing.locationText = entities.zone.name; filled.push('location'); }
+      if (!existing.requestedPackageKey && entities.pkg) { existing.requestedPackageKey = entities.pkg.key; filled.push('requested service'); }
+      refreshLeadDerivedFields(existing);
+      existing.history.push({ at: leadTimestamp(), action: 'AI_UPDATED', by: 'AI Agent', note: filled.length ? `Filled ${filled.join(', ')} from a new message` : 'Repeat inquiry on the same conversation; no duplicate lead created' });
+      renderSalesPipeline();
+      return { lead: existing, created: false };
+    }
+    const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === conv.customerId);
+    const isOffice = /\b(office|corporate|company|business|factory)\b|অফিস/i.test(text || '') || !!(customer && /corporate|enterprise/i.test(customer.accountStatus));
+    const lead = buildLead({
+      name: conv.customerName,
+      customerId: customer ? customer.customerId : null,
+      locationText: entities.zone ? entities.zone.name : '',
+      connectionType: isOffice ? 'office' : 'home',
+      requestedPackageKey: entities.pkg ? entities.pkg.key : null,
+      source: { channel: conv.channel, conversationId: conv.conversationId, type: conv.type },
+      createdBy: 'AI Agent'
+    });
+    leads.push(lead);
+    conv.messages.push({
+      id: 'sys-lead-' + Date.now(),
+      sender: 'system',
+      eventType: 'lead',
+      text: `AI Agent created sales lead ${lead.leadId} for ${SALES_TEAMS[lead.assignedTeam].label} (simulated demo record)`,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    });
+    renderSalesPipeline();
+    return { lead, created: true };
+  }
+
+  // Copilot "Suggest Sales Lead" action: open this conversation's lead, capturing it if needed.
+  function openLeadFromConversation(conv) {
+    let lead = leads.find(l => l.source.conversationId === conv.conversationId);
+    if (!lead) {
+      let text = '';
+      for (let i = conv.messages.length - 1; i >= 0; i--) {
+        const m = conv.messages[i];
+        if (m.sender === 'customer' || m.sender === 'voice') { text = m.text || m.transcript || ''; break; }
+      }
+      const result = captureLeadFromInquiry(conv, classifyCustomerIntent(text, aiLanguageMode), text);
+      if (!result) {
+        showToast('No New-Connection Lead', 'This inquiry is not a new-connection request (for example a package change), so no lead was created.');
+        return;
+      }
+      lead = result.lead;
+      renderCustomerConversation(conv.conversationId);
+    }
+    switchView('sales-leads');
+    openLeadModal(lead.leadId);
+  }
+
+  // --- Sales view rendering ---
+  function getFilteredLeads() {
+    const q = ((document.getElementById('sales-search') || {}).value || '').trim().toLowerCase();
+    const team = (document.getElementById('sales-team-filter') || {}).value || 'ALL';
+    const coverage = (document.getElementById('sales-coverage-filter') || {}).value || 'ALL';
+    return leads.filter(l =>
+      (team === 'ALL' || l.assignedTeam === team) &&
+      (coverage === 'ALL' || l.coverageStatus === coverage) &&
+      (!q || [l.leadId, l.name, l.phone, l.locationText, l.areaName || ''].join(' ').toLowerCase().includes(q))
+    );
+  }
+
+  function renderLeadBadge(cls, icon, text) {
+    return `<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded font-label-sm text-label-sm ${cls}"><span class="material-symbols-outlined text-[13px]" aria-hidden="true">${icon}</span>${escapeHtml(text)}</span>`;
+  }
+
+  function renderLeadCard(lead) {
+    const cov = LEAD_COVERAGE_META[lead.coverageStatus];
+    const pkg = getLeadPackage(lead.recommendedPackageKey);
+    const missing = getLeadMissingFields(lead);
+    return `<button type="button" onclick="openLeadModal('${lead.leadId}')" class="lead-card text-left w-full rounded-lg bg-surface-container-lowest p-space-md flex flex-col gap-1.5 shadow-[0_1px_2px_rgba(15,23,42,0.06)] hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary transition">
+        <span class="flex items-center justify-between gap-2"><span class="font-code-telemetry text-code-telemetry text-primary">${lead.leadId}</span><span class="font-label-sm text-label-sm text-on-surface-variant">${SALES_TEAMS[lead.assignedTeam].label}</span></span>
+        <span class="font-headline-sm text-headline-sm text-on-surface">${escapeHtml(lead.name)}</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">${escapeHtml(lead.locationText || 'Location not provided')}</span>
+        <span class="flex flex-wrap gap-1">
+          ${renderLeadBadge(cov.cls, cov.icon, cov.label)}
+          ${pkg ? renderLeadBadge('bg-surface-container text-on-surface', 'speed', pkg.name) : ''}
+          ${isLeadFollowUpOverdue(lead) ? renderLeadBadge('bg-error-container text-on-error-container', 'alarm', 'Follow-up overdue') : ''}
+          ${lead.source.conversationId ? renderLeadBadge('bg-tertiary-fixed text-on-tertiary-fixed', 'smart_toy', 'From chat') : ''}
+          ${missing.length ? renderLeadBadge('bg-surface-container-highest text-on-surface-variant', 'edit_note', 'Missing ' + missing.join(', ')) : ''}
+        </span>
+      </button>`;
+  }
+
+  function renderSalesPipeline() {
+    const board = document.getElementById('sales-pipeline');
+    const strip = document.getElementById('sales-stage-strip');
+    if (!board || !strip) return;
+    strip.innerHTML = LEAD_STAGES.map(s => {
+      const count = leads.filter(l => l.status === s.key).length;
+      return `<li class="relative flex justify-center"><button type="button" onclick="scrollToLeadStage('${s.key}')" aria-label="${s.label}: ${count} ${count === 1 ? 'lead' : 'leads'}" class="sales-stage-node flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary">
+          <span class="w-9 h-9 rounded-full grid place-items-center bg-inverse-surface ring-1 ring-inverse-primary/40 font-code-metric text-code-metric text-inverse-on-surface">${count}</span>
+          <span class="font-label-sm text-label-sm text-inverse-on-surface/80">${s.label}</span>
+        </button></li>`;
+    }).join('');
+    const visible = getFilteredLeads();
+    board.innerHTML = LEAD_STAGES.map(s => {
+      const items = visible.filter(l => l.status === s.key);
+      return `<section id="sales-col-${s.key}" class="snap-start shrink-0 w-[85%] sm:w-[300px] lg:w-auto lg:flex-1 lg:min-w-[210px] flex flex-col gap-space-sm rounded-xl bg-surface-container-low p-space-sm" aria-labelledby="sales-col-${s.key}-h">
+          <h2 id="sales-col-${s.key}-h" class="flex items-center justify-between px-space-xs pt-1 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">${s.icon}</span>${s.label}</span>
+            <span class="font-code-telemetry text-code-telemetry">${items.length}</span>
+          </h2>
+          ${items.length ? items.map(renderLeadCard).join('') : '<p class="px-space-xs py-space-lg text-center font-body-sm text-body-sm text-outline">No leads in this stage</p>'}
+        </section>`;
+    }).join('');
+  }
+
+  function scrollToLeadStage(stageKey) {
+    const col = document.getElementById('sales-col-' + stageKey);
+    if (!col) return;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    col.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest', inline: 'start' });
+  }
+
+  // --- Dialogs (same open/close transition as the other modals, plus focus return) ---
+  let leadDialogReturnFocus = null;
+
+  function showLeadDialog(modalId, containerId, focusSelector) {
+    const modal = document.getElementById(modalId);
+    const container = document.getElementById(containerId);
+    if (!modal || !container) return;
+    if (modal.classList.contains('hidden')) leadDialogReturnFocus = document.activeElement;
     modal.classList.remove('hidden');
     setTimeout(() => {
       modal.classList.remove('opacity-0');
       container.classList.remove('scale-95');
       container.classList.add('scale-100');
+      const first = container.querySelector(focusSelector || 'input, select, textarea') || container.querySelector('button');
+      if (first) first.focus();
     }, 10);
   }
 
-  function closeLeadModal() {
-    const modal = document.getElementById('lead-modal');
-    const container = document.getElementById('lead-modal-container');
-    if (!modal || !container) return;
+  function hideLeadDialog(modalId, containerId) {
+    const modal = document.getElementById(modalId);
+    const container = document.getElementById(containerId);
+    if (!modal || !container || modal.classList.contains('hidden')) return;
     modal.classList.add('opacity-0');
     container.classList.remove('scale-100');
     container.classList.add('scale-95');
     setTimeout(() => modal.classList.add('hidden'), 200);
+    if (leadDialogReturnFocus && document.contains(leadDialogReturnFocus)) leadDialogReturnFocus.focus();
+    leadDialogReturnFocus = null;
   }
 
-  function triggerLeadAction(actionName, msg) {
-    closeLeadModal();
-    showToast(actionName, msg);
+  let currentLeadId = null;
+
+  function openLeadModal(leadId) {
+    const lead = getLeadById(leadId);
+    if (!lead) {
+      showToast('Lead Not Found', `No demo lead with ID ${leadId}.`);
+      return;
+    }
+    currentLeadId = leadId;
+    renderLeadModal(lead);
+    showLeadDialog('lead-modal', 'lead-modal-container', 'button');
   }
+
+  function closeLeadModal() {
+    hideLeadDialog('lead-modal', 'lead-modal-container');
+  }
+
+  function renderLeadField(label, valueHtml) {
+    return `<div class="flex flex-col gap-0.5"><dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">${label}</dt><dd class="font-body-sm text-body-sm text-on-surface">${valueHtml}</dd></div>`;
+  }
+
+  function renderLeadModal(lead) {
+    const body = document.getElementById('lead-modal-body');
+    if (!body) return;
+    document.getElementById('lead-modal-id').textContent = `${lead.leadId} · demo record`;
+    document.getElementById('lead-modal-title').textContent = lead.name;
+    document.getElementById('lead-modal-sub').textContent = `${SALES_TEAMS[lead.assignedTeam].label} · ${lead.assignedTo} · created ${lead.createdAt}`;
+
+    const cov = LEAD_COVERAGE_META[lead.coverageStatus];
+    const covNote = {
+      covered: `${lead.areaName} is inside the simulated SpaceNet fiber footprint.`,
+      unverified: lead.locationText ? 'Area not found in the demo coverage map. Needs a manual check.' : 'No location yet. Ask the prospect for their area.',
+      not_covered: `${lead.areaName} is outside the simulated fiber footprint.`
+    }[lead.coverageStatus];
+    const pkg = getLeadPackage(lead.recommendedPackageKey);
+    const requested = getLeadPackage(lead.requestedPackageKey);
+    const missing = getLeadMissingFields(lead);
+    const today = leadTimestamp().slice(0, 10);
+
+    const sourceHtml = lead.source.conversationId
+      ? `${escapeHtml(lead.source.channel)} ${escapeHtml(lead.source.type)} · <button type="button" class="text-primary underline" onclick="openLeadSourceChat('${lead.leadId}')">Open chat ${escapeHtml(lead.source.conversationId)}</button>`
+      : escapeHtml(lead.source.channel === 'manual' ? 'Entered by staff' : `${lead.source.channel} ${lead.source.type}`);
+    const customerHtml = lead.customerId
+      ? `<button type="button" class="text-primary underline" onclick="openLeadCustomerProfile('${lead.leadId}')">${escapeHtml(lead.customerId)} · open 360° profile</button>`
+      : 'Prospect (no customer record)';
+
+    const stageButtons = LEAD_STAGES.map(s => {
+      const active = s.key === lead.status;
+      return `<button type="button" aria-pressed="${active}" onclick="changeLeadStatusFromModal('${s.key}')" class="flex items-center gap-1 px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition ${active ? 'bg-primary text-on-primary font-semibold' : 'bg-surface-container text-on-surface hover:bg-surface-container-high'}"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">${s.icon}</span>${s.label}</button>`;
+    }).join('');
+
+    const followUpHtml = lead.followUp
+      ? `<div class="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-surface-container-low p-space-sm">
+          <span class="font-body-sm text-body-sm"><strong>${escapeHtml(lead.followUp.dueAt)}</strong> · ${escapeHtml(lead.followUp.note)}
+            ${lead.followUp.done ? renderLeadBadge('bg-secondary-fixed text-on-secondary-fixed', 'done', 'Done') : (isLeadFollowUpOverdue(lead) ? renderLeadBadge('bg-error-container text-on-error-container', 'alarm', 'Overdue') : '')}</span>
+          ${lead.followUp.done ? '' : `<button type="button" onclick="completeLeadFollowUpFromModal()" class="px-space-sm py-1 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high">Mark done</button>`}
+        </div>`
+      : '<p class="font-body-sm text-body-sm text-on-surface-variant">No reminder set.</p>';
+
+    const surveyHtml = lead.surveyRequest
+      ? `<p class="font-body-sm text-body-sm">${renderLeadBadge('bg-tertiary-fixed text-on-tertiary-fixed', 'event', 'Requested')} for <strong>${escapeHtml(lead.surveyRequest.preferredSlot)}</strong>. Simulated request; no technician has been dispatched (scheduling arrives with Module 09).</p>`
+      : (lead.coverageStatus === 'not_covered'
+        ? '<p class="font-body-sm text-body-sm text-on-surface-variant">Not available: the area is outside simulated coverage.</p>'
+        : `<div class="flex flex-wrap items-end gap-2">
+            <label class="flex flex-col gap-1 font-label-sm text-label-sm text-on-surface-variant">Preferred visit
+              <input id="lead-survey-slot" type="datetime-local" class="px-space-sm py-1 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary">
+            </label>
+            <button type="button" onclick="requestLeadSurveyFromModal()" class="px-space-sm py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high">Request site survey</button>
+          </div>`);
+
+    body.innerHTML = `
+      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+        ${renderLeadField('Phone', escapeHtml(lead.phone || 'Not provided'))}
+        ${renderLeadField('Location', escapeHtml(lead.locationText || 'Not provided'))}
+        ${renderLeadField('Coverage', `${renderLeadBadge(cov.cls, cov.icon, cov.label)} <span class="block mt-1 text-on-surface-variant">${escapeHtml(covNote)}</span>`)}
+        ${renderLeadField('Connection', escapeHtml(lead.connectionType === 'office' ? 'Office / corporate' : 'Home / residential'))}
+        ${renderLeadField('Requested service', escapeHtml(requested ? requested.name : 'Not stated'))}
+        ${renderLeadField('Recommended package', pkg ? `${escapeHtml(pkg.name)} · ${escapeHtml(pkg.price)} <span class="text-on-surface-variant">(demo pricing)</span>` : 'None (outside coverage)')}
+        ${renderLeadField('Source', sourceHtml)}
+        ${renderLeadField('Customer link', customerHtml)}
+      </dl>
+      ${missing.length ? `<p class="rounded-lg bg-surface-container-highest p-space-sm font-body-sm text-body-sm text-on-surface-variant">Still missing: <strong>${escapeHtml(missing.join(', '))}</strong>. Collect these before the site survey.</p>` : ''}
+      <div class="flex flex-col gap-space-xs">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">Stage</h3>
+        <div class="flex flex-wrap gap-1.5" role="group" aria-label="Lead stage">${stageButtons}</div>
+      </div>
+      <div class="flex flex-col gap-space-xs">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">Follow-up reminder</h3>
+        ${followUpHtml}
+        <div class="flex flex-wrap items-end gap-2">
+          <label class="flex flex-col gap-1 font-label-sm text-label-sm text-on-surface-variant">Due date
+            <input id="lead-followup-date" type="date" value="${today}" class="px-space-sm py-1 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary">
+          </label>
+          <label class="flex flex-col gap-1 flex-1 min-w-[160px] font-label-sm text-label-sm text-on-surface-variant">Note
+            <input id="lead-followup-note" type="text" placeholder="e.g. Share package brochure" class="px-space-sm py-1 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary">
+          </label>
+          <button type="button" onclick="setLeadFollowUpFromModal()" class="px-space-sm py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high">Set reminder</button>
+        </div>
+      </div>
+      <div class="flex flex-col gap-space-xs">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">Site survey</h3>
+        ${surveyHtml}
+      </div>
+      <div class="flex flex-col gap-space-xs">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">History</h3>
+        <ol class="flex flex-col gap-1.5 border-l border-surface-container-high pl-space-md">
+          ${lead.history.slice().reverse().map(h => `<li class="font-body-sm text-body-sm text-on-surface"><span class="font-code-telemetry text-code-telemetry text-on-surface-variant">${escapeHtml(h.at)}</span> · ${escapeHtml(h.note)} <span class="text-on-surface-variant">(${escapeHtml(h.by)})</span></li>`).join('')}
+        </ol>
+      </div>`;
+  }
+
+  function refreshLeadViews() {
+    renderSalesPipeline();
+    const lead = getLeadById(currentLeadId);
+    if (lead) renderLeadModal(lead);
+  }
+
+  function changeLeadStatusFromModal(status) {
+    if (!updateLeadStatus(currentLeadId, status)) return;
+    refreshLeadViews();
+    showToast('Lead Stage Updated', `${currentLeadId} moved to ${getLeadStageLabel(status)} (demo record).`);
+  }
+
+  function setLeadFollowUpFromModal() {
+    const date = (document.getElementById('lead-followup-date') || {}).value;
+    const note = (document.getElementById('lead-followup-note') || {}).value;
+    if (!setLeadFollowUp(currentLeadId, date, note)) {
+      showToast('Reminder Not Set', 'Choose a valid due date first.');
+      return;
+    }
+    refreshLeadViews();
+    showToast('Follow-up Reminder Set', `In-app reminder only for ${date}; no message is sent.`);
+  }
+
+  function completeLeadFollowUpFromModal() {
+    if (!completeLeadFollowUp(currentLeadId)) return;
+    refreshLeadViews();
+    showToast('Follow-up Completed', `${currentLeadId} reminder marked done.`);
+  }
+
+  function requestLeadSurveyFromModal() {
+    const slot = ((document.getElementById('lead-survey-slot') || {}).value || '').replace('T', ' ');
+    if (!requestLeadSiteSurvey(currentLeadId, slot)) {
+      showToast('Survey Not Requested', 'Pick a preferred visit date and time first.');
+      return;
+    }
+    refreshLeadViews();
+    showToast('Site Survey Requested (Simulated)', 'Recorded on the lead only. No technician or customer was contacted.');
+  }
+
+  function openLeadSourceChat(leadId) {
+    const lead = getLeadById(leadId);
+    if (!lead || !lead.source.conversationId) return;
+    closeLeadModal();
+    goToChatFromTicket(lead.source.conversationId);
+  }
+
+  function openLeadCustomerProfile(leadId) {
+    const lead = getLeadById(leadId);
+    if (!lead || !lead.customerId) return;
+    closeLeadModal();
+    goToProfileFromChat(lead.customerId);
+  }
+
+  // --- New lead form ---
+  function readLeadForm() {
+    const val = id => ((document.getElementById(id) || {}).value || '').trim();
+    return {
+      name: val('lead-form-name'),
+      phone: val('lead-form-phone'),
+      locationText: val('lead-form-location'),
+      connectionType: val('lead-form-type') || 'home',
+      requestedPackageKey: val('lead-form-package') || null
+    };
+  }
+
+  function updateLeadFormPreview() {
+    const preview = document.getElementById('lead-form-preview');
+    if (!preview) return;
+    const draft = refreshLeadDerivedFields(readLeadForm());
+    const cov = LEAD_COVERAGE_META[draft.coverageStatus];
+    const pkg = getLeadPackage(draft.recommendedPackageKey);
+    preview.innerHTML = `<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">AI routing preview</p>
+      <p>${renderLeadBadge(cov.cls, cov.icon, cov.label)} &rarr; <strong>${SALES_TEAMS[draft.assignedTeam].label}</strong> (${escapeHtml(draft.assignedTo)})</p>
+      <p class="mt-1">Recommended: ${pkg ? `${escapeHtml(pkg.name)} · ${escapeHtml(pkg.price)}` : 'none, area outside simulated coverage'}</p>`;
+  }
+
+  function openLeadCreateModal() {
+    ['lead-form-name', 'lead-form-phone', 'lead-form-location'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    const type = document.getElementById('lead-form-type');
+    if (type) type.value = 'home';
+    const pkgSelect = document.getElementById('lead-form-package');
+    if (pkgSelect) {
+      pkgSelect.innerHTML = '<option value="">Not sure yet</option>' + SPACE_NET_PACKAGES.map(p => `<option value="${p.key}">${escapeHtml(p.name)} · ${escapeHtml(p.price)}</option>`).join('');
+    }
+    const err = document.getElementById('lead-form-error');
+    if (err) err.classList.add('hidden');
+    updateLeadFormPreview();
+    showLeadDialog('lead-create-modal', 'lead-create-container');
+  }
+
+  function closeLeadCreateModal() {
+    hideLeadDialog('lead-create-modal', 'lead-create-container');
+  }
+
+  function submitLeadCreateForm(event) {
+    if (event) event.preventDefault();
+    const input = readLeadForm();
+    const err = document.getElementById('lead-form-error');
+    let problem = '';
+    let field = '';
+    if (!input.name) { problem = 'Enter the prospect name.'; field = 'lead-form-name'; }
+    else if (input.phone.replace(/\D/g, '').length < 10) { problem = 'Enter a phone number with at least 10 digits.'; field = 'lead-form-phone'; }
+    if (problem) {
+      if (err) { err.textContent = problem; err.classList.remove('hidden'); }
+      const el = document.getElementById(field);
+      if (el) el.focus();
+      return null;
+    }
+    const lead = createLead({ ...input, createdBy: 'Sales staff' });
+    closeLeadCreateModal();
+    renderSalesPipeline();
+    showToast('Lead Created', `${lead.leadId} assigned to ${SALES_TEAMS[lead.assignedTeam].label} (demo record).`);
+    return lead;
+  }
+
+  renderSalesPipeline();
 
   // 7. Network Outage & Maintenance Modal
   function openMaintenanceModal() {

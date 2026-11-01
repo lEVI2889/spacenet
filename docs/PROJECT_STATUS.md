@@ -1,9 +1,9 @@
 # SpaceNet AI CRM — Project Status & Roadmap
 
-**Current Date:** 2026-10-31<br>
+**Current Date:** 2026-11-01<br>
 **Phase:** Frontend Interactive Demonstration Prototype<br>
-**Active Feature Branch:** `feature/rohan-module-05-ai-diagnostics`<br>
-**Target Pull Request Branch:** `feature/rohan-module-04-customer-profiles` (Stacked PR Strategy)<br>
+**Active Feature Branch:** `feature/adnan-module-06-sales-leads`<br>
+**Target Pull Request Branch:** `main` (Modules 01–05 merged via PR #7; Escape/command-palette fix merged via PR #8)<br>
 **Repository:** `https://github.com/lEVI2889/spacenet`
 
 ---
@@ -42,6 +42,7 @@ SpaceNet/
 ├── test_module_03.mjs                  # Module 03 empirical validation suite (135 tests)
 ├── test_module_04.mjs                  # Module 04 empirical validation suite (131 tests)
 ├── test_module_05.mjs                  # Module 05 empirical validation suite (157 tests)
+├── test_module_06.mjs                  # Module 06 Sales & Leads suite incl. static markup checks (96 tests)
 └── .gitignore                          # Standard git ignore definitions
 ```
 
@@ -109,6 +110,13 @@ SpaceNet/
 
 ---
 
+## 8a. Module 06 Implementation Status (Sales & Leads) — DEMO FLOW COMPLETE, PENDING REVIEW
+
+* **Completion Handoff:** `docs/MODULE_06_COMPLETION_HANDOFF.md`
+* **Scope:** Five-stage fictional lead pipeline, lead form, automatic AI lead capture from new-connection inquiries (idempotent per conversation), coverage tri-state, residential/corporate routing, follow-up reminders, simulated site-survey requests. Contract v1.6.0 (Section 15).
+
+---
+
 ## 9. Canonical Project Roadmap (Modules 01–10)
 
 ### Rohan (Customer-Facing & Support Lead)
@@ -119,7 +127,7 @@ SpaceNet/
 * **Module 05:** AI Troubleshooting & Diagnostics (Completed & Validated on Stacked Branch)
 
 ### Adnan (Operations & Admin Lead)
-* **Module 06:** Sales & Leads
+* **Module 06:** Sales & Leads (Demo flow complete on feature branch; awaiting review and PR)
 * **Module 07:** Billing & Plans
 * **Module 08:** Network Outages / NOC
 * **Module 09:** Technician & Field Operations
