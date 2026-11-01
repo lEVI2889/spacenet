@@ -2,7 +2,7 @@
 
 **Current Date:** 2026-11-01<br>
 **Phase:** Frontend Interactive Demonstration Prototype<br>
-**Active Feature Branch:** `feature/adnan-module-10-admin-analytics`<br>
+**Active Feature Branch:** `feature/spacenet-galaxy-immersion-polish`<br>
 **Target Pull Request Branch:** `main` (Modules 01–05 merged via PR #7; Escape/command-palette fix merged via PR #8)<br>
 **Repository:** `https://github.com/lEVI2889/spacenet`
 
@@ -48,6 +48,7 @@ SpaceNet/
 ├── test_module_09.mjs                  # Module 09 Technician Operations suite incl. static markup checks (72 tests)
 ├── test_module_10.mjs                  # Module 10 Admin & Analytics suite incl. metric-consistency checks (75 tests)
 ├── test_mobile_shell.mjs               # Responsive shell / phone drawer suite (22 tests)
+├── test_galaxy_ui.mjs                  # Galaxy UI suite: navigation, backdrop motion, dialog focus (23 tests)
 └── .gitignore                          # Standard git ignore definitions
 ```
 
@@ -122,7 +123,14 @@ SpaceNet/
 
 ---
 
-## 8e. Module 10 Implementation Status (Admin & Analytics) — DEMO FLOW COMPLETE, PENDING REVIEW
+## 8f. Galaxy UI/UX Upgrade — IMPLEMENTED ON BRANCH, PENDING REVIEW
+
+* **Handoff:** `docs/GALAXY_UI_UPGRADE_HANDOFF.md`
+* **Scope:** Visual and navigation layer only (no CRM rule changes): sidebar-only navigation with live badges, richer layered galaxy with eased scroll parallax, Mission Control dashboard tiles, consistent page titles and heroes, dialog focus return. Contract v1.11.0 (Section 20).
+
+---
+
+## 8e. Module 10 Implementation Status (Admin & Analytics) — MERGED (PR #15)
 
 * **Completion Handoff:** `docs/MODULE_10_COMPLETION_HANDOFF.md`
 * **Scope:** Live Dashboard KPIs and navigation badges from one metric function, Analytics view with honest not-available notes, AI per-channel switch wired to the simulator, working hours, illustrative role matrix, package price overrides that never touch issued invoices. Contract v1.10.0 (Section 19).
@@ -164,7 +172,7 @@ SpaceNet/
 * **Module 07:** Billing & Plans (Merged via PR #12)
 * **Module 08:** Network Outages / NOC (Merged via PR #11)
 * **Module 09:** Technician & Field Operations (Merged via PR #14)
-* **Module 10:** Admin & Analytics (Demo flow complete on feature branch; awaiting review and PR)
+* **Module 10:** Admin & Analytics (Merged via PR #15)
 
 ---
 

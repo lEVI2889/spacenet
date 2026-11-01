@@ -71,7 +71,7 @@ const snapshot = () => JSON.stringify({ c: ctx.SPACE_NET_CUSTOMERS, t: ctx.ticke
 
 // -------------------------------------------------------------------------
 console.log('--- GROUP 1: Static markup integrity (real HTML) ---');
-['view-analytics', 'analytics-grid', 'dash-kpis', 'nav-btn-analytics', 'nav-badge-inbox', 'nav-badge-tickets', 'nav-badge-customers', 'nav-badge-sales',
+['view-analytics', 'analytics-grid', 'dash-kpis', 'nav-badge-inbox', 'nav-badge-tickets', 'nav-badge-customers', 'nav-badge-sales',
   'nav-badge-billing', 'nav-badge-technicians', 'nav-badge-outages', 'admin-ai-channels', 'admin-hours-form', 'admin-hours-start', 'admin-hours-end',
   'admin-hours-days', 'admin-hours-error', 'admin-hours-summary', 'admin-roles-head', 'admin-roles-body', 'admin-pricing', 'admin-pricing-error'].forEach(id => assert(idInMarkup(id), `Static element #${id} exists`));
 const m10Start = appScript.indexOf('MODULE 10: ADMIN & ANALYTICS');
@@ -80,6 +80,7 @@ const m10Code = appScript.slice(m10Start, m10End);
 const literalIds = [...new Set([...m10Code.matchAll(/getElementById\('([a-z0-9-]+)'\)/g)].map(m => m[1]))];
 assert(m10Start > 0 && m10End > m10Start, 'Module 10 code section located');
 assert(literalIds.length >= 12 && literalIds.every(idInMarkup), `Every literal id looked up by Module 10 exists in markup (${literalIds.length} ids)`);
+assert([['unified-inbox','nav-badge-inbox'],['tickets','nav-badge-tickets'],['customer-profiles','nav-badge-customers'],['sales-leads','nav-badge-sales'],['billing','nav-badge-billing'],['technicians','nav-badge-technicians'],['network-outages','nav-badge-outages']].every(([p, b]) => new RegExp(`data-path="${p}"[^>]*>(?:(?!</a>)[\\s\\S])*id="${b}"`).test(markup)), 'Every navigation badge sits inside its sidebar link');
 assert(/data-path="analytics"/.test(markup) && (appScript.match(/(validViews|availableViews) = \[[^\]]*'analytics'[^\]]*\]/g) || []).length === 2, 'Sidebar link and both router lists include #analytics');
 assert(!/>4,829<|>3,912<|>142<|\$38,400|81\.0% Auto|1 Active\s*<\/span>/.test(markup), 'Hardcoded dashboard KPI figures and the static "1 Active" badge are gone');
 assert((markup.match(/Illustrative sample/g) || []).length === 2, 'Remaining static dashboard chart and activity feed are labelled illustrative');
@@ -117,7 +118,7 @@ assert(/>7<\/span>/.test(kpis) && />4<\/span>/.test(kpis), 'Tiles show the compu
 ctx.refreshNavBadges();
 const badge = id => el(id).textContent;
 assert(badge('nav-badge-inbox') === '7' && badge('nav-badge-tickets') === '4' && badge('nav-badge-customers') === '9' && badge('nav-badge-sales') === '4', 'Inbox, tickets, customers and sales badges');
-assert(badge('nav-badge-outages') === '1 Active' && badge('nav-badge-technicians') === '2' && badge('nav-badge-billing') === String(m.overdueInvoices), 'Outage, technician and billing badges');
+assert(badge('nav-badge-outages') === '1' && badge('nav-badge-technicians') === '2' && badge('nav-badge-billing') === String(m.overdueInvoices), 'Outage, technician and billing badges');
 
 // -------------------------------------------------------------------------
 console.log('\n--- GROUP 4: State stays consistent across modules ---');
