@@ -2,7 +2,7 @@
 
 **Current Date:** 2026-11-01<br>
 **Phase:** Frontend Interactive Demonstration Prototype<br>
-**Active Feature Branch:** `feature/adnan-module-07-billing-plans`<br>
+**Active Feature Branch:** `feature/adnan-module-09-technician-ops`<br>
 **Target Pull Request Branch:** `main` (Modules 01–05 merged via PR #7; Escape/command-palette fix merged via PR #8)<br>
 **Repository:** `https://github.com/lEVI2889/spacenet`
 
@@ -45,6 +45,8 @@ SpaceNet/
 ├── test_module_06.mjs                  # Module 06 Sales & Leads suite incl. static markup checks (96 tests)
 ├── test_module_07.mjs                  # Module 07 Billing & Plans suite incl. static markup and duplicate-name checks (79 tests)
 ├── test_module_08.mjs                  # Module 08 Network Outages suite incl. static markup checks (79 tests)
+├── test_module_09.mjs                  # Module 09 Technician Operations suite incl. static markup checks (72 tests)
+├── test_mobile_shell.mjs               # Responsive shell / phone drawer suite (22 tests)
 └── .gitignore                          # Standard git ignore definitions
 ```
 
@@ -119,6 +121,13 @@ SpaceNet/
 
 ---
 
+## 8d. Module 09 Implementation Status (Technician Operations) — DEMO FLOW COMPLETE, PENDING REVIEW
+
+* **Completion Handoff:** `docs/MODULE_09_COMPLETION_HANDOFF.md`
+* **Scope:** Field jobs derived from survey requests and escalated tickets, fictional technician roster, scheduling, eligibility-checked assignment, lifecycle to completion, installation after a completed survey, simulated visit notifications. Contract v1.9.0 (Section 18). Mobile shell (PR #13) is merged.
+
+---
+
 ## 8c. Module 07 Implementation Status (Billing & Plans) — DEMO FLOW COMPLETE, PENDING REVIEW
 
 * **Completion Handoff:** `docs/MODULE_07_COMPLETION_HANDOFF.md`
@@ -144,9 +153,9 @@ SpaceNet/
 
 ### Adnan (Operations & Admin Lead)
 * **Module 06:** Sales & Leads (Merged via PR #9)
-* **Module 07:** Billing & Plans (Demo flow complete on feature branch; awaiting review and PR)
+* **Module 07:** Billing & Plans (Merged via PR #12)
 * **Module 08:** Network Outages / NOC (Merged via PR #11)
-* **Module 09:** Technician & Field Operations
+* **Module 09:** Technician & Field Operations (Demo flow complete on feature branch; awaiting review and PR)
 * **Module 10:** Admin & Analytics
 
 ---

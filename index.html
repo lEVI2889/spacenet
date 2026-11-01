@@ -53,6 +53,7 @@ main.bg-surface { background-color: transparent; }
 #space-backdrop[data-view="sales-leads"] .space-sky { transform: translate3d(-2%, 7%, 0); }
 #space-backdrop[data-view="network-outages"] .space-sky { transform: translate3d(7%, -1%, 0); }
 #space-backdrop[data-view="billing"] .space-sky { transform: translate3d(-5%, -6%, 0); }
+#space-backdrop[data-view="technicians"] .space-sky { transform: translate3d(6%, 3%, 0); }
 /* Header joins the dark frame; its search box and pills keep their own light surfaces. */
 #app-header { background-color: rgba(6, 10, 28, .72); box-shadow: 0 1px 0 rgba(179, 197, 255, .10); }
 #app-header .text-right .text-on-surface { color: #eef0ff; }
@@ -109,7 +110,7 @@ html { -webkit-tap-highlight-color: transparent; }
   .app-view:not(.hidden) { animation: space-view-fade 150ms ease; }
 }
 </style>
-</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.02"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.04" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.09" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.16" data-tile="900"></div></div></div><div id="mobile-nav-backdrop" class="hidden" aria-hidden="true" onclick="closeMobileNav()"></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><button type="button" id="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close navigation" class="md:hidden absolute top-3 right-3 z-10 p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><button type="button" id="mobile-nav-btn" onclick="openMobileNav()" aria-label="Open navigation" aria-controls="app-sidebar" aria-expanded="false" class="md:hidden shrink-0 p-1.5 rounded-lg text-inverse-on-surface hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary"><span class="material-symbols-outlined" aria-hidden="true">menu</span></button><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" onclick="openCmdPalette()" onfocus="openCmdPalette()" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
+</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.02"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.04" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.09" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.16" data-tile="900"></div></div></div><div id="mobile-nav-backdrop" class="hidden" aria-hidden="true" onclick="closeMobileNav()"></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><button type="button" id="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close navigation" class="md:hidden absolute top-3 right-3 z-10 p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="technicians" href="#"><span class="material-symbols-outlined text-[20px]">engineering</span><span class="font-body-md text-body-md sidebar-text">Technician Ops</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><button type="button" id="mobile-nav-btn" onclick="openMobileNav()" aria-label="Open navigation" aria-controls="app-sidebar" aria-expanded="false" class="md:hidden shrink-0 p-1.5 rounded-lg text-inverse-on-surface hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary"><span class="material-symbols-outlined" aria-hidden="true">menu</span></button><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" onclick="openCmdPalette()" onfocus="openCmdPalette()" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
 <!-- Interactive View Switcher Sub-Header Bar & Live System Metric Ribbon -->
 <div class="sticky top-16 z-30 bg-surface/90 backdrop-blur-md px-space-md py-space-sm mb-space-lg shadow-sm flex flex-wrap items-center justify-between gap-space-md rounded-xl">
 <div class="flex items-center gap-space-xs overflow-x-auto py-1">
@@ -145,6 +146,10 @@ html { -webkit-tap-highlight-color: transparent; }
 <button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-billing" onclick="switchView('billing')">
 <span class="material-symbols-outlined text-[18px]">receipt_long</span>
 <span class="">Billing</span>
+</button>
+<button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-technicians" onclick="switchView('technicians')">
+<span class="material-symbols-outlined text-[18px]">engineering</span>
+<span class="">Technicians</span>
 </button>
 <button class="view-switch-btn flex items-center gap-space-xs px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" id="nav-btn-network-outages" onclick="switchView('network-outages')">
 <span class="material-symbols-outlined text-[18px]">router</span>
@@ -1788,6 +1793,54 @@ html { -webkit-tap-highlight-color: transparent; }
 </div>
 
 <!-- ========================================================================= -->
+<!-- VIEW: TECHNICIAN OPERATIONS (MODULE 09)                                    -->
+<!-- ========================================================================= -->
+<section class="app-view flex flex-col gap-space-lg hidden" id="view-technicians" aria-labelledby="tech-heading">
+<div class="sales-hero relative overflow-hidden rounded-xl bg-inverse-surface text-inverse-on-surface p-space-lg shadow-sm">
+  <div class="relative flex flex-col gap-1 max-w-2xl">
+    <span class="font-code-telemetry text-code-telemetry uppercase tracking-wider text-inverse-primary">Module 09 &middot; Field Operations</span>
+    <h1 id="tech-heading" class="font-headline-lg text-headline-lg">Technician Operations</h1>
+    <p class="font-body-sm text-body-sm text-inverse-on-surface/80">Field jobs come from existing site-survey requests and escalated connectivity tickets. Technicians, schedules and notifications are fictional demo data; nobody is actually dispatched.</p>
+  </div>
+  <dl id="tech-stats" class="relative mt-space-lg grid grid-cols-2 sm:grid-cols-4 gap-space-sm"></dl>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-space-md">
+  <div class="xl:col-span-2 flex flex-col gap-space-sm">
+    <div class="flex flex-wrap items-center gap-space-sm">
+      <label class="sr-only" for="tech-status-filter">Job status</label>
+      <select id="tech-status-filter" onchange="renderTechView()" class="py-space-xs px-space-sm rounded-lg bg-surface-container-lowest font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
+        <option value="ALL">Status: All</option>
+        <option value="open">Open jobs</option>
+        <option value="unassigned">Unassigned</option>
+        <option value="completed">Completed</option>
+      </select>
+      <span class="px-space-sm py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">Demo data &middot; simulated</span>
+    </div>
+    <div id="tech-job-list" class="grid grid-cols-1 lg:grid-cols-2 gap-space-md" aria-label="Field jobs"></div>
+  </div>
+  <div class="flex flex-col gap-space-sm">
+    <h2 class="font-headline-sm text-headline-sm text-inverse-on-surface">Technician roster</h2>
+    <ul id="tech-roster" class="flex flex-col gap-space-sm" aria-label="Technician roster"></ul>
+  </div>
+</div>
+</section>
+<!-- Module 09: job dialog -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="tech-job-modal" onclick="if (event.target === this) closeTechJobModal()">
+<div class="bg-surface-container-lowest max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-space-lg sm:p-space-xl flex flex-col gap-space-md transform scale-95 transition-transform duration-200" id="tech-job-modal-container" role="dialog" aria-modal="true" aria-labelledby="tech-job-modal-title">
+  <div class="flex items-start justify-between gap-space-md pb-space-xs border-b border-surface-container-high">
+    <div class="flex flex-col gap-0.5">
+      <span id="tech-job-modal-id" class="font-code-telemetry text-code-telemetry text-primary"></span>
+      <h2 id="tech-job-modal-title" class="font-headline-md text-headline-md text-on-surface"></h2>
+      <span id="tech-job-modal-sub" class="font-body-sm text-body-sm text-on-surface-variant"></span>
+    </div>
+    <button type="button" onclick="closeTechJobModal()" aria-label="Close job details" class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
+  </div>
+  <p id="tech-job-error" class="hidden font-body-sm text-body-sm text-error" role="alert"></p>
+  <div id="tech-job-modal-body" class="flex flex-col gap-space-md"></div>
+</div>
+</div>
+
+<!-- ========================================================================= -->
 <!-- MODAL: CREATE NEW SUPPORT TICKET (MODULE 03)                            -->
 <!-- ========================================================================= -->
 <div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="create-ticket-modal">
@@ -2600,7 +2653,7 @@ html { -webkit-tap-highlight-color: transparent; }
     }
 
     const hash = window.location.hash.replace('#', '');
-    const validViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'billing', 'network-outages'];
+    const validViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'billing', 'technicians', 'network-outages'];
     if (validViews.includes(hash)) {
       switchView(hash);
     } else {
@@ -2610,7 +2663,7 @@ html { -webkit-tap-highlight-color: transparent; }
     // Hash change event listener for SPA navigation
     window.addEventListener('hashchange', () => {
       const currentHash = window.location.hash.replace('#', '');
-      const availableViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'billing', 'network-outages'];
+      const availableViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'billing', 'technicians', 'network-outages'];
       if (availableViews.includes(currentHash) && currentActiveView !== currentHash) {
         switchView(currentHash);
       }
@@ -2638,6 +2691,7 @@ html { -webkit-tap-highlight-color: transparent; }
         closeCreateTicketModal();
         closeOutageDialogs();
         closeBillingDialogs();
+        closeTechJobModal();
         closeStatusInquiryModal();
         closeLeadCreateModal();
       }
@@ -8858,6 +8912,342 @@ html { -webkit-tap-highlight-color: transparent; }
   }
 
   renderBillingView();
+
+  // =========================================================================
+  // MODULE 09: TECHNICIAN OPERATIONS (fictional field jobs, in-memory only)
+  // Jobs are derived from existing records: Module 06 site-survey requests
+  // and escalated connectivity tickets. Job progress never changes a lead,
+  // ticket or customer, and nobody is actually dispatched or messaged.
+  // =========================================================================
+
+  const TECH_JOB_TYPES = {
+    site_survey: { label: 'Site survey', icon: 'straighten' },
+    installation: { label: 'Installation', icon: 'router' },
+    repair: { label: 'Repair', icon: 'build' }
+  };
+  const TECH_JOB_STATUSES = [
+    { key: 'unassigned', label: 'Unassigned', cls: 'bg-surface-container-highest text-on-surface-variant' },
+    { key: 'scheduled', label: 'Scheduled', cls: 'bg-tertiary-fixed text-on-tertiary-fixed' },
+    { key: 'assigned', label: 'Assigned', cls: 'bg-primary-fixed text-on-primary-fixed' },
+    { key: 'on_the_way', label: 'On the way', cls: 'bg-secondary-fixed text-on-secondary-fixed' },
+    { key: 'working', label: 'Working', cls: 'bg-secondary-container text-on-secondary-container' },
+    { key: 'completed', label: 'Completed', cls: 'bg-surface-container-high text-on-surface-variant' }
+  ];
+  const TECH_PRIORITY_FROM_TICKET = { URGENT: 'urgent', HIGH: 'high', NORMAL: 'normal' };
+  const TECH_REPAIR_CATEGORIES = ['NO_INTERNET', 'SLOW_INTERNET'];
+  const TECH_NO_MESSAGE = 'Simulated — no message sent';
+
+  // Fictional roster. Availability is a fixed demo value, not a live location or status feed.
+  const TECH_ROSTER = [
+    { techId: 'TECH-01', name: 'Rakib Hasan', role: 'Fibre splicing & repair', skills: ['repair', 'installation'], zones: ['Uttara', 'Mirpur', 'Banani'], available: true },
+    { techId: 'TECH-02', name: 'Sumon Mia', role: 'Field engineer', skills: ['repair', 'site_survey', 'installation'], zones: ['Dhanmondi', 'Mohakhali', 'Tejgaon'], available: true },
+    { techId: 'TECH-03', name: 'Farida Yasmin', role: 'Survey & installation', skills: ['site_survey', 'installation'], zones: ['Gulshan', 'Banani', 'Bashundhara', 'Tejgaon'], available: true },
+    { techId: 'TECH-04', name: 'Jahid Karim', role: 'Fibre splicing & repair', skills: ['repair'], zones: ['Uttara', 'Mirpur'], available: false }
+  ];
+
+  const techJobs = [];
+
+  function getTechJobById(jobId) {
+    return techJobs.find(j => j.jobId === jobId) || null;
+  }
+
+  function getTechStatusMeta(key) {
+    return TECH_JOB_STATUSES.find(s => s.key === key) || TECH_JOB_STATUSES[0];
+  }
+
+  function getTechById(techId) {
+    return TECH_ROSTER.find(t => t.techId === techId) || null;
+  }
+
+  function techZoneFromText(text) {
+    const lower = String(text || '').toLowerCase();
+    return getOutageZones().find(z => lower.includes(z.toLowerCase())) || null;
+  }
+
+  function nextTechJobId() {
+    return `TASK-TECH-${7001 + techJobs.length}`;
+  }
+
+  function addTechJob(fields) {
+    const at = fields.createdAt || leadTimestamp();
+    const job = Object.assign({
+      jobId: nextTechJobId(), status: 'unassigned', technicianId: null, scheduledAt: null,
+      notifications: [], createdAt: at, isDemo: true
+    }, fields);
+    job.history = [{ at, action: 'CREATED', by: 'System', note: `${TECH_JOB_TYPES[job.type].label} job created from ${job.sourceId}` }];
+    techJobs.push(job);
+    return job;
+  }
+
+  function hasTechJob(sourceId, type) {
+    return techJobs.some(j => j.sourceId === sourceId && j.type === type);
+  }
+
+  // Creates jobs for eligible sources that do not have one yet. Safe to call repeatedly.
+  function syncTechJobs() {
+    let created = 0;
+    leads.filter(l => l.surveyRequest && l.surveyRequest.status === 'requested').forEach(lead => {
+      if (hasTechJob(lead.leadId, 'site_survey')) return;
+      addTechJob({ type: 'site_survey', sourceId: lead.leadId, leadId: lead.leadId, ticketId: null, customerId: lead.customerId,
+        title: `Site survey for ${lead.name}`, zone: techZoneFromText(lead.locationText), address: lead.locationText,
+        priority: lead.segment === 'corporate' ? 'high' : 'normal', preferredSlot: lead.surveyRequest.preferredSlot });
+      created++;
+    });
+    tickets.filter(t => t.status === 'ESCALATED' && TECH_REPAIR_CATEGORIES.includes(t.category)).forEach(ticket => {
+      if (hasTechJob(ticket.ticketId, 'repair')) return;
+      const conn = (SPACE_NET_CUSTOMERS.find(c => c.customerId === ticket.customerId) || { connections: [] }).connections.find(k => k.circuitId === ticket.circuitId);
+      addTechJob({ type: 'repair', sourceId: ticket.ticketId, leadId: null, ticketId: ticket.ticketId, customerId: ticket.customerId,
+        title: `Repair: ${ticket.subject || ticket.categoryLabel}`, zone: getTicketZone(ticket), address: conn ? conn.address : '',
+        priority: TECH_PRIORITY_FROM_TICKET[ticket.priority] || 'normal', preferredSlot: null });
+      created++;
+    });
+    return created;
+  }
+
+  // Installation only follows a completed site survey (an explicit, eligible workflow step).
+  function createInstallationFromSurvey(surveyJobId) {
+    const survey = getTechJobById(surveyJobId);
+    if (!survey || survey.type !== 'site_survey') return { error: 'Installations can only be created from a site-survey job.' };
+    if (survey.status !== 'completed') return { error: 'Complete the site survey before creating an installation job.' };
+    if (hasTechJob(survey.sourceId, 'installation')) return { error: `An installation job for ${survey.sourceId} already exists.` };
+    const job = addTechJob({ type: 'installation', sourceId: survey.sourceId, leadId: survey.leadId, ticketId: null, customerId: survey.customerId,
+      title: survey.title.replace('Site survey for', 'Installation for'), zone: survey.zone, address: survey.address, priority: survey.priority, preferredSlot: null });
+    survey.history.push({ at: leadTimestamp(), action: 'FOLLOW_UP_JOB', by: 'NOC staff', note: `Installation job ${job.jobId} created` });
+    return { job };
+  }
+
+  function getEligibleTechs(job) {
+    return TECH_ROSTER.filter(t => t.available && t.skills.includes(job.type) && (!job.zone || t.zones.includes(job.zone)));
+  }
+
+  function scheduleTechJob(jobId, when) {
+    const job = getTechJobById(jobId);
+    if (!job) return { error: 'Job not found.' };
+    if (!['unassigned', 'scheduled', 'assigned'].includes(job.status)) return { error: 'Visits can only be rescheduled before the technician sets off.' };
+    const value = String(when || '').replace('T', ' ');
+    if (!/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]) ([01]\d|2[0-3]):[0-5]\d$/.test(value)) return { error: 'Choose a valid visit date and time.' };
+    const previous = job.scheduledAt;
+    job.scheduledAt = value;
+    if (job.status === 'unassigned') job.status = 'scheduled';
+    job.history.push({ at: leadTimestamp(), action: previous ? 'RESCHEDULED' : 'SCHEDULED', by: 'NOC staff', note: previous ? `Visit moved from ${previous} to ${value}` : `Visit scheduled for ${value}` });
+    return { job };
+  }
+
+  function assignTechJob(jobId, techId) {
+    const job = getTechJobById(jobId);
+    const tech = getTechById(techId);
+    if (!job || !tech) return { error: 'Choose a job and a technician.' };
+    if (!['scheduled', 'assigned'].includes(job.status)) return { error: job.status === 'unassigned' ? 'Schedule the visit before assigning a technician.' : 'This job can no longer be reassigned.' };
+    if (!getEligibleTechs(job).includes(tech)) return { error: `${tech.name} is not available for ${TECH_JOB_TYPES[job.type].label.toLowerCase()} jobs in ${job.zone || 'this area'}.` };
+    if (job.technicianId === techId) return { error: `${tech.name} is already assigned.` };
+    const previous = getTechById(job.technicianId);
+    job.technicianId = techId;
+    job.status = 'assigned';
+    job.history.push({ at: leadTimestamp(), action: previous ? 'REASSIGNED' : 'ASSIGNED', by: 'NOC staff', note: previous ? `Reassigned from ${previous.name} to ${tech.name}` : `Assigned to ${tech.name}` });
+    return { job };
+  }
+
+  function advanceTechJob(jobId) {
+    const job = getTechJobById(jobId);
+    const order = ['assigned', 'on_the_way', 'working', 'completed'];
+    const idx = job ? order.indexOf(job.status) : -1;
+    if (idx < 0 || idx === order.length - 1) return { error: 'This job cannot move to the next stage now.' };
+    const next = order[idx + 1];
+    job.history.push({ at: leadTimestamp(), action: 'STATUS_CHANGED', by: getTechById(job.technicianId).name, note: `${getTechStatusMeta(job.status).label} → ${getTechStatusMeta(next).label}` });
+    job.status = next;
+    return { job };
+  }
+
+  function notifyTechAppointment(jobId) {
+    const job = getTechJobById(jobId);
+    if (!job || !job.scheduledAt || !job.technicianId || job.status === 'completed') return null;
+    const entry = { at: leadTimestamp(), note: TECH_NO_MESSAGE, visit: job.scheduledAt, technician: getTechById(job.technicianId).name };
+    job.notifications.push(entry);
+    job.history.push({ at: entry.at, action: 'NOTIFICATION_SIMULATED', by: 'NOC staff', note: `Visit time ${entry.visit} with ${entry.technician} · ${TECH_NO_MESSAGE}` });
+    return entry;
+  }
+
+  // --- Technician view rendering ---
+  function getFilteredTechJobs() {
+    const f = (document.getElementById('tech-status-filter') || {}).value || 'ALL';
+    return techJobs.filter(j => f === 'ALL' || (f === 'open' && j.status !== 'completed') || (f === 'unassigned' && j.status === 'unassigned') || (f === 'completed' && j.status === 'completed'));
+  }
+
+  function renderTechView() {
+    const stats = document.getElementById('tech-stats');
+    const list = document.getElementById('tech-job-list');
+    const roster = document.getElementById('tech-roster');
+    if (!stats || !list || !roster) return;
+    const open = techJobs.filter(j => j.status !== 'completed');
+    stats.innerHTML = [
+      ['Open jobs', open.length],
+      ['Unassigned', techJobs.filter(j => j.status === 'unassigned').length],
+      ['Scheduled visits', open.filter(j => j.scheduledAt).length],
+      ['Completed', techJobs.filter(j => j.status === 'completed').length]
+    ].map(([label, value]) => `<div class="rounded-lg bg-white/5 ring-1 ring-inverse-primary/20 px-space-sm py-space-xs">
+        <dt class="font-label-sm text-label-sm text-inverse-on-surface/75">${label}</dt>
+        <dd class="font-code-metric text-code-metric text-inverse-on-surface">${value}</dd></div>`).join('');
+
+    const flow = TECH_JOB_STATUSES.map(s => s.key);
+    const jobs = getFilteredTechJobs();
+    list.innerHTML = jobs.length ? jobs.map(j => {
+      const meta = getTechStatusMeta(j.status);
+      const tech = getTechById(j.technicianId);
+      const idx = flow.indexOf(j.status);
+      return `<button type="button" onclick="openTechJobModal('${j.jobId}')" class="lead-card text-left w-full rounded-xl bg-surface-container-lowest p-space-md flex flex-col gap-space-xs shadow-[0_1px_2px_rgba(15,23,42,0.06)] hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary transition">
+          <span class="flex items-center justify-between gap-2"><span class="font-code-telemetry text-code-telemetry text-primary">${j.jobId}</span>${renderLeadBadge(meta.cls, '', meta.label)}</span>
+          <span class="font-headline-sm text-headline-sm text-on-surface">${escapeHtml(j.title)}</span>
+          <span class="flex flex-wrap gap-1">${renderLeadBadge('bg-surface-container text-on-surface', TECH_JOB_TYPES[j.type].icon, TECH_JOB_TYPES[j.type].label)}${renderLeadBadge('bg-surface-container text-on-surface', 'location_on', j.zone || 'Area unverified')}${j.priority !== 'normal' ? renderLeadBadge(j.priority === 'urgent' ? 'bg-error-container text-on-error-container' : 'bg-tertiary-fixed text-on-tertiary-fixed', 'priority_high', j.priority === 'urgent' ? 'Urgent' : 'High') : ''}</span>
+          <span class="flex items-center gap-1" aria-label="Stage ${idx + 1} of ${flow.length}">${flow.map((s, i) => `<span class="h-1.5 flex-1 rounded-full ${i <= idx ? 'bg-primary' : 'bg-surface-container-high'}"></span>`).join('')}</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">${escapeHtml(j.sourceId)} · ${tech ? escapeHtml(tech.name) : 'No technician'} · ${j.scheduledAt ? `Visit ${escapeHtml(j.scheduledAt)}` : 'Visit not scheduled'}</span>
+        </button>`;
+    }).join('') : '<p class="rounded-xl bg-surface-container-lowest p-space-md font-body-sm text-body-sm text-on-surface-variant">No jobs match this filter.</p>';
+
+    roster.innerHTML = TECH_ROSTER.map(t => {
+      const active = techJobs.filter(j => j.technicianId === t.techId && j.status !== 'completed').length;
+      return `<li class="rounded-xl bg-surface-container-lowest p-space-md flex flex-col gap-1">
+          <span class="flex items-center justify-between gap-2"><span class="font-headline-sm text-headline-sm text-on-surface">${escapeHtml(t.name)}</span>${t.available ? renderLeadBadge('bg-secondary-fixed text-on-secondary-fixed', 'check_circle', 'Available') : renderLeadBadge('bg-surface-container-highest text-on-surface-variant', 'event_busy', 'On leave')}</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">${escapeHtml(t.role)} · ${t.zones.map(escapeHtml).join(', ')}</span>
+          <span class="font-label-sm text-label-sm text-on-surface-variant">${active} active job${active === 1 ? '' : 's'} · demo roster</span>
+        </li>`;
+    }).join('');
+  }
+
+  // --- Job dialog ---
+  let currentTechJobId = null;
+
+  function openTechJobModal(jobId) {
+    const job = getTechJobById(jobId);
+    if (!job) {
+      showToast('Job Not Found', `No demo field job with ID ${jobId}.`);
+      return;
+    }
+    currentTechJobId = jobId;
+    const err = document.getElementById('tech-job-error');
+    if (err) err.classList.add('hidden');
+    renderTechJobModal(job);
+    showLeadDialog('tech-job-modal', 'tech-job-modal-container', 'button');
+  }
+
+  function closeTechJobModal() {
+    hideLeadDialog('tech-job-modal', 'tech-job-modal-container');
+  }
+
+  function renderTechJobModal(job) {
+    const body = document.getElementById('tech-job-modal-body');
+    if (!body) return;
+    const tech = getTechById(job.technicianId);
+    const customer = SPACE_NET_CUSTOMERS.find(c => c.customerId === job.customerId);
+    document.getElementById('tech-job-modal-id').textContent = `${job.jobId} · demo field job`;
+    document.getElementById('tech-job-modal-title').textContent = job.title;
+    document.getElementById('tech-job-modal-sub').textContent = `${TECH_JOB_TYPES[job.type].label} · ${job.zone || 'area unverified'} · ${getTechStatusMeta(job.status).label}`;
+    const btn = 'px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition';
+    const eligible = getEligibleTechs(job);
+    const canSchedule = ['unassigned', 'scheduled', 'assigned'].includes(job.status);
+    const canAssign = ['scheduled', 'assigned'].includes(job.status);
+    const nextLabel = { assigned: 'Mark on the way', on_the_way: 'Start work', working: 'Mark completed' }[job.status];
+    const sourceLink = job.ticketId
+      ? `<button type="button" class="text-primary underline" onclick="openTechSource('${job.jobId}')">Ticket ${escapeHtml(job.ticketId)}</button>`
+      : `<button type="button" class="text-primary underline" onclick="openTechSource('${job.jobId}')">Lead ${escapeHtml(job.leadId)}</button>`;
+    body.innerHTML = `
+      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+        ${renderLeadField('Source', sourceLink)}
+        ${renderLeadField('Customer', customer ? `<button type="button" class="text-primary underline" onclick="openTechCustomer('${customer.customerId}')">${escapeHtml(customer.name)} · ${escapeHtml(customer.customerId)}</button>` : 'Prospect (no customer record)')}
+        ${renderLeadField('Address', escapeHtml(job.address || 'Not provided'))}
+        ${renderLeadField('Priority', escapeHtml(job.priority))}
+        ${renderLeadField('Technician', tech ? escapeHtml(`${tech.name} (${tech.role})`) : 'Not assigned')}
+        ${renderLeadField('Visit', job.scheduledAt ? escapeHtml(job.scheduledAt) : (job.preferredSlot ? `Not scheduled · customer prefers ${escapeHtml(job.preferredSlot)}` : 'Not scheduled'))}
+      </dl>
+      ${canSchedule ? `<div class="flex flex-wrap items-end gap-2">
+          <label class="flex flex-col gap-1 font-label-sm text-label-sm text-on-surface-variant">Visit date and time
+            <input id="tech-job-when" type="datetime-local" value="${escapeHtml((job.scheduledAt || job.preferredSlot || '').replace(' ', 'T'))}" class="px-space-sm py-1 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary">
+          </label>
+          <button type="button" onclick="scheduleTechFromModal()" class="${btn} bg-surface-container text-on-surface hover:bg-surface-container-high">${job.scheduledAt ? 'Reschedule' : 'Schedule visit'}</button>
+        </div>` : ''}
+      ${canAssign ? `<div class="flex flex-wrap items-end gap-2">
+          <label class="flex flex-col gap-1 font-label-sm text-label-sm text-on-surface-variant">Technician (available, right zone and skill)
+            <select id="tech-job-tech" class="px-space-sm py-1 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary">${eligible.length ? eligible.map(t => `<option value="${t.techId}" ${t.techId === job.technicianId ? 'selected' : ''}>${escapeHtml(t.name)}</option>`).join('') : '<option value="">No eligible technician</option>'}</select>
+          </label>
+          <button type="button" onclick="assignTechFromModal()" ${eligible.length ? '' : 'disabled'} class="${btn} bg-primary text-on-primary font-semibold disabled:opacity-50">${tech ? 'Reassign' : 'Assign'}</button>
+        </div>` : ''}
+      <div class="flex flex-wrap gap-space-xs">
+        ${nextLabel ? `<button type="button" onclick="advanceTechFromModal()" class="${btn} bg-primary text-on-primary font-semibold">${nextLabel}</button>` : ''}
+        ${job.scheduledAt && tech && job.status !== 'completed' ? `<button type="button" onclick="notifyTechFromModal()" class="${btn} bg-surface-container text-on-surface hover:bg-surface-container-high">Send visit time to customer</button>` : ''}
+        ${job.type === 'site_survey' && job.status === 'completed' && !hasTechJob(job.sourceId, 'installation') ? `<button type="button" onclick="createInstallationFromModal()" class="${btn} bg-surface-container text-on-surface hover:bg-surface-container-high">Create installation job</button>` : ''}
+      </div>
+      <p class="font-label-sm text-label-sm text-on-surface-variant">${TECH_NO_MESSAGE}; no technician is actually dispatched. Job progress does not change the ${job.ticketId ? 'ticket' : 'lead'}.</p>
+      <div class="flex flex-col gap-space-xs">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">History</h3>
+        <ol class="flex flex-col gap-1.5 border-l border-surface-container-high pl-space-md">
+          ${job.history.slice().reverse().map(h => `<li class="font-body-sm text-body-sm text-on-surface"><span class="font-code-telemetry text-code-telemetry text-on-surface-variant">${escapeHtml(h.at)}</span> · ${escapeHtml(h.note)} <span class="text-on-surface-variant">(${escapeHtml(h.by)})</span></li>`).join('')}
+        </ol>
+      </div>`;
+  }
+
+  function applyTechResult(result, title, message) {
+    const err = document.getElementById('tech-job-error');
+    if (result.error) {
+      if (err) { err.textContent = result.error; err.classList.remove('hidden'); }
+      return false;
+    }
+    if (err) err.classList.add('hidden');
+    renderTechView();
+    const job = getTechJobById(currentTechJobId);
+    if (job) renderTechJobModal(job);
+    showToast(title, message);
+    return true;
+  }
+
+  function scheduleTechFromModal() {
+    const when = (document.getElementById('tech-job-when') || {}).value;
+    applyTechResult(scheduleTechJob(currentTechJobId, when), 'Visit Scheduled', `${currentTechJobId} visit set (demo record).`);
+  }
+
+  function assignTechFromModal() {
+    const techId = (document.getElementById('tech-job-tech') || {}).value;
+    const tech = getTechById(techId);
+    applyTechResult(assignTechJob(currentTechJobId, techId), 'Technician Assigned', `${tech ? tech.name : 'Technician'} assigned to ${currentTechJobId} (demo; no dispatch).`);
+  }
+
+  function advanceTechFromModal() {
+    const result = advanceTechJob(currentTechJobId);
+    applyTechResult(result, 'Job Updated', result.job ? `${currentTechJobId} is now ${getTechStatusMeta(result.job.status).label} (demo record).` : '');
+  }
+
+  function notifyTechFromModal() {
+    const entry = notifyTechAppointment(currentTechJobId);
+    applyTechResult(entry ? {} : { error: 'Schedule and assign the visit first.' }, 'Notification Simulated', `${TECH_NO_MESSAGE}. Visit time logged on ${currentTechJobId}.`);
+  }
+
+  function createInstallationFromModal() {
+    const result = createInstallationFromSurvey(currentTechJobId);
+    applyTechResult(result, 'Installation Job Created', result.job ? `${result.job.jobId} created from completed survey ${currentTechJobId}.` : '');
+  }
+
+  function openTechSource(jobId) {
+    const job = getTechJobById(jobId);
+    if (!job) return;
+    closeTechJobModal();
+    if (job.ticketId) { switchView('tickets'); openTicketDetail(job.ticketId); }
+    else { switchView('sales-leads'); openLeadModal(job.leadId); }
+  }
+
+  function openTechCustomer(customerId) {
+    closeTechJobModal();
+    goToProfileFromChat(customerId);
+  }
+
+  // Seed: derive jobs from existing records, then give the repair job a demo schedule and crew.
+  syncTechJobs();
+  (function seedTechDemoState() {
+    const repair = techJobs.find(j => j.type === 'repair' && j.ticketId === 'TKT-9031');
+    if (!repair) return;
+    scheduleTechJob(repair.jobId, '2026-11-01 15:00');
+    assignTechJob(repair.jobId, 'TECH-01');
+  })();
+  renderTechView();
+  // New survey requests or escalations appear when the view is opened.
+  window.addEventListener('hashchange', () => { if (window.location.hash === '#technicians') { syncTechJobs(); renderTechView(); } });
 
   // 8. Command Palette
   function openCmdPalette() {
