@@ -1,6 +1,6 @@
 # SpaceNet AI CRM — Shared Data Contract & Architecture Standard
 
-**Document Version:** 1.8.0
+**Document Version:** 1.9.0
 **Effective Date:** 2026-10-31
 **Authors & Maintainers:** Rohan (Customer-Facing & Support Lead) & Adnan (Operations & Admin Lead)
 **Repository:** `https://github.com/lEVI2889/spacenet`
@@ -31,6 +31,7 @@ SpaceNet is an intelligent Customer Relationship Management (CRM) and Network Op
 | **v1.6.0** | 2026-11-01 | Adnan | Sales & Leads (Module 06): `SpaceNetLead` schema, `LEAD-<NUM>` implemented, coverage tri-state, team routing, idempotent AI lead capture from `sales_handoff` (Section 15). |
 | **v1.7.0** | 2026-11-01 | Adnan | Network Outages (Module 08): `SpaceNetOutage` schema, `OUT-<ZONE>-<NUM>` implemented, derived affected customers/complaints, NOC spike rule, simulated notifications (Section 16). |
 | **v1.8.0** | 2026-11-01 | Adnan | Billing & Plans (Module 07): `SpaceNetInvoice`, `INV-<NUM>` implemented, simulated payments (`PAY-`), package-change (`PCR-`) and line-shift (`LSR-`) requests, plan-to-catalog mapping (Section 17). |
+| **v1.9.0** | 2026-11-01 | Adnan | Technician Operations (Module 09): `SpaceNetFieldJob`, `TASK-TECH-<NUM>` implemented, derived survey/repair jobs, installation-after-survey rule, eligibility and lifecycle (Section 18). |
 
 ---
 
@@ -53,6 +54,7 @@ To guarantee seamless navigation and referential integrity across modules develo
 | **Network Outage** | `OUT-<ZONE>-<NUM>` | `OUT-<ZONE>-<NUM>` | `OUT-UTT-0107` | Module 08 (`outages`) |
 | **Invoice** | `INV-<NUM>` | `INV-<NUM>` | `INV-11001` | Module 07 (`invoices`) |
 | **Payment / Requests** | `PAY-<NUM>`, `PCR-<NUM>`, `LSR-<NUM>` | same | `PAY-5004`, `PCR-3001`, `LSR-4001` | Module 07 |
+| **Field Job** | `TASK-TECH-<NUM>` | `TASK-TECH-<NUM>` | `TASK-TECH-7001` | Module 09 (`techJobs`) |
 | **Standard Message** | `m-<CUST_ABBR>-<NUM>` or `msg-<TIMESTAMP>` | N/A | `m-alx-1`, `msg-1730301234` | Module 01 (Tasks 1–5) |
 | **Voice Note Message** | `vmsg-<CUST_ABBR>-<NUM>` | N/A | `vmsg-alx-1`, `vmsg-frh-1` | Module 02 (Feature Group 6) |
 | **System Event Log** | `sys-<TIMESTAMP>` | N/A | `sys-1730302345` | Module 01 (Task 4) |
@@ -68,7 +70,6 @@ To guarantee seamless navigation and referential integrity across modules develo
 
 | Entity | Proposed Format | Description | Target Module |
 | :--- | :--- | :--- | :--- |
-| **Technician Task** | `TASK-TECH-<NUM>` | Field dispatch assignment ID | Module 09 (Technician & Field Operations) |
 | **ONT Hardware MAC** | `00:E0:4C:<HEX>` | Physical hardware address identifier | Telemetry & Diagnostics |
 
 ---
@@ -894,3 +895,42 @@ interface SpaceNetInvoice {
 * Global Escape handler: `closeBillingDialogs()`.
 * Reuses Module 06 `showLeadDialog`, `hideLeadDialog`, `renderLeadBadge`, `getLeadPackage`, `resolveLeadCoverage`, `leadTimestamp`, and Module 04's `goToProfileFromChat`.
 * **Shared scope:** all modules share one script scope. Module 05 owns `getCustomerConnection`; billing uses `findBillingConnection`. `test_module_07.mjs` fails on any duplicate top-level function, `const` or `let` name.
+
+---
+
+## 18. Technician Operations Contract (Module 09)
+
+All field jobs, technicians, schedules and notifications are fictional, in-memory demo records. Nobody is dispatched and no message is sent.
+
+### 18.1 `SpaceNetFieldJob` (collection `techJobs`)
+
+```typescript
+interface SpaceNetFieldJob {
+  jobId: string;                 // 'TASK-TECH-<NUM>', from 7001
+  type: 'site_survey' | 'installation' | 'repair';
+  sourceId: string;              // LEAD-<NUM> (survey, installation) or TKT-<ID> (repair)
+  leadId: string | null; ticketId: string | null; customerId: string | null;
+  title: string; zone: string | null; address: string;
+  priority: 'urgent' | 'high' | 'normal';   // repair: from ticket priority; survey: corporate → high
+  status: 'unassigned' | 'scheduled' | 'assigned' | 'on_the_way' | 'working' | 'completed';
+  technicianId: string | null;   // TECH_ROSTER techId
+  scheduledAt: 'YYYY-MM-DD HH:MM' | null; preferredSlot: string | null;
+  notifications: { at: string; note: 'Simulated — no message sent'; visit: string; technician: string }[];
+  history: { at: string; action: string; by: string; note: string }[];
+  createdAt: string; isDemo: true;
+}
+```
+
+### 18.2 Rules
+
+1. **Derived jobs (`syncTechJobs`, idempotent per `sourceId` + `type`):** leads whose `surveyRequest.status === 'requested'` become `site_survey` jobs. Tickets with status `ESCALATED` in `NO_INTERNET` / `SLOW_INTERNET` become `repair` jobs.
+2. **Installations** are created only by `createInstallationFromSurvey` after the survey job is `completed`, at most one per lead. A survey request never becomes an installation directly.
+3. **Lifecycle:** unassigned → scheduled → assigned → on_the_way → working → completed. A job is scheduled before it is assigned. Rescheduling or reassignment is allowed only before `on_the_way`, and `completed` is final.
+4. **Eligibility:** a technician must be available, have the job type in `skills`, and cover the job zone (any zone when it is unknown).
+5. **No side effects:** job actions never change customers, leads or tickets.
+
+### 18.3 Integration hooks
+
+* Router: `'technicians'` added to both view lists; sidebar link `data-path="technicians"`; top tab `#nav-btn-technicians`; own sky region.
+* Global Escape handler: `closeTechJobModal()`. A `hashchange` listener re-syncs jobs when `#technicians` opens.
+* Reuses Module 06 dialog, badge and field helpers plus `leadTimestamp`, and Module 08 `getOutageZones` / `getTicketZone`.

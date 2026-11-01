@@ -76,7 +76,7 @@ console.log('--- GROUP 1: Static markup integrity (real HTML) ---');
   'outage-form-zone', 'outage-form-type', 'outage-form-title', 'outage-form-severity', 'outage-form-severity-wrap', 'outage-form-window',
   'outage-form-window-wrap', 'outage-form-cause', 'outage-form-error'].forEach(id => assert(idInMarkup(id), `Static element #${id} exists`));
 const m08Start = appScript.indexOf('MODULE 08: NETWORK OUTAGES');
-const m08End = appScript.indexOf('// 8. Command Palette');
+const m08End = appScript.indexOf('MODULE 07: BILLING & PLANS');
 const m08Code = appScript.slice(m08Start, m08End);
 const literalIds = [...new Set([...m08Code.matchAll(/getElementById\('([a-z0-9-]+)'\)/g)].map(m => m[1]))];
 assert(m08Start > 0 && m08End > m08Start, 'Module 08 code section located');

@@ -76,13 +76,13 @@ console.log('--- GROUP 1: Static markup integrity (real HTML) ---');
   'billing-request-modal', 'billing-request-container', 'billing-request-title', 'billing-req-customer', 'billing-req-circuit', 'billing-req-package',
   'billing-req-package-wrap', 'billing-req-address', 'billing-req-address-wrap', 'billing-req-preview', 'billing-req-error'].forEach(id => assert(idInMarkup(id), `Static element #${id} exists`));
 const m07Start = appScript.indexOf('MODULE 07: BILLING & PLANS');
-const m07End = appScript.indexOf('// 8. Command Palette');
+const m07End = appScript.indexOf('MODULE 09: TECHNICIAN OPERATIONS');
 const m07Code = appScript.slice(m07Start, m07End);
 const literalIds = [...new Set([...m07Code.matchAll(/getElementById\('([a-z0-9-]+)'\)/g)].map(m => m[1]))];
 assert(m07Start > 0 && m07End > m07Start, 'Module 07 code section located');
 assert(literalIds.length > 10 && literalIds.every(idInMarkup), `Every literal id looked up by Module 07 exists in markup (${literalIds.length} ids)`);
 assert(/data-path="billing"/.test(markup) && idInMarkup('nav-btn-billing'), 'Sidebar link and top switcher tab for Billing exist');
-assert((appScript.match(/'sales-leads', 'billing', 'network-outages'\]/g) || []).length === 2, 'Router accepts #billing in both view lists');
+assert((appScript.match(/(validViews|availableViews) = \[[^\]]*'billing'[^\]]*\]/g) || []).length === 2, 'Router accepts #billing in both view lists');
 const escBlock = appScript.slice(appScript.indexOf("e.key === 'Escape'"), appScript.indexOf("e.key === 'Escape'") + 450);
 assert(/closeBillingDialogs\(\);/.test(escBlock), 'Escape handler closes the billing dialogs');
 assert(!/fetch\(|XMLHttpRequest|sendBeacon|WebSocket/.test(m07Code), 'Billing code makes no network calls');
