@@ -1,6 +1,6 @@
 # SpaceNet AI CRM — Shared Data Contract & Architecture Standard
 
-**Document Version:** 1.11.1
+**Document Version:** 1.11.2
 **Effective Date:** 2026-10-31
 **Authors & Maintainers:** Rohan (Customer-Facing & Support Lead) & Adnan (Operations & Admin Lead)
 **Repository:** `https://github.com/lEVI2889/spacenet`
@@ -35,6 +35,7 @@ SpaceNet is an intelligent Customer Relationship Management (CRM) and Network Op
 | **v1.10.0** | 2026-11-01 | Adnan | Admin & Analytics (Module 10): `getCrmMetrics` metric definitions, live Dashboard KPIs and navigation badges, `adminSettings` (AI per channel, working hours, role matrix, package price overrides) (Section 19). |
 | **v1.11.0** | 2026-11-01 | Adnan | Galaxy UI/UX upgrade: top tab strip removed; navigation badges live in the sidebar links (same ids); outage badge shows a plain count; sky layers; dialog focus return (Section 20). |
 | **v1.11.1** | 2026-11-01 | Adnan | QA D1/D2: switching a channel's AI off cancels its queued replies immediately (lead capture still runs); composer messages are always staff-authored and never trigger AI replies (Section 19.2). |
+| **v1.11.2** | 2026-11-01 | Adnan | QA D5–D11: modal dialogs contain Tab/Shift+Tab; Module 03 ticket dialogs use the shared helper with dialog semantics; simulated-action wording (Section 20.3). |
 
 ---
 
@@ -992,4 +993,6 @@ The Dashboard tiles, navigation badges and Analytics all read this one function.
 * Content surfaces stay opaque; the sky shows around them. Phones drop the Milky Way band and the twinkle layer.
 
 ### 20.3 Dialogs
-* `showLeadDialog` / `hideLeadDialog` (used by Modules 06–09) return focus to the opener; if the list re-rendered, to the new element with the same `onclick`; otherwise to the active view's heading (`restoreLeadDialogFocus`).
+* `showLeadDialog` / `hideLeadDialog` (used by Modules 03 and 06–09; Module 03: create-ticket and ticket-detail dialogs) return focus to the opener; if the list re-rendered, to the new element with the same `onclick`; otherwise to the active view's heading (`restoreLeadDialogFocus`).
+* Every open `[role="dialog"][aria-modal="true"]` (except the phone drawer, which has its own trap) contains keyboard focus: Tab / Shift+Tab wrap inside it, and focus outside it is pulled back in (one `keydown` listener on `window`).
+* User-facing results of simulated actions say so ("Simulated — no message sent", "no SMS sent", "(Simulated)"); no operational counts are invented.
