@@ -160,8 +160,15 @@ const workflow = span('div', 'diag-workflow-panel');
 assert(/lg:col-span-7/.test(markup.slice(workflow[0], workflow[0] + 200)) && ['diag-answers-container', 'diag-btn-escalate', 'diag-btn-resolve', 'diag-btn-sync', 'diag-assessment-card'].every(id => inside(id, workflow)),
   'Diagnostics: the guided workflow, assessment and escalate/resolve/sync actions form the primary column');
 const inspector = [markup.indexOf('aria-label="Technical inspector"'), markup.indexOf('</aside>', markup.indexOf('aria-label="Technical inspector"'))];
-assert(['diag-target-card', 'diag-hardware-card', 'diag-speed-card', 'diag-history-panel'].every(id => inside(id, inspector)) && markup.indexOf('id="diag-target-card"') < markup.indexOf('id="diag-hardware-card"'),
-  'Diagnostics: session target (with its warning) leads the technical inspector; equipment, speed test and history follow');
+assert(['diag-target-card', 'diag-hardware-card'].every(id => inside(id, inspector)) && markup.indexOf('id="diag-target-card"') < markup.indexOf('id="diag-hardware-card"'),
+  'Diagnostics: session target (with its warning) leads the technical inspector, followed by equipment & tools');
+const lowerRow = span('div', 'diag-secondary-row');
+assert(['diag-speed-card', 'diag-history-panel'].every(id => inside(id, lowerRow) && !inside(id, inspector)) && /lg:col-span-12/.test(markup.slice(lowerRow[0], lowerRow[0] + 200)) && markup.indexOf('</aside>') < lowerRow[0],
+  'Diagnostics: speed test and session history sit in a full-width row below both columns (no empty half-page when expanded)');
+assert(/class="[^"]*max-h-\[360px\][^"]*" id="diag-history-list"/.test(markup), 'Diagnostics: the session history list stays compact (scrolls inside its panel)');
+const handling = span('div', 'chat-handling-control');
+assert(inside('agent-mode-badge', handling) && inside('copilot-toggle', handling) && /id="chat-handling-control"[\s\S]*?id="chat-read-toggle-btn"/.test(markup),
+  'Inbox header: AI/human state and the Override switch form one handling control, placed before the secondary actions');
 assert(/<details class="[^"]*" id="diag-hardware-card" open>/.test(markup) && /<details class="[^"]*" id="diag-speed-card">/.test(markup) && /<details class="[^"]*" id="diag-history-panel">/.test(markup),
   'Diagnostics: equipment & tools open by default; speed test and history collapsed');
 ctx.filterInbox('facebook'); ctx.filterType('dm');

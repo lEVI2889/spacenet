@@ -144,6 +144,9 @@ main .uppercase.tracking-wider, main .uppercase.tracking-wide { text-transform: 
 :is(#view-tickets, #view-customer-profiles) .p-space-sm.bg-surface-container-low.rounded-lg.flex-col > span:first-child:not(.text-error) { color: rgb(var(--c-on-surface-variant)); }
 :is(#view-tickets, #view-customer-profiles) .p-space-sm.bg-surface-container-low.rounded-lg.flex-col > span:last-child:not(.text-error) { color: rgb(var(--c-on-surface)); }
 #ticket-table-body td:nth-child(2) button { white-space: nowrap; }
+/* Takeover switch: a visible boundary on every surface (outline token is >= 4.5:1). */
+#copilot-toggle + div { box-shadow: inset 0 0 0 1px rgb(var(--c-outline)); }
+#copilot-toggle:focus-visible + div { outline: 2px solid rgb(var(--c-primary)); outline-offset: 2px; }
 /* Press feedback on buttons (instant, transform only; off under reduced motion). */
 button:not(:disabled):not(.lead-card):active { transform: scale(.98); }
 @keyframes space-nebula-drift { to { transform: translate3d(3%, 2%, 0) scale(1.05); } }
@@ -546,21 +549,13 @@ html { -webkit-tap-highlight-color: transparent; }
 <span id="chat-circuit-plan" class="font-body-sm text-label-sm text-on-surface-variant">Circuit ID: <span class="font-code-telemetry">SPN-FBR-0941</span> • Plan: Fiber 500Mbps</span>
 </div>
 </div>
-<!-- Handover Toggle Pill & 360 Profile Action -->
-<div class="flex flex-wrap items-center gap-space-sm sm:gap-space-md">
-<button id="chat-read-toggle-btn" type="button" class="px-2.5 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer border border-outline-variant/30" onclick="toggleConversationReadState()">
-  <span id="chat-read-toggle-icon" class="material-symbols-outlined text-[16px]" aria-hidden="true">mark_chat_unread</span>
-  <span id="chat-read-toggle-label">Mark as unread</span>
-</button>
-<button id="chat-customer-profile-btn" type="button" class="px-2.5 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-headline-sm text-label-md flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer border border-outline-variant/30" onclick="goToProfileFromChat()" title="View Unified Customer 360° Profile">
-  <span class="material-symbols-outlined text-[16px]">badge</span>
-  <span class="font-semibold">360° Profile</span>
-</button>
+<!-- Handling (AI / human takeover) first, then secondary chat actions -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<div id="chat-handling-control" class="flex flex-wrap items-center gap-2 pl-1 pr-3 py-1 rounded-2xl sm:rounded-full bg-surface-container-low ring-1 ring-outline-variant/60">
 <div class="flex items-center gap-1.5 px-space-sm py-1 bg-tertiary-fixed text-on-tertiary-fixed rounded-full font-label-md text-label-md font-semibold" id="agent-mode-badge">
 <span class="material-symbols-outlined text-[14px]">auto_awesome</span>
 <span id="agent-mode-text" class="">AI Copilot Handling</span>
 </div>
-<!-- Handover switch -->
 <label class="flex items-center cursor-pointer select-none">
 <span class="font-label-sm text-label-sm text-on-surface-variant mr-2">Override:</span>
 <div class="relative">
@@ -570,6 +565,15 @@ html { -webkit-tap-highlight-color: transparent; }
 </div>
 <span class="font-label-sm text-label-sm text-on-surface font-semibold ml-2" id="override-label">Human Off</span>
 </label>
+</div>
+<button id="chat-read-toggle-btn" type="button" class="px-2 py-1.5 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors cursor-pointer" onclick="toggleConversationReadState()">
+  <span id="chat-read-toggle-icon" class="material-symbols-outlined text-[16px]" aria-hidden="true">mark_chat_unread</span>
+  <span id="chat-read-toggle-label">Mark as unread</span>
+</button>
+<button id="chat-customer-profile-btn" type="button" class="px-2 py-1.5 rounded-lg hover:bg-surface-container text-primary font-label-md text-label-md flex items-center gap-1.5 transition-colors cursor-pointer" onclick="goToProfileFromChat()" title="View Unified Customer 360° Profile">
+  <span class="material-symbols-outlined text-[16px]">badge</span>
+  <span class="font-semibold">360° Profile</span>
+</button>
 </div>
 </div>
 <!-- Parent Social Post Context Banner (Rendered for Social Post Comments) -->
@@ -1458,6 +1462,12 @@ html { -webkit-tap-highlight-color: transparent; }
       </details>
 
       <!-- Simulated Interactive Speed Test Widget -->
+    </div>
+
+    </aside>
+    <!-- Secondary diagnostics (collapsed by default): speed test and session history, full width under both columns -->
+    <div class="lg:col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-space-lg items-start" id="diag-secondary-row">
+    <div class="flex flex-col gap-space-md">
       <details class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md" id="diag-speed-card">
         <summary class="flex items-center justify-between gap-2 cursor-pointer select-none">
           <div class="flex items-center gap-2">
@@ -1518,7 +1528,6 @@ html { -webkit-tap-highlight-color: transparent; }
         </div>
       </details>
     </div>
-
     <div class="flex flex-col gap-space-md" id="diag-history-col">
       <!-- Historical Diagnostic Sessions List -->
       <details class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm" id="diag-history-panel">
@@ -1537,12 +1546,12 @@ html { -webkit-tap-highlight-color: transparent; }
         </div>
 
         <!-- Scrollable History List -->
-        <div class="flex-1 max-h-[520px] overflow-y-auto space-y-2 pr-1" id="diag-history-list">
+        <div class="flex-1 max-h-[360px] overflow-y-auto space-y-2 pr-1" id="diag-history-list">
           <!-- Populated dynamically via renderDiagHistoryUI() -->
         </div>
       </details>
     </div>
-    </aside>
+    </div>
 
   </div>
 </section>
