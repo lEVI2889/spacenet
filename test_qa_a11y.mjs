@@ -121,12 +121,21 @@ assert(/aria-label="Attach file \(not available in this demo\)"/.test(markup), '
 console.log('\n--- D10: contrast ---');
 const lum = h => { const [r, g, b] = [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255).map(v => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
 const ratio = (a, b) => (Math.max(lum(a), lum(b)) + 0.05) / (Math.min(lum(a), lum(b)) + 0.05);
-const token = name => (tailwindConfig.match(new RegExp(`"${name}": "(#[0-9a-fA-F]{6})"`)) || [])[1];
-const surfaces = ['surface-container-lowest', 'surface', 'surface-container-low', 'surface-container', 'surface-container-high', 'surface-container-highest'].map(token);
-const outline = token('outline');
-assert(surfaces.every(Boolean) && surfaces.every(s => ratio(outline, s) >= 4.5), `Caption colour ${outline} is >= 4.5:1 on every light surface (min ${Math.min(...surfaces.map(s => ratio(outline, s))).toFixed(2)})`);
+// Colour tokens are theme variables since the Minimal Galaxy theme: read each palette from the theme stylesheet.
+const themeBlock = t => (html.match(t === 'dark' ? /:root, :root\[data-theme="dark"\] \{([^}]*)\}/ : /:root\[data-theme="light"\] \{([^}]*)\}/) || [])[1] || '';
+const token = (t, name) => { const m = themeBlock(t).match(new RegExp(`--c-${name}: (\\d+) (\\d+) (\\d+);`)); return m ? '#' + m.slice(1).map(v => (+v).toString(16).padStart(2, '0')).join('') : undefined; };
+const SURFACE_TOKENS = ['surface-container-lowest', 'surface', 'surface-container-low', 'surface-container', 'surface-container-high', 'surface-container-highest'];
+assert(/"outline": "rgb\(var\(--c-outline\) \/ <alpha-value>\)"/.test(tailwindConfig), 'Tailwind colour tokens resolve through the theme variables');
+const surfaces = SURFACE_TOKENS.map(n => token('light', n));
+for (const t of ['light', 'dark']) {
+  const ts = SURFACE_TOKENS.map(n => token(t, n));
+  const outline = token(t, 'outline');
+  assert(ts.every(Boolean) && ts.every(s => ratio(outline, s) >= 4.5), `Caption colour ${outline} is >= 4.5:1 on every ${t} surface (min ${Math.min(...ts.map(s => ratio(outline, s))).toFixed(2)})`);
+}
 assert(/'text-amber-800'/.test(appScript) && !/Degraded'\) \? 'text-amber-600'/.test(appScript) && !/opticalEl\.className = '[^']*text-amber-600/.test(appScript), 'Telemetry warning values use amber-800');
 assert(surfaces.every(s => ratio('#92400e', s) >= 4.5), 'amber-800 is >= 4.5:1 on every light surface');
+const darkAmber = (css.match(/\.dark \.text-amber-800:not\(\[class\*="dark:text-"\]\), \.dark \.text-amber-700:not\(\[class\*="dark:text-"\]\) \{ color: (#[0-9a-f]{6}); \}/) || [])[1];
+assert(darkAmber && SURFACE_TOKENS.map(n => token('dark', n)).every(s => ratio(darkAmber, s) >= 4.5), 'amber-800 warning text maps to a dark-theme tint that is >= 4.5:1 on every dark surface');
 
 console.log('\n--- D11: reduced motion ---');
 const reduced = (css.match(/@media \(prefers-reduced-motion: reduce\) \{([\s\S]*?)\n\}/) || [])[1] || '';
