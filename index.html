@@ -1,85 +1,109 @@
 <!DOCTYPE html><html lang="en" style=""><svg class="inline-defs-container" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg><head>
 <title>SpaceNet AI CRM & NOC Operations Platform</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230066ff'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z'/></svg>"><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#424656", "inverse-on-surface": "#eef0ff", "surface-container-highest": "#dae2fd", "error": "#ba1a1a", "primary": "#0050cb", "on-tertiary": "#ffffff", "tertiary-container": "#8848f9", "tertiary-fixed": "#eaddff", "on-primary": "#ffffff", "tertiary-fixed-dim": "#d2bbff", "background": "#faf8ff", "on-primary-container": "#f8f7ff", "on-secondary-fixed": "#001d31", "on-primary-fixed-variant": "#003fa4", "surface-container-lowest": "#ffffff", "error-container": "#ffdad6", "surface-dim": "#d2d9f4", "primary-container": "#0066ff", "surface": "#faf8ff", "on-secondary-container": "#00476e", "surface-container": "#eaedff", "surface-variant": "#dae2fd", "on-tertiary-fixed": "#25005a", "on-secondary-fixed-variant": "#004b73", "on-primary-fixed": "#001849", "outline-variant": "#c2c6d8", "surface-tint": "#0054d6", "on-secondary": "#ffffff", "on-tertiary-fixed-variant": "#5a00c6", "surface-container-low": "#f2f3ff", "on-tertiary-container": "#fdf6ff", "on-error-container": "#93000a", "secondary-fixed": "#cce5ff", "on-error": "#ffffff", "outline": "#5f6375", "tertiary": "#6e26df", "surface-bright": "#faf8ff", "inverse-primary": "#b3c5ff", "on-background": "#131b2e", "secondary-fixed-dim": "#93ccff", "secondary": "#006398", "primary-fixed": "#dae1ff", "inverse-surface": "#283044", "on-surface": "#131b2e", "primary-fixed-dim": "#b3c5ff", "surface-container-high": "#e2e7ff", "secondary-container": "#5bb8fe" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "space-lg": "1rem", "gutter": "1rem", "margin-desktop": "2rem", "space-md": "0.75rem", "space-2xl": "2rem", "space-xl": "1.5rem", "margin": "1rem", "space-xs": "0.25rem", "gutter-desktop": "1.5rem" }, "fontFamily": { "headline-xl-mobile": [ "Geist" ], "body-lg": [ "Geist" ], "body-sm": [ "Geist" ], "code-metric": [ "JetBrains Mono" ], "headline-lg": [ "Geist" ], "label-md": [ "Geist" ], "headline-sm": [ "Geist" ], "headline-md": [ "Geist" ], "label-sm": [ "Geist" ], "code-telemetry": [ "JetBrains Mono" ], "body-md": [ "Geist" ], "headline-xl": [ "Geist" ] }, "fontSize": { "headline-xl-mobile": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "body-lg": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" } ], "body-sm": [ "13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" } ], "code-metric": [ "14px", { "lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" } ], "headline-sm": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-md": [ "20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" } ], "code-telemetry": [ "12px", { "lineHeight": "16px", "letterSpacing": "-0.01em", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-xl": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "600" } ] } } } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script id="theme-init">/* Theme before first paint: saved choice, else system preference, else dark. Only the preference is stored; CRM demo data never is. */(function(){var t;try{t=localStorage.getItem('spacenet-theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}var r=document.documentElement;if(!r)return;r.setAttribute('data-theme',t);r.classList.toggle('dark',t==='dark');r.style.colorScheme=t})();</script><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "rgb(var(--c-on-surface-variant) / <alpha-value>)", "inverse-on-surface": "rgb(var(--c-inverse-on-surface) / <alpha-value>)", "surface-container-highest": "rgb(var(--c-surface-container-highest) / <alpha-value>)", "error": "rgb(var(--c-error) / <alpha-value>)", "primary": "rgb(var(--c-primary) / <alpha-value>)", "on-tertiary": "rgb(var(--c-on-tertiary) / <alpha-value>)", "tertiary-container": "rgb(var(--c-tertiary-container) / <alpha-value>)", "tertiary-fixed": "rgb(var(--c-tertiary-fixed) / <alpha-value>)", "on-primary": "rgb(var(--c-on-primary) / <alpha-value>)", "tertiary-fixed-dim": "rgb(var(--c-tertiary-fixed-dim) / <alpha-value>)", "background": "rgb(var(--c-background) / <alpha-value>)", "on-primary-container": "rgb(var(--c-on-primary-container) / <alpha-value>)", "on-secondary-fixed": "rgb(var(--c-on-secondary-fixed) / <alpha-value>)", "on-primary-fixed-variant": "rgb(var(--c-on-primary-fixed-variant) / <alpha-value>)", "surface-container-lowest": "rgb(var(--c-surface-container-lowest) / <alpha-value>)", "error-container": "rgb(var(--c-error-container) / <alpha-value>)", "surface-dim": "rgb(var(--c-surface-dim) / <alpha-value>)", "primary-container": "rgb(var(--c-primary-container) / <alpha-value>)", "surface": "rgb(var(--c-surface) / <alpha-value>)", "on-secondary-container": "rgb(var(--c-on-secondary-container) / <alpha-value>)", "surface-container": "rgb(var(--c-surface-container) / <alpha-value>)", "surface-variant": "rgb(var(--c-surface-variant) / <alpha-value>)", "on-tertiary-fixed": "rgb(var(--c-on-tertiary-fixed) / <alpha-value>)", "on-secondary-fixed-variant": "rgb(var(--c-on-secondary-fixed-variant) / <alpha-value>)", "on-primary-fixed": "rgb(var(--c-on-primary-fixed) / <alpha-value>)", "outline-variant": "rgb(var(--c-outline-variant) / <alpha-value>)", "surface-tint": "rgb(var(--c-surface-tint) / <alpha-value>)", "on-secondary": "rgb(var(--c-on-secondary) / <alpha-value>)", "on-tertiary-fixed-variant": "rgb(var(--c-on-tertiary-fixed-variant) / <alpha-value>)", "surface-container-low": "rgb(var(--c-surface-container-low) / <alpha-value>)", "on-tertiary-container": "rgb(var(--c-on-tertiary-container) / <alpha-value>)", "on-error-container": "rgb(var(--c-on-error-container) / <alpha-value>)", "secondary-fixed": "rgb(var(--c-secondary-fixed) / <alpha-value>)", "on-error": "rgb(var(--c-on-error) / <alpha-value>)", "outline": "rgb(var(--c-outline) / <alpha-value>)", "tertiary": "rgb(var(--c-tertiary) / <alpha-value>)", "surface-bright": "rgb(var(--c-surface-bright) / <alpha-value>)", "inverse-primary": "rgb(var(--c-inverse-primary) / <alpha-value>)", "on-background": "rgb(var(--c-on-background) / <alpha-value>)", "secondary-fixed-dim": "rgb(var(--c-secondary-fixed-dim) / <alpha-value>)", "secondary": "rgb(var(--c-secondary) / <alpha-value>)", "primary-fixed": "rgb(var(--c-primary-fixed) / <alpha-value>)", "inverse-surface": "rgb(var(--c-inverse-surface) / <alpha-value>)", "on-surface": "rgb(var(--c-on-surface) / <alpha-value>)", "primary-fixed-dim": "rgb(var(--c-primary-fixed-dim) / <alpha-value>)", "surface-container-high": "rgb(var(--c-surface-container-high) / <alpha-value>)", "secondary-container": "rgb(var(--c-secondary-container) / <alpha-value>)" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "space-lg": "1rem", "gutter": "1rem", "margin-desktop": "2rem", "space-md": "0.75rem", "space-2xl": "2rem", "space-xl": "1.5rem", "margin": "1rem", "space-xs": "0.25rem", "gutter-desktop": "1.5rem" }, "fontFamily": { "headline-xl-mobile": [ "Geist" ], "body-lg": [ "Geist" ], "body-sm": [ "Geist" ], "code-metric": [ "JetBrains Mono" ], "headline-lg": [ "Geist" ], "label-md": [ "Geist" ], "headline-sm": [ "Geist" ], "headline-md": [ "Geist" ], "label-sm": [ "Geist" ], "code-telemetry": [ "JetBrains Mono" ], "body-md": [ "Geist" ], "headline-xl": [ "Geist" ] }, "fontSize": { "headline-xl-mobile": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "body-lg": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" } ], "body-sm": [ "13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" } ], "code-metric": [ "14px", { "lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" } ], "headline-sm": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-md": [ "20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" } ], "code-telemetry": [ "12px", { "lineHeight": "16px", "letterSpacing": "-0.01em", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-xl": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "600" } ] } } } }</script>
 <style id="spacenet-theme">
-/* SpaceNet galaxy theme: a fixed backdrop behind opaque content cards.
-   Motion = scroll parallax (transform only, JS below) + a slow nebula drift; both off under reduced motion. */
-body.bg-background { background-color: #060a1c; }
+/* SpaceNet "Minimal Galaxy" theme. Two palettes behind the same Tailwind token names; <html data-theme> picks one
+   (dark is the default). Glass only on the app chrome; data surfaces stay opaque. Motion = scroll parallax
+   (transform only, JS below) + a slow nebula drift; both off under reduced motion. */
+:root, :root[data-theme="dark"] { color-scheme: dark; --c-background: 11 11 20; --c-surface: 17 17 28; --c-surface-bright: 38 38 56; --c-surface-dim: 13 13 23; --c-surface-container-lowest: 20 20 31; --c-surface-container-low: 24 24 38; --c-surface-container: 29 29 44; --c-surface-container-high: 35 35 52; --c-surface-container-highest: 42 42 61; --c-surface-variant: 42 42 61; --c-on-surface: 236 235 246; --c-on-background: 236 235 246; --c-on-surface-variant: 180 178 203; --c-outline: 154 152 180; --c-outline-variant: 59 58 82; --c-primary: 170 163 255; --c-on-primary: 23 17 74; --c-primary-container: 74 67 184; --c-on-primary-container: 241 239 255; --c-primary-fixed: 43 39 99; --c-primary-fixed-dim: 58 53 132; --c-on-primary-fixed: 226 223 255; --c-on-primary-fixed-variant: 201 196 255; --c-surface-tint: 170 163 255; --c-secondary: 111 211 196; --c-on-secondary: 6 45 41; --c-secondary-container: 18 61 58; --c-on-secondary-container: 181 236 228; --c-secondary-fixed: 19 61 57; --c-secondary-fixed-dim: 28 85 80; --c-on-secondary-fixed: 197 242 235; --c-on-secondary-fixed-variant: 159 226 215; --c-tertiary: 201 172 255; --c-on-tertiary: 42 18 88; --c-tertiary-container: 91 58 158; --c-on-tertiary-container: 243 236 255; --c-tertiary-fixed: 51 33 95; --c-tertiary-fixed-dim: 67 48 122; --c-on-tertiary-fixed: 234 220 255; --c-on-tertiary-fixed-variant: 214 195 255; --c-error: 255 143 134; --c-on-error: 74 10 6; --c-error-container: 76 25 21; --c-on-error-container: 255 214 210; --c-inverse-surface: 25 24 48; --c-inverse-on-surface: 236 235 246; --c-inverse-primary: 185 178 255;
+  --sky: radial-gradient(140% 90% at 50% 0%, #17162d 0%, #0d0d18 55%, #08080f 100%);
+  --star: 255 255 255; --star-a: 1;
+  --nebula-1: rgba(124,58,237,.34); --nebula-2: rgba(79,70,229,.26); --nebula-3: rgba(45,212,191,.14); --nebula-4: rgba(168,85,247,.14);
+  --chrome: rgb(17 17 28 / .78); --chrome-border: rgb(59 58 82 / .7);
+  --card-shadow: 0 16px 34px -20px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.02);
+  --scrim: rgba(11,11,20,.55);
+  --hero: radial-gradient(60% 140% at 100% 0%, rgba(124,58,237,.22), transparent 60%), radial-gradient(50% 120% at 0% 100%, rgba(45,212,191,.10), transparent 60%), linear-gradient(135deg, #1d1b38, #131223);
+  --planet-body: radial-gradient(circle at 30% 28%, #4b44a8 0%, #262063 34%, #110f33 66%, #07061a 100%); --planet-ring: rgba(185,178,255,.26); --planet-glow: rgba(124,58,237,.18);
+  --tone-blue: #8ea2ff; --tone-violet: #b9a2ff; --tone-cyan: #6fd3c4; --tone-magenta: #f09ad0; --tone-alert: #ff8f86; }
+:root[data-theme="light"] { color-scheme: light; --c-background: 244 243 250; --c-surface: 248 247 252; --c-surface-bright: 251 250 255; --c-surface-dim: 222 220 236; --c-surface-container-lowest: 255 255 255; --c-surface-container-low: 246 245 251; --c-surface-container: 239 238 248; --c-surface-container-high: 232 230 244; --c-surface-container-highest: 224 222 240; --c-surface-variant: 227 225 241; --c-on-surface: 23 22 42; --c-on-background: 23 22 42; --c-on-surface-variant: 74 72 99; --c-outline: 93 91 120; --c-outline-variant: 201 198 220; --c-primary: 75 69 198; --c-on-primary: 255 255 255; --c-primary-container: 92 85 214; --c-on-primary-container: 255 255 255; --c-primary-fixed: 228 225 255; --c-primary-fixed-dim: 198 193 251; --c-on-primary-fixed: 20 16 74; --c-on-primary-fixed-variant: 58 51 168; --c-surface-tint: 75 69 198; --c-secondary: 31 102 128; --c-on-secondary: 255 255 255; --c-secondary-container: 205 233 241; --c-on-secondary-container: 14 67 86; --c-secondary-fixed: 211 236 243; --c-secondary-fixed-dim: 159 208 223; --c-on-secondary-fixed: 6 46 60; --c-on-secondary-fixed-variant: 20 80 99; --c-tertiary: 113 64 191; --c-on-tertiary: 255 255 255; --c-tertiary-container: 125 79 208; --c-on-tertiary-container: 255 255 255; --c-tertiary-fixed: 236 226 255; --c-tertiary-fixed-dim: 211 192 247; --c-on-tertiary-fixed: 38 16 79; --c-on-tertiary-fixed-variant: 90 47 163; --c-error: 179 38 30; --c-on-error: 255 255 255; --c-error-container: 251 225 223; --c-on-error-container: 122 20 16; --c-inverse-surface: 233 230 247; --c-inverse-on-surface: 27 26 48; --c-inverse-primary: 70 63 189;
+  --sky: radial-gradient(140% 90% at 50% 0%, #fbfaff 0%, #f2f1fa 55%, #ebe9f6 100%);
+  --star: 92 86 190; --star-a: .45;
+  --nebula-1: rgba(167,139,250,.26); --nebula-2: rgba(129,140,248,.20); --nebula-3: rgba(94,234,212,.12); --nebula-4: rgba(196,181,253,.18);
+  --chrome: rgb(251 250 255 / .78); --chrome-border: rgb(201 198 220 / .75);
+  --card-shadow: 0 12px 30px -20px rgba(64,52,140,.30), 0 1px 2px rgba(64,52,140,.06);
+  --scrim: rgba(244,243,250,.6);
+  --hero: radial-gradient(60% 140% at 100% 0%, rgba(139,122,240,.20), transparent 60%), radial-gradient(50% 120% at 0% 100%, rgba(94,200,220,.12), transparent 60%), linear-gradient(135deg, #f3f1fc, #e8e5f7);
+  --planet-body: radial-gradient(circle at 30% 28%, #ffffff 0%, #e4e0fa 40%, #c9c2f2 75%, #b6aded 100%); --planet-ring: rgba(120,110,210,.22); --planet-glow: rgba(139,122,240,.16);
+  --tone-blue: #3d55c7; --tone-violet: #6a4bc4; --tone-cyan: #1d6f80; --tone-magenta: #a3346f; --tone-alert: #b3261e; }
+body.bg-background { background-color: rgb(var(--c-background)); }
 main.bg-surface { background-color: transparent; }
-#space-backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: radial-gradient(140% 90% at 50% 0%, #131b4a 0%, #080c26 52%, #04061a 100%); }
+#space-backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: var(--sky); }
 #space-backdrop .space-sky { position: absolute; inset: -14% -12%; transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1); }
 #space-backdrop .space-layer { position: absolute; left: 0; right: 0; top: 0; will-change: transform; transition: opacity 600ms ease; }
 #space-backdrop .space-nebula { inset: -15% -10%; }
 #space-backdrop .space-nebula-glow { position: absolute; inset: 0;
   background:
-    radial-gradient(42% 36% at 16% 20%, rgba(124,58,237,.62), transparent 70%),
-    radial-gradient(38% 34% at 84% 24%, rgba(37,99,235,.56), transparent 70%),
-    radial-gradient(30% 28% at 64% 80%, rgba(34,211,238,.32), transparent 70%),
-    radial-gradient(26% 22% at 36% 62%, rgba(219,39,119,.36), transparent 70%);
+    radial-gradient(42% 36% at 16% 20%, var(--nebula-1), transparent 70%),
+    radial-gradient(38% 34% at 84% 24%, var(--nebula-2), transparent 70%),
+    radial-gradient(30% 28% at 64% 80%, var(--nebula-3), transparent 70%),
+    radial-gradient(26% 22% at 36% 62%, var(--nebula-4), transparent 70%);
   animation: space-nebula-drift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate; }
 /* Scroll-linked second nebula: fades in as the page is scrolled (opacity only). */
 #space-backdrop .space-nebula-shift { position: absolute; inset: 0; opacity: 0;
   background:
-    radial-gradient(34% 30% at 76% 70%, rgba(236,72,153,.32), transparent 70%),
-    radial-gradient(38% 32% at 22% 78%, rgba(34,211,238,.24), transparent 70%),
-    radial-gradient(30% 26% at 52% 36%, rgba(139,92,246,.22), transparent 70%); }
+    radial-gradient(34% 30% at 76% 70%, var(--nebula-4), transparent 70%),
+    radial-gradient(38% 32% at 22% 78%, var(--nebula-3), transparent 70%),
+    radial-gradient(30% 26% at 52% 36%, var(--nebula-1), transparent 70%); }
 /* Milky Way band: rotated inner element (the layer itself carries the parallax transform). */
 #space-backdrop .space-galaxy { inset: -10% -20%; }
 #space-backdrop .space-galaxy-band { position: absolute; left: -10%; right: -10%; top: 26%; height: 46%; transform: rotate(-14deg);
   background:
     radial-gradient(46% 7% at 52% 52%, rgba(4,6,26,.55), transparent 72%),
-    radial-gradient(1px 1px at 12px 18px, rgba(255,255,255,.85) 50%, transparent 51%) 0 0 / 46px 46px,
-    radial-gradient(1px 1px at 31px 7px, rgba(220,230,255,.55) 50%, transparent 51%) 0 0 / 46px 46px,
-    radial-gradient(1px 1px at 5px 37px, rgba(255,232,245,.5) 50%, transparent 51%) 0 0 / 46px 46px,
-    radial-gradient(50% 50% at 50% 50%, rgba(220,206,255,.34), rgba(150,118,255,.16) 45%, transparent 72%);
+    radial-gradient(1px 1px at 12px 18px, rgb(var(--star) / calc(.85 * var(--star-a))) 50%, transparent 51%) 0 0 / 46px 46px,
+    radial-gradient(1px 1px at 31px 7px, rgb(var(--star) / calc(.55 * var(--star-a))) 50%, transparent 51%) 0 0 / 46px 46px,
+    radial-gradient(1px 1px at 5px 37px, rgb(var(--star) / calc(.5 * var(--star-a))) 50%, transparent 51%) 0 0 / 46px 46px,
+    radial-gradient(50% 50% at 50% 50%, rgb(var(--star) / calc(.34 * var(--star-a))), rgba(150,118,255,.16) 45%, transparent 72%);
   -webkit-mask-image: radial-gradient(50% 50% at 50% 50%, #000 25%, transparent 75%); mask-image: radial-gradient(50% 50% at 50% 50%, #000 25%, transparent 75%); }
 #space-backdrop .space-stars { background-repeat: repeat; }
 #space-backdrop .space-stars-far { height: calc(100% + 320px); background-size: 320px 320px;
   background-image:
-    radial-gradient(1px 1px at 20px 40px, rgba(255,255,255,.6) 50%, transparent 51%),
-    radial-gradient(1px 1px at 140px 90px, rgba(255,255,255,.45) 50%, transparent 51%),
-    radial-gradient(1px 1px at 260px 30px, rgba(200,215,255,.55) 50%, transparent 51%),
-    radial-gradient(1px 1px at 90px 210px, rgba(255,255,255,.4) 50%, transparent 51%),
-    radial-gradient(1px 1px at 230px 260px, rgba(255,255,255,.5) 50%, transparent 51%),
-    radial-gradient(1px 1px at 300px 170px, rgba(200,215,255,.4) 50%, transparent 51%),
-    radial-gradient(1px 1px at 60px 300px, rgba(255,240,250,.45) 50%, transparent 51%),
-    radial-gradient(1px 1px at 180px 150px, rgba(255,255,255,.35) 50%, transparent 51%),
-    radial-gradient(1px 1px at 310px 300px, rgba(210,225,255,.5) 50%, transparent 51%),
-    radial-gradient(1px 1px at 120px 20px, rgba(255,255,255,.4) 50%, transparent 51%); }
+    radial-gradient(1px 1px at 20px 40px, rgb(var(--star) / calc(.6 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 140px 90px, rgb(var(--star) / calc(.45 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 260px 30px, rgb(var(--star) / calc(.55 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 90px 210px, rgb(var(--star) / calc(.4 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 230px 260px, rgb(var(--star) / calc(.5 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 300px 170px, rgb(var(--star) / calc(.4 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 60px 300px, rgb(var(--star) / calc(.45 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 180px 150px, rgb(var(--star) / calc(.35 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 310px 300px, rgb(var(--star) / calc(.5 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 120px 20px, rgb(var(--star) / calc(.4 * var(--star-a))) 50%, transparent 51%); }
 #space-backdrop .space-stars-mid { height: calc(100% + 540px); background-size: 540px 540px;
   background-image:
-    radial-gradient(1.5px 1.5px at 60px 120px, rgba(255,255,255,.8) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 400px 60px, rgba(190,210,255,.75) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 260px 380px, rgba(255,255,255,.65) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 480px 470px, rgba(255,230,240,.65) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 150px 470px, rgba(200,235,255,.6) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 340px 220px, rgba(255,255,255,.55) 50%, transparent 51%); }
+    radial-gradient(1.5px 1.5px at 60px 120px, rgb(var(--star) / calc(.8 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 400px 60px, rgb(var(--star) / calc(.75 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 260px 380px, rgb(var(--star) / calc(.65 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 480px 470px, rgb(var(--star) / calc(.65 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 150px 470px, rgb(var(--star) / calc(.6 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 340px 220px, rgb(var(--star) / calc(.55 * var(--star-a))) 50%, transparent 51%); }
 #space-backdrop .space-stars-near { height: calc(100% + 900px); background-size: 900px 900px;
   background-image:
-    radial-gradient(2px 2px at 150px 200px, rgba(255,255,255,.9) 50%, transparent 51%),
-    radial-gradient(2.5px 2.5px at 700px 520px, rgba(200,220,255,.8) 50%, transparent 51%),
-    radial-gradient(2px 2px at 420px 780px, rgba(255,255,255,.7) 50%, transparent 51%),
-    radial-gradient(2px 2px at 820px 120px, rgba(255,225,240,.7) 50%, transparent 51%); }
+    radial-gradient(2px 2px at 150px 200px, rgb(var(--star) / calc(.9 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(2.5px 2.5px at 700px 520px, rgb(var(--star) / calc(.8 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(2px 2px at 420px 780px, rgb(var(--star) / calc(.7 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(2px 2px at 820px 120px, rgb(var(--star) / calc(.7 * var(--star-a))) 50%, transparent 51%); }
 /* A few bright stars with a soft halo; slow opacity twinkle (off under reduced motion). */
 #space-backdrop .space-stars-near::before { content: ''; position: absolute; inset: 0; background-size: 900px 900px; background-repeat: repeat;
   background-image:
-    radial-gradient(2.5px 2.5px at 300px 120px, #fff 45%, transparent 60%),
+    radial-gradient(2.5px 2.5px at 300px 120px, rgb(var(--star) / var(--star-a)) 45%, transparent 60%),
     radial-gradient(18px 18px at 300px 120px, rgba(147,204,255,.35), transparent 70%),
-    radial-gradient(2.5px 2.5px at 610px 660px, #fff 45%, transparent 60%),
+    radial-gradient(2.5px 2.5px at 610px 660px, rgb(var(--star) / var(--star-a)) 45%, transparent 60%),
     radial-gradient(16px 16px at 610px 660px, rgba(236,160,255,.3), transparent 70%);
   animation: space-twinkle 7s ease-in-out infinite alternate; }
 /* Distant ringed planet, lower right, on its own near-depth layer. */
 #space-backdrop .space-planet { left: auto; top: auto; right: -4vmin; bottom: -16vmin; width: 44vmin; height: 44vmin; }
 #space-backdrop .space-planet-body { position: absolute; inset: 0; border-radius: 50%;
-  background: radial-gradient(circle at 30% 28%, #4a5fc4 0%, #232c75 34%, #0d1240 66%, #05071a 100%);
-  box-shadow: inset 10px 12px 26px rgba(147,204,255,.28), inset -26px -30px 60px rgba(0,0,0,.7), 0 0 70px rgba(91,130,255,.22); }
+  background: var(--planet-body);
+  box-shadow: inset 10px 12px 26px rgba(255,255,255,.18), inset -26px -30px 60px rgba(0,0,0,.35), 0 0 60px var(--planet-glow); }
 #space-backdrop .space-planet-ring { position: absolute; left: -32%; right: -32%; top: 41%; height: 18%; border-radius: 50%; transform: rotate(-16deg);
-  border: 2px solid rgba(179,197,255,.30); box-shadow: 0 0 14px rgba(179,197,255,.16), inset 0 0 10px rgba(179,197,255,.10); }
+  border: 1.5px solid var(--planet-ring); }
 /* Working screens: quieter sky so content leads; the dashboard gets the full atmosphere. */
+#space-backdrop .space-galaxy { opacity: .45; }
+#space-backdrop .space-planet { opacity: .7; }
+:root[data-theme="light"] #space-backdrop .space-galaxy, :root[data-theme="light"] #space-backdrop .space-stars-near::before { display: none; }
 #space-backdrop:not([data-view="dashboard"]) .space-nebula { opacity: .7; }
-#space-backdrop:not([data-view="dashboard"]) .space-galaxy { opacity: .6; }
-#space-backdrop:not([data-view="dashboard"]) .space-planet { opacity: .55; }
+#space-backdrop:not([data-view="dashboard"]) .space-galaxy { opacity: .3; }
+#space-backdrop:not([data-view="dashboard"]) .space-planet { opacity: .4; }
 #space-backdrop:not([data-view="dashboard"]) .space-stars-near { opacity: .5; }
 #space-backdrop:not([data-view="dashboard"]) .space-stars-mid { opacity: .8; }
 /* Each view sits in its own region of the sky; switching views glides between them. */
@@ -92,60 +116,80 @@ main.bg-surface { background-color: transparent; }
 #space-backdrop[data-view="billing"] .space-sky { transform: translate3d(-7%, -8%, 0); }
 #space-backdrop[data-view="technicians"] .space-sky { transform: translate3d(8%, 4%, 0); }
 #space-backdrop[data-view="analytics"] .space-sky { transform: translate3d(-9%, 6%, 0); }
-/* Header joins the dark frame; its search box and pills keep their own light surfaces. */
-#app-header { background-color: rgba(6, 10, 28, .72); box-shadow: 0 1px 0 rgba(179, 197, 255, .10); }
-#app-header .text-right .text-on-surface { color: #eef0ff; }
-#app-header .text-right .text-on-surface-variant { color: #aab4d6; }
+/* App chrome (header, sidebar): the one place glass is used. */
+#app-header { background-color: var(--chrome); -webkit-backdrop-filter: blur(16px) saturate(1.15); backdrop-filter: blur(16px) saturate(1.15); box-shadow: 0 1px 0 var(--chrome-border); }
+#app-header #theme-toggle-btn { display: inline-flex; }
+/* Secondary tools live in native <details> disclosures: keyboard and screen-reader support built in. */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] > summary .disclosure-chevron { transform: rotate(180deg); }
+details > summary:hover { background-color: rgb(var(--c-on-surface) / .04); }
+details > summary:focus-visible { outline: 2px solid rgb(var(--c-primary)); outline-offset: -2px; }
+#app-header .rounded-full, #app-header .text-right span { white-space: nowrap; }
+@media (max-width: 1439.98px) { #app-header #copilot-status-pill { display: none; } }
+/* Minimal composition: the decorative orbit no longer sits over the pipeline counts. */
+.sales-orbit { display: none; }
+/* Global declutter: calm labels, quiet header indicators, fewer sidebar badges, a clear KPI hierarchy. */
+main .uppercase.tracking-wider, main .uppercase.tracking-wide { text-transform: none; letter-spacing: 0; }
+#app-header .animate-ping { display: none; }
+#app-header > div:last-child > .rounded-full:not(button) { background: transparent; box-shadow: none; padding-left: .25rem; padding-right: .25rem; }
+.side-badge:not(.side-badge-alert) { background: transparent; color: rgb(var(--c-on-surface-variant)); font-weight: 500; }
+#nav-badge-customers, #nav-diag-count { display: none !important; }
+.space-mission-band > svg { display: none !important; }
+.kpi-tile-src { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+#dash-kpis .kpi-tile:nth-child(n+5) { padding: .75rem 1rem; }
+#dash-kpis .kpi-tile:nth-child(n+5) .kpi-tile-value { font-size: 24px; line-height: 30px; }
+#dash-kpis .kpi-tile:nth-child(n+5) .kpi-tile-icon { padding: .2rem; font-size: 18px; }
+/* Metric strips (Tickets, Customers): colour only where it signals risk (error); the rest stay neutral. */
+:is(#view-tickets, #view-customer-profiles) .p-space-sm.bg-surface-container-low.rounded-lg.flex-col > span:first-child:not(.text-error) { color: rgb(var(--c-on-surface-variant)); }
+:is(#view-tickets, #view-customer-profiles) .p-space-sm.bg-surface-container-low.rounded-lg.flex-col > span:last-child:not(.text-error) { color: rgb(var(--c-on-surface)); }
+#ticket-table-body td:nth-child(2) button { white-space: nowrap; }
+/* Press feedback on buttons (instant, transform only; off under reduced motion). */
+button:not(:disabled):not(.lead-card):active { transform: scale(.98); }
 @keyframes space-nebula-drift { to { transform: translate3d(3%, 2%, 0) scale(1.05); } }
 @keyframes space-twinkle { from { opacity: .35; } to { opacity: 1; } }
-/* Dark mission-control sidebar; content cards stay on their existing opaque surfaces. */
-#app-sidebar.bg-surface-container-low { background-color: rgba(8, 12, 34, .78); border-right: 1px solid rgba(179, 197, 255, .10); }
+#app-sidebar.bg-surface-container-low { background-color: var(--chrome); -webkit-backdrop-filter: blur(18px) saturate(1.15); backdrop-filter: blur(18px) saturate(1.15); border-right: 1px solid var(--chrome-border); }
 #app-sidebar .bg-surface-container-low { background-color: transparent; }
-#app-sidebar .bg-surface-container { background-color: rgba(179, 197, 255, .07); }
-#app-sidebar .text-on-surface { color: #eef0ff; }
-#app-sidebar .text-on-surface-variant { color: #aab4d6; }
-#app-sidebar .text-outline { color: #7d87a8; }
-#app-sidebar .text-primary { color: #b3c5ff; }
-#app-sidebar .text-secondary { color: #93ccff; }
-#app-sidebar nav a:not(.bg-primary-container):hover, #app-sidebar button:hover { background-color: rgba(179, 197, 255, .10); color: #ffffff; }
-#app-sidebar nav a.bg-primary-container { box-shadow: 0 0 0 1px rgba(179, 197, 255, .25), 0 4px 18px rgba(0, 102, 255, .35); }
+#app-sidebar .bg-surface-container { background-color: rgb(var(--c-primary) / .07); }
+#app-sidebar nav a:not(.bg-primary-container):hover, #app-sidebar button:hover { background-color: rgb(var(--c-primary) / .10); color: rgb(var(--c-on-surface)); }
+#app-sidebar nav a.bg-primary-container { box-shadow: 0 0 0 1px rgb(var(--c-primary) / .25); }
 /* Dashboard title band sits on the sky; a soft scrim keeps its text readable over stars. */
-.space-mission-band::before { content: ''; position: absolute; inset: -24px -12px; pointer-events: none; background: radial-gradient(closest-side at 30% 55%, rgba(6, 10, 28, .6), transparent); }
+.space-mission-band::before { content: ''; position: absolute; inset: -24px -12px; pointer-events: none; background: radial-gradient(closest-side at 30% 55%, var(--scrim), transparent); }
 /* View switch: brief fade-up so screens don't teleport. */
 .app-view:not(.hidden) { animation: space-view-in 320ms cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes space-view-in { from { opacity: 0; transform: translateY(12px); } }
 /* View titles on the sky (Inbox, Tickets, Customers) share the dashboard band's scrim. */
-.space-view-title::before { content: ''; position: absolute; inset: -20px -12px; pointer-events: none; background: radial-gradient(closest-side at 25% 50%, rgba(6, 10, 28, .6), transparent); }
+.space-view-title::before { content: ''; position: absolute; inset: -20px -12px; pointer-events: none; background: radial-gradient(closest-side at 25% 50%, var(--scrim), transparent); }
 /* Module heroes (06-10): one deep-space panel instead of flat slate. */
-.sales-hero.bg-inverse-surface { background: radial-gradient(60% 140% at 100% 0%, rgba(124,58,237,.32), transparent 60%), radial-gradient(50% 120% at 0% 100%, rgba(34,211,238,.14), transparent 60%), linear-gradient(135deg, #121a46, #0b1030); border: 1px solid rgba(179,197,255,.14); box-shadow: 0 18px 40px -18px rgba(2,6,23,.85); }
+.sales-hero.bg-inverse-surface { background: var(--hero); box-shadow: inset 0 0 0 1px var(--chrome-border); }
 /* Content cards lift off the sky with a real offset shadow; they stay opaque for readability. */
-.app-view > .rounded-xl, .app-view > .grid > .rounded-xl, .app-view > .grid > div > .rounded-xl { box-shadow: 0 14px 34px -14px rgba(2,6,23,.75), 0 2px 6px rgba(2,6,23,.3); }
+.app-view > .rounded-xl, .app-view > .grid > .rounded-xl, .app-view > .grid > div > .rounded-xl { box-shadow: var(--card-shadow); }
 /* Dashboard instrument tiles (rendered by renderDashboardKpis). */
-.kpi-tile { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: .25rem; text-align: left; padding: 1rem 1.125rem; border-radius: .75rem; color: #eef0ff;
-  background: radial-gradient(120% 90% at 100% 0%, var(--tone-soft), transparent 55%), linear-gradient(160deg, #141c46, #0b1132);
-  border: 1px solid rgba(179,197,255,.14); box-shadow: 0 16px 34px -16px rgba(2,6,23,.9);
-  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), border-color 200ms ease, box-shadow 200ms ease; }
+.kpi-tile { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: .25rem; text-align: left; padding: 1rem 1.125rem; border-radius: .75rem; color: rgb(var(--c-on-surface));
+  background: radial-gradient(120% 90% at 100% 0%, var(--tone-soft), transparent 55%), linear-gradient(160deg, rgb(var(--c-surface-container-lowest)), rgb(var(--c-surface-container-low)));
+  border: 1px solid rgb(var(--c-outline-variant) / .7); box-shadow: var(--card-shadow);
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), border-color 200ms ease; }
 .kpi-tile::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, var(--tone), transparent 80%); }
-.kpi-tile:hover { transform: translateY(-2px); border-color: rgba(179,197,255,.32); box-shadow: 0 22px 40px -16px rgba(2,6,23,.95); }
-.kpi-tile:focus-visible { outline: 2px solid #93ccff; outline-offset: 2px; }
-.kpi-tile[data-tone="blue"] { --tone: #5b8cff; --tone-soft: rgba(91,140,255,.22); }
-.kpi-tile[data-tone="violet"] { --tone: #a78bfa; --tone-soft: rgba(167,139,250,.22); }
-.kpi-tile[data-tone="cyan"] { --tone: #22d3ee; --tone-soft: rgba(34,211,238,.18); }
-.kpi-tile[data-tone="magenta"] { --tone: #f472b6; --tone-soft: rgba(244,114,182,.18); }
-.kpi-tile[data-tone="alert"] { --tone: #ff8a80; --tone-soft: rgba(255,138,128,.22); }
-.kpi-tile-label { font: 500 12px/16px Geist, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #b8c2e6; }
-.kpi-tile-icon { display: inline-flex; padding: .3rem; border-radius: .5rem; color: var(--tone); background: var(--tone-soft); font-size: 20px; }
-.kpi-tile-value { font: 600 34px/40px Geist, sans-serif; letter-spacing: -.025em; color: #ffffff; font-variant-numeric: tabular-nums; }
-.kpi-tile-sub { font: 400 13px/18px Geist, sans-serif; color: #cdd5f3; }
-.kpi-tile-src { font: 500 11px/14px Geist, sans-serif; color: #9aa6cf; }
+.kpi-tile:hover { transform: translateY(-2px); border-color: rgb(var(--c-primary) / .35); }
+.kpi-tile:focus-visible { outline: 2px solid rgb(var(--c-primary)); outline-offset: 2px; }
+.kpi-tile[data-tone="blue"] { --tone: var(--tone-blue); --tone-soft: rgba(110,120,240,.10); }
+.kpi-tile[data-tone="violet"] { --tone: var(--tone-violet); --tone-soft: rgba(150,110,240,.10); }
+.kpi-tile[data-tone="cyan"] { --tone: var(--tone-cyan); --tone-soft: rgba(45,180,170,.09); }
+.kpi-tile[data-tone="magenta"] { --tone: var(--tone-magenta); --tone-soft: rgba(220,90,160,.08); }
+.kpi-tile[data-tone="alert"] { --tone: var(--tone-alert); --tone-soft: rgba(220,70,60,.10); }
+.kpi-tile-label { font: 500 12px/16px Geist, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: rgb(var(--c-on-surface-variant)); }
+.kpi-tile-icon { display: inline-flex; padding: .3rem; border-radius: .5rem; color: var(--tone); background: rgb(var(--c-surface-container)); font-size: 20px; }
+.kpi-tile-value { font: 600 34px/40px Geist, sans-serif; letter-spacing: -.025em; color: rgb(var(--c-on-surface)); font-variant-numeric: tabular-nums; }
+.kpi-tile-sub { font: 400 13px/18px Geist, sans-serif; color: rgb(var(--c-on-surface-variant)); }
+.kpi-tile-src { font: 500 11px/14px Geist, sans-serif; color: rgb(var(--c-outline)); }
 .kpi-tile-pulse { width: .5rem; height: .5rem; border-radius: 9999px; background: var(--tone); animation: kpi-pulse 2.4s ease-out infinite; }
 @keyframes kpi-pulse { 0% { box-shadow: 0 0 0 0 var(--tone); } 70%, 100% { box-shadow: 0 0 0 7px transparent; } }
 /* Sidebar badges (moved from the removed top tab strip; same ids, owned by Module 10). */
 #app-sidebar nav a { position: relative; }
 .side-badge { margin-left: auto; display: inline-flex; align-items: center; justify-content: center; min-width: 1.375rem; height: 1.25rem; padding: 0 .375rem; border-radius: 9999px;
-  font: 600 11px/1 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; white-space: nowrap; background: rgba(179,197,255,.14); color: #dbe4ff; }
+  font: 600 11px/1 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; white-space: nowrap; background: rgb(var(--c-primary) / .12); color: rgb(var(--c-on-surface)); }
 .side-badge.hidden { display: none; }
-.side-badge-alert { background: #ffb4ab; color: #690005; }
+.side-badge-alert { background: rgb(var(--c-error-container)); color: rgb(var(--c-on-error-container)); }
 #app-sidebar nav a.bg-primary-container .side-badge:not(.side-badge-alert) { background: rgba(255,255,255,.22); color: #fff; }
 /* Collapsed (icon) sidebar: hide every text label, not only those tagged .sidebar-text. */
 @media (min-width: 768px) {
@@ -161,12 +205,17 @@ main.bg-surface { background-color: transparent; }
 /* Header: quick action stays reachable (icon-only on phones). */
 #app-header #quick-sweep-btn { display: flex; }
 /* Browser surfaces themed from the palette. */
-::selection { background: rgba(91,184,254,.35); }
-#app-sidebar :focus-visible, #app-header :focus-visible { outline: 2px solid #5bb8fe; outline-offset: 2px; }
-/* Content sits on light cards: primary blue keeps the ring above 3:1. */
-main button:focus-visible, main a:focus-visible { outline: 2px solid #0050cb; outline-offset: 2px; }
+::selection { background: rgb(var(--c-primary) / .28); }
+#app-sidebar :focus-visible, #app-header :focus-visible { outline: 2px solid rgb(var(--c-primary)); outline-offset: 2px; }
+/* Primary is >= 4.5:1 on every surface in both themes, so the ring stays above 3:1. */
+main button:focus-visible, main a:focus-visible { outline: 2px solid rgb(var(--c-primary)); outline-offset: 2px; }
 .font-code-metric, .font-code-telemetry, main td { font-variant-numeric: tabular-nums; }
 @keyframes space-view-fade { from { opacity: 0; } }
+#chart-line-ai { stroke: rgb(var(--c-primary)); }
+#chart-line-escalated { stroke: rgb(var(--c-error)); }
+#aiGradient stop { stop-color: rgb(var(--c-primary)); }
+#view-dashboard svg circle[fill="#0066ff"] { fill: rgb(var(--c-primary)); }
+.space-mission-band svg circle { fill: rgb(var(--c-primary)); }
 /* Phone shell (<768px): the sidebar becomes an off-canvas drawer. Desktop width/offset
    classes (w-64/w-20, pl-64/pl-20, left-64/left-20) and their collapse JS are untouched. */
 html { -webkit-tap-highlight-color: transparent; }
@@ -200,27 +249,40 @@ html { -webkit-tap-highlight-color: transparent; }
 @media (max-width: 767.98px) {
   #space-backdrop .space-galaxy, #space-backdrop .space-stars-near::before { display: none; }
   /* As a drawer it sits over page content, so it must be opaque. */
-  #app-sidebar.bg-surface-container-low { background-color: #080c22; }
+  #app-sidebar.bg-surface-container-low { background-color: rgb(var(--c-surface-container-low)); }
 }
 @media (max-width: 767.98px) and (prefers-reduced-motion: reduce) {
   #app-sidebar, body.mobile-nav-open #app-sidebar { transition: none; }
 }
+/* Hard-coded amber/emerald utilities were written for light surfaces; on dark surfaces they map to light tints.
+   Elements that carry their own Tailwind dark: variant are excluded, so the result never depends on stylesheet order. */
+.dark .text-amber-900:not([class*="dark:text-"]), .dark .text-amber-800:not([class*="dark:text-"]), .dark .text-amber-700:not([class*="dark:text-"]) { color: #f6d69c; }
+.dark .text-amber-600:not([class*="dark:text-"]) { color: #f2c06e; }
+.dark .text-emerald-900:not([class*="dark:text-"]), .dark .text-emerald-600:not([class*="dark:text-"]) { color: #8fe3c2; }
+.dark .bg-amber-100:not([class*="dark:bg-"]), .dark .bg-amber-50:not([class*="dark:bg-"]) { background-color: rgb(146 92 14 / .26); }
+.dark .bg-emerald-100:not([class*="dark:bg-"]) { background-color: rgb(16 128 96 / .24); }
+.dark .border-amber-300:not([class*="dark:border-"]), .dark .border-emerald-300:not([class*="dark:border-"]) { border-color: rgb(var(--c-outline-variant)); }
+.dark .placeholder\:text-amber-800\/60::placeholder { color: rgb(246 214 156 / .6); }
+/* Primary/tertiary buttons hover to their container colour; in the dark theme that would put dark label text on a dark fill. */
+.dark .text-on-primary.hover\:bg-primary-container:hover { background-color: rgb(var(--c-primary)); background-image: linear-gradient(rgb(255 255 255 / .14), rgb(255 255 255 / .14)); }
+.dark .text-on-tertiary.hover\:bg-tertiary-container:hover { background-color: rgb(var(--c-tertiary)); background-image: linear-gradient(rgb(255 255 255 / .14), rgb(255 255 255 / .14)); }
 @media (prefers-reduced-motion: reduce) {
   #space-backdrop .space-nebula-glow, #space-backdrop .space-stars-near::before, .kpi-tile-pulse, .animate-ping, .animate-pulse { animation: none; }
   .kpi-tile { transition: none; }
   .kpi-tile:hover { transform: none; }
+  button:not(:disabled):active { transform: none; }
   #space-backdrop .space-layer, #space-backdrop .space-sky { transition: none; }
   #space-backdrop .space-layer { will-change: auto; }
   .app-view:not(.hidden) { animation: space-view-fade 150ms ease; }
 }
 </style>
-</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.03"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-galaxy" data-depth="0.05"><div class="space-galaxy-band"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.06" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.12" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.2" data-tile="900"></div><div class="space-layer space-planet" data-depth="0.3" data-max="260"><div class="space-planet-body"></div><div class="space-planet-ring"></div></div></div></div><div id="mobile-nav-backdrop" class="hidden" aria-hidden="true" onclick="closeMobileNav()"></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><button type="button" id="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close navigation" class="md:hidden absolute top-3 right-3 z-10 p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span><span id="nav-badge-inbox" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span><span id="nav-badge-tickets" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span><span id="nav-badge-customers" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span><span id="nav-diag-count" class="side-badge">4</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span><span id="nav-badge-sales" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span><span id="nav-badge-billing" class="hidden side-badge side-badge-alert"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="technicians" href="#"><span class="material-symbols-outlined text-[20px]">engineering</span><span class="font-body-md text-body-md sidebar-text">Technician Ops</span><span id="nav-badge-technicians" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="analytics" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="font-body-md text-body-md sidebar-text">Admin &amp; Analytics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span><span id="nav-badge-outages" class="hidden side-badge side-badge-alert"></span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><button type="button" id="mobile-nav-btn" onclick="openMobileNav()" aria-label="Open navigation" aria-controls="app-sidebar" aria-expanded="false" class="md:hidden shrink-0 p-1.5 rounded-lg text-inverse-on-surface hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary"><span class="material-symbols-outlined" aria-hidden="true">menu</span></button><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" aria-label="Global search" onclick="openCmdPalette()" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openCmdPalette(); }" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><button type="button" id="quick-sweep-btn" onclick="triggerGlobalDiagnostics()" aria-label="Quick ONT Sweep" class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest text-primary font-label-sm text-label-sm font-semibold hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">bolt</span><span class="hidden lg:inline">Quick ONT Sweep</span></button><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
+</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.03"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-galaxy" data-depth="0.05"><div class="space-galaxy-band"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.06" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.12" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.2" data-tile="900"></div><div class="space-layer space-planet" data-depth="0.3" data-max="260"><div class="space-planet-body"></div><div class="space-planet-ring"></div></div></div></div><div id="mobile-nav-backdrop" class="hidden" aria-hidden="true" onclick="closeMobileNav()"></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><button type="button" id="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close navigation" class="md:hidden absolute top-3 right-3 z-10 p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span><span id="nav-badge-inbox" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span><span id="nav-badge-tickets" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span><span id="nav-badge-customers" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span><span id="nav-diag-count" class="side-badge">4</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span><span id="nav-badge-sales" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span><span id="nav-badge-billing" class="hidden side-badge side-badge-alert"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="technicians" href="#"><span class="material-symbols-outlined text-[20px]">engineering</span><span class="font-body-md text-body-md sidebar-text">Technician Ops</span><span id="nav-badge-technicians" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="analytics" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="font-body-md text-body-md sidebar-text">Admin &amp; Analytics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span><span id="nav-badge-outages" class="hidden side-badge side-badge-alert"></span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><button type="button" id="mobile-nav-btn" onclick="openMobileNav()" aria-label="Open navigation" aria-controls="app-sidebar" aria-expanded="false" class="md:hidden shrink-0 p-1.5 rounded-lg text-inverse-on-surface hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary"><span class="material-symbols-outlined" aria-hidden="true">menu</span></button><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" aria-label="Global search" onclick="openCmdPalette()" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openCmdPalette(); }" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div id="copilot-status-pill" class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><button type="button" id="theme-toggle-btn" onclick="toggleTheme()" aria-pressed="true" aria-label="Dark theme" title="Switch light / dark theme" class="items-center justify-center w-8 h-8 shrink-0 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[18px]" aria-hidden="true" id="theme-toggle-icon">dark_mode</span></button><button type="button" id="quick-sweep-btn" onclick="triggerGlobalDiagnostics()" aria-label="Quick ONT Sweep" class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest text-primary font-label-sm text-label-sm font-semibold hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">bolt</span><span class="hidden lg:inline">Quick ONT Sweep</span></button><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
 <!-- Notification Toast Layer -->
 <div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-space-sm px-space-lg py-space-md bg-inverse-surface text-inverse-on-surface rounded-xl shadow-xl" id="toast-notification">
-<span class="material-symbols-outlined text-secondary-container" id="toast-icon">check_circle</span>
+<span class="material-symbols-outlined text-inverse-primary" id="toast-icon">check_circle</span>
 <div class="flex flex-col">
 <span class="font-headline-sm text-label-md" id="toast-title">Notification</span>
-<span class="font-body-sm text-body-sm text-surface-container-highest" id="toast-msg">Operation completed successfully.</span>
+<span class="font-body-sm text-body-sm text-inverse-on-surface/80" id="toast-msg">Operation completed successfully.</span>
 </div>
 </div>
 <!-- ========================================================================= -->
@@ -422,7 +484,10 @@ html { -webkit-tap-highlight-color: transparent; }
 <button type="button" class="inbox-queue-pill px-2.5 py-0.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-queue="read" aria-pressed="false" onclick="filterQueue('read')">Read <span id="inbox-queue-count-read" class="font-code-telemetry">0</span></button>
 <button type="button" class="inbox-queue-pill px-2.5 py-0.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-queue="awaiting" aria-pressed="false" onclick="filterQueue('awaiting')"><span class="material-symbols-outlined text-[13px]" aria-hidden="true">support_agent</span> Awaiting human reply <span id="inbox-queue-count-awaiting" class="font-code-telemetry">0</span></button>
 </div>
-<!-- Conversation Type Filter (All / Direct Messages / Comments) -->
+<!-- Channel and type filters: secondary, one disclosure (the queue filters above stay visible) -->
+<details id="inbox-more-filters" class="inbox-more-filters">
+<summary class="flex items-center gap-1.5 cursor-pointer select-none font-label-md text-label-md text-on-surface-variant py-0.5"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">tune</span>Channel &amp; type <span id="inbox-filter-summary" class="text-on-surface font-semibold">All</span><span class="material-symbols-outlined text-[16px] ml-auto disclosure-chevron" aria-hidden="true">expand_more</span></summary>
+<div class="flex flex-col gap-space-xs pt-space-xs">
 <div id="inbox-type-filter-strip" class="flex items-center gap-1 overflow-x-auto pb-1 text-label-sm font-label-sm border-b border-surface-container">
 <button class="inbox-type-pill px-2.5 py-0.5 rounded bg-primary text-on-primary font-semibold flex items-center gap-1 whitespace-nowrap transition-colors" data-type="all" onclick="filterType('all', this)">
   <span class="material-symbols-outlined text-[13px]">all_inbox</span> All
@@ -454,6 +519,8 @@ html { -webkit-tap-highlight-color: transparent; }
             </button>
 </div>
 </div>
+</details>
+</div>
 <!-- Chat List Items -->
 <div class="flex-1 overflow-y-auto divide-y divide-surface-container-low" id="inbox-thread-list">
 <!-- Dynamically populated by renderThreadList() -->
@@ -474,15 +541,9 @@ html { -webkit-tap-highlight-color: transparent; }
 <span id="chat-channel-badge" class="px-2 py-0.2 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">WhatsApp</span>
 <span id="chat-type-badge" class="px-2 py-0.2 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">mail</span> Direct Message</span>
 <span id="chat-origin-badge" class="hidden px-2 py-0.2 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-[11px] flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">link</span> Continued from Public Comment</span>
-            <div class="flex items-center gap-1 bg-surface-container px-1 py-0.5 rounded-lg text-[11px] font-label-sm">
-              <span class="text-outline px-1">AI Lang:</span>
-              <button class="px-1.5 py-0.5 rounded bg-primary text-on-primary font-semibold" onclick="setAiLanguage('EN', this)">EN</button>
-              <button class="px-1.5 py-0.5 rounded hover:bg-surface-container-high text-on-surface" onclick="setAiLanguage('BN', this)">বাংলা</button>
-              <button class="px-1.5 py-0.5 rounded hover:bg-surface-container-high text-on-surface" onclick="setAiLanguage('Banglish', this)">Banglish</button>
-            </div>
 
 </div>
-<span id="chat-circuit-plan" class="font-body-sm text-label-sm text-on-surface-variant">Circuit ID: <span class="font-code-telemetry">SPN-FBR-0941</span> • Plan: Fiber 500Mbps • <button type="button" class="inline-flex items-center gap-0.5 text-primary hover:underline font-semibold cursor-pointer" onclick="goToProfileFromChat()" title="Open Customer 360° Profile"><span class="material-symbols-outlined text-[13px]">badge</span> 360° Profile</button></span>
+<span id="chat-circuit-plan" class="font-body-sm text-label-sm text-on-surface-variant">Circuit ID: <span class="font-code-telemetry">SPN-FBR-0941</span> • Plan: Fiber 500Mbps</span>
 </div>
 </div>
 <!-- Handover Toggle Pill & 360 Profile Action -->
@@ -558,16 +619,13 @@ html { -webkit-tap-highlight-color: transparent; }
 </div>
 
 <!-- Customer Frustration Alert Banner (Deterministic Sentiment Indicator) -->
-<div id="chat-frustration-alert" class="hidden px-space-md py-2 bg-error-container/70 border-b border-error/30 flex flex-wrap items-center justify-between gap-2 text-on-error-container text-[12px] transition-all">
-  <div class="flex items-center gap-2">
-    <span class="material-symbols-outlined text-error text-[18px]">sentiment_very_dissatisfied</span>
-    <div>
-      <span class="font-headline-sm font-bold text-error">Customer Frustration Detected:</span>
-      <span class="font-body-sm text-on-error-container ml-1" id="frustration-reason-text">Dissatisfaction patterns &amp; repeated downtime complaint detected.</span>
-      <span class="text-[10px] opacity-75 italic block">(Deterministic sentiment rule pattern &bull; High churn risk &bull; Escalation recommended)</span>
-    </div>
+<div id="chat-frustration-alert" role="status" class="hidden px-space-md py-1.5 bg-error-container border-b border-error/30 flex flex-wrap items-center justify-between gap-2 text-on-error-container text-[12px]">
+  <div class="flex flex-1 basis-64 items-center gap-2 min-w-0">
+    <span class="material-symbols-outlined text-error text-[18px] shrink-0" aria-hidden="true">sentiment_very_dissatisfied</span>
+    <p class="min-w-0" id="frustration-alert-text"><span class="font-semibold">Frustration detected · escalation recommended.</span>
+      <span class="font-body-sm" id="frustration-reason-text">Dissatisfaction patterns &amp; repeated downtime complaint detected.</span></p>
   </div>
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-2 shrink-0">
     <button onclick="escalateToHumanFromFrustration()" class="px-3 py-1 bg-error hover:bg-error/90 text-on-error font-headline-sm text-[11px] rounded-lg flex items-center gap-1 shadow-xs cursor-pointer transition-colors">
       <span class="material-symbols-outlined text-[14px]">support_agent</span>
       <span>Escalate to Human NOC</span>
@@ -575,55 +633,6 @@ html { -webkit-tap-highlight-color: transparent; }
   </div>
 </div>
 
-<!-- AI Copilot Intent Recognition & Basic Routing Banner -->
-<div id="chat-ai-routing-banner" class="px-space-md py-2 bg-surface-container-low/90 border-b border-surface-container flex flex-wrap items-center justify-between gap-2 text-[12px] font-body-sm transition-all">
-  <div class="flex flex-wrap items-center gap-2">
-    <div class="flex items-center gap-1 text-tertiary font-headline-sm font-semibold">
-      <span class="material-symbols-outlined text-[16px]">psychology</span>
-      <span>AI Intent:</span>
-    </div>
-    <span id="routing-detected-intent" class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-semibold text-[11px]">
-      Package &amp; Speed Inquiry
-    </span>
-    <span class="text-outline text-[11px]">&bull; Route:</span>
-    <span id="routing-suggested-route" class="font-medium text-on-surface text-[11px]">Knowledge Base / FAQ</span>
-    <span id="routing-confidence-pill" class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-code-telemetry text-[10px]">96% Match</span>
-  </div>
-  <div class="flex items-center gap-1.5" id="routing-actions-container">
-    <button id="routing-action-btn" class="px-2.5 py-1 rounded-md bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-[11px] flex items-center gap-1 transition-colors cursor-pointer" onclick="handleRoutingAction()">
-      <span class="material-symbols-outlined text-[13px] text-primary" id="routing-action-icon">auto_stories</span>
-      <span id="routing-action-label">Explore KB Answer</span>
-    </button>
-  </div>
-</div>
-<!-- Demo Only: Customer Inbound Message Simulator Strip (Issue 5) -->
-<div id="demo-customer-simulator-strip" class="px-space-md py-1.5 bg-surface-container/60 border-b border-surface-container flex flex-wrap items-center justify-between gap-2 text-[11px] font-body-sm transition-all">
-  <div class="flex items-center gap-1.5 text-on-surface-variant font-medium">
-    <span class="material-symbols-outlined text-[15px] text-primary">sensors</span>
-    <span class="font-headline-sm text-label-sm font-semibold text-on-surface">Demo Simulator:</span>
-    <span class="text-outline text-[10px] hidden sm:inline">Simulate inbound customer inquiry</span>
-  </div>
-  <div class="flex flex-wrap items-center gap-1.5 flex-1 max-w-xl justify-end">
-    <select id="sim-preset-select" onchange="handleSimPresetChange(this)" class="px-2 py-1 bg-surface-container-low text-on-surface rounded border border-surface-container font-body-sm text-[11px] focus:outline-none focus:ring-1 focus:ring-primary max-w-[240px] truncate cursor-pointer">
-      <option value="">-- Choose Preset Customer Inquiry --</option>
-      <option value="Will I receive an automatic bill credit if my internet is down for 24 hours?">Outage Credit: "Will I receive automatic bill credit if internet is down 24h?"</option>
-      <option value="Is SpaceNet available in Banani? Do you guarantee 99.9% uptime?">Multi-Intent: "Available in Banani? Do you guarantee 99.9% uptime?"</option>
-      <option value="How much is the installation fee for Fiber Gamer 300M, and is it available in Banani?">3-Part Multi-Intent: "Fee for Fiber Gamer 300M &amp; available in Banani?"</option>
-      <option value="Great! How much is the installation fee for Fiber Gamer 300M, and is it available in Banani?">Package &amp; Setup: "Installation fee for Fiber Gamer 300M in Banani?"</option>
-      <option value="How can I pay my monthly bill via bKash Merchant?">Billing: "How can I pay monthly bill via bKash Merchant?"</option>
-      <option value="What packages are available and what are the speeds?">Packages: "What packages are available and what are speeds?"</option>
-      <option value="My connection is dropping and PON light is flashing red!">Technical: "Connection dropping and PON light is flashing red!"</option>
-      <option value="This is the third time I called. Internet is still not working and worst service ever!">Frustration: "3rd time I called. Still not working, worst service!"</option>
-      <option value="প্যাকেজের দাম কত এবং ধানমন্ডিতে লাইন আছে?">বাংলা: "প্যাকেজের দাম কত এবং ধানমন্ডিতে লাইন আছে?"</option>
-      <option value="Dhanmondi-te notun line nite chai setup fee koto?">Banglish: "Dhanmondi-te notun line nite chai setup fee koto?"</option>
-    </select>
-    <input id="sim-custom-input" aria-label="Fictional customer inquiry" type="text" placeholder="Or type fictional inquiry..." class="flex-1 min-w-[130px] px-2 py-1 bg-surface-container-low text-on-surface rounded border border-surface-container text-[11px] focus:outline-none focus:ring-1 focus:ring-primary placeholder:text-outline" onkeydown="if(event.key==='Enter') executeSimulateCustomerMessage()">
-    <button onclick="executeSimulateCustomerMessage()" class="px-2.5 py-1 bg-secondary text-on-secondary hover:bg-secondary/90 rounded font-headline-sm text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition-colors cursor-pointer">
-      <span class="material-symbols-outlined text-[13px]">send</span>
-      <span>Simulate Inbound</span>
-    </button>
-  </div>
-</div>
 <!-- Real-Time Chat Log Stream -->
 <div class="flex-1 min-h-[18rem] max-h-[60vh] lg:min-h-0 lg:max-h-none p-space-lg overflow-y-auto flex flex-col gap-space-md bg-surface/30" id="chat-message-stream">
 <!-- Customer Message -->
@@ -686,6 +695,10 @@ html { -webkit-tap-highlight-color: transparent; }
 </div>
 </div>
 </div>
+<!-- Copilot tools (secondary): suggested replies, AI routing, reply language and the demo simulator. Collapsed by default so the transcript leads. -->
+<details id="chat-copilot-tools" class="chat-tools border-t border-surface-container">
+<summary class="px-space-md py-2 flex items-center gap-2 cursor-pointer select-none font-label-md text-label-md text-on-surface"><span class="material-symbols-outlined text-[16px] text-tertiary" aria-hidden="true">auto_awesome</span><span class="font-semibold">Copilot tools</span><span class="text-on-surface-variant truncate">Suggested replies · AI routing · reply language · simulator</span><span class="material-symbols-outlined text-[18px] text-outline ml-auto disclosure-chevron" aria-hidden="true">expand_more</span></summary>
+<div class="max-h-[42vh] overflow-y-auto">
 <!-- 3 Clickable AI Suggested Replies Toolbar -->
 <div class="px-space-md py-space-xs bg-surface-container-low/40 flex flex-col gap-1">
 <div class="flex items-center justify-between">
@@ -706,6 +719,65 @@ html { -webkit-tap-highlight-color: transparent; }
             </button>
 </div>
 </div>
+<!-- AI Copilot Intent Recognition & Basic Routing Banner -->
+<div id="chat-ai-routing-banner" class="px-space-md py-2 border-t border-surface-container flex flex-wrap items-center justify-between gap-2 text-[12px] font-body-sm transition-all">
+  <div class="flex flex-wrap items-center gap-2">
+    <div class="flex items-center gap-1 text-tertiary font-headline-sm font-semibold">
+      <span class="material-symbols-outlined text-[16px]">psychology</span>
+      <span>AI Intent:</span>
+    </div>
+    <span id="routing-detected-intent" class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-semibold text-[11px]">
+      Package &amp; Speed Inquiry
+    </span>
+    <span class="text-outline text-[11px]">&bull; Route:</span>
+    <span id="routing-suggested-route" class="font-medium text-on-surface text-[11px]">Knowledge Base / FAQ</span>
+    <span id="routing-confidence-pill" class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-code-telemetry text-[10px]">96% Match</span>
+  </div>
+  <div class="flex items-center gap-1.5" id="routing-actions-container">
+    <button id="routing-action-btn" class="px-2.5 py-1 rounded-md bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-[11px] flex items-center gap-1 transition-colors cursor-pointer" onclick="handleRoutingAction()">
+      <span class="material-symbols-outlined text-[13px] text-primary" id="routing-action-icon">auto_stories</span>
+      <span id="routing-action-label">Explore KB Answer</span>
+    </button>
+  </div>
+</div>
+<div class="px-space-md py-1.5 border-t border-surface-container flex items-center gap-2 text-[12px]">
+            <div class="flex items-center gap-1 bg-surface-container px-1 py-0.5 rounded-lg text-[11px] font-label-sm">
+              <span class="text-on-surface-variant px-1">AI reply language</span>
+              <button class="px-1.5 py-0.5 rounded bg-primary text-on-primary font-semibold" onclick="setAiLanguage('EN', this)">EN</button>
+              <button class="px-1.5 py-0.5 rounded hover:bg-surface-container-high text-on-surface" onclick="setAiLanguage('BN', this)">বাংলা</button>
+              <button class="px-1.5 py-0.5 rounded hover:bg-surface-container-high text-on-surface" onclick="setAiLanguage('Banglish', this)">Banglish</button>
+            </div>
+</div>
+<!-- Demo Only: Customer Inbound Message Simulator Strip (Issue 5) -->
+<div id="demo-customer-simulator-strip" class="px-space-md py-1.5 border-t border-surface-container flex flex-wrap items-center justify-between gap-2 text-[11px] font-body-sm transition-all">
+  <div class="flex items-center gap-1.5 text-on-surface-variant font-medium">
+    <span class="material-symbols-outlined text-[15px] text-primary">sensors</span>
+    <span class="font-headline-sm text-label-sm font-semibold text-on-surface">Demo Simulator:</span>
+    <span class="text-outline text-[10px] hidden sm:inline">Simulate inbound customer inquiry</span>
+  </div>
+  <div class="flex flex-wrap items-center gap-1.5 flex-1 max-w-xl justify-end">
+    <select id="sim-preset-select" onchange="handleSimPresetChange(this)" class="px-2 py-1 bg-surface-container-low text-on-surface rounded border border-surface-container font-body-sm text-[11px] focus:outline-none focus:ring-1 focus:ring-primary max-w-[240px] truncate cursor-pointer">
+      <option value="">-- Choose Preset Customer Inquiry --</option>
+      <option value="Will I receive an automatic bill credit if my internet is down for 24 hours?">Outage Credit: "Will I receive automatic bill credit if internet is down 24h?"</option>
+      <option value="Is SpaceNet available in Banani? Do you guarantee 99.9% uptime?">Multi-Intent: "Available in Banani? Do you guarantee 99.9% uptime?"</option>
+      <option value="How much is the installation fee for Fiber Gamer 300M, and is it available in Banani?">3-Part Multi-Intent: "Fee for Fiber Gamer 300M &amp; available in Banani?"</option>
+      <option value="Great! How much is the installation fee for Fiber Gamer 300M, and is it available in Banani?">Package &amp; Setup: "Installation fee for Fiber Gamer 300M in Banani?"</option>
+      <option value="How can I pay my monthly bill via bKash Merchant?">Billing: "How can I pay monthly bill via bKash Merchant?"</option>
+      <option value="What packages are available and what are the speeds?">Packages: "What packages are available and what are speeds?"</option>
+      <option value="My connection is dropping and PON light is flashing red!">Technical: "Connection dropping and PON light is flashing red!"</option>
+      <option value="This is the third time I called. Internet is still not working and worst service ever!">Frustration: "3rd time I called. Still not working, worst service!"</option>
+      <option value="প্যাকেজের দাম কত এবং ধানমন্ডিতে লাইন আছে?">বাংলা: "প্যাকেজের দাম কত এবং ধানমন্ডিতে লাইন আছে?"</option>
+      <option value="Dhanmondi-te notun line nite chai setup fee koto?">Banglish: "Dhanmondi-te notun line nite chai setup fee koto?"</option>
+    </select>
+    <input id="sim-custom-input" aria-label="Fictional customer inquiry" type="text" placeholder="Or type fictional inquiry..." class="flex-1 min-w-[130px] px-2 py-1 bg-surface-container-low text-on-surface rounded border border-surface-container text-[11px] focus:outline-none focus:ring-1 focus:ring-primary placeholder:text-outline" onkeydown="if(event.key==='Enter') executeSimulateCustomerMessage()">
+    <button onclick="executeSimulateCustomerMessage()" class="px-2.5 py-1 bg-secondary text-on-secondary hover:bg-secondary/90 rounded font-headline-sm text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition-colors cursor-pointer">
+      <span class="material-symbols-outlined text-[13px]">send</span>
+      <span>Simulate Inbound</span>
+    </button>
+  </div>
+</div>
+</div>
+</details>
 <!-- Composer Mode Tabs -->
 <div class="px-space-md pt-2 pb-1 bg-surface-container-lowest flex items-center justify-between border-t border-surface-container">
   <div class="flex items-center gap-1 text-label-sm font-label-sm">
@@ -1115,20 +1187,13 @@ html { -webkit-tap-highlight-color: transparent; }
 <!-- ========================================================================= -->
 <section class="app-view flex flex-col gap-space-lg hidden" id="view-ai-diagnostics">
   <!-- Top Diagnostics Control & Target Bar -->
-  <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+  <div class="bg-surface-container-lowest px-space-lg py-space-md rounded-xl shadow-sm flex flex-col gap-space-sm">
     <!-- Header title and Return Context -->
-    <div class="flex flex-wrap items-center justify-between gap-space-md pb-space-xs border-b border-surface-container-high/60">
-      <div class="flex items-center gap-space-md">
-        <div class="w-10 h-10 rounded-xl bg-primary-container text-on-primary-container flex items-center justify-center shadow-xs">
-          <span class="material-symbols-outlined text-[24px]">troubleshoot</span>
-        </div>
-        <div class="flex flex-col">
-          <div class="flex items-center gap-2">
-            <h1 class="font-headline-md text-headline-md text-on-surface">AI Troubleshooting & Diagnostics Workbench</h1>
-            <span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[11px] font-code-telemetry font-bold">Module 05</span>
-          </div>
-          <p class="font-body-sm text-body-sm text-on-surface-variant">Interactive ISP diagnostic decision trees, simulated ONT telemetry, and connection-aware speed verification</p>
-        </div>
+    <div class="flex flex-wrap items-center justify-between gap-space-md">
+      <div class="flex items-center gap-space-sm min-w-0">
+        <span class="material-symbols-outlined text-primary text-[22px]" aria-hidden="true">troubleshoot</span>
+        <h1 class="font-headline-md text-headline-md text-on-surface">AI Diagnostics</h1>
+        <span class="font-label-sm text-label-sm text-on-surface-variant">Simulated telemetry · no device is contacted</span>
       </div>
 
       <!-- Action Toolbar (Return Breadcrumb & Reset Demo) -->
@@ -1151,7 +1216,7 @@ html { -webkit-tap-highlight-color: transparent; }
       <div class="flex flex-wrap items-center gap-space-md">
         <!-- Target Customer Dropdown -->
         <div class="flex items-center gap-2">
-          <label for="diag-customer-select" class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-semibold">Target Subscriber:</label>
+          <label for="diag-customer-select" class="font-label-md text-label-md text-on-surface-variant">Subscriber</label>
           <select id="diag-customer-select" class="bg-surface-container-low text-on-surface font-label-md text-label-md px-3 py-1.5 rounded-lg border border-surface-container focus:outline-none focus:ring-2 focus:ring-primary font-semibold" onchange="selectDiagCustomer(this.value)">
             <!-- Populated dynamically via renderDiagnosticsWorkspace() -->
           </select>
@@ -1159,18 +1224,13 @@ html { -webkit-tap-highlight-color: transparent; }
 
         <!-- Target Circuit Pills -->
         <div class="flex items-center gap-2">
-          <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-semibold">Active Circuit:</span>
+          <span class="font-label-md text-label-md text-on-surface-variant">Circuit</span>
           <div class="flex items-center gap-1.5" id="diag-circuit-pills">
             <!-- Populated dynamically via renderDiagnosticsWorkspace() -->
           </div>
         </div>
       </div>
 
-      <!-- Demo Simulation Guard Banner -->
-      <div class="flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-lg border border-surface-container text-[11px] text-outline">
-        <span class="material-symbols-outlined text-[15px] text-secondary">verified_user</span>
-        <span>Simulated ISP Telemetry &mdash; Client-Side Demo Only</span>
-      </div>
     </div>
   </div>
 
@@ -1178,7 +1238,7 @@ html { -webkit-tap-highlight-color: transparent; }
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
 
     <!-- COLUMN 1: AI-Guided Troubleshooting Workflows (5 Cols) -->
-    <div class="lg:col-span-5 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md" id="diag-workflow-panel">
+    <div class="lg:col-span-7 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md" id="diag-workflow-panel">
       <!-- Workflow Selection Tabs -->
       <div class="flex flex-col gap-1">
         <span class="font-label-sm text-outline uppercase tracking-wider font-semibold">Diagnostic Workflow:</span>
@@ -1233,12 +1293,12 @@ html { -webkit-tap-highlight-color: transparent; }
       </div>
 
       <!-- Recorded Decision Trace Breadcrumb -->
-      <div class="flex flex-col gap-1.5 pt-2 border-t border-surface-container">
-        <span class="font-label-sm text-outline uppercase tracking-wider font-semibold">Recorded Diagnostic Responses:</span>
+      <details class="pt-2 border-t border-surface-container">
+        <summary class="flex items-center gap-1.5 cursor-pointer select-none font-label-md text-label-md text-on-surface-variant py-1 rounded"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">checklist</span>Recorded answers<span class="material-symbols-outlined text-[16px] ml-auto disclosure-chevron" aria-hidden="true">expand_more</span></summary>
         <div class="flex flex-col gap-1 max-h-[140px] overflow-y-auto pr-1" id="diag-responses-log">
           <!-- Populated dynamically via renderDiagWorkflowUI() -->
         </div>
-      </div>
+      </details>
 
       <!-- Assessment, Recommendations & Escalation Box -->
       <div class="p-space-md rounded-xl border flex flex-col gap-2 transition-all bg-surface-container-low border-surface-container-high" id="diag-assessment-card">
@@ -1274,17 +1334,36 @@ html { -webkit-tap-highlight-color: transparent; }
       </div>
     </div>
 
-    <!-- COLUMN 2: Simulated Equipment & Telemetry Teleport (4 Cols) -->
-    <div class="lg:col-span-4 flex flex-col gap-space-lg" id="diag-telemetry-col">
-      <!-- Hardware Status Card -->
-      <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md" id="diag-hardware-card">
+    <!-- Technical inspector (secondary): session target, equipment & tools, speed test, history -->
+    <aside class="lg:col-span-5 flex flex-col gap-space-md" aria-label="Technical inspector">
+    <h2 class="px-space-xs font-label-md text-label-md text-on-surface-variant flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">tune</span>Technical inspector</h2>
+      <!-- Active Target Card -->
+      <div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm" id="diag-target-card">
         <div class="flex items-center justify-between pb-space-xs border-b border-surface-container">
+          <span class="font-label-sm text-outline uppercase tracking-wider font-semibold">Session Target</span>
+          <span class="px-2 py-0.2 rounded bg-surface-container font-code-telemetry text-[10px] text-primary font-bold" id="diag-target-cust-id">CUST-8832</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-headline-sm text-body-md text-on-surface font-semibold" id="diag-target-customer-name">Alex Rivera</span>
+          <span class="font-body-sm text-[12px] text-on-surface-variant" id="diag-target-plan-status">Fiber 500M &bull; Active (Online)</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-1.5 pt-1">
+          <span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-code-telemetry text-[10px] font-bold" id="diag-target-circuit-badge">SPN-FBR-0941</span>
+          <span class="hidden px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-code-telemetry text-[10px] font-bold" id="diag-linked-ticket-pill">#TKT-9042</span>
+          <span class="hidden px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-code-telemetry text-[10px] font-bold" id="diag-linked-chat-pill">WA Chat</span>
+        </div>
+      </div>
+
+    <div class="flex flex-col gap-space-md" id="diag-telemetry-col">
+      <!-- Hardware Status Card -->
+      <details class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md" id="diag-hardware-card" open>
+        <summary class="flex items-center justify-between gap-2 cursor-pointer select-none">
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-primary text-[20px]">router</span>
             <span class="font-headline-sm text-body-md font-semibold text-on-surface">Equipment & LED Status</span>
           </div>
-          <span class="text-[11px] font-code-telemetry text-outline" id="diag-mac-badge">MAC: --</span>
-        </div>
+          <span class="text-[11px] font-code-telemetry text-outline" id="diag-mac-badge">MAC: --</span><span class="material-symbols-outlined text-[18px] text-outline disclosure-chevron" aria-hidden="true">expand_more</span>
+        </summary>
 
         <!-- Hardware Details Sub-Card -->
         <div class="grid grid-cols-2 gap-2 text-[11px] bg-surface-container-low p-space-sm rounded-lg">
@@ -1376,17 +1455,17 @@ html { -webkit-tap-highlight-color: transparent; }
             <span class="font-code-telemetry text-[10px] text-on-surface-variant truncate max-w-[150px]" id="diag-telemetry-ip">--</span>
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- Simulated Interactive Speed Test Widget -->
-      <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md" id="diag-speed-card">
-        <div class="flex items-center justify-between pb-space-xs border-b border-surface-container">
+      <details class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md" id="diag-speed-card">
+        <summary class="flex items-center justify-between gap-2 cursor-pointer select-none">
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-secondary text-[20px]">speed</span>
             <span class="font-headline-sm text-body-md font-semibold text-on-surface">Simulated Speed Test</span>
           </div>
-          <span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[11px] font-code-telemetry font-bold" id="diag-speed-plan-badge">Plan: 500M</span>
-        </div>
+          <span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[11px] font-code-telemetry font-bold" id="diag-speed-plan-badge">Plan: 500M</span><span class="material-symbols-outlined text-[18px] text-outline disclosure-chevron" aria-hidden="true">expand_more</span>
+        </summary>
 
         <!-- Testing Status & Progress Bar -->
         <div class="flex flex-col gap-1" id="diag-speed-progress-wrapper">
@@ -1437,37 +1516,19 @@ html { -webkit-tap-highlight-color: transparent; }
             <span>Repeat</span>
           </button>
         </div>
-      </div>
+      </details>
     </div>
 
-    <!-- COLUMN 3: Active Target & Diagnostic History (3 Cols) -->
-    <div class="lg:col-span-3 flex flex-col gap-space-lg" id="diag-history-col">
-      <!-- Active Target Card -->
-      <div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm" id="diag-target-card">
-        <div class="flex items-center justify-between pb-space-xs border-b border-surface-container">
-          <span class="font-label-sm text-outline uppercase tracking-wider font-semibold">Session Target</span>
-          <span class="px-2 py-0.2 rounded bg-surface-container font-code-telemetry text-[10px] text-primary font-bold" id="diag-target-cust-id">CUST-8832</span>
-        </div>
-        <div class="flex flex-col">
-          <span class="font-headline-sm text-body-md text-on-surface font-semibold" id="diag-target-customer-name">Alex Rivera</span>
-          <span class="font-body-sm text-[12px] text-on-surface-variant" id="diag-target-plan-status">Fiber 500M &bull; Active (Online)</span>
-        </div>
-        <div class="flex flex-wrap items-center gap-1.5 pt-1">
-          <span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-code-telemetry text-[10px] font-bold" id="diag-target-circuit-badge">SPN-FBR-0941</span>
-          <span class="hidden px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-code-telemetry text-[10px] font-bold" id="diag-linked-ticket-pill">#TKT-9042</span>
-          <span class="hidden px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-code-telemetry text-[10px] font-bold" id="diag-linked-chat-pill">WA Chat</span>
-        </div>
-      </div>
-
+    <div class="flex flex-col gap-space-md" id="diag-history-col">
       <!-- Historical Diagnostic Sessions List -->
-      <div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm flex-1 max-h-[820px] overflow-hidden" id="diag-history-panel">
-        <div class="flex items-center justify-between pb-space-xs border-b border-surface-container">
+      <details class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm" id="diag-history-panel">
+        <summary class="flex items-center justify-between gap-2 cursor-pointer select-none">
           <div class="flex items-center gap-1.5">
             <span class="material-symbols-outlined text-primary text-[18px]">history</span>
             <span class="font-headline-sm text-body-md font-semibold text-on-surface">Diagnostic History</span>
           </div>
-          <span class="px-2 py-0.2 rounded-full bg-surface-container font-code-telemetry text-label-sm text-primary font-bold" id="diag-history-count-badge">4</span>
-        </div>
+          <span class="px-2 py-0.2 rounded-full bg-surface-container font-code-telemetry text-label-sm text-primary font-bold" id="diag-history-count-badge">4</span><span class="material-symbols-outlined text-[18px] text-outline disclosure-chevron" aria-hidden="true">expand_more</span>
+        </summary>
 
         <!-- Filter Switch: Active Circuit vs All Circuits -->
         <div class="flex items-center justify-between gap-1 p-1 bg-surface-container-low rounded-lg text-[11px]">
@@ -1476,11 +1537,12 @@ html { -webkit-tap-highlight-color: transparent; }
         </div>
 
         <!-- Scrollable History List -->
-        <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="diag-history-list">
+        <div class="flex-1 max-h-[520px] overflow-y-auto space-y-2 pr-1" id="diag-history-list">
           <!-- Populated dynamically via renderDiagHistoryUI() -->
         </div>
-      </div>
+      </details>
     </div>
+    </aside>
 
   </div>
 </section>
@@ -1491,19 +1553,17 @@ html { -webkit-tap-highlight-color: transparent; }
 /* Module 06 space accents: static starfield + one slow orbit. Reusable later for the theme pass. */
 .sales-hero {
   background-image:
-    radial-gradient(1px 1px at 12% 30%, rgba(255,255,255,.55) 50%, transparent 51%),
-    radial-gradient(1px 1px at 34% 72%, rgba(255,255,255,.35) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 58% 18%, rgba(255,255,255,.45) 50%, transparent 51%),
-    radial-gradient(1px 1px at 76% 64%, rgba(255,255,255,.30) 50%, transparent 51%),
-    radial-gradient(1px 1px at 88% 40%, rgba(255,255,255,.40) 50%, transparent 51%),
-    radial-gradient(1px 1px at 22% 86%, rgba(255,255,255,.30) 50%, transparent 51%),
-    radial-gradient(120% 140% at 100% 0%, rgba(110,38,223,.32), transparent 55%),
-    radial-gradient(90% 120% at 0% 100%, rgba(0,102,255,.22), transparent 60%);
+    radial-gradient(1px 1px at 12% 30%, rgb(var(--star) / calc(.55 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 34% 72%, rgb(var(--star) / calc(.35 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 58% 18%, rgb(var(--star) / calc(.45 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 76% 64%, rgb(var(--star) / calc(.3 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 40%, rgb(var(--star) / calc(.4 * var(--star-a))) 50%, transparent 51%),
+    radial-gradient(1px 1px at 22% 86%, rgb(var(--star) / calc(.3 * var(--star-a))) 50%, transparent 51%);
 }
-.sales-orbit { color: #b3c5ff; }
+.sales-orbit { color: rgb(var(--c-inverse-primary)); }
 .sales-orbit-spin { transform-origin: 210px 210px; animation: sales-orbit-spin 60s linear infinite; }
 @keyframes sales-orbit-spin { to { transform: rotate(360deg); } }
-.sales-stage-strip::before { content: ''; position: absolute; left: 10%; right: 10%; top: 1.4rem; height: 1px; background: linear-gradient(90deg, transparent, rgba(179,197,255,.55), transparent); }
+.sales-stage-strip::before { content: ''; position: absolute; left: 10%; right: 10%; top: 1.4rem; height: 1px; background: linear-gradient(90deg, transparent, rgb(var(--c-primary) / .45), transparent); }
 @media (prefers-reduced-motion: reduce) {
   .sales-orbit-spin { animation: none; }
   .lead-card, #lead-modal, #lead-modal-container, #lead-create-modal, #lead-create-container { transition: none !important; }
@@ -2132,7 +2192,7 @@ html { -webkit-tap-highlight-color: transparent; }
         <div class="p-space-sm bg-surface-container rounded-lg flex flex-col gap-1.5" id="td-modal-feedback-card">
           <div class="flex items-center justify-between">
             <span class="font-label-sm font-semibold text-on-surface">Customer Satisfaction Rating (CSAT)</span>
-            <div class="flex items-center text-amber-500 text-[14px]" id="td-modal-feedback-stars">★★★★★</div>
+            <div class="flex items-center text-amber-700 text-[14px]" id="td-modal-feedback-stars">★★★★★</div>
           </div>
           <p class="font-body-sm text-[12px] text-on-surface-variant italic" id="td-modal-feedback-comment">No customer review submitted yet.</p>
         </div>
@@ -2492,8 +2552,8 @@ html { -webkit-tap-highlight-color: transparent; }
       channel: 'telegram',
       channelLabel: 'Telegram',
       channelBadge: 'TG',
-      channelColor: 'bg-primary-container text-on-primary',
-      badgeColor: 'bg-primary-container text-on-primary',
+      channelColor: 'bg-primary-container text-on-primary-container',
+      badgeColor: 'bg-primary-container text-on-primary-container',
       type: 'dm',
       status: 'ai_handling',
       unread: true, // last message is an unanswered customer message
@@ -2728,6 +2788,34 @@ html { -webkit-tap-highlight-color: transparent; }
       }
     });
   });
+
+  // Theme (presentation only): data-theme + Tailwind's `dark` class on <html>. The head script picks the
+  // first theme before paint; this keeps the toggle in sync and saves an explicit choice.
+  const THEME_STORAGE_KEY = 'spacenet-theme';
+  function applyTheme(theme) {
+    const root = document.documentElement;
+    if (!root) return;
+    root.setAttribute('data-theme', theme);
+    root.classList.toggle('dark', theme === 'dark');
+    root.style.colorScheme = theme;
+    const btn = document.getElementById('theme-toggle-btn');
+    if (btn) btn.setAttribute('aria-pressed', String(theme === 'dark'));
+    const icon = document.getElementById('theme-toggle-icon');
+    if (icon) icon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
+  }
+
+  function setTheme(theme) {
+    try { localStorage.setItem(THEME_STORAGE_KEY, theme); } catch (e) { /* storage blocked: the theme still applies for this visit */ }
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (document.startViewTransition && !reduce) document.startViewTransition(() => applyTheme(theme));
+    else applyTheme(theme);
+  }
+
+  function toggleTheme() {
+    setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  }
+
+  if (document.documentElement) applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
 
   // 2. Toast Notification
   function showToast(title, message) {
@@ -4129,7 +4217,7 @@ html { -webkit-tap-highlight-color: transparent; }
         msgBtn.className = 'composer-mode-tab px-3 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-medium flex items-center gap-1.5 transition-colors cursor-pointer';
       }
       if (noteBtn) {
-        noteBtn.className = 'composer-mode-tab px-3 py-1 rounded-md bg-amber-600 text-white font-semibold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer';
+        noteBtn.className = 'composer-mode-tab px-3 py-1 rounded-md bg-amber-700 text-white font-semibold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer';
       }
       if (hint) {
         hint.innerHTML = '<span class="material-symbols-outlined text-[13px] text-amber-700">lock</span><span class="text-amber-800 font-semibold">Internal Team Note (Private &bull; Hidden from Customer)</span>';
@@ -4139,7 +4227,7 @@ html { -webkit-tap-highlight-color: transparent; }
         input.placeholder = 'Write an internal team note (only visible to NOC staff, not sent to customer)...';
       }
       if (sendBtn) {
-        sendBtn.className = 'px-space-lg py-2 bg-amber-600 hover:bg-amber-700 text-white font-headline-sm text-label-md rounded-lg flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer';
+        sendBtn.className = 'px-space-lg py-2 bg-amber-700 hover:bg-amber-800 text-white font-headline-sm text-label-md rounded-lg flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer';
       }
       if (sendLabel) sendLabel.textContent = 'Add Note';
       if (sendIcon) sendIcon.textContent = 'lock';
@@ -4240,6 +4328,12 @@ html { -webkit-tap-highlight-color: transparent; }
 
   function renderThreadList() {
     renderInboxQueueStrip();
+    const filterSummary = document.getElementById('inbox-filter-summary');
+    if (filterSummary) {
+      const typeLabel = { dm: 'DMs', comment: 'Comments' }[currentTypeFilter];
+      const channelLabel = { whatsapp: 'WhatsApp', facebook: 'Facebook', instagram: 'Instagram', telegram: 'Telegram', web: 'Website chat' }[currentChannelFilter] || '';
+      filterSummary.textContent = [channelLabel, typeLabel].filter(Boolean).join(' · ') || 'All';
+    }
     const container = document.getElementById('inbox-thread-list');
     if (!container) return;
 
@@ -4315,9 +4409,10 @@ html { -webkit-tap-highlight-color: transparent; }
 
       const isComment = conv.type === 'comment';
       const isHuman = conv.status === 'human_takeover';
+      // Direct message is the default, so only public comments get a type badge (fewer badges per row).
       const typeBadge = isComment
         ? `<span class="px-1.5 py-0.2 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-[10px] font-medium flex items-center gap-0.5"><span class="material-symbols-outlined text-[10px]">forum</span> Comment</span>`
-        : `<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-[10px] font-medium flex items-center gap-0.5"><span class="material-symbols-outlined text-[10px]">mail</span> DM</span>`;
+        : '';
 
       const awaiting = isAwaitingHumanReply(conv);
       const humanIndicator = isHuman
@@ -4442,7 +4537,7 @@ html { -webkit-tap-highlight-color: transparent; }
     const circuitPlanEl = document.getElementById('chat-circuit-plan');
     const targetCustId = cust.customerId || cust.displayId || cust.id;
     if (circuitPlanEl) {
-      circuitPlanEl.innerHTML = `Circuit ID: <span class="font-code-telemetry">${escapeHtml(cust.circuitId || cust.circuit)}</span> &bull; Plan: ${escapeHtml(cust.plan)} &bull; <button type="button" class="inline-flex items-center gap-0.5 text-primary hover:underline font-semibold cursor-pointer" onclick="goToProfileFromChat('${escapeHtml(targetCustId)}')" title="Open Customer 360° Profile"><span class="material-symbols-outlined text-[13px]">badge</span> 360° Profile</button>`;
+      circuitPlanEl.innerHTML = `Circuit ID: <span class="font-code-telemetry">${escapeHtml(cust.circuitId || cust.circuit)}</span> &bull; Plan: ${escapeHtml(cust.plan)}`;
     }
 
     const chatProfileBtn = document.getElementById('chat-customer-profile-btn');
@@ -7564,7 +7659,7 @@ html { -webkit-tap-highlight-color: transparent; }
 
         ${tkt.feedback ? `
           <div class="p-1.5 rounded bg-surface-container text-[11px] flex items-center justify-between gap-1">
-            <div class="flex items-center text-amber-500 text-[13px]">${'★'.repeat(tkt.feedback.rating || 5)}${'☆'.repeat(5 - (tkt.feedback.rating || 5))}</div>
+            <div class="flex items-center text-amber-700 text-[13px]">${'★'.repeat(tkt.feedback.rating || 5)}${'☆'.repeat(5 - (tkt.feedback.rating || 5))}</div>
             <span class="font-body-sm italic text-on-surface-variant line-clamp-1">"${escapeHtml(tkt.feedback.comment || '')}"</span>
           </div>
         ` : ''}
@@ -7673,7 +7768,7 @@ html { -webkit-tap-highlight-color: transparent; }
       CLOSED: { icon: 'lock', color: 'text-on-surface-variant' },
       REOPENED: { icon: 'restart_alt', color: 'text-amber-600' },
       DIAGNOSTICS_RUN: { icon: 'bolt', color: 'text-tertiary' },
-      FEEDBACK_RECEIVED: { icon: 'star', color: 'text-amber-500' },
+      FEEDBACK_RECEIVED: { icon: 'star', color: 'text-amber-700' },
       PRIVACY_TRANSITION: { icon: 'shield', color: 'text-primary' },
       VOICE_INQUIRY: { icon: 'mic', color: 'text-secondary' }
     };
@@ -9749,7 +9844,7 @@ html { -webkit-tap-highlight-color: transparent; }
             <span class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2"><span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">support_agent</span>Awaiting human reply</span>
             <span id="analytics-queue-note" class="font-body-sm text-body-sm text-on-surface-variant">Chats handed off from AI to staff with no staff reply since the handoff. Reading a chat does not clear it. ${m.unreadConversations} unread chat${m.unreadConversations === 1 ? '' : 's'} in total.</span>
           </span>
-          <span class="flex items-center gap-space-sm"><span class="font-code-metric text-code-metric text-on-surface">${m.awaitingHumanReply}</span><span class="font-label-md text-label-md text-primary flex items-center gap-1">Open queue<span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span></span></span>
+          <span class="flex items-center gap-space-sm"><span class="font-headline-lg text-[28px] leading-none font-semibold text-on-surface tabular-nums">${m.awaitingHumanReply}</span><span class="font-label-md text-label-md text-primary flex items-center gap-1">Open queue<span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span></span></span>
         </button>`;
     }
     grid.innerHTML = [
