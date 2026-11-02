@@ -55,7 +55,7 @@ let phone = true;
 const mqListeners = [];
 global.window = { location: { hash: '' }, scrollTo: () => {}, document: global.document,
   addEventListener: (type, fn) => { (winListeners[type] = winListeners[type] || []).push(fn); },
-  matchMedia: q => ({ get matches() { return q.includes('max-width: 767.98px') ? phone : false; }, addEventListener: (t, fn) => mqListeners.push(fn) }) };
+  matchMedia: q => ({ get matches() { return q.includes('max-width: 1023.98px') ? phone : false; }, addEventListener: (t, fn) => mqListeners.push(fn) }) };
 global.setTimeout = fn => fn();
 global.clearTimeout = () => {};
 
@@ -80,13 +80,13 @@ const snapshot = () => JSON.stringify({ c: ctx.SPACE_NET_CUSTOMERS, t: ctx.ticke
 // -------------------------------------------------------------------------
 console.log('--- GROUP 1: Markup and CSS (real HTML) ---');
 const btnTag = (htmlContent.match(/<button[^>]*id="mobile-nav-btn"[^>]*>/) || [''])[0];
-assert(/aria-label="Open navigation"/.test(btnTag) && /aria-controls="app-sidebar"/.test(btnTag) && /aria-expanded="false"/.test(btnTag) && /md:hidden/.test(btnTag), 'Menu button: label, controls, expanded state, phone-only');
+assert(/aria-label="Open navigation"/.test(btnTag) && /aria-controls="app-sidebar"/.test(btnTag) && /aria-expanded="false"/.test(btnTag) && /lg:hidden/.test(btnTag), 'Menu button: label, controls, expanded state, phones and tablets only');
 assert(/<button[^>]*id="mobile-nav-close"[^>]*aria-label="Close navigation"/.test(htmlContent), 'Drawer has a labelled close button');
 assert(idInMarkup('mobile-nav-backdrop'), 'Backdrop element exists');
 assert(/<aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 /.test(htmlContent) && /<div id="main-content-wrapper" class="pl-64 /.test(htmlContent) && /<header id="app-header" class="fixed top-0 left-64 /.test(htmlContent), 'Desktop sidebar/offset classes unchanged (collapse JS still matches them)');
-const phoneCss = (htmlContent.match(/@media \(max-width: 767\.98px\) \{([\s\S]*?)\n\}/) || ['', ''])[1];
-assert(/#main-content-wrapper \{ padding-left: 0 !important; \}/.test(phoneCss) && /#app-header \{ left: 0 !important;/.test(phoneCss), 'Phone CSS removes the fixed left offsets');
-assert(/#app-sidebar \{[^}]*transform: translateX\(-100%\)/.test(phoneCss) && /body\.mobile-nav-open #app-sidebar \{ transform: none;/.test(phoneCss), 'Phone CSS turns the sidebar into an off-canvas drawer');
+const phoneCss = (htmlContent.match(/@media \(max-width: 1023\.98px\) \{(\s*#main-content-wrapper \{ padding-left: 0 !important; \}[\s\S]*?)\n\}/) || ['', ''])[1];
+assert(/#main-content-wrapper \{ padding-left: 0 !important; \}/.test(phoneCss) && /#app-header \{ left: 0 !important;/.test(phoneCss), 'Phone/tablet CSS (<1024px) removes the fixed left offsets');
+assert(/#app-sidebar \{[^}]*transform: translateX\(-100%\)/.test(phoneCss) && /body\.mobile-nav-open #app-sidebar \{ transform: none;/.test(phoneCss), 'Phone/tablet CSS (<1024px) turns the sidebar into an off-canvas drawer');
 assert(/#main-content-wrapper input, #main-content-wrapper select, #main-content-wrapper textarea \{ font-size: 16px !important; \}/.test(phoneCss), 'Phone inputs forced to 16px over Tailwind size classes (no iOS focus zoom)');
 assert(/prefers-reduced-motion: reduce\) \{\s*#app-sidebar, body\.mobile-nav-open #app-sidebar \{ transition: none; \}/.test(htmlContent), 'Drawer slide is disabled under reduced motion');
 

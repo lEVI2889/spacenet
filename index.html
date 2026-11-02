@@ -6,26 +6,28 @@
 /* SpaceNet "Minimal Galaxy" theme. Two palettes behind the same Tailwind token names; <html data-theme> picks one
    (dark is the default). Glass only on the app chrome; data surfaces stay opaque. Motion = scroll parallax
    (transform only, JS below) + a slow nebula drift; both off under reduced motion. */
-:root, :root[data-theme="dark"] { color-scheme: dark; --c-background: 11 11 20; --c-surface: 17 17 28; --c-surface-bright: 38 38 56; --c-surface-dim: 13 13 23; --c-surface-container-lowest: 20 20 31; --c-surface-container-low: 24 24 38; --c-surface-container: 29 29 44; --c-surface-container-high: 35 35 52; --c-surface-container-highest: 42 42 61; --c-surface-variant: 42 42 61; --c-on-surface: 236 235 246; --c-on-background: 236 235 246; --c-on-surface-variant: 180 178 203; --c-outline: 154 152 180; --c-outline-variant: 59 58 82; --c-primary: 170 163 255; --c-on-primary: 23 17 74; --c-primary-container: 74 67 184; --c-on-primary-container: 241 239 255; --c-primary-fixed: 43 39 99; --c-primary-fixed-dim: 58 53 132; --c-on-primary-fixed: 226 223 255; --c-on-primary-fixed-variant: 201 196 255; --c-surface-tint: 170 163 255; --c-secondary: 111 211 196; --c-on-secondary: 6 45 41; --c-secondary-container: 18 61 58; --c-on-secondary-container: 181 236 228; --c-secondary-fixed: 19 61 57; --c-secondary-fixed-dim: 28 85 80; --c-on-secondary-fixed: 197 242 235; --c-on-secondary-fixed-variant: 159 226 215; --c-tertiary: 201 172 255; --c-on-tertiary: 42 18 88; --c-tertiary-container: 91 58 158; --c-on-tertiary-container: 243 236 255; --c-tertiary-fixed: 51 33 95; --c-tertiary-fixed-dim: 67 48 122; --c-on-tertiary-fixed: 234 220 255; --c-on-tertiary-fixed-variant: 214 195 255; --c-error: 255 143 134; --c-on-error: 74 10 6; --c-error-container: 76 25 21; --c-on-error-container: 255 214 210; --c-inverse-surface: 25 24 48; --c-inverse-on-surface: 236 235 246; --c-inverse-primary: 185 178 255;
-  --sky: radial-gradient(140% 90% at 50% 0%, #17162d 0%, #0d0d18 55%, #08080f 100%);
-  --star: 255 255 255; --star-a: 1;
-  --nebula-1: rgba(124,58,237,.34); --nebula-2: rgba(79,70,229,.26); --nebula-3: rgba(45,212,191,.14); --nebula-4: rgba(168,85,247,.14);
-  --chrome: rgb(17 17 28 / .78); --chrome-border: rgb(59 58 82 / .7);
-  --card-shadow: 0 16px 34px -20px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.02);
-  --scrim: rgba(11,11,20,.55);
-  --hero: radial-gradient(60% 140% at 100% 0%, rgba(124,58,237,.22), transparent 60%), radial-gradient(50% 120% at 0% 100%, rgba(45,212,191,.10), transparent 60%), linear-gradient(135deg, #1d1b38, #131223);
+:root, :root[data-theme="dark"] { color-scheme: dark; --c-background: 24 24 27; --c-surface: 27 27 30; --c-surface-bright: 47 47 52; --c-surface-dim: 21 21 23; --c-surface-container-lowest: 32 32 35; --c-surface-container-low: 30 30 33; --c-surface-container: 37 37 40; --c-surface-container-high: 43 43 47; --c-surface-container-highest: 50 50 54; --c-surface-variant: 46 46 50; --c-on-surface: 229 229 231; --c-on-background: 229 229 231; --c-on-surface-variant: 174 174 181; --c-outline: 154 154 162; --c-outline-variant: 59 59 64; --c-primary: 174 176 238; --c-on-primary: 28 29 71; --c-primary-container: 65 68 143; --c-on-primary-container: 238 238 255; --c-primary-fixed: 44 45 78; --c-primary-fixed-dim: 57 59 102; --c-on-primary-fixed: 227 227 251; --c-on-primary-fixed-variant: 201 202 243; --c-surface-tint: 174 176 238; --c-secondary: 141 201 195; --c-on-secondary: 13 46 44; --c-secondary-container: 31 58 56; --c-on-secondary-container: 198 232 228; --c-secondary-fixed: 31 54 52; --c-secondary-fixed-dim: 42 74 71; --c-on-secondary-fixed: 209 238 234; --c-on-secondary-fixed-variant: 169 219 213; --c-tertiary: 195 191 214; --c-on-tertiary: 41 38 58; --c-tertiary-container: 76 71 95; --c-on-tertiary-container: 241 239 250; --c-tertiary-fixed: 45 44 51; --c-tertiary-fixed-dim: 58 56 66; --c-on-tertiary-fixed: 231 229 239; --c-on-tertiary-fixed-variant: 207 203 224; --c-error: 242 149 140; --c-on-error: 74 15 10; --c-error-container: 74 34 32; --c-on-error-container: 251 217 213; --c-inverse-surface: 32 32 35; --c-inverse-on-surface: 229 229 231; --c-inverse-primary: 180 182 241;
+
+  --sky: radial-gradient(120% 70% at 50% 0%, #1d1d21 0%, #18181b 60%);
+  --star: 255 255 255; --star-a: .35;
+  --nebula-1: rgba(120,124,200,.07); --nebula-2: rgba(120,124,200,.05); --nebula-3: rgba(120,180,175,.04); --nebula-4: rgba(120,124,200,.04);
+  --chrome: rgb(27 27 30); --chrome-border: rgb(59 59 64);
+  --card-shadow: 0 0 0 1px rgb(255 255 255 / .055);
+  --scrim: transparent;
+  --hero: none;
   --planet-body: radial-gradient(circle at 30% 28%, #4b44a8 0%, #262063 34%, #110f33 66%, #07061a 100%); --planet-ring: rgba(185,178,255,.26); --planet-glow: rgba(124,58,237,.18);
-  --tone-blue: #8ea2ff; --tone-violet: #b9a2ff; --tone-cyan: #6fd3c4; --tone-magenta: #f09ad0; --tone-alert: #ff8f86; }
-:root[data-theme="light"] { color-scheme: light; --c-background: 244 243 250; --c-surface: 248 247 252; --c-surface-bright: 251 250 255; --c-surface-dim: 222 220 236; --c-surface-container-lowest: 255 255 255; --c-surface-container-low: 246 245 251; --c-surface-container: 239 238 248; --c-surface-container-high: 232 230 244; --c-surface-container-highest: 224 222 240; --c-surface-variant: 227 225 241; --c-on-surface: 23 22 42; --c-on-background: 23 22 42; --c-on-surface-variant: 74 72 99; --c-outline: 93 91 120; --c-outline-variant: 201 198 220; --c-primary: 75 69 198; --c-on-primary: 255 255 255; --c-primary-container: 92 85 214; --c-on-primary-container: 255 255 255; --c-primary-fixed: 228 225 255; --c-primary-fixed-dim: 198 193 251; --c-on-primary-fixed: 20 16 74; --c-on-primary-fixed-variant: 58 51 168; --c-surface-tint: 75 69 198; --c-secondary: 31 102 128; --c-on-secondary: 255 255 255; --c-secondary-container: 205 233 241; --c-on-secondary-container: 14 67 86; --c-secondary-fixed: 211 236 243; --c-secondary-fixed-dim: 159 208 223; --c-on-secondary-fixed: 6 46 60; --c-on-secondary-fixed-variant: 20 80 99; --c-tertiary: 113 64 191; --c-on-tertiary: 255 255 255; --c-tertiary-container: 125 79 208; --c-on-tertiary-container: 255 255 255; --c-tertiary-fixed: 236 226 255; --c-tertiary-fixed-dim: 211 192 247; --c-on-tertiary-fixed: 38 16 79; --c-on-tertiary-fixed-variant: 90 47 163; --c-error: 179 38 30; --c-on-error: 255 255 255; --c-error-container: 251 225 223; --c-on-error-container: 122 20 16; --c-inverse-surface: 233 230 247; --c-inverse-on-surface: 27 26 48; --c-inverse-primary: 70 63 189;
-  --sky: radial-gradient(140% 90% at 50% 0%, #fbfaff 0%, #f2f1fa 55%, #ebe9f6 100%);
-  --star: 92 86 190; --star-a: .45;
-  --nebula-1: rgba(167,139,250,.26); --nebula-2: rgba(129,140,248,.20); --nebula-3: rgba(94,234,212,.12); --nebula-4: rgba(196,181,253,.18);
-  --chrome: rgb(251 250 255 / .78); --chrome-border: rgb(201 198 220 / .75);
-  --card-shadow: 0 12px 30px -20px rgba(64,52,140,.30), 0 1px 2px rgba(64,52,140,.06);
-  --scrim: rgba(244,243,250,.6);
-  --hero: radial-gradient(60% 140% at 100% 0%, rgba(139,122,240,.20), transparent 60%), radial-gradient(50% 120% at 0% 100%, rgba(94,200,220,.12), transparent 60%), linear-gradient(135deg, #f3f1fc, #e8e5f7);
+  --tone-blue: #aeb0ee; --tone-violet: #c3bfd6; --tone-cyan: #8dc9c3; --tone-magenta: #d7b7c8; --tone-alert: #f2958c; }
+:root[data-theme="light"] { color-scheme: light; --c-background: 243 243 241; --c-surface: 246 246 244; --c-surface-bright: 251 251 250; --c-surface-dim: 227 227 224; --c-surface-container-lowest: 252 252 251; --c-surface-container-low: 245 245 243; --c-surface-container: 238 238 235; --c-surface-container-high: 232 232 229; --c-surface-container-highest: 225 225 221; --c-surface-variant: 230 230 226; --c-on-surface: 28 28 30; --c-on-background: 28 28 30; --c-on-surface-variant: 85 86 92; --c-outline: 94 95 101; --c-outline-variant: 214 214 210; --c-primary: 69 74 160; --c-on-primary: 255 255 255; --c-primary-container: 79 84 171; --c-on-primary-container: 255 255 255; --c-primary-fixed: 232 232 244; --c-primary-fixed-dim: 207 208 234; --c-on-primary-fixed: 28 30 82; --c-on-primary-fixed-variant: 56 60 142; --c-surface-tint: 69 74 160; --c-secondary: 44 100 99; --c-on-secondary: 255 255 255; --c-secondary-container: 220 236 234; --c-on-secondary-container: 23 67 67; --c-secondary-fixed: 225 238 236; --c-secondary-fixed-dim: 182 214 211; --c-on-secondary-fixed: 15 51 51; --c-on-secondary-fixed-variant: 30 79 78; --c-tertiary: 91 86 112; --c-on-tertiary: 255 255 255; --c-tertiary-container: 97 92 119; --c-on-tertiary-container: 255 255 255; --c-tertiary-fixed: 236 235 240; --c-tertiary-fixed-dim: 214 212 222; --c-on-tertiary-fixed: 38 35 47; --c-on-tertiary-fixed-variant: 71 67 90; --c-error: 179 38 30; --c-on-error: 255 255 255; --c-error-container: 249 227 224; --c-on-error-container: 120 23 16; --c-inverse-surface: 252 252 251; --c-inverse-on-surface: 28 28 30; --c-inverse-primary: 69 74 160;
+
+  --sky: radial-gradient(120% 70% at 50% 0%, #f7f7f5 0%, #f3f3f1 60%);
+  --star: 92 86 190; --star-a: .2;
+  --nebula-1: rgba(69,74,160,.035); --nebula-2: rgba(69,74,160,.025); --nebula-3: rgba(44,100,99,.02); --nebula-4: rgba(69,74,160,.02);
+  --chrome: rgb(246 246 244); --chrome-border: rgb(214 214 210);
+  --card-shadow: 0 0 0 1px rgb(28 28 30 / .06), 0 1px 2px rgb(28 28 30 / .04);
+  --scrim: transparent;
+  --hero: none;
   --planet-body: radial-gradient(circle at 30% 28%, #ffffff 0%, #e4e0fa 40%, #c9c2f2 75%, #b6aded 100%); --planet-ring: rgba(120,110,210,.22); --planet-glow: rgba(139,122,240,.16);
-  --tone-blue: #3d55c7; --tone-violet: #6a4bc4; --tone-cyan: #1d6f80; --tone-magenta: #a3346f; --tone-alert: #b3261e; }
+  --tone-blue: #454aa0; --tone-violet: #5b5670; --tone-cyan: #2c6463; --tone-magenta: #7a4a63; --tone-alert: #b3261e; }
 body.bg-background { background-color: rgb(var(--c-background)); }
 main.bg-surface { background-color: transparent; }
 #space-backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: var(--sky); }
@@ -126,7 +128,6 @@ details[open] > summary .disclosure-chevron { transform: rotate(180deg); }
 details > summary:hover { background-color: rgb(var(--c-on-surface) / .04); }
 details > summary:focus-visible { outline: 2px solid rgb(var(--c-primary)); outline-offset: -2px; }
 #app-header .rounded-full, #app-header .text-right span { white-space: nowrap; }
-@media (max-width: 1439.98px) { #app-header #copilot-status-pill { display: none; } }
 /* Minimal composition: the decorative orbit no longer sits over the pipeline counts. */
 .sales-orbit { display: none; }
 /* Global declutter: calm labels, quiet header indicators, fewer sidebar badges, a clear KPI hierarchy. */
@@ -159,8 +160,8 @@ button:not(:disabled):not(.lead-card):active { transform: scale(.98); }
 /* Dashboard title band sits on the sky; a soft scrim keeps its text readable over stars. */
 .space-mission-band::before { content: ''; position: absolute; inset: -24px -12px; pointer-events: none; background: radial-gradient(closest-side at 30% 55%, var(--scrim), transparent); }
 /* View switch: brief fade-up so screens don't teleport. */
-.app-view:not(.hidden) { animation: space-view-in 320ms cubic-bezier(0.16, 1, 0.3, 1); }
-@keyframes space-view-in { from { opacity: 0; transform: translateY(12px); } }
+.app-view:not(.hidden) { animation: space-view-in 220ms cubic-bezier(.4, 0, .2, 1); }
+@keyframes space-view-in { from { opacity: 0; transform: translateY(6px); } }
 /* View titles on the sky (Inbox, Tickets, Customers) share the dashboard band's scrim. */
 .space-view-title::before { content: ''; position: absolute; inset: -20px -12px; pointer-events: none; background: radial-gradient(closest-side at 25% 50%, var(--scrim), transparent); }
 /* Module heroes (06-10): one deep-space panel instead of flat slate. */
@@ -195,8 +196,10 @@ button:not(:disabled):not(.lead-card):active { transform: scale(.98); }
 .side-badge-alert { background: rgb(var(--c-error-container)); color: rgb(var(--c-on-error-container)); }
 #app-sidebar nav a.bg-primary-container .side-badge:not(.side-badge-alert) { background: rgba(255,255,255,.22); color: #fff; }
 /* Collapsed (icon) sidebar: hide every text label, not only those tagged .sidebar-text. */
-@media (min-width: 768px) {
-  #app-sidebar.w-20 nav a > span:not(.material-symbols-outlined):not(.side-badge), #app-sidebar.w-20 .h-16 > .flex-col,
+@media (min-width: 1024px) {
+  /* Rail labels are visually hidden, not removed, so each link keeps its accessible name. */
+  #app-sidebar.w-20 nav a > span:not(.material-symbols-outlined):not(.side-badge) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  #app-sidebar.w-20 .h-16 > .flex-col,
   #app-sidebar.w-20 > div:last-child .font-label-sm, #app-sidebar.w-20 > div:last-child .font-code-telemetry, #app-sidebar.w-20 #collapse-sidebar-btn .font-label-md { display: none; }
   #app-sidebar.w-20 nav a, #app-sidebar.w-20 > div:last-child > div { justify-content: center; }
   #app-sidebar.w-20 .side-badge { position: absolute; top: 2px; left: 34px; height: 1rem; min-width: 1rem; padding: 0 .25rem; font-size: 9px; }
@@ -219,10 +222,10 @@ main button:focus-visible, main a:focus-visible { outline: 2px solid rgb(var(--c
 #aiGradient stop { stop-color: rgb(var(--c-primary)); }
 #view-dashboard svg circle[fill="#0066ff"] { fill: rgb(var(--c-primary)); }
 .space-mission-band svg circle { fill: rgb(var(--c-primary)); }
-/* Phone shell (<768px): the sidebar becomes an off-canvas drawer. Desktop width/offset
+/* Phone and tablet shell (<1024px): the sidebar becomes an off-canvas drawer, so tablets get the full width. Desktop width/offset
    classes (w-64/w-20, pl-64/pl-20, left-64/left-20) and their collapse JS are untouched. */
 html { -webkit-tap-highlight-color: transparent; }
-@media (max-width: 767.98px) {
+@media (max-width: 1023.98px) {
   #main-content-wrapper { padding-left: 0 !important; }
   #app-header { left: 0 !important; padding-left: .75rem; padding-right: .75rem; gap: .5rem; }
   #app-header > div:first-child { flex: 1 1 auto; min-width: 0; gap: .5rem; }
@@ -234,7 +237,6 @@ html { -webkit-tap-highlight-color: transparent; }
   #app-sidebar { width: 16rem !important; height: 100dvh; overflow-y: auto; overscroll-behavior: contain; transform: translateX(-100%); visibility: hidden;
     transition: transform 250ms cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 250ms; }
   body.mobile-nav-open #app-sidebar { transform: none; visibility: visible; transition: transform 250ms cubic-bezier(0.32, 0.72, 0, 1); }
-  #app-sidebar .sidebar-text.hidden { display: inline; }
   #collapse-sidebar-btn { display: none; }
   #mobile-nav-backdrop { position: fixed; inset: 0; z-index: 45; background: rgba(2, 6, 23, .6); }
   /* !important: Tailwind text-size utilities on inputs would otherwise win and iOS would zoom on focus. */
@@ -242,6 +244,7 @@ html { -webkit-tap-highlight-color: transparent; }
   /* Inline toolbar pickers (label + select in one row) must not push the page wider. */
   main .flex.items-center > select { max-width: 60vw; }
 }
+@media (min-width: 768px) and (max-width: 1023.98px) { main { padding-left: 1.5rem !important; padding-right: 1.5rem !important; } }
 /* Tablet widths: the header keeps search, Quick ONT Sweep and the avatar; status pills and the name step aside. */
 @media (max-width: 1279.98px) { #app-header .text-right { display: none; } }
 @media (min-width: 768px) and (max-width: 1023.98px) {
@@ -249,13 +252,134 @@ html { -webkit-tap-highlight-color: transparent; }
   #app-header #global-search-input { width: 16rem; }
 }
 /* Phones: lighter sky (no Milky Way band, no twinkle layer); nebula, stars and planet remain. */
-@media (max-width: 767.98px) {
+@media (max-width: 1023.98px) {
   #space-backdrop .space-galaxy, #space-backdrop .space-stars-near::before { display: none; }
   /* As a drawer it sits over page content, so it must be opaque. */
   #app-sidebar.bg-surface-container-low { background-color: rgb(var(--c-surface-container-low)); }
 }
-@media (max-width: 767.98px) and (prefers-reduced-motion: reduce) {
+@media (max-width: 1023.98px) and (prefers-reduced-motion: reduce) {
   #app-sidebar, body.mobile-nav-open #app-sidebar { transition: none; }
+}
+/* ===== Calm Precision: neutral surfaces, one type scale, one motion curve (inspired by, not copied from, Nothing). ===== */
+:root { --ease: cubic-bezier(.4, 0, .2, 1); --dur-1: 120ms; --dur-2: 200ms; --dur-3: 280ms; }
+/* Backdrop: a quiet canvas. No planet, band, near stars or drifting nebula; a faint far starfield only. */
+#space-backdrop .space-galaxy, #space-backdrop .space-planet, #space-backdrop .space-stars-near, #space-backdrop .space-stars-mid { display: none; }
+#space-backdrop .space-nebula-glow, #space-backdrop .space-stars-near::before { animation: none; }
+#space-backdrop .space-nebula { display: none; }
+/* Overlays dim without blurring: a full-screen blur measurably cost frames when dialogs open. */
+.backdrop-blur-xs, .backdrop-blur-sm { -webkit-backdrop-filter: none; backdrop-filter: none; }
+/* Type: Geist throughout; size and weight carry hierarchy, not caps or colour. 12px floor for small copy. */
+html .uppercase { text-transform: none; letter-spacing: 0; }
+html .text-\[9px\], html .text-\[10px\] { font-size: 11px; }
+html .text-\[11px\] { font-size: 12px; line-height: 16px; }
+html .text-\[12px\] { font-size: 13px; line-height: 18px; }
+html .font-bold { font-weight: 600; }
+main h1 { letter-spacing: -.02em; }
+main th { font-weight: 500; color: rgb(var(--c-on-surface-variant)); }
+/* Shell: solid chrome (no large blur), hairline edges, tinted rather than filled selection. */
+#app-header { background-color: var(--chrome); -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 1px 0 var(--chrome-border); }
+#app-sidebar.bg-surface-container-low { background-color: var(--chrome); -webkit-backdrop-filter: none; backdrop-filter: none; }
+#app-sidebar nav a { transition: background-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease); }
+#app-sidebar nav a.bg-primary-container { background-color: rgb(var(--c-primary) / .1); color: rgb(var(--c-primary)); box-shadow: none; font-weight: 600; }
+#app-sidebar nav a.bg-primary-container .side-badge:not(.side-badge-alert) { background: transparent; color: rgb(var(--c-primary)); }
+#app-header #copilot-status-pill { display: none; }
+/* Module headers: plain headings on the canvas; their stat rows sit on quiet surfaces. */
+.sales-hero.bg-inverse-surface { background: none; box-shadow: none; padding: 0; border-radius: 0; overflow: visible; }
+.sales-hero dl > div { background: rgb(var(--c-surface-container-lowest)); box-shadow: var(--card-shadow); border-radius: .5rem; }
+.sales-hero dl dt { color: rgb(var(--c-on-surface-variant)); }
+.sales-hero dl dd { color: rgb(var(--c-on-surface)); font-family: Geist, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600; }
+.sales-hero .sales-stage-node > span:first-child { background: rgb(var(--c-surface-container-lowest)); box-shadow: var(--card-shadow); }
+html .shadow-sm { box-shadow: var(--card-shadow); }
+/* Dashboard KPIs: compact tiles; the alert tone is the only coloured accent. */
+.kpi-tile { padding: 1rem; gap: .125rem; background: rgb(var(--c-surface-container-lowest)); border: 0; }
+.kpi-tile::before { display: none; }
+.kpi-tile[data-tone="alert"]::before { display: block; }
+.kpi-tile-label { text-transform: none; letter-spacing: 0; font-size: 13px; }
+.kpi-tile-icon { color: rgb(var(--c-on-surface-variant)); background: transparent; padding: 0; }
+.kpi-tile[data-tone="alert"] .kpi-tile-icon { color: var(--tone-alert); }
+.kpi-tile-value { font-size: 30px; line-height: 36px; }
+#dash-kpis .kpi-tile:nth-child(n+5) .kpi-tile-value { font-size: 22px; line-height: 28px; }
+@media (max-width: 639.98px) {
+  .kpi-tile, #dash-kpis .kpi-tile:nth-child(n+5) { padding: .75rem; }
+  .kpi-tile-value, #dash-kpis .kpi-tile:nth-child(n+5) .kpi-tile-value { font-size: 22px; line-height: 28px; }
+  .kpi-tile-icon { display: none; }
+  .kpi-tile-sub { font-size: 12px; line-height: 16px; }
+}
+/* Analytics bars: quieter, thinner fills so figures lead. */
+#analytics-grid .h-2 { height: .375rem; }
+#analytics-grid .h-2 > .bg-primary { background-color: rgb(var(--c-primary) / .55); }
+/* Disclosures and their chevrons move on the shared curve. */
+.disclosure-chevron { transition: transform var(--dur-2) var(--ease); }
+details[open] > :not(summary) { animation: calm-disclose var(--dur-2) var(--ease); }
+@keyframes calm-disclose { from { opacity: 0; transform: translateY(-4px); } }
+/* Tickets below 1024px (phones, and tablets where the sidebar leaves ~450px): each ticket is a card with ID, status,
+   customer, issue, priority and actions; no clipped or sideways-scrolling columns. */
+@media (max-width: 1023.98px) {
+  #view-tickets table, #view-tickets tbody { display: block; }
+  #view-tickets thead { display: none; }
+  #ticket-table-body tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "id status" "cust cust" "issue prio" "agent actions"; gap: .375rem .75rem; padding: .75rem 1rem; align-items: center; }
+  #ticket-table-body td { padding: 0; }
+  #ticket-table-body td:nth-child(1), #ticket-table-body td:nth-child(4) { display: none; }
+  #ticket-table-body td:nth-child(2) { grid-area: id; }
+  #ticket-table-body td:nth-child(3) { grid-area: cust; }
+  #ticket-table-body td:nth-child(5) { grid-area: issue; }
+  #ticket-table-body td:nth-child(6) { grid-area: prio; justify-self: end; }
+  #ticket-table-body td:nth-child(7) { grid-area: agent; min-width: 0; }
+  #ticket-table-body td:nth-child(8) { grid-area: status; justify-self: end; }
+  #ticket-table-body td:nth-child(9) { grid-area: actions; }
+}
+/* Sales: the stage strip is the stage selector. Below 1360px one complete stage shows at a time (cards in a responsive
+   grid); from 1360px all five columns share the width instead of scrolling the last stage out of view. */
+.sales-stage-node[aria-pressed="true"] > span:first-child { box-shadow: 0 0 0 2px rgb(var(--c-primary)); }
+.sales-stage-node[aria-pressed="true"] > span:last-child { color: rgb(var(--c-primary)); font-weight: 600; }
+@media (max-width: 1359.98px) {
+  #sales-pipeline > section { display: none; width: 100%; }
+  #sales-pipeline > section.sales-col-active { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); align-items: start; }
+  #sales-pipeline > section.sales-col-active > :not(.lead-card) { grid-column: 1 / -1; }
+}
+@media (min-width: 1360px) { #sales-pipeline > section { flex: 1 1 0; } }
+/* Billing below 1024px (phones and tablets): each invoice is a compact card (ID + status, customer + amount, packages,
+   due date + View); no sideways scrolling and no IDs or dates broken across lines. */
+.billing-card-label { display: none; }
+@media (max-width: 1023.98px) {
+  #view-billing table, #view-billing tbody { display: block; min-width: 0; }
+  #view-billing thead { display: none; }
+  #billing-invoice-body tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "id status" "cust amount" "pkg pkg" "due view"; gap: .25rem .75rem; padding: .75rem 1rem; align-items: center; }
+  #billing-invoice-body td { padding: 0; }
+  #billing-invoice-body td:nth-child(1) { grid-area: id; }
+  #billing-invoice-body td:nth-child(2) { grid-area: cust; min-width: 0; }
+  #billing-invoice-body td:nth-child(3) { grid-area: pkg; color: rgb(var(--c-on-surface-variant)); }
+  #billing-invoice-body td:nth-child(4) { grid-area: amount; justify-self: end; align-self: start; }
+  #billing-invoice-body td:nth-child(5) { grid-area: due; color: rgb(var(--c-on-surface-variant)); }
+  #billing-invoice-body td:nth-child(6) { grid-area: status; justify-self: end; }
+  #billing-invoice-body td:nth-child(7) { grid-area: view; }
+  #billing-invoice-body td[colspan] { grid-column: 1 / -1; }
+  .billing-card-label { display: inline; }
+  /* Period and customer ID sit beside the invoice ID and name, so a card is four short lines. */
+  #billing-invoice-body td:nth-child(1) > span, #billing-invoice-body td:nth-child(2) > span:last-child { display: inline; margin-left: .5rem; }
+}
+/* Small laptops: the table fits without sideways scrolling once the secondary connection-type column is dropped. */
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  #view-tickets thead th:nth-child(4), #ticket-table-body td:nth-child(4) { display: none; }
+  #view-tickets thead th, #ticket-table-body td { padding-left: .625rem; padding-right: .625rem; }
+}
+/* Inbox on phones and tablets: one pane at a time. A tapped chat replaces the list; Back returns. */
+#inbox-back-btn { display: none; }
+@media (max-width: 1023.98px) {
+  /* clip (not hidden) keeps the rounded pane without making it a scroll container, so the dock can stick. */
+  #inbox-workspace > :nth-child(2) { overflow: clip; }
+  #chat-composer-dock { position: sticky; bottom: 0; z-index: 5; background: rgb(var(--c-surface-container-lowest)); box-shadow: 0 -1px 0 rgb(var(--c-outline-variant)); }
+}
+html { scroll-padding-top: 76px; }
+@media (max-width: 639.98px) {
+  #composer-mode-hint { display: none; }
+  .composer-mode-tab { white-space: nowrap; padding-left: .5rem; padding-right: .5rem; }
+}
+@media (max-width: 1023.98px) {
+  #inbox-back-btn { display: inline-flex; }
+  #inbox-workspace[data-mobile-pane="list"] > :nth-child(2) { display: none; }
+  #inbox-workspace[data-mobile-pane="chat"] > :first-child { display: none; }
+  #inbox-workspace[data-mobile-pane="list"] > :first-child { height: auto; min-height: 24rem; max-height: calc(100dvh - 10rem); }
 }
 /* Hard-coded amber/emerald utilities were written for light surfaces; on dark surfaces they map to light tints.
    Elements that carry their own Tailwind dark: variant are excluded, so the result never depends on stylesheet order. */
@@ -266,6 +390,8 @@ html { -webkit-tap-highlight-color: transparent; }
 .dark .bg-emerald-100:not([class*="dark:bg-"]) { background-color: rgb(16 128 96 / .24); }
 .dark .border-amber-300:not([class*="dark:border-"]), .dark .border-emerald-300:not([class*="dark:border-"]) { border-color: rgb(var(--c-outline-variant)); }
 .dark .placeholder\:text-amber-800\/60::placeholder { color: rgb(246 214 156 / .6); }
+/* Soft Paper surfaces are near-white: amber-700 lands just under 4.5:1 there, so light theme uses amber-800. */
+:root[data-theme="light"] .text-amber-700 { color: #92400e; }
 /* Primary/tertiary buttons hover to their container colour; in the dark theme that would put dark label text on a dark fill. */
 .dark .text-on-primary.hover\:bg-primary-container:hover { background-color: rgb(var(--c-primary)); background-image: linear-gradient(rgb(255 255 255 / .14), rgb(255 255 255 / .14)); }
 .dark .text-on-tertiary.hover\:bg-tertiary-container:hover { background-color: rgb(var(--c-tertiary)); background-image: linear-gradient(rgb(255 255 255 / .14), rgb(255 255 255 / .14)); }
@@ -274,12 +400,14 @@ html { -webkit-tap-highlight-color: transparent; }
   .kpi-tile { transition: none; }
   .kpi-tile:hover { transform: none; }
   button:not(:disabled):active { transform: none; }
+  details[open] > :not(summary) { animation: none; }
+  .disclosure-chevron, #app-sidebar nav a { transition: none; }
   #space-backdrop .space-layer, #space-backdrop .space-sky { transition: none; }
   #space-backdrop .space-layer { will-change: auto; }
   .app-view:not(.hidden) { animation: space-view-fade 150ms ease; }
 }
 </style>
-</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.03"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-galaxy" data-depth="0.05"><div class="space-galaxy-band"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.06" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.12" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.2" data-tile="900"></div><div class="space-layer space-planet" data-depth="0.3" data-max="260"><div class="space-planet-body"></div><div class="space-planet-ring"></div></div></div></div><div id="mobile-nav-backdrop" class="hidden" aria-hidden="true" onclick="closeMobileNav()"></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><button type="button" id="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close navigation" class="md:hidden absolute top-3 right-3 z-10 p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span><span id="nav-badge-inbox" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span><span id="nav-badge-tickets" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span><span id="nav-badge-customers" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span><span id="nav-diag-count" class="side-badge">4</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span><span id="nav-badge-sales" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span><span id="nav-badge-billing" class="hidden side-badge side-badge-alert"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="technicians" href="#"><span class="material-symbols-outlined text-[20px]">engineering</span><span class="font-body-md text-body-md sidebar-text">Technician Ops</span><span id="nav-badge-technicians" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="analytics" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="font-body-md text-body-md sidebar-text">Admin &amp; Analytics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span><span id="nav-badge-outages" class="hidden side-badge side-badge-alert"></span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><button type="button" id="mobile-nav-btn" onclick="openMobileNav()" aria-label="Open navigation" aria-controls="app-sidebar" aria-expanded="false" class="md:hidden shrink-0 p-1.5 rounded-lg text-inverse-on-surface hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary"><span class="material-symbols-outlined" aria-hidden="true">menu</span></button><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" aria-label="Global search" onclick="openCmdPalette()" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openCmdPalette(); }" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div id="copilot-status-pill" class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><button type="button" id="theme-toggle-btn" onclick="toggleTheme()" aria-pressed="true" aria-label="Dark theme" title="Switch light / dark theme" class="items-center justify-center w-8 h-8 shrink-0 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[18px]" aria-hidden="true" id="theme-toggle-icon">dark_mode</span></button><button type="button" id="quick-sweep-btn" onclick="triggerGlobalDiagnostics()" aria-label="Quick ONT Sweep" class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest text-primary font-label-sm text-label-sm font-semibold hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">bolt</span><span class="hidden lg:inline">Quick ONT Sweep</span></button><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
+</head><body class="bg-background font-body-md text-on-surface antialiased"><div id="space-backdrop" data-view="dashboard" aria-hidden="true"><div class="space-sky"><div class="space-layer space-nebula" data-depth="0.03"><div class="space-nebula-glow"></div><div class="space-nebula-shift" id="space-nebula-shift"></div></div><div class="space-layer space-galaxy" data-depth="0.05"><div class="space-galaxy-band"></div></div><div class="space-layer space-stars space-stars-far" data-depth="0.06" data-tile="320"></div><div class="space-layer space-stars space-stars-mid" data-depth="0.12" data-tile="540"></div><div class="space-layer space-stars space-stars-near" data-depth="0.2" data-tile="900"></div><div class="space-layer space-planet" data-depth="0.3" data-max="260"><div class="space-planet-body"></div><div class="space-planet-ring"></div></div></div></div><div id="mobile-nav-backdrop" class="hidden" aria-hidden="true" onclick="closeMobileNav()"></div><aside id="app-sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all duration-300"><button type="button" id="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close navigation" class="lg:hidden absolute top-3 right-3 z-10 p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><span class="material-symbols-outlined" aria-hidden="true">close</span></button><div class="flex flex-col"><div class="h-16 flex items-center px-space-xl gap-space-sm bg-surface-container-low"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-[0_1px_2px_rgba(0,102,255,0.2)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">SpaceNet</span><span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">AI CRM Ops</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span><span id="nav-badge-inbox" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm transition-colors" data-path="tickets" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span class="font-body-md text-body-md">Tickets</span><span id="nav-badge-tickets" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customer-profiles" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-md text-body-md">Customer Profiles</span><span id="nav-badge-customers" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ai-diagnostics" href="#" onclick="switchView('ai-diagnostics'); return false;"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-body-md text-body-md sidebar-text">AI Diagnostics</span><span id="nav-diag-count" class="side-badge">4</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sales-leads" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md sidebar-text">Sales / Leads</span><span id="nav-badge-sales" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="billing" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-body-md text-body-md sidebar-text">Billing &amp; Plans</span><span id="nav-badge-billing" class="hidden side-badge side-badge-alert"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="technicians" href="#"><span class="material-symbols-outlined text-[20px]">engineering</span><span class="font-body-md text-body-md sidebar-text">Technician Ops</span><span id="nav-badge-technicians" class="side-badge"></span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="analytics" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="font-body-md text-body-md sidebar-text">Admin &amp; Analytics</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="network-outages" href="#"><span class="material-symbols-outlined text-[20px]">router</span><span class="font-body-md text-body-md sidebar-text">Network Outages</span><span id="nav-badge-outages" class="hidden side-badge side-badge-alert"></span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary">speed</span><span class="font-label-sm text-label-sm text-on-surface-variant">Core Latency</span></div><span class="font-code-telemetry text-code-telemetry text-primary font-semibold">&lt;12ms</span></div><button id="collapse-sidebar-btn" onclick="toggleSidebarCollapse()" class="w-full flex items-center justify-between px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span><span class="font-label-md text-label-md">Collapse Sidebar</span></div><span class="font-code-telemetry text-code-telemetry text-outline">[</span></button></div></aside><div id="main-content-wrapper" class="pl-64 flex flex-col min-h-screen transition-all duration-300"><header id="app-header" class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl transition-all duration-300"><div class="flex items-center gap-space-lg"><button type="button" id="mobile-nav-btn" onclick="openMobileNav()" aria-label="Open navigation" aria-controls="app-sidebar" aria-expanded="false" class="lg:hidden shrink-0 p-1.5 rounded-lg text-inverse-on-surface hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary"><span class="material-symbols-outlined" aria-hidden="true">menu</span></button><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-64 xl:w-96 pl-10 pr-14 py-space-xs bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_2px_rgba(15,23,42,0.04)]" id="global-search-input" aria-label="Global search" onclick="openCmdPalette()" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openCmdPalette(); }" placeholder="Search subscribers, circuit IDs, or MACs (⌘K)..." type="text" readonly><div class="absolute right-space-sm flex items-center gap-0.5 px-space-xs py-0.5 bg-surface-container rounded font-code-telemetry text-[10px] text-on-surface-variant"><span class="">⌘</span><span class="">K</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-label-sm text-label-sm text-on-surface font-medium">All Systems Nominal</span></div><div id="copilot-status-pill" class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high"><span class="material-symbols-outlined text-tertiary text-[14px]">auto_awesome</span><span class="font-label-sm text-label-sm text-tertiary font-semibold">Copilot Ready</span></div><button type="button" id="theme-toggle-btn" onclick="toggleTheme()" aria-pressed="true" aria-label="Dark theme" title="Switch light / dark theme" class="items-center justify-center w-8 h-8 shrink-0 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[18px]" aria-hidden="true" id="theme-toggle-icon">dark_mode</span></button><button type="button" id="quick-sweep-btn" onclick="triggerGlobalDiagnostics()" aria-label="Quick ONT Sweep" class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest text-primary font-label-sm text-label-sm font-semibold hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">bolt</span><span class="hidden lg:inline">Quick ONT Sweep</span></button><div class="h-6 w-[1px] bg-surface-container-high mx-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Telecom Admin</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">NOC Level III</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-desktop bg-surface"><div class="flex flex-col w-full">
 <!-- Notification Toast Layer -->
 <div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-space-sm px-space-lg py-space-md bg-inverse-surface text-inverse-on-surface rounded-xl shadow-xl" id="toast-notification">
 <span class="material-symbols-outlined text-inverse-primary" id="toast-icon">check_circle</span>
@@ -293,9 +421,9 @@ html { -webkit-tap-highlight-color: transparent; }
 <!-- ========================================================================= -->
 <section class="app-view flex flex-col gap-space-xl" id="view-dashboard">
 <!-- Mission Control band: no card behind it, so the galaxy backdrop shows through -->
-<div class="space-mission-band relative flex flex-wrap items-end justify-between gap-space-md px-space-xs pt-10 pb-space-lg">
+<div class="space-mission-band relative flex flex-wrap items-end justify-between gap-space-md px-space-xs pt-space-sm">
   <div class="relative flex flex-col gap-1">
-    <h1 class="text-[40px] leading-[48px] font-semibold tracking-[-0.025em] text-inverse-on-surface">Mission Control</h1>
+    <h1 class="text-[28px] leading-[34px] font-semibold tracking-[-0.02em] text-inverse-on-surface">Mission Control</h1>
     <p class="font-body-md text-body-md text-inverse-on-surface/85">Network &amp; customer operations. Overview figures on this screen are fictional demo data.</p>
   </div>
   <svg class="relative hidden xl:block w-60 h-24 text-inverse-primary" viewBox="0 0 160 64" aria-hidden="true">
@@ -306,16 +434,16 @@ html { -webkit-tap-highlight-color: transparent; }
   </svg>
 </div>
 <!-- Top KPI cards: rendered from live demo records by Module 10 (renderDashboardKpis) -->
-<div id="dash-kpis" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-lg" aria-live="polite"></div>
+<div id="dash-kpis" class="grid grid-cols-2 xl:grid-cols-4 gap-space-sm sm:gap-space-md" aria-live="polite"></div>
 <!-- Complaint & Incident Trends Visualization + Live Diagnostics -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
 <!-- Main Line Chart Card (8 cols) -->
-<div class="lg:col-span-8 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="xl:col-span-8 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
 <div class="flex flex-wrap items-center justify-between gap-space-md mb-space-md">
 <div>
 <div class="flex items-center gap-space-xs">
 <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
-<h2 class="font-headline-md text-headline-md text-on-surface">Weekly Complaint &amp; Incident Velocity <span class="align-middle ml-1 px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">Illustrative sample</span></h2>
+<h2 class="font-headline-md text-headline-md text-on-surface">Weekly Complaint &amp; Incident Velocity <span class="align-middle ml-1 px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap">Illustrative sample</span></h2>
 </div>
 <p class="font-body-sm text-body-sm text-on-surface-variant">Live telemetry comparing automated AI resolutions against field dispatches</p>
 </div>
@@ -390,7 +518,7 @@ html { -webkit-tap-highlight-color: transparent; }
 </div>
 </div>
 <!-- Secondary Telemetry Widgets (4 cols) -->
-<div class="lg:col-span-4 flex flex-col gap-space-lg">
+<div class="xl:col-span-4 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 gap-space-lg">
 <!-- Live Network Health Card -->
 <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
 <div class="flex items-center justify-between mb-space-md">
@@ -427,7 +555,7 @@ html { -webkit-tap-highlight-color: transparent; }
 <div class="flex items-center justify-between mb-space-md">
 <div class="flex items-center gap-space-xs">
 <span class="material-symbols-outlined text-tertiary text-[20px]">auto_awesome</span>
-<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent AI Agent Actions <span class="align-middle ml-1 px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">Illustrative sample</span></h3>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent AI Agent Actions <span class="align-middle ml-1 px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap">Illustrative sample</span></h3>
 </div>
 <span class="font-code-telemetry text-[11px] text-on-surface-variant">Live stream</span>
 </div>
@@ -471,7 +599,7 @@ html { -webkit-tap-highlight-color: transparent; }
     <p class="font-body-sm text-body-sm text-inverse-on-surface/85">Every customer channel in one queue, with AI replies and staff takeover.</p>
   </div>
 </div>
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:h-[calc(100vh-140px)] lg:min-h-[700px]">
+<div id="inbox-workspace" data-mobile-pane="list" class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:h-[calc(100vh-140px)] lg:min-h-[700px]">
 <!-- Left Column: Channel Filter + Chat Thread List (4 cols); stacked screens get their own bounded height -->
 <div class="lg:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col h-[26rem] lg:h-full overflow-hidden">
 <!-- Inbox Search & Filter Tabs -->
@@ -534,6 +662,7 @@ html { -webkit-tap-highlight-color: transparent; }
 <!-- Chat Header with Live Auto-Pilot / Human Handover Toggle -->
 <div class="p-space-md bg-surface-container-low/70 flex flex-wrap items-center justify-between gap-space-sm">
 <div class="flex items-center gap-space-md min-w-0">
+<button type="button" id="inbox-back-btn" onclick="showInboxList()" aria-label="Back to conversations" class="shrink-0 items-center gap-1 -ml-1 px-2 py-1.5 rounded-lg text-primary font-label-md text-label-md hover:bg-surface-container"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span><span>Chats</span></button>
 <div id="chat-customer-avatar" class="w-10 h-10 shrink-0 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm">
               AR
             </div>
@@ -782,6 +911,8 @@ html { -webkit-tap-highlight-color: transparent; }
 </div>
 </div>
 </details>
+<!-- Composer dock: mode tabs + input. Sticky at the bottom of the screen on phones and tablets so Send stays in reach. -->
+<div id="chat-composer-dock">
 <!-- Composer Mode Tabs -->
 <div class="px-space-md pt-2 pb-1 bg-surface-container-lowest flex items-center justify-between border-t border-surface-container">
   <div class="flex items-center gap-1 text-label-sm font-label-sm">
@@ -808,6 +939,7 @@ html { -webkit-tap-highlight-color: transparent; }
 <span id="chat-send-label">Send</span>
 <span id="chat-send-icon" class="material-symbols-outlined text-[16px]">send</span>
 </button>
+</div>
 </div>
 </div>
 </div>
@@ -1010,7 +1142,7 @@ html { -webkit-tap-highlight-color: transparent; }
   <!-- Main 2-Column Responsive Workspace -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
     <!-- Left Column: Searchable Directory List (4 cols) -->
-    <div class="lg:col-span-4 bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm max-h-[880px] overflow-hidden">
+    <div class="lg:col-span-5 xl:col-span-4 bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm max-h-[880px] overflow-hidden">
       <div class="flex items-center justify-between px-space-xs pb-space-xs border-b border-surface-container-high/60">
         <div class="flex items-center gap-1.5">
           <span class="material-symbols-outlined text-primary text-[20px]">contacts</span>
@@ -1041,7 +1173,7 @@ html { -webkit-tap-highlight-color: transparent; }
     </div>
 
     <!-- Right Column: Customer 360° Profile Workspace (8 cols) -->
-    <div class="lg:col-span-8 flex flex-col gap-space-lg" id="customer-360-workspace">
+    <div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-space-lg" id="customer-360-workspace">
       <!-- Profile Header Hero Card -->
       <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md" id="cust-360-hero-card">
         <div class="flex flex-wrap items-start justify-between gap-space-md">
@@ -1051,7 +1183,7 @@ html { -webkit-tap-highlight-color: transparent; }
             </div>
             <div class="flex flex-col">
               <div class="flex items-center gap-space-xs flex-wrap">
-                <h2 class="font-headline-md text-headline-md font-bold text-on-surface" id="cust-hero-name">Alex Rivera</h2>
+                <h2 class="font-headline-md text-headline-md font-bold text-on-surface" id="cust-hero-name" tabindex="-1">Alex Rivera</h2>
                 <span class="font-code-metric font-semibold text-primary px-2 py-0.5 rounded bg-primary-fixed/40 text-[13px]" id="cust-hero-id">CUST-8832</span>
                 <span class="px-2.5 py-0.5 rounded-full text-label-sm font-semibold bg-secondary-fixed text-on-secondary-fixed" id="cust-hero-status-badge">Active (Good Standing)</span>
                 <span class="px-2 py-0.5 rounded-full text-label-sm bg-tertiary-fixed text-on-tertiary-fixed font-semibold" id="cust-hero-plan-badge">Fiber 500M</span>
@@ -1079,9 +1211,6 @@ html { -webkit-tap-highlight-color: transparent; }
 
           <!-- Demo Label Tag -->
           <div class="flex flex-col items-end gap-1">
-            <span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-[11px] font-code-telemetry font-medium">
-              Demo Subscriber Record
-            </span>
             <span class="text-[11px] text-outline font-label-sm" id="cust-hero-billing-cycle">Cycle: 1st of month</span>
           </div>
         </div>
@@ -1688,7 +1817,7 @@ html { -webkit-tap-highlight-color: transparent; }
   <dl id="noc-stats" class="relative mt-space-lg grid grid-cols-2 sm:grid-cols-5 gap-space-sm"></dl>
 </div>
 <div id="noc-spike-panel" aria-live="polite"></div>
-<div id="noc-outage-list" class="grid grid-cols-1 lg:grid-cols-2 gap-space-md" aria-label="Outages and maintenance"></div>
+<div id="noc-outage-list" class="grid grid-cols-1 gap-space-sm" aria-label="Outages and maintenance"></div>
 </section>
 <!-- Module 08: outage detail dialog -->
 <div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200" id="outage-modal" onclick="if (event.target === this) closeOutageModal()">
@@ -1904,8 +2033,8 @@ html { -webkit-tap-highlight-color: transparent; }
   </div>
   <dl id="tech-stats" class="relative mt-space-lg grid grid-cols-2 sm:grid-cols-4 gap-space-sm"></dl>
 </div>
-<div class="grid grid-cols-1 xl:grid-cols-3 gap-space-md">
-  <div class="xl:col-span-2 flex flex-col gap-space-sm">
+<div class="flex flex-col gap-space-lg">
+  <div class="flex flex-col gap-space-sm">
     <div class="flex flex-wrap items-center gap-space-sm">
       <label class="sr-only" for="tech-status-filter">Job status</label>
       <select id="tech-status-filter" onchange="renderTechView()" class="py-space-xs px-space-sm rounded-lg bg-surface-container-lowest font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
@@ -1916,11 +2045,11 @@ html { -webkit-tap-highlight-color: transparent; }
       </select>
       <span class="px-space-sm py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">Demo data &middot; simulated</span>
     </div>
-    <div id="tech-job-list" tabindex="-1" class="grid grid-cols-1 lg:grid-cols-2 gap-space-md focus:outline-none" aria-label="Field jobs"></div>
+    <div id="tech-job-list" tabindex="-1" class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-space-md focus:outline-none" aria-label="Field jobs"></div>
   </div>
   <div class="flex flex-col gap-space-sm">
     <h2 class="font-headline-sm text-headline-sm text-inverse-on-surface">Technician roster</h2>
-    <ul id="tech-roster" class="flex flex-col gap-space-sm" aria-label="Technician roster"></ul>
+    <ul id="tech-roster" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-sm" aria-label="Technician roster"></ul>
   </div>
 </div>
 </section>
@@ -2751,6 +2880,8 @@ html { -webkit-tap-highlight-color: transparent; }
     if (typeof initDiagnosticsModule === 'function') {
       initDiagnosticsModule();
     }
+    const hardwareCard = document.getElementById('diag-hardware-card');
+    if (hardwareCard && window.matchMedia && window.matchMedia('(max-width: 1023.98px)').matches) hardwareCard.open = false;
 
     const hash = window.location.hash.replace('#', '');
     const validViews = ['dashboard', 'unified-inbox', 'tickets', 'customer-profiles', 'ai-diagnostics', 'sales-leads', 'billing', 'technicians', 'analytics', 'network-outages'];
@@ -2815,9 +2946,8 @@ html { -webkit-tap-highlight-color: transparent; }
 
   function setTheme(theme) {
     try { localStorage.setItem(THEME_STORAGE_KEY, theme); } catch (e) { /* storage blocked: the theme still applies for this visit */ }
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (document.startViewTransition && !reduce) document.startViewTransition(() => applyTheme(theme));
-    else applyTheme(theme);
+    // Instant switch: a measured View Transition cost ~30 fps (full-page snapshot); an instant swap held ~57 fps.
+    applyTheme(theme);
   }
 
   function toggleTheme() {
@@ -2848,12 +2978,11 @@ html { -webkit-tap-highlight-color: transparent; }
   }
 
   // 3. Sidebar Collapse / Expand
-  function toggleSidebarCollapse() {
+  function toggleSidebarCollapse(silent = false) {
     isSidebarCollapsed = !isSidebarCollapsed;
     const sidebar = document.getElementById('app-sidebar');
     const mainWrapper = document.getElementById('main-content-wrapper');
     const header = document.getElementById('app-header');
-    const textEls = document.querySelectorAll('.sidebar-text');
 
     if (isSidebarCollapsed) {
       sidebar.classList.remove('w-64');
@@ -2862,7 +2991,6 @@ html { -webkit-tap-highlight-color: transparent; }
       mainWrapper.classList.add('pl-20');
       header.classList.remove('left-64');
       header.classList.add('left-20');
-      textEls.forEach(el => el.classList.add('hidden'));
     } else {
       sidebar.classList.remove('w-20');
       sidebar.classList.add('w-64');
@@ -2870,9 +2998,13 @@ html { -webkit-tap-highlight-color: transparent; }
       mainWrapper.classList.add('pl-64');
       header.classList.remove('left-20');
       header.classList.add('left-64');
-      textEls.forEach(el => el.classList.remove('hidden'));
     }
-    showToast('Sidebar View', isSidebarCollapsed ? 'Collapsed to icon mode' : 'Expanded to full menu');
+    // Icon-only links get a hover label.
+    document.querySelectorAll('#app-sidebar nav a').forEach(a => {
+      const label = a.querySelector('span:not(.material-symbols-outlined):not(.side-badge)');
+      if (isSidebarCollapsed && label) a.setAttribute('title', label.textContent.trim()); else a.removeAttribute('title');
+    });
+    if (!silent) showToast('Sidebar View', isSidebarCollapsed ? 'Collapsed to icon mode' : 'Expanded to full menu');
   }
 
   // =========================================================================
@@ -4090,6 +4222,7 @@ html { -webkit-tap-highlight-color: transparent; }
     filterInbox('all', null, true);
     switchView('unified-inbox');
     filterQueue(queue, true);
+    setInboxMobilePane('list'); // the queue itself is the destination
     const pill = document.querySelector(`.inbox-queue-pill[data-queue="${queue}"]`);
     if (pill && pill.focus) pill.focus();
   }
@@ -4491,6 +4624,27 @@ html { -webkit-tap-highlight-color: transparent; }
     }
 
     renderCustomerConversation(conv.conversationId);
+    // Phones/tablets show one pane: opening a chat brings the chat forward (CSS ignores this on wide screens).
+    setInboxMobilePane('chat');
+    // On narrow screens bring the chat's top into view, below the fixed app header.
+    const ws = document.getElementById('inbox-workspace');
+    if (ws && window.matchMedia && window.matchMedia('(max-width: 1023.98px)').matches && currentActiveView === 'unified-inbox') {
+      window.scrollTo({ top: Math.max(0, ws.getBoundingClientRect().top + window.scrollY - 76) });
+    }
+    if (hadListFocus) { const back = document.getElementById('inbox-back-btn'); if (back && back.offsetParent && back.focus) back.focus(); }
+  }
+
+  function setInboxMobilePane(pane) {
+    const ws = document.getElementById('inbox-workspace');
+    if (ws && ws.setAttribute) ws.setAttribute('data-mobile-pane', pane);
+  }
+
+  function showInboxList() {
+    setInboxMobilePane('list');
+    // The open chat may be filtered out of the list; fall back to the first visible conversation so focus never drops to <body>.
+    const item = document.querySelector(`.chat-thread-item[data-conversation-id="${currentConversationId}"]`)
+      || [...document.querySelectorAll('.chat-thread-item')].find(el => el.offsetParent !== null);
+    if (item && item.focus) item.focus();
   }
 
   function selectCustomer(custKey, rowEl) {
@@ -6086,7 +6240,7 @@ html { -webkit-tap-highlight-color: transparent; }
         <td class="py-3 px-space-md">
           <div class="flex flex-col">
             <span class="font-headline-sm text-label-md text-on-surface">${escapeHtml(tkt.customerName)}</span>
-            <span class="font-code-telemetry text-[11px] text-outline">${escapeHtml(tkt.circuitId)}</span>
+            <span class="font-code-telemetry text-[11px] text-outline whitespace-nowrap">${escapeHtml(tkt.circuitId)}</span>
           </div>
         </td>
         <td class="py-3 px-space-md font-code-telemetry text-on-surface-variant">${escapeHtml(tkt.connectionType || 'Fiber GPON')}</td>
@@ -7280,10 +7434,32 @@ html { -webkit-tap-highlight-color: transparent; }
       const card = document.createElement('div');
       card.className = `p-space-sm rounded-xl transition-all cursor-pointer border ${
         isSelected
-          ? 'bg-primary-container/10 border-primary shadow-xs'
-          : 'bg-surface-container-low hover:bg-surface-container border-transparent'
+          ? 'bg-primary/10 border-transparent'
+          : 'bg-transparent hover:bg-surface-container border-transparent'
       }`;
-      card.onclick = () => selectCustomerProfile(cust.customerId);
+      card.tabIndex = 0;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-pressed', String(isSelected));
+      card.setAttribute('data-customer-id', cust.customerId);
+      card.onkeydown = e => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        card.onclick();
+        // Narrow: the details were scrolled into view, so focus their heading. Wide: the directory re-rendered,
+        // so put focus back on the chosen row.
+        const narrow = window.matchMedia && window.matchMedia('(max-width: 1023.98px)').matches;
+        const target = narrow ? document.getElementById('cust-hero-name') : document.querySelector(`#view-customer-profiles [role="button"][data-customer-id="${cust.customerId}"]`);
+        if (target) target.focus({ preventScroll: narrow });
+      };
+      card.onclick = () => {
+        selectCustomerProfile(cust.customerId);
+        // Below 1024px the details sit under the directory: bring the chosen customer into view.
+        const ws = document.getElementById('customer-360-workspace');
+        if (ws && window.matchMedia && window.matchMedia('(max-width: 1023.98px)').matches) {
+          const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          ws.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        }
+      };
 
       card.innerHTML = `
         <div class="flex items-center justify-between gap-2">
@@ -7513,11 +7689,11 @@ html { -webkit-tap-highlight-color: transparent; }
         </div>
         <div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
           <span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-wider">Optical Rx Power</span>
-          <span class="font-code-telemetry text-[12px] font-bold ${activeConn.connectionStatus.includes('Degraded') ? 'text-amber-800' : activeConn.connectionStatus.includes('Offline') ? 'text-error' : 'text-secondary'} mt-0.5 truncate">${escapeHtml(eq.opticalRx || 'N/A')}</span>
+          <span class="font-code-telemetry text-[12px] font-bold ${activeConn.connectionStatus.includes('Degraded') ? 'text-amber-800' : activeConn.connectionStatus.includes('Offline') ? 'text-error' : 'text-secondary'} mt-0.5 truncate" title="${escapeHtml(eq.opticalRx || 'N/A')}">${escapeHtml(eq.opticalRx || 'N/A')}</span>
         </div>
         <div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
           <span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-wider">Core Latency</span>
-          <span class="font-code-telemetry text-[12px] font-bold text-on-surface mt-0.5 truncate">${escapeHtml(eq.pingLatency || 'N/A')}</span>
+          <span class="font-code-telemetry text-[12px] font-bold text-on-surface mt-0.5 truncate" title="${escapeHtml(eq.pingLatency || 'N/A')}">${escapeHtml(eq.pingLatency || 'N/A')}</span>
         </div>
         <div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
           <span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-wider">IP &amp; MAC</span>
@@ -8200,13 +8376,18 @@ html { -webkit-tap-highlight-color: transparent; }
       </button>`;
   }
 
+  // Stage the narrow pipeline shows (view state only; lead stages live on each lead).
+  let currentSalesStage = null;
+  const SALES_ONE_STAGE_QUERY = '(max-width: 1359.98px)';
+
   function renderSalesPipeline() {
     const board = document.getElementById('sales-pipeline');
     const strip = document.getElementById('sales-stage-strip');
     if (!board || !strip) return;
+    const activeStage = currentSalesStage || LEAD_STAGES[0].key;
     strip.innerHTML = LEAD_STAGES.map(s => {
       const count = leads.filter(l => l.status === s.key).length;
-      return `<li class="relative flex justify-center"><button type="button" onclick="scrollToLeadStage('${s.key}')" aria-label="${s.label}: ${count} ${count === 1 ? 'lead' : 'leads'}" class="sales-stage-node flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary">
+      return `<li class="relative flex justify-center"><button type="button" onclick="scrollToLeadStage('${s.key}')" data-stage="${s.key}" aria-pressed="${s.key === activeStage}" aria-label="${s.label}: ${count} ${count === 1 ? 'lead' : 'leads'}" class="sales-stage-node flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inverse-primary">
           <span class="w-9 h-9 rounded-full grid place-items-center bg-inverse-surface ring-1 ring-inverse-primary/40 font-code-metric text-code-metric text-inverse-on-surface">${count}</span>
           <span class="font-label-sm text-label-sm text-inverse-on-surface/80">${s.label}</span>
         </button></li>`;
@@ -8214,7 +8395,7 @@ html { -webkit-tap-highlight-color: transparent; }
     const visible = getFilteredLeads();
     board.innerHTML = LEAD_STAGES.map(s => {
       const items = visible.filter(l => l.status === s.key);
-      return `<section id="sales-col-${s.key}" class="snap-start shrink-0 w-[85%] sm:w-[300px] lg:w-auto lg:flex-1 lg:min-w-[210px] flex flex-col gap-space-sm rounded-xl bg-surface-container-low p-space-sm" aria-labelledby="sales-col-${s.key}-h">
+      return `<section id="sales-col-${s.key}" class="${s.key === activeStage ? 'sales-col-active ' : ''}snap-start shrink-0 min-w-0 flex flex-col gap-space-sm rounded-xl bg-surface-container-low p-space-sm" aria-labelledby="sales-col-${s.key}-h">
           <h2 id="sales-col-${s.key}-h" class="flex items-center justify-between px-space-xs pt-1 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
             <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">${s.icon}</span>${s.label}</span>
             <span class="font-code-telemetry text-code-telemetry">${items.length}</span>
@@ -8227,6 +8408,11 @@ html { -webkit-tap-highlight-color: transparent; }
   function scrollToLeadStage(stageKey) {
     const col = document.getElementById('sales-col-' + stageKey);
     if (!col) return;
+    currentSalesStage = stageKey;
+    document.querySelectorAll('#sales-pipeline > section').forEach(sec => sec.classList.toggle('sales-col-active', sec === col));
+    document.querySelectorAll('#sales-stage-strip .sales-stage-node').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.stage === stageKey)));
+    // Below 1360px only the chosen stage is shown, so there is nothing to scroll to.
+    if (window.matchMedia && window.matchMedia(SALES_ONE_STAGE_QUERY).matches) return;
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     col.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest', inline: 'start' });
   }
@@ -9094,7 +9280,7 @@ html { -webkit-tap-highlight-color: transparent; }
           <td class="px-space-md py-space-sm"><span class="font-semibold">${escapeHtml(customer.name)}</span><span class="block text-on-surface-variant">${escapeHtml(inv.customerId)}</span></td>
           <td class="px-space-md py-space-sm">${inv.lines.map(l => escapeHtml(l.packageName)).join('<br>')}</td>
           <td class="px-space-md py-space-sm text-right font-code-metric text-code-metric">${formatBdt(inv.total)}</td>
-          <td class="px-space-md py-space-sm">${inv.dueDate}</td>
+          <td class="px-space-md py-space-sm"><span class="billing-card-label">Due </span>${inv.dueDate}</td>
           <td class="px-space-md py-space-sm">${renderLeadBadge(meta.cls, meta.icon, meta.label)}</td>
           <td class="px-space-md py-space-sm text-right"><button type="button" onclick="openInvoiceModal('${inv.invoiceId}')" class="px-space-sm py-1 rounded-lg bg-surface-container text-primary font-label-md text-label-md hover:bg-surface-container-high">View</button></td>
         </tr>`;
@@ -11475,7 +11661,7 @@ html { -webkit-tap-highlight-color: transparent; }
         btn.className = isSelected
           ? 'px-2.5 py-1 rounded-lg font-code-telemetry text-[11px] font-bold bg-primary text-on-primary shadow-xs transition-colors'
           : 'px-2.5 py-1 rounded-lg font-code-telemetry text-[11px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors';
-        btn.innerHTML = `${conn.circuitId} ${conn.isPrimary ? '<span class="text-[9px] uppercase px-1 py-0.2 bg-black/20 rounded font-normal ml-0.5">Primary</span>' : '<span class="text-[9px] uppercase px-1 py-0.2 bg-black/20 rounded font-normal ml-0.5">Secondary</span>'}`;
+        btn.innerHTML = `${conn.circuitId} <span class="text-[9px] uppercase px-1 border border-current rounded font-normal ml-0.5">${conn.isPrimary ? 'Primary' : 'Secondary'}</span>`;
         btn.onclick = () => selectDiagCircuit(conn.circuitId);
         pillsContainer.appendChild(btn);
       });
@@ -11900,7 +12086,7 @@ html { -webkit-tap-highlight-color: transparent; }
   // SHELL: phone navigation drawer (<768px). The desktop sidebar and its
   // collapse behaviour are untouched; on desktop these functions do nothing.
   // =========================================================================
-  const MOBILE_NAV_QUERY = '(max-width: 767.98px)';
+  const MOBILE_NAV_QUERY = '(max-width: 1023.98px)';
   let mobileNavReturnFocus = null;
 
   function isMobileNavViewport() {
@@ -11985,6 +12171,22 @@ html { -webkit-tap-highlight-color: transparent; }
     if (mq.addEventListener) mq.addEventListener('change', onChange); else if (mq.addListener) mq.addListener(onChange);
   }
   initMobileNav();
+
+  // Small laptops (1024-1279px) start on the icon rail so master-detail screens keep their width.
+  // Applied only when the viewport enters or leaves that range; the Collapse button still works in between.
+  const SIDEBAR_RAIL_QUERY = '(min-width: 1024px) and (max-width: 1279.98px)';
+  function syncSidebarRail() {
+    if (!window.matchMedia) return;
+    const wantRail = window.matchMedia(SIDEBAR_RAIL_QUERY).matches;
+    if (wantRail !== isSidebarCollapsed) toggleSidebarCollapse(true);
+  }
+  function initSidebarRail() {
+    if (!window.matchMedia) return;
+    const mq = window.matchMedia(SIDEBAR_RAIL_QUERY);
+    if (mq.matches) syncSidebarRail();
+    if (mq.addEventListener) mq.addEventListener('change', syncSidebarRail); else if (mq.addListener) mq.addListener(syncSidebarRail);
+  }
+  initSidebarRail();
 </script>
 </body>
 </html>

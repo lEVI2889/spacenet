@@ -89,14 +89,14 @@ ctx.toggleTheme();
 assert(root.getAttribute('data-theme') === 'light' && !root.classList.contains('dark') && root.style.colorScheme === 'light', 'Toggle switches to Celestial Pearl (data-theme, dark class and color-scheme)');
 assert(btn.getAttribute('aria-pressed') === 'false' && icon.textContent === 'light_mode', 'Toggle state is announced: aria-pressed false, light icon');
 assert(storage.data['spacenet-theme'] === 'light', 'The explicit choice is saved under spacenet-theme');
-assert(transitions === 1, 'With motion allowed, the change uses a View Transition when the browser has one');
+assert(transitions === 0, 'The theme switches instantly (no View Transition): the measured snapshot cost dropped frames to ~30 fps');
 ctx.toggleTheme();
 assert(root.getAttribute('data-theme') === 'dark' && btn.getAttribute('aria-pressed') === 'true' && storage.data['spacenet-theme'] === 'dark', 'Toggling again returns to Obsidian Galaxy and saves it');
 assert(snapshot() === before, 'Switching themes changes no CRM state: tickets, chats, queue filter, view, jobs, diagnostics, leads, invoices');
 assert(Object.keys(storage.data).length === 1, 'Only the theme preference is written to storage; no CRM data is stored');
 reduceMotion = true;
 ctx.toggleTheme();
-assert(transitions === 2 && root.getAttribute('data-theme') === 'light', 'Reduced motion: the theme changes immediately, without a transition');
+assert(transitions === 0 && root.getAttribute('data-theme') === 'light', 'Reduced motion: the theme changes immediately, without a transition');
 global.localStorage = storageMock({}, { throwOnSet: true }); ctx.localStorage = global.localStorage;
 let threw = false;
 try { ctx.toggleTheme(); } catch (e) { threw = true; }
