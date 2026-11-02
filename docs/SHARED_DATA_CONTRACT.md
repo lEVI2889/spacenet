@@ -1,6 +1,6 @@
 # SpaceNet AI CRM — Shared Data Contract & Architecture Standard
 
-**Document Version:** 1.11.2
+**Document Version:** 1.12.0
 **Effective Date:** 2026-10-31
 **Authors & Maintainers:** Rohan (Customer-Facing & Support Lead) & Adnan (Operations & Admin Lead)
 **Repository:** `https://github.com/lEVI2889/spacenet`
@@ -36,6 +36,7 @@ SpaceNet is an intelligent Customer Relationship Management (CRM) and Network Op
 | **v1.11.0** | 2026-11-01 | Adnan | Galaxy UI/UX upgrade: top tab strip removed; navigation badges live in the sidebar links (same ids); outage badge shows a plain count; sky layers; dialog focus return (Section 20). |
 | **v1.11.1** | 2026-11-01 | Adnan | QA D1/D2: switching a channel's AI off cancels its queued replies immediately (lead capture still runs); composer messages are always staff-authored and never trigger AI replies (Section 19.2). |
 | **v1.11.2** | 2026-11-01 | Adnan | QA D5–D11: modal dialogs contain Tab/Shift+Tab; Module 03 ticket dialogs use the shared helper with dialog semantics; simulated-action wording (Section 20.3). |
+| **v1.12.0** | 2026-11-02 | Adnan | Cross-module workflow corrections (additive): maintained `unread` and the derived "awaiting human reply" queue shared by Inbox and Analytics; ticket ↔ field-job links and technician display by ID; `TECH_ASSIGNED` and `RESOLUTION_NOTES_SYNCED` ticket history entries; optional `sessionId` on history; diagnostic session status `ASSESSED`; diagnostics-to-resolution rules (Section 21). |
 
 ---
 
@@ -105,7 +106,7 @@ Every conversation record in `conversations` conforms to the normalized schema b
   badgeColor: 'bg-primary-fixed text-on-primary-fixed', // Header badge styling
   type: 'comment',                             // Conversation type: 'dm' | 'comment'
   status: 'ai_handling',                       // Control state: 'ai_handling' | 'human_takeover'
-  unread: false,
+  unread: false,                               // Unread customer message (maintained since v1.12.0, Section 21.1)
 
   // Metadata Tag
   tag: {
@@ -362,8 +363,10 @@ interface SpaceNetTicket {
     timestamp: string;                        // ISO 8601 timestamp
     timeStr: string;                          // Human-readable relative string
     author: string;                           // Action initiator
-    action: 'CREATED' | 'STATUS_CHANGE' | 'ESCALATED' | 'RESOLVED' | 'CLOSED' | 'REOPENED' | 'DIAGNOSTICS_RUN' | 'DIAGNOSTIC_EXEC' | 'GUIDANCE_STEP' | 'FEEDBACK_RECEIVED' | 'VIEWED';
+    action: 'CREATED' | 'STATUS_CHANGE' | 'ESCALATED' | 'RESOLVED' | 'CLOSED' | 'REOPENED' | 'DIAGNOSTICS_RUN' | 'DIAGNOSTIC_EXEC' | 'GUIDANCE_STEP' | 'FEEDBACK_RECEIVED' | 'VIEWED'
+      | 'TECH_ASSIGNED' | 'RESOLUTION_NOTES_SYNCED';   // v1.12.0, Section 21
     notes: string;                            // Action description / system note
+    sessionId?: string;                       // v1.12.0: DiagnosticSession linked by Sync to Ticket (DIAGNOSTIC_EXEC only)
   }>;
 }
 ```
@@ -398,11 +401,11 @@ interface SpaceNetTicket {
 
 ### 6.5 Category Guided Support & Simulated Hardware Diagnostics
 * **Checklists (`getGuidedStepsForCategory`):** Dynamically provides 4 technical troubleshooting steps tailored to the issue category. Staff can check off items (`toggleGuidedStep`), updating step completion and logging audit events.
-* **Simulated Diagnostic Triggers (`runSimulatedDiagnostic`):**
-  - Remote ONT Reboot: Dispatches simulated signal, confirms ONT renegotiation in 14.2s.
-  - Optical Power Sweep: Evaluates GPON Rx dBm (nominal range -8 dBm to -27 dBm, returns -19.4 dBm).
-  - Throughput Speed Test: Confirms line speed (942 Mbps down / 918 Mbps up, 3ms core latency).
-* **Sync to Resolution (`syncGuidedStepsToResolution`):** Compiles all completed troubleshooting checklist items into a structured resolution summary for one-click documentation.
+* **Simulated Diagnostic Triggers (`runSimulatedDiagnostic`):** each returns a fixed sample result labelled "Simulated (no device contacted)" in the toast and the ticket history, and records one `DiagnosticSession` linked to the ticket:
+  - Remote ONT Reboot: sample result, link renegotiated in 14.2s.
+  - Optical Power Sweep: sample result -19.4 dBm (healthy GPON range -8 dBm to -27 dBm).
+  - Throughput Speed Test: sample result 942 Mbps down / 918 Mbps up, 3 ms latency.
+* **Sync to Resolution (`syncGuidedStepsToResolution`):** see Section 21.3. It copies progress into the resolution notes; it never resolves the ticket.
 
 ### 6.6 Chat Integration & Copilot Actionable Prefill
 * **Actionable "Suggest Ticket":** When Module 02 Copilot detects a technical problem, clicking `"Suggest Ticket"` (`handleRoutingAction`) opens `#create-ticket-modal` with prefilled subscriber details:
@@ -421,7 +424,7 @@ interface SpaceNetTicket {
 * **Simulated Customer Status Inquiry (`simulateCustomerStatusInquiry`):** Supports looking up status by Ticket ID or Customer ID, returning structured customer, state, assigned agent, and SLA timing information.
 
 ### 6.8 Resolution, Reopening & CSAT Ratings
-* **Resolution Documentation:** Captures resolution summary, sets status to `RESOLVED`, records `resolvedAt`.
+* **Resolution Documentation:** Captures resolution summary, sets status to `RESOLVED`, records `resolvedAt`. Since v1.12.0 an empty notes box is saved as "Resolved by staff. No resolution notes were recorded." (no technical result is invented), and resolving never changes a linked field job (Section 21.2). Quick Resolve in the table refuses tickets that are already `RESOLVED` or `CLOSED` and says so.
 * **Simulated Customer Confirmation & Closure:** Allows simulating subscriber confirmation of restored service to transition tickets to `CLOSED` and record `closedAt`.
 * **Reopening:** If an issue recurs, staff can transition status to `REOPENED` while preserving all prior resolution summaries, customer ratings, and complete audit history.
 * **CSAT Rating:** 1–5 star rating simulator with optional feedback comment. Renders star ratings (`★★★★★`) and feedback in the ticket workspace.
@@ -522,7 +525,7 @@ interface DiagnosticSession {
   circuitPlan: string;                        // Subscribed plan (e.g. 'Fiber 500M')
   isPrimaryCircuit: boolean;                  // Flag distinguishing primary vs secondary connection
   diagnosticType: 'NO_INTERNET' | 'SLOW_INTERNET' | 'ROUTER_WIFI' | 'SPEED_TEST' | 'OPTICAL_SWEEP' | 'ONT_REBOOT' | 'WIFI_SCAN' | 'WAN_CHECK' | 'ONT_STATUS';
-  status: 'IN_PROGRESS' | 'COMPLETED' | 'ESCALATED' | 'RESOLVED';
+  status: 'IN_PROGRESS' | 'COMPLETED' | 'ESCALATED' | 'RESOLVED' | 'ASSESSED';   // ASSESSED (v1.12.0): on-screen assessment recorded by Sync to Ticket
   severity: 'Healthy' | 'Degraded' | 'Critical' | 'Needs Human Review' | 'Resolved';
   stageIndex: number;
   stageName: string;
@@ -557,8 +560,8 @@ interface DiagnosticSession {
   outcome: 'Healthy' | 'Degraded' | 'Critical' | 'Needs Human Review' | 'Resolved';
   timestamp: string;                          // ISO 8601
   timeStr: string;                            // e.g. 'Just now'
-  ticketId?: string | null;                   // Linked support incident (e.g. 'TKT-9042')
-  conversationId?: string | null;             // Linked omnichannel chat (e.g. 'CONV-WA-8832')
+  ticketId?: string | null;                   // Linked support incident (e.g. 'TKT-9042'); inherited from the origin only for the origin's subscriber (v1.12.0)
+  conversationId?: string | null;             // Linked omnichannel chat (e.g. 'CONV-WA-8832'); same rule
 }
 ```
 
@@ -607,7 +610,7 @@ Three deterministic decision trees guide technical support agents through common
 | **Diagnostics &rarr; Customer 360°** | Module 05 `[Back to 360° Profile]` | `returnFromDiagnostics()` | Restores `#view-customer-profiles` with active customer pre-selected. |
 | **Support Ticket &rarr; Diagnostics** | Module 03 Modal `[Full AI Diagnostics]` | `openDiagnosticsFromTicket(ticketId)` | Opens diagnostics, maps ticket category to diagnostic workflow, preserves `ticketId`. |
 | **Diagnostics &rarr; Support Ticket** | Module 05 `[Back to Ticket]` | `returnFromDiagnostics()` | Restores `#view-tickets` and re-opens ticket detail modal. |
-| **Sync Diagnostic to Ticket** | Module 05 `[Sync to Ticket]` | `syncDiagnosticToLinkedTicket(ticketId, session)` | Appends audit event `action: 'DIAGNOSTIC_EXEC'` to `ticket.history` with tested circuit telemetry. |
+| **Sync Diagnostic to Ticket** | Module 05 `[Sync to Ticket]` | `syncDiagnosticToLinkedTicket()` | Appends one `action: 'DIAGNOSTIC_EXEC'` entry with `sessionId` for the newest session of that ticket (or records the on-screen assessment once as an `ASSESSED` session). Repeat syncs of the same session add nothing. Refused, and hidden, while another subscriber is shown. Never writes the resolution summary (Section 21.3). |
 | **Escalate to New Ticket** | Module 05 `[Escalate to Support Ticket]` | `escalateDiagnosticToTicket(session)` | Opens `#create-ticket-modal` prefilled with tested customer, circuit, category, priority, and diagnostic findings. Requires explicit staff confirmation. |
 | **Unified Inbox &rarr; Diagnostics** | Module 01/02 Chat Header Copilot | `openDiagnosticsFromChat(conversationId)` | Opens diagnostics targeting customer linked to chat. |
 | **Diagnostics &rarr; Unified Inbox** | Module 05 `[Back to Unified Inbox]` | `returnFromDiagnostics()` | Restores `#view-unified-inbox` with thread preserved. |
@@ -927,11 +930,11 @@ interface SpaceNetFieldJob {
 
 ### 18.2 Rules
 
-1. **Derived jobs (`syncTechJobs`, idempotent per `sourceId` + `type`):** leads whose `surveyRequest.status === 'requested'` become `site_survey` jobs. Tickets with status `ESCALATED` in `NO_INTERNET` / `SLOW_INTERNET` become `repair` jobs.
+1. **Derived jobs (`syncTechJobs`, idempotent per `sourceId` + `type`):** leads whose `surveyRequest.status === 'requested'` become `site_survey` jobs. Tickets with status `ESCALATED` in `NO_INTERNET` / `SLOW_INTERNET` become `repair` jobs. Since v1.12.0 escalating a ticket (`escalateCurrentTicket`) runs `syncTechJobs()` at once, so the repair job exists immediately.
 2. **Installations** are created only by `createInstallationFromSurvey` after the survey job is `completed`, at most one per lead. A survey request never becomes an installation directly.
 3. **Lifecycle:** unassigned → scheduled → assigned → on_the_way → working → completed. A job is scheduled before it is assigned. Rescheduling or reassignment is allowed only before `on_the_way`, and `completed` is final.
 4. **Eligibility:** a technician must be available, have the job type in `skills`, and cover the job zone (any zone when it is unknown).
-5. **No side effects:** job actions never change customers, leads or tickets.
+5. **No side effects:** job actions never change customers, leads or ticket fields/status. One exception (v1.12.0): `assignTechJob` on a repair job appends a `TECH_ASSIGNED` entry (technician name and `techId`) to the linked ticket's `history` and updates its `updatedAt`.
 
 ### 18.3 Integration hooks
 
@@ -948,6 +951,7 @@ interface SpaceNetFieldJob {
 | Metric | Definition (source) |
 |---|---|
 | Conversations / AI-handled / with staff | `conversations.length`; `status === 'ai_handling'`; `status === 'human_takeover'` |
+| Awaiting human reply / unread (v1.12.0) | `getInboxQueueCounts().awaiting` and `.unread` (Section 21.1), the same function the Inbox filters use |
 | Open tickets | `tickets` not `RESOLVED` / `CLOSED` (also the Tickets badge) |
 | Escalated / past SLA | `status === 'ESCALATED'`; `isTicketOverdue(t)` (Module 03) |
 | Avg resolution time | Mean of `resolvedAt − createdAt` over tickets that have both (no first-response timestamps exist, so that metric is "not available") |
@@ -996,3 +1000,29 @@ The Dashboard tiles, navigation badges and Analytics all read this one function.
 * `showLeadDialog` / `hideLeadDialog` (used by Modules 03 and 06–09; Module 03: create-ticket and ticket-detail dialogs) return focus to the opener; if the list re-rendered, to the new element with the same `onclick`; otherwise to the active view's heading (`restoreLeadDialogFocus`).
 * Every open `[role="dialog"][aria-modal="true"]` (except the phone drawer, which has its own trap) contains keyboard focus: Tab / Shift+Tab wrap inside it, and focus outside it is pulled back in (one `keydown` listener on `window`).
 * User-facing results of simulated actions say so ("Simulated — no message sent", "no SMS sent", "(Simulated)"); no operational counts are invented.
+
+---
+
+## 21. Cross-Module Workflow Contract (v1.12.0)
+
+All additive: no existing field changes meaning. State remains in memory and resets on reload.
+
+### 21.1 Inbox queues: unread, human takeover, awaiting human reply
+Three separate concepts:
+* **Unread** (`conv.unread`, stored): a customer message nobody has opened. Opening a chat (`selectConversation`: a click, the keyboard, or a link from another module) sets it `false`. A customer message (`noteCustomerMessage`, after simulated inbound messages and the takeover acknowledgement) sets it `true` unless that chat is open on screen in the Inbox. Automatic preselection after a filter change does not count as opening. Mark as read / unread (`toggleConversationReadState`) flips it and changes nothing else. Seed chats whose last message is from the customer start unread.
+* **Human takeover** (`conv.status`): who controls replies, unchanged.
+* **Awaiting human reply** (`isAwaitingHumanReply(conv)`, derived, never stored): `status === 'human_takeover'` and no `sender: 'staff'` message after the latest `system` / `eventType: 'takeover'` message. AI messages, internal notes, replies in other chats and reading the chat do not clear it; a new takeover after a handback starts a new wait.
+* **Counts:** `getInboxQueueCounts()` returns `{ all, unread, read, awaiting }` for the Inbox filter buttons (`filterQueue`) and for Module 10 (`awaitingHumanReply`, `unreadConversations`).
+* **Deep link:** the Analytics "Awaiting human reply" button calls `openInboxQueue('awaiting')`: clears search, type and channel filters, `switchView('unified-inbox')` (hash router, so Back/Forward work), activates the queue and focuses its button, without filter toasts.
+
+### 21.2 Tickets and field jobs
+* A ticket's field job is `getTicketFieldJob(ticketId)`: the `repair` job whose `ticketId` matches. There is at most one (Section 18.2 rule 1). Tickets store no technician name; the name is read from `TECH_ROSTER` by the job's `technicianId`.
+* The ticket dialog's **Assigned To** card shows the support owner (`assignedStaff`, unchanged meaning), the field technician (or "Unassigned") and a link to the job (`openTicketFieldJob`). Assigning or reassigning from the ticket calls `assignTechJob`, so Section 18.2 rules 3–4 apply unchanged.
+* Navigation: roster workload → that technician's jobs (`filterTechJobsByTech`, the same jobs the workload number counts); job → ticket (`openTechSource`, existing); ticket → job (`openTicketFieldJob`). The ticket table shows the field technician under the handling agent.
+* Ticket resolution and job completion are independent: resolving a ticket never changes its job, and the confirmation names an open job.
+
+### 21.3 Diagnostics to resolution
+* Opening Full AI Diagnostics from a ticket keeps the ticket as origin. Sessions inherit the origin's `ticketId` / `conversationId` only while the workbench shows the origin's subscriber (`diagOriginMatches`); Sync to Ticket is hidden otherwise.
+* **Sync to Ticket:** Section 8.6.
+* **Sync to Resolution** (`syncGuidedStepsToResolution`): writes one block starting "— Troubleshooting record (synced) —" with completed steps (with times), pending steps, and the simulated sessions whose `ticketId` is this ticket, labelled simulated. The agent's own notes before and after the block are kept and the block is replaced on each sync. A `RESOLUTION_NOTES_SYNCED` history entry is added only when the notes change. The ticket status never changes, and completing the checklist never resolves the ticket.
+* Diagnostic "Mark Check Resolved" (`markDiagnosticResolved`) records the agent's judgement on the session only; the linked ticket stays open.
