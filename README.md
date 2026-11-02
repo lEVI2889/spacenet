@@ -62,4 +62,4 @@ Deployment is owned by Rohan; see the technical handoff below for details and a 
 | [docs/FINAL_QA_SIGNOFF.md](docs/FINAL_QA_SIGNOFF.md) | What was verified, what was not, accepted limitations |
 | [docs/ROHAN_TECHNICAL_HANDOFF.md](docs/ROHAN_TECHNICAL_HANDOFF.md) | Environment, demo journeys, deployment notes, post-deployment checklist |
 | [docs/QA_FINAL_REPORT.md](docs/QA_FINAL_REPORT.md) | QA defect evidence and fix status (D12, D13 deferred) |
-| [docs/SHARED_DATA_CONTRACT.md](docs/SHARED_DATA_CONTRACT.md) | Data model and module integration contract (v1.11.2) |
+| [docs/SHARED_DATA_CONTRACT.md](docs/SHARED_DATA_CONTRACT.md) | Data model and module integration contract (v1.12.0) |
