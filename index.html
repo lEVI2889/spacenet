@@ -415,6 +415,13 @@ html { -webkit-tap-highlight-color: transparent; }
 <span class="material-symbols-outlined absolute left-2.5 top-2 text-outline text-[18px]">search</span>
 <input id="inbox-search-input" aria-label="Filter chats or customer ID" oninput="handleInboxSearch(this.value)" class="w-full pl-9 pr-3 py-1.5 bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-xs" placeholder="Filter chats or customer ID..." type="text">
 </div>
+<!-- Queue Filter: read state and human handoff (counts from getInboxQueueCounts, shared with Admin & Analytics) -->
+<div id="inbox-queue-strip" role="group" aria-label="Conversation queue" class="flex flex-wrap items-center gap-1 pb-1 text-label-sm font-label-sm">
+<button type="button" class="inbox-queue-pill px-2.5 py-0.5 rounded bg-primary text-on-primary font-semibold flex items-center gap-1 whitespace-nowrap transition-colors" data-queue="all" aria-pressed="true" onclick="filterQueue('all')">All <span id="inbox-queue-count-all" class="font-code-telemetry">0</span></button>
+<button type="button" class="inbox-queue-pill px-2.5 py-0.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-queue="unread" aria-pressed="false" onclick="filterQueue('unread')"><span class="material-symbols-outlined text-[13px]" aria-hidden="true">mark_chat_unread</span> Unread <span id="inbox-queue-count-unread" class="font-code-telemetry">0</span></button>
+<button type="button" class="inbox-queue-pill px-2.5 py-0.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-queue="read" aria-pressed="false" onclick="filterQueue('read')">Read <span id="inbox-queue-count-read" class="font-code-telemetry">0</span></button>
+<button type="button" class="inbox-queue-pill px-2.5 py-0.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 whitespace-nowrap transition-colors" data-queue="awaiting" aria-pressed="false" onclick="filterQueue('awaiting')"><span class="material-symbols-outlined text-[13px]" aria-hidden="true">support_agent</span> Awaiting human reply <span id="inbox-queue-count-awaiting" class="font-code-telemetry">0</span></button>
+</div>
 <!-- Conversation Type Filter (All / Direct Messages / Comments) -->
 <div id="inbox-type-filter-strip" class="flex items-center gap-1 overflow-x-auto pb-1 text-label-sm font-label-sm border-b border-surface-container">
 <button class="inbox-type-pill px-2.5 py-0.5 rounded bg-primary text-on-primary font-semibold flex items-center gap-1 whitespace-nowrap transition-colors" data-type="all" onclick="filterType('all', this)">
@@ -480,6 +487,10 @@ html { -webkit-tap-highlight-color: transparent; }
 </div>
 <!-- Handover Toggle Pill & 360 Profile Action -->
 <div class="flex flex-wrap items-center gap-space-sm sm:gap-space-md">
+<button id="chat-read-toggle-btn" type="button" class="px-2.5 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer border border-outline-variant/30" onclick="toggleConversationReadState()">
+  <span id="chat-read-toggle-icon" class="material-symbols-outlined text-[16px]" aria-hidden="true">mark_chat_unread</span>
+  <span id="chat-read-toggle-label">Mark as unread</span>
+</button>
 <button id="chat-customer-profile-btn" type="button" class="px-2.5 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-headline-sm text-label-md flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer border border-outline-variant/30" onclick="goToProfileFromChat()" title="View Unified Customer 360° Profile">
   <span class="material-symbols-outlined text-[16px]">badge</span>
   <span class="font-semibold">360° Profile</span>
@@ -1253,7 +1264,7 @@ html { -webkit-tap-highlight-color: transparent; }
           </button>
           <button type="button" class="px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-secondary font-headline-sm text-[12px] rounded-lg flex items-center gap-1 transition-colors cursor-pointer" id="diag-btn-resolve" onclick="markDiagnosticResolved()">
             <span class="material-symbols-outlined text-[16px]">check_circle</span>
-            <span>Mark Resolved</span>
+            <span>Mark Check Resolved</span>
           </button>
           <button type="button" class="hidden px-3 py-1.5 bg-tertiary-fixed hover:bg-tertiary text-on-tertiary-fixed hover:text-on-tertiary font-headline-sm text-[12px] rounded-lg flex items-center gap-1 transition-colors cursor-pointer" id="diag-btn-sync" onclick="syncDiagnosticToLinkedTicket()">
             <span class="material-symbols-outlined text-[16px]">sync</span>
@@ -1770,6 +1781,7 @@ html { -webkit-tap-highlight-color: transparent; }
     <p class="font-body-sm text-body-sm text-inverse-on-surface/80">Every figure here is calculated from the demo records in this session (customers, chats, tickets, leads, outages, jobs, invoices). Anything the demo data cannot support is marked as not available. Settings below are demo settings only.</p>
   </div>
 </div>
+<div id="analytics-queue" aria-live="polite"></div>
 <div id="analytics-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-space-md" aria-live="polite"></div>
 <h2 class="font-headline-md text-headline-md text-inverse-on-surface mt-space-sm">Admin settings (demo)</h2>
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
@@ -1835,7 +1847,7 @@ html { -webkit-tap-highlight-color: transparent; }
       </select>
       <span class="px-space-sm py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">Demo data &middot; simulated</span>
     </div>
-    <div id="tech-job-list" class="grid grid-cols-1 lg:grid-cols-2 gap-space-md" aria-label="Field jobs"></div>
+    <div id="tech-job-list" tabindex="-1" class="grid grid-cols-1 lg:grid-cols-2 gap-space-md focus:outline-none" aria-label="Field jobs"></div>
   </div>
   <div class="flex flex-col gap-space-sm">
     <h2 class="font-headline-sm text-headline-sm text-inverse-on-surface">Technician roster</h2>
@@ -2200,6 +2212,12 @@ html { -webkit-tap-highlight-color: transparent; }
         </div>
       </div>
 
+      <!-- Assignment: support owner + field technician read from the linked repair job -->
+      <section class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-2 text-[12px]" aria-labelledby="td-modal-assignment-heading">
+        <h4 id="td-modal-assignment-heading" class="font-label-sm uppercase tracking-wider text-outline font-semibold">Assigned To</h4>
+        <div id="td-modal-assignment" class="flex flex-col gap-2" aria-live="polite"></div>
+      </section>
+
       <!-- Quick Escalation Info Box -->
       <div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-2 border border-surface-container-high/50 text-[12px]">
         <div class="flex items-center gap-1.5 text-on-surface font-semibold">
@@ -2289,6 +2307,8 @@ html { -webkit-tap-highlight-color: transparent; }
   let currentCustomerKey = 'alex';
   let currentChannelFilter = 'all';
   let currentTypeFilter = 'all';
+  let currentQueueFilter = 'all'; // 'all' | 'unread' | 'read' | 'awaiting'
+  let queueKeepConversationId = null; // the chat you just worked on stays listed until the queue filter changes
   let currentComposerMode = 'message';
   let currentSearchQuery = '';
   let aiLanguageMode = 'EN';
@@ -2320,7 +2340,7 @@ html { -webkit-tap-highlight-color: transparent; }
       badgeColor: 'bg-secondary-fixed text-on-secondary-fixed',
       type: 'dm',
       status: 'ai_handling',
-      unread: false,
+      unread: true, // last message is an unanswered customer message
       circuitId: 'SPN-FBR-0941',
       plan: 'Fiber 500Mbps',
       planBadge: 'Fiber 500M',
@@ -2367,7 +2387,7 @@ html { -webkit-tap-highlight-color: transparent; }
       badgeColor: 'bg-primary-fixed text-on-primary-fixed',
       type: 'dm',
       status: 'ai_handling',
-      unread: false,
+      unread: true, // last message is an unanswered customer message
       circuitId: 'SPN-OFF-2281',
       plan: 'Office Pro 1Gbps',
       planBadge: 'Office Pro 1G',
@@ -2399,7 +2419,7 @@ html { -webkit-tap-highlight-color: transparent; }
       badgeColor: 'bg-tertiary-fixed text-on-tertiary-fixed',
       type: 'dm',
       status: 'ai_handling',
-      unread: false,
+      unread: true, // last message is an unanswered customer message
       circuitId: 'SPN-GAM-6210',
       plan: 'Fiber Gamer 300Mbps',
       planBadge: 'Fiber Gamer 300M',
@@ -2445,7 +2465,7 @@ html { -webkit-tap-highlight-color: transparent; }
       badgeColor: 'bg-secondary-container text-on-secondary-container',
       type: 'dm',
       status: 'ai_handling',
-      unread: false,
+      unread: true, // last message is an unanswered customer message
       circuitId: 'SPN-VDS-1092',
       plan: 'Home Lite 100M',
       planBadge: 'Home Lite',
@@ -2476,7 +2496,7 @@ html { -webkit-tap-highlight-color: transparent; }
       badgeColor: 'bg-primary-container text-on-primary',
       type: 'dm',
       status: 'ai_handling',
-      unread: false,
+      unread: true, // last message is an unanswered customer message
       circuitId: 'SPN-CORP-7721',
       plan: 'Fiber Gigabit',
       planBadge: 'Fiber Gigabit',
@@ -3824,6 +3844,7 @@ html { -webkit-tap-highlight-color: transparent; }
       time: timeStr
     });
     conv.lastMessageTime = 'Just now';
+    noteCustomerMessage(conv);
 
     if (inputEl) inputEl.value = '';
     if (selectEl) selectEl.selectedIndex = 0;
@@ -3907,6 +3928,92 @@ html { -webkit-tap-highlight-color: transparent; }
     return true;
   }
 
+  // Inbox queues: one source for the Inbox filters and Admin analytics. Three separate ideas:
+  // - unread: a customer message nobody has opened yet (conv.unread);
+  // - human takeover: who controls replies (conv.status);
+  // - awaiting human reply: taken over, and no staff message since the latest takeover event.
+  // AI messages and internal notes are not staff replies; reading a chat does not answer it.
+  function isAwaitingHumanReply(conv) {
+    if (!conv || conv.status !== 'human_takeover') return false;
+    const msgs = conv.messages || [];
+    let since = 0;
+    for (let i = msgs.length - 1; i >= 0; i--) {
+      if (msgs[i].sender === 'system' && msgs[i].eventType === 'takeover') { since = i + 1; break; }
+    }
+    return !msgs.slice(since).some(m => m.sender === 'staff');
+  }
+
+  const INBOX_QUEUES = {
+    all: { label: 'All conversations', test: () => true },
+    unread: { label: 'Unread', test: c => !!c.unread },
+    read: { label: 'Read', test: c => !c.unread },
+    awaiting: { label: 'Awaiting human reply', test: isAwaitingHumanReply }
+  };
+
+  function getInboxQueueCounts() {
+    const counts = {};
+    Object.keys(INBOX_QUEUES).forEach(k => { counts[k] = conversations.filter(INBOX_QUEUES[k].test).length; });
+    return counts;
+  }
+
+  // Read rule: opening a chat (clicking it, or arriving from another module) marks it read.
+  // A new customer message marks it unread unless that chat is open on screen in the Inbox.
+  function noteCustomerMessage(conv) {
+    if (!(currentActiveView === 'unified-inbox' && currentConversationId === conv.conversationId)) conv.unread = true;
+  }
+
+  function renderInboxQueueStrip() {
+    const counts = getInboxQueueCounts();
+    document.querySelectorAll('.inbox-queue-pill').forEach(btn => {
+      const active = btn.getAttribute('data-queue') === currentQueueFilter;
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      btn.className = `inbox-queue-pill px-2.5 py-0.5 rounded flex items-center gap-1 whitespace-nowrap transition-colors ${active ? 'bg-primary text-on-primary font-semibold' : 'bg-surface-container hover:bg-surface-container-high text-on-surface'}`;
+    });
+    Object.keys(counts).forEach(k => {
+      const el = document.getElementById('inbox-queue-count-' + k);
+      if (el) el.textContent = String(counts[k]);
+    });
+  }
+
+  function filterQueue(queue, silent) {
+    if (!INBOX_QUEUES[queue]) return;
+    currentQueueFilter = queue;
+    queueKeepConversationId = null;
+    renderThreadList();
+    if (!silent) showToast('Queue Filter Applied', `Showing: ${INBOX_QUEUES[queue].label}`);
+  }
+
+  // Admin & Analytics deep link: clears other Inbox filters so every counted chat is listed.
+  function openInboxQueue(queue) {
+    currentSearchQuery = '';
+    const searchInput = document.getElementById('inbox-search-input');
+    if (searchInput) searchInput.value = '';
+    // silent: the navigation itself is the feedback; three filter toasts were noise (QA L3)
+    filterType('all', null, true);
+    filterInbox('all', null, true);
+    switchView('unified-inbox');
+    filterQueue(queue, true);
+    const pill = document.querySelector(`.inbox-queue-pill[data-queue="${queue}"]`);
+    if (pill && pill.focus) pill.focus();
+  }
+
+  function toggleConversationReadState() {
+    const conv = getConversation(currentConversationId);
+    if (!conv) return;
+    conv.unread = !conv.unread;
+    queueKeepConversationId = conv.conversationId;
+    renderThreadList();
+    renderChatReadControls(conv);
+    showToast(conv.unread ? 'Marked as Unread' : 'Marked as Read', `${conv.customerName} (${conv.conversationId}). Handoff status is unchanged.`);
+  }
+
+  function renderChatReadControls(conv) {
+    const label = document.getElementById('chat-read-toggle-label');
+    const icon = document.getElementById('chat-read-toggle-icon');
+    if (label) label.textContent = conv && conv.unread ? 'Mark as read' : 'Mark as unread';
+    if (icon) icon.textContent = conv && conv.unread ? 'mark_chat_read' : 'mark_chat_unread';
+  }
+
   function handleSimPresetChange(selectEl) {
     const inputEl = document.getElementById('sim-custom-input');
     if (selectEl.value && inputEl) {
@@ -3986,7 +4093,7 @@ html { -webkit-tap-highlight-color: transparent; }
     renderThreadList();
   }
 
-  function filterType(type, btn) {
+  function filterType(type, btn, silent) {
     currentTypeFilter = type;
     if (!btn) {
       btn = document.querySelector(`.inbox-type-pill[data-type="${type}"]`);
@@ -3999,7 +4106,7 @@ html { -webkit-tap-highlight-color: transparent; }
     }
     renderThreadList();
     const labelMap = { all: 'All Conversations', dm: 'Direct Messages', comment: 'Public Comments' };
-    showToast('Type Filter Applied', 'Showing: ' + (labelMap[type] || type));
+    if (!silent) showToast('Type Filter Applied', 'Showing: ' + (labelMap[type] || type));
   }
 
   function setComposerMode(mode) {
@@ -4132,10 +4239,15 @@ html { -webkit-tap-highlight-color: transparent; }
   }
 
   function renderThreadList() {
+    renderInboxQueueStrip();
     const container = document.getElementById('inbox-thread-list');
     if (!container) return;
 
     const filtered = conversations.filter(conv => {
+      // 0. Queue filter (read state / awaiting human reply)
+      if (currentQueueFilter !== 'all' && conv.conversationId !== queueKeepConversationId && !INBOX_QUEUES[currentQueueFilter].test(conv)) {
+        return false;
+      }
       // 1. Channel filter
       if (currentChannelFilter !== 'all' && conv.channel !== currentChannelFilter) {
         return false;
@@ -4164,7 +4276,9 @@ html { -webkit-tap-highlight-color: transparent; }
         <div class="p-space-xl flex flex-col items-center justify-center text-center text-on-surface-variant py-12">
           <span class="material-symbols-outlined text-[32px] text-outline mb-2">search_off</span>
           <p class="font-headline-sm text-body-md font-semibold text-on-surface">No conversations found</p>
-          <p class="font-body-sm text-label-sm text-outline mt-1">No chats match "${escapeHtml(currentSearchQuery || (currentChannelFilter !== 'all' ? currentChannelFilter : currentTypeFilter))}".</p>
+          <p class="font-body-sm text-label-sm text-outline mt-1">${currentQueueFilter !== 'all' && !currentSearchQuery && currentChannelFilter === 'all' && currentTypeFilter === 'all'
+            ? `No conversations in the ${escapeHtml(INBOX_QUEUES[currentQueueFilter].label)} queue.`
+            : `No chats match "${escapeHtml(currentSearchQuery || (currentChannelFilter !== 'all' ? currentChannelFilter : (currentTypeFilter !== 'all' ? currentTypeFilter : INBOX_QUEUES[currentQueueFilter].label)))}".`}</p>
         </div>
       `;
       renderEmptyChatState();
@@ -4205,21 +4319,32 @@ html { -webkit-tap-highlight-color: transparent; }
         ? `<span class="px-1.5 py-0.2 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-[10px] font-medium flex items-center gap-0.5"><span class="material-symbols-outlined text-[10px]">forum</span> Comment</span>`
         : `<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-[10px] font-medium flex items-center gap-0.5"><span class="material-symbols-outlined text-[10px]">mail</span> DM</span>`;
 
+      const awaiting = isAwaitingHumanReply(conv);
       const humanIndicator = isHuman
-        ? `<span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-900 font-label-sm text-[10px] font-semibold flex items-center gap-0.5" title="Human Agent Override Active"><span class="material-symbols-outlined text-[10px]">support_agent</span> Human</span>`
+        ? (awaiting
+          ? `<span class="px-1.5 py-0.2 rounded bg-error-container text-on-error-container font-label-sm text-[10px] font-semibold flex items-center gap-0.5" title="Handed off from AI; no staff reply yet"><span class="material-symbols-outlined text-[10px]">support_agent</span> Awaiting reply</span>`
+          : `<span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-900 font-label-sm text-[10px] font-semibold flex items-center gap-0.5" title="Human Agent Override Active"><span class="material-symbols-outlined text-[10px]">support_agent</span> Human</span>`)
         : '';
+      const unreadDot = conv.unread
+        ? '<span class="w-2 h-2 rounded-full bg-primary shrink-0" aria-hidden="true"></span><span class="sr-only">Unread.</span>'
+        : '';
+      const convIdAttr = escapeHtml(conv.conversationId);
 
       return `
-        <div class="chat-thread-item p-space-md ${activeClass} cursor-pointer transition-colors flex flex-col gap-1"
-             data-conversation-id="${escapeHtml(conv.conversationId)}"
+        <div class="chat-thread-item p-space-md ${activeClass} cursor-pointer transition-colors flex flex-col gap-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+             role="button" tabindex="0" ${isActive ? 'aria-current="true"' : ''}
+             data-conversation-id="${convIdAttr}"
              data-customer-id="${escapeHtml(conv.customerId)}"
              data-channel="${escapeHtml(conv.channel)}"
              data-type="${escapeHtml(conv.type)}"
-             onclick="selectConversation('${escapeHtml(conv.conversationId)}')">
+             data-unread="${conv.unread ? 'true' : 'false'}"
+             onclick="selectConversation('${convIdAttr}')"
+             onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); selectConversation('${convIdAttr}'); }">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-space-xs">
+              ${unreadDot}
               <span class="w-6 h-6 rounded-full ${conv.channelColor} flex items-center justify-center font-code-telemetry text-[11px] font-semibold">${escapeHtml(conv.channelBadge)}</span>
-              <span class="font-headline-sm text-body-md text-on-surface font-semibold">${escapeHtml(conv.customerName)}</span>
+              <span class="font-headline-sm text-body-md text-on-surface ${conv.unread ? 'font-bold' : 'font-semibold'}">${escapeHtml(conv.customerName)}</span>
               <span class="font-code-telemetry text-code-telemetry text-on-surface-variant font-medium">${escapeHtml(conv.displayId || conv.id)}</span>
             </div>
             <span class="font-code-telemetry text-[11px] text-outline">${escapeHtml(conv.lastMessageTime)}</span>
@@ -4251,27 +4376,15 @@ html { -webkit-tap-highlight-color: transparent; }
     const input = document.getElementById('chat-input');
     if (input) input.value = '';
 
-    // Update active highlight on thread items
-    document.querySelectorAll('.chat-thread-item').forEach(el => {
-      const match = el.getAttribute('data-conversation-id') === conv.conversationId;
-      if (match) {
-        el.classList.add('bg-surface-container-high/60');
-        el.classList.remove('hover:bg-surface-container');
-        const p = el.querySelector('p');
-        if (p) {
-          p.classList.add('text-on-surface');
-          p.classList.remove('text-on-surface-variant');
-        }
-      } else {
-        el.classList.remove('bg-surface-container-high/60');
-        el.classList.add('hover:bg-surface-container');
-        const p = el.querySelector('p');
-        if (p) {
-          p.classList.remove('text-on-surface');
-          p.classList.add('text-on-surface-variant');
-        }
-      }
-    });
+    // Opening a chat reads it (handoff state is separate and unchanged); it stays listed in the current queue.
+    conv.unread = false;
+    queueKeepConversationId = conv.conversationId;
+    const hadListFocus = !!(document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('chat-thread-item'));
+    renderThreadList(); // refreshes highlight, unread dot and queue counts
+    if (hadListFocus) {
+      const item = document.querySelector(`.chat-thread-item[data-conversation-id="${conv.conversationId}"]`);
+      if (item && item.focus) item.focus();
+    }
 
     renderCustomerConversation(conv.conversationId);
   }
@@ -4416,7 +4529,9 @@ html { -webkit-tap-highlight-color: transparent; }
     if (agentBadge) {
       if (isHuman) {
         agentBadge.className = 'flex items-center gap-1.5 px-space-sm py-1 bg-surface-container text-on-surface rounded-full font-label-md text-label-md font-semibold';
-        agentBadge.innerHTML = '<span class="material-symbols-outlined text-[14px]">support_agent</span><span>Human Staff Override</span>';
+        agentBadge.innerHTML = isAwaitingHumanReply(cust)
+          ? '<span class="material-symbols-outlined text-[14px]">support_agent</span><span>Human Override · awaiting first staff reply</span>'
+          : '<span class="material-symbols-outlined text-[14px]">support_agent</span><span>Human Staff Override</span>';
       } else {
         agentBadge.className = 'flex items-center gap-1.5 px-space-sm py-1 bg-tertiary-fixed text-on-tertiary-fixed rounded-full font-label-md text-label-md font-semibold';
         agentBadge.innerHTML = '<span class="material-symbols-outlined text-[14px]">auto_awesome</span><span id="agent-mode-text">AI Copilot Handling</span>';
@@ -4425,6 +4540,7 @@ html { -webkit-tap-highlight-color: transparent; }
     if (overrideLabel) {
       overrideLabel.textContent = isHuman ? 'Human ON' : 'Human Off';
     }
+    renderChatReadControls(cust);
 
     // 6. Render Messages Stream
     const stream = document.getElementById('chat-message-stream');
@@ -4753,6 +4869,7 @@ html { -webkit-tap-highlight-color: transparent; }
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         });
         targetConv.lastMessageTime = 'Just now';
+        noteCustomerMessage(targetConv);
         if (currentConversationId === targetConv.conversationId) {
           renderCustomerConversation(targetConv.conversationId);
         }
@@ -4764,7 +4881,7 @@ html { -webkit-tap-highlight-color: transparent; }
     // Staff messages are not customer queries: no automatic AI reply is scheduled for them.
   }
 
-  function filterInbox(ch, btn) {
+  function filterInbox(ch, btn, silent) {
     currentChannelFilter = ch;
 
     // Auto-discover button element if not passed explicitly
@@ -4788,7 +4905,7 @@ html { -webkit-tap-highlight-color: transparent; }
       telegram: 'Telegram',
       web: 'Website Chat'
     };
-    showToast('Channel Filtered', 'Showing conversations for: ' + (labelMap[ch] || ch.toUpperCase()));
+    if (!silent) showToast('Channel Filtered', 'Showing conversations for: ' + (labelMap[ch] || ch.toUpperCase()));
   }
 
   // 5. Tickets Management & Details (Module 03 — Complete Implementation)
@@ -5840,6 +5957,8 @@ html { -webkit-tap-highlight-color: transparent; }
       const prioMeta = TICKET_PRIORITIES[tkt.priority] || { label: tkt.priority, badgeClass: 'bg-surface-container text-on-surface-variant' };
       const statusMeta = TICKET_STATUSES[tkt.status] || { label: tkt.statusLabel || tkt.status, badgeClass: 'bg-surface-container text-on-surface' };
 
+      const fieldJob = getTicketFieldJob(tkt.ticketId);
+      const fieldTech = fieldJob ? getTechById(fieldJob.technicianId) : null;
       const tr = document.createElement('tr');
       tr.className = 'hover:bg-surface-container-high/40 transition-colors cursor-pointer group';
       tr.setAttribute('data-type', tkt.category);
@@ -5859,7 +5978,7 @@ html { -webkit-tap-highlight-color: transparent; }
         <td class="py-3 px-space-md" onclick="event.stopPropagation()">
           <input class="rounded text-primary focus:ring-0" type="checkbox" aria-label="Select ticket ${escapeHtml(tkt.displayId)}">
         </td>
-        <td class="py-3 px-space-md font-code-metric text-primary font-semibold">${escapeHtml(tkt.displayId)}</td>
+        <td class="py-3 px-space-md font-code-metric text-primary font-semibold"><button type="button" class="rounded hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary" onclick="event.stopPropagation(); openTicketDetail('${tkt.ticketId}')">${escapeHtml(tkt.displayId)}</button></td>
         <td class="py-3 px-space-md">
           <div class="flex flex-col">
             <span class="font-headline-sm text-label-md text-on-surface">${escapeHtml(tkt.customerName)}</span>
@@ -5880,6 +5999,7 @@ html { -webkit-tap-highlight-color: transparent; }
             ${tkt.handlingAgent.includes('AI') ? '<span class="material-symbols-outlined text-[14px]">auto_awesome</span>' : ''}
             ${escapeHtml(tkt.handlingAgent)}
           </span>
+          ${fieldJob ? `<span class="flex items-center gap-1 font-label-sm text-[11px] text-on-surface-variant"><span class="material-symbols-outlined text-[13px]" aria-hidden="true">engineering</span>${fieldTech ? escapeHtml(fieldTech.name) : 'Field job unassigned'}</span>` : ''}
         </td>
         <td class="py-3 px-space-md text-left">
           <div class="flex items-center gap-1.5 flex-wrap">
@@ -6289,6 +6409,8 @@ html { -webkit-tap-highlight-color: transparent; }
       }
     }
 
+    renderTicketAssignment(tkt);
+
     // Render Guided Steps
     renderGuidedSteps(tkt);
 
@@ -6297,6 +6419,78 @@ html { -webkit-tap-highlight-color: transparent; }
 
     // Render Audit History
     renderTicketHistory(tkt);
+  }
+
+  // Set by Module 09 once techJobs exists (declared later in this script).
+  let ticketFieldJobsReady = false;
+
+  // --- Ticket <-> field job. The repair job's technicianId is the only assignment record:
+  // tickets read the name from the roster by ID and never store a copy.
+  function getTicketFieldJob(ticketId) {
+    if (!ticketFieldJobsReady) return null; // the ticket table first renders before Module 09 declares techJobs
+    return techJobs.find(j => j.type === 'repair' && j.ticketId === ticketId) || null;
+  }
+
+  // Ticket resolution and field-job completion are separate: say so when a job is still open.
+  function openFieldJobNote(tkt) {
+    const job = tkt ? getTicketFieldJob(tkt.ticketId) : null;
+    return job && job.status !== 'completed' ? ` Field job ${job.jobId} is still ${getTechStatusMeta(job.status).label.toLowerCase()}; update it in Technician Ops.` : '';
+  }
+
+  function renderTicketAssignment(tkt) {
+    const box = document.getElementById('td-modal-assignment');
+    if (!box || !tkt) return;
+    const job = getTicketFieldJob(tkt.ticketId);
+    const tech = job ? getTechById(job.technicianId) : null;
+    const row = (label, value) => `<div class="py-1.5 flex items-start justify-between gap-2"><span class="text-on-surface-variant">${label}:</span><span class="text-right text-on-surface font-semibold">${value}</span></div>`;
+    let controls;
+    if (!job) {
+      controls = '<p class="text-on-surface-variant text-[11px] leading-relaxed">No field job. A repair job is created in Technician Ops when a No Internet or Slow Internet ticket is escalated.</p>';
+    } else if (['scheduled', 'assigned'].includes(job.status)) {
+      const eligible = getEligibleTechs(job);
+      controls = `<div class="flex flex-wrap items-end gap-2">
+          <label class="flex flex-col gap-1 text-on-surface-variant text-[11px]">Field technician (available, right zone and skill)
+            <select id="td-modal-tech-select" class="px-space-sm py-1 rounded-lg bg-surface-container text-on-surface text-[12px] focus:outline-none focus:ring-2 focus:ring-primary">${eligible.length ? eligible.map(t => `<option value="${t.techId}" ${t.techId === job.technicianId ? 'selected' : ''}>${escapeHtml(t.name)}</option>`).join('') : '<option value="">No eligible technician</option>'}</select>
+          </label>
+          <button type="button" onclick="assignTechFromTicket()" ${eligible.length ? '' : 'disabled'} class="px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-[12px] font-semibold disabled:opacity-50">${tech ? 'Reassign' : 'Assign'}</button>
+        </div>`;
+    } else if (job.status === 'unassigned') {
+      controls = '<p class="text-on-surface-variant text-[11px] leading-relaxed">Schedule the visit in the field job before assigning a technician.</p>';
+    } else {
+      controls = `<p class="text-on-surface-variant text-[11px] leading-relaxed">The technician can no longer be changed: the job is ${escapeHtml(getTechStatusMeta(job.status).label.toLowerCase())}.</p>`;
+    }
+    box.innerHTML = `<div class="divide-y divide-surface-container-high/60">
+        ${row('Support owner', escapeHtml(tkt.assignedStaff || 'Unassigned'))}
+        ${row('Field technician', tech ? escapeHtml(tech.name) : 'Unassigned')}
+        ${row('Field job', job ? `<button type="button" class="text-primary underline" onclick="openTicketFieldJob('${job.jobId}')">${escapeHtml(job.jobId)} · ${escapeHtml(getTechStatusMeta(job.status).label)}</button>` : 'No field job')}
+      </div>
+      ${controls}
+      <p id="td-modal-assign-error" role="alert" class="hidden text-error text-[11px] font-semibold"></p>`;
+  }
+
+  function assignTechFromTicket() {
+    const tkt = currentModalTicket;
+    const job = tkt ? getTicketFieldJob(tkt.ticketId) : null;
+    const techId = (document.getElementById('td-modal-tech-select') || {}).value;
+    const result = job ? assignTechJob(job.jobId, techId) : { error: 'This ticket has no field job to assign.' };
+    if (result.error) {
+      const err = document.getElementById('td-modal-assign-error');
+      if (err) { err.textContent = result.error; err.classList.remove('hidden'); }
+      return;
+    }
+    renderTicketAssignment(tkt);
+    renderTicketHistory(tkt);
+    renderTicketTable();
+    renderTechView();
+    showToast('Technician Assigned', `${getTechById(techId).name} assigned to ${job.jobId} for ${tkt.ticketId} (demo; no dispatch).`);
+  }
+
+  function openTicketFieldJob(jobId) {
+    if (!getTechJobById(jobId)) return;
+    closeTicketModal();
+    switchView('technicians');
+    renderTechView();
+    openTechJobModal(jobId);
   }
 
   function renderGuidedSteps(tkt) {
@@ -6351,14 +6545,14 @@ html { -webkit-tap-highlight-color: transparent; }
 
     let note = '';
     if (actionType === 'reboot') {
-      note = 'Simulated remote ONT power-cycle signal dispatched. ONT link renegotiated in 14.2s.';
-      showToast('Remote Reboot Executed', note);
+      note = 'Simulated ONT remote reboot (no device contacted). Sample result: link renegotiated in 14.2s.';
+      showToast('ONT Reboot (Simulated)', note);
     } else if (actionType === 'optical') {
-      note = 'Optical Rx power sweep complete: -19.4 dBm (Healthy GPON threshold: -8 dBm to -27 dBm).';
-      showToast('Optical Sweep Complete (Simulated)', note);
+      note = 'Simulated optical Rx sweep (no device contacted). Sample result: -19.4 dBm (healthy GPON range -8 to -27 dBm).';
+      showToast('Optical Sweep (Simulated)', note);
     } else if (actionType === 'speed') {
-      note = 'Speed test verified: 942 Mbps Download / 918 Mbps Upload with 3ms core latency.';
-      showToast('Speed Test Verified', note);
+      note = 'Simulated speed test (no device contacted). Sample result: 942 Mbps down / 918 Mbps up, 3 ms latency.';
+      showToast('Speed Test (Simulated)', note);
     }
 
     const diagBox = document.getElementById('td-modal-diag');
@@ -6397,19 +6591,42 @@ html { -webkit-tap-highlight-color: transparent; }
     renderTicketHistory(currentModalTicket);
   }
 
+  // Copies this ticket's checklist progress and its simulated diagnostic sessions into the resolution
+  // notes as one replaceable block. Keeps the agent's own text; never changes the ticket status.
+  const TROUBLESHOOTING_SYNC_MARKER = '— Troubleshooting record (synced) —';
   function syncGuidedStepsToResolution() {
-    if (!currentModalTicket) return;
-    const completed = (currentModalTicket.guidedSteps || []).filter(s => s.completed);
-    if (!completed.length) {
-      showToast('No Completed Steps', 'Check off completed troubleshooting steps before syncing.');
+    const tkt = currentModalTicket;
+    if (!tkt) return;
+    const steps = tkt.guidedSteps || [];
+    const done = steps.filter(s => s.completed);
+    const todo = steps.filter(s => !s.completed);
+    const sessions = diagnosticSessions.filter(d => d.ticketId === tkt.ticketId);
+    if (!done.length && !sessions.length) {
+      showToast('Nothing to Sync', 'Complete a troubleshooting step or run a simulated check first.');
       return;
     }
-
-    const summaryText = 'Completed Troubleshooting Steps: ' + completed.map(s => s.label).join('; ') + '. Issue verified resolved.';
+    const block = [
+      TROUBLESHOOTING_SYNC_MARKER,
+      `Completed steps: ${done.map(s => `${s.label} (${s.completedAt || 'time not recorded'})`).join('; ') || 'none'}.`,
+      `Pending steps: ${todo.map(s => s.label).join('; ') || 'none'}.`,
+      `Simulated checks on this ticket: ${sessions.map(d => `${d.sessionId} ${d.diagnosticType} → ${d.outcome}`).join('; ') || 'none'} (simulated, not live network measurements).`
+    ].join('\n');
     const input = document.getElementById('td-modal-resolution-summary');
-    if (input) input.value = summaryText;
-    currentModalTicket.resolutionSummary = summaryText;
-    showToast('Summary Synced', 'Completed steps compiled into Resolution Summary.');
+    const current = (input ? input.value : tkt.resolutionSummary) || '';
+    const at = current.indexOf(TROUBLESHOOTING_SYNC_MARKER);
+    const ownNotes = (at < 0 ? [current] : [current.slice(0, at), current.slice(at).split('\n').slice(4).join('\n')])
+      .map(t => t.trim()).filter(Boolean).join('\n\n');
+    const notes = ownNotes ? `${ownNotes}\n\n${block}` : block;
+    const changed = notes !== (tkt.resolutionSummary || '');
+    if (input) input.value = notes;
+    tkt.resolutionSummary = notes;
+    if (changed) {
+      tkt.updatedAt = new Date().toISOString();
+      tkt.history.push({ timestamp: tkt.updatedAt, timeStr: 'Just now', author: 'Staff (Tier III NOC)', action: 'RESOLUTION_NOTES_SYNCED',
+        notes: `Troubleshooting progress copied to the resolution notes: ${done.length} of ${steps.length} steps done, ${sessions.length} simulated check${sessions.length === 1 ? '' : 's'}. Ticket status unchanged.` });
+      renderTicketHistory(tkt);
+    }
+    showToast('Resolution Notes Updated', changed ? `${done.length}/${steps.length} steps and ${sessions.length} simulated check${sessions.length === 1 ? '' : 's'} added. The ticket is not resolved until you mark it resolved.` : 'Nothing new since the last sync.');
   }
 
   function renderFeedbackSection(tkt) {
@@ -6550,8 +6767,13 @@ html { -webkit-tap-highlight-color: transparent; }
       'Staff Escalation'
     );
 
+    syncTechJobs(); // escalated connectivity tickets get their repair job now (idempotent)
+    renderTicketAssignment(currentModalTicket);
     if (res.success) {
-      showToast('Escalated to Tier III NOC', 'Logged in CRM. (Demo Mode: Field technician dispatch reserved for Module 09)');
+      const job = getTicketFieldJob(currentModalTicket.ticketId);
+      showToast('Escalated to Tier III NOC', job
+        ? `Field repair job ${job.jobId} created in Technician Ops (unassigned). Schedule it there, then assign. No technician dispatched.`
+        : 'Logged in CRM. No field job: only No Internet and Slow Internet tickets get repair jobs.');
     } else {
       showToast('Escalation Alert', res.error);
     }
@@ -6561,13 +6783,7 @@ html { -webkit-tap-highlight-color: transparent; }
   function resolveCurrentTicketModal() {
     if (!currentModalTicket) return;
     const input = document.getElementById('td-modal-resolution-summary');
-    const summary = input ? input.value.trim() : '';
-
-    if (!summary) {
-      syncGuidedStepsToResolution();
-    }
-    const finalSummary = (input && input.value.trim()) || 'Troubleshooting completed. Line metrics confirmed nominal.';
-    currentModalTicket.resolutionSummary = finalSummary;
+    const finalSummary = (input && input.value.trim()) || 'Resolved by staff. No resolution notes were recorded.';
 
     const res = updateTicketStatus(
       currentModalTicket.ticketId,
@@ -6577,7 +6793,9 @@ html { -webkit-tap-highlight-color: transparent; }
     );
 
     if (res.success) {
-      showToast('Ticket Resolved', `${currentModalTicket.displayId} marked resolved. Awaiting customer confirmation.`);
+      currentModalTicket.resolutionSummary = finalSummary;
+      if (input) input.value = finalSummary; // the status re-render above showed the previous summary
+      showToast('Ticket Resolved', `${currentModalTicket.displayId} marked resolved. Awaiting customer confirmation.${openFieldJobNote(currentModalTicket)}`);
     } else {
       showToast('Action Failed', res.error);
     }
@@ -6684,14 +6902,21 @@ html { -webkit-tap-highlight-color: transparent; }
 
   function resolveTicketRow(btn, ticketId) {
     const cleanId = ticketId ? ticketId.replace('#', '') : '';
-    const res = updateTicketStatus(cleanId, 'RESOLVED', 'Quick-resolved via table action button.');
+    const tkt = tickets.find(t => t.ticketId === cleanId);
+    const res = tkt && tkt.status === 'CLOSED'
+      ? { success: false, error: 'Ticket is already closed.' }
+      : updateTicketStatus(cleanId, 'RESOLVED', 'Quick-resolved via table action button.');
+    if (!res.success) {
+      showToast('Not Resolved', `${ticketId}: ${res.error}`);
+      return;
+    }
     if (btn && btn.closest) {
       const row = btn.closest('tr');
       if (row) row.style.opacity = '0.45';
       btn.disabled = true;
       btn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-secondary">done_all</span>';
     }
-    showToast('Ticket Resolved', `${ticketId} resolved. Satisfaction survey simulated — no SMS sent.`);
+    showToast('Ticket Resolved', `${ticketId} resolved. Satisfaction survey simulated — no SMS sent.${openFieldJobNote(res.ticket)}`);
   }
 
   // Feature Group 6: Simulated Status Inquiry Workflow
@@ -9086,6 +9311,12 @@ html { -webkit-tap-highlight-color: transparent; }
     job.technicianId = techId;
     job.status = 'assigned';
     job.history.push({ at: leadTimestamp(), action: previous ? 'REASSIGNED' : 'ASSIGNED', by: 'NOC staff', note: previous ? `Reassigned from ${previous.name} to ${tech.name}` : `Assigned to ${tech.name}` });
+    const tkt = job.ticketId ? tickets.find(t => t.ticketId === job.ticketId) : null;
+    if (tkt) {
+      tkt.updatedAt = new Date().toISOString();
+      tkt.history.push({ timestamp: tkt.updatedAt, timeStr: 'Just now', author: 'NOC staff', action: 'TECH_ASSIGNED',
+        notes: `${previous ? `Field job ${job.jobId} reassigned from ${previous.name} (${previous.techId})` : `Field job ${job.jobId} assigned`} to ${tech.name} (${tech.techId}). Simulated — no technician dispatched.` });
+    }
     return { job };
   }
 
@@ -9110,9 +9341,22 @@ html { -webkit-tap-highlight-color: transparent; }
   }
 
   // --- Technician view rendering ---
+  let currentTechFilterTechId = null;
+
   function getFilteredTechJobs() {
     const f = (document.getElementById('tech-status-filter') || {}).value || 'ALL';
-    return techJobs.filter(j => f === 'ALL' || (f === 'open' && j.status !== 'completed') || (f === 'unassigned' && j.status === 'unassigned') || (f === 'completed' && j.status === 'completed'));
+    return techJobs.filter(j => (f === 'ALL' || (f === 'open' && j.status !== 'completed') || (f === 'unassigned' && j.status === 'unassigned') || (f === 'completed' && j.status === 'completed'))
+      && (!currentTechFilterTechId || j.technicianId === currentTechFilterTechId));
+  }
+
+  // Roster workload -> that technician's open jobs (the same jobs the workload number counts).
+  function filterTechJobsByTech(techId) {
+    currentTechFilterTechId = getTechById(techId) ? techId : null;
+    const sel = document.getElementById('tech-status-filter');
+    if (sel) sel.value = currentTechFilterTechId ? 'open' : 'ALL';
+    renderTechView();
+    const list = document.getElementById('tech-job-list');
+    if (list && list.focus) list.focus();
   }
 
   function renderTechView() {
@@ -9132,7 +9376,11 @@ html { -webkit-tap-highlight-color: transparent; }
 
     const flow = TECH_JOB_STATUSES.map(s => s.key);
     const jobs = getFilteredTechJobs();
-    list.innerHTML = jobs.length ? jobs.map(j => {
+    const filterTech = getTechById(currentTechFilterTechId);
+    const filterNote = filterTech ? `<p class="lg:col-span-2 rounded-xl bg-surface-container-lowest px-space-md py-space-sm flex flex-wrap items-center justify-between gap-2 font-body-sm text-body-sm text-on-surface">
+        <span>Showing ${jobs.length} job${jobs.length === 1 ? '' : 's'} assigned to <strong>${escapeHtml(filterTech.name)}</strong> (${escapeHtml(filterTech.techId)})</span>
+        <button type="button" onclick="filterTechJobsByTech(null)" class="px-space-sm py-1 rounded-lg bg-surface-container hover:bg-surface-container-high font-label-md text-label-md text-on-surface">Show all jobs</button></p>` : '';
+    list.innerHTML = filterNote + (jobs.length ? jobs.map(j => {
       const meta = getTechStatusMeta(j.status);
       const tech = getTechById(j.technicianId);
       const idx = flow.indexOf(j.status);
@@ -9143,14 +9391,15 @@ html { -webkit-tap-highlight-color: transparent; }
           <span class="flex items-center gap-1" aria-label="Stage ${idx + 1} of ${flow.length}">${flow.map((s, i) => `<span class="h-1.5 flex-1 rounded-full ${i <= idx ? 'bg-primary' : 'bg-surface-container-high'}"></span>`).join('')}</span>
           <span class="font-body-sm text-body-sm text-on-surface-variant">${escapeHtml(j.sourceId)} · ${tech ? escapeHtml(tech.name) : 'No technician'} · ${j.scheduledAt ? `Visit ${escapeHtml(j.scheduledAt)}` : 'Visit not scheduled'}</span>
         </button>`;
-    }).join('') : '<p class="rounded-xl bg-surface-container-lowest p-space-md font-body-sm text-body-sm text-on-surface-variant">No jobs match this filter.</p>';
+    }).join('') : '<p class="rounded-xl bg-surface-container-lowest p-space-md font-body-sm text-body-sm text-on-surface-variant">No jobs match this filter.</p>');
 
     roster.innerHTML = TECH_ROSTER.map(t => {
       const active = techJobs.filter(j => j.technicianId === t.techId && j.status !== 'completed').length;
       return `<li class="rounded-xl bg-surface-container-lowest p-space-md flex flex-col gap-1">
           <span class="flex items-center justify-between gap-2"><span class="font-headline-sm text-headline-sm text-on-surface">${escapeHtml(t.name)}</span>${t.available ? renderLeadBadge('bg-secondary-fixed text-on-secondary-fixed', 'check_circle', 'Available') : renderLeadBadge('bg-surface-container-highest text-on-surface-variant', 'event_busy', 'On leave')}</span>
           <span class="font-body-sm text-body-sm text-on-surface-variant">${escapeHtml(t.role)} · ${t.zones.map(escapeHtml).join(', ')}</span>
-          <span class="font-label-sm text-label-sm text-on-surface-variant">${active} active job${active === 1 ? '' : 's'} · demo roster</span>
+          ${active ? `<button type="button" onclick="filterTechJobsByTech('${t.techId}')" aria-pressed="${currentTechFilterTechId === t.techId}" class="self-start font-label-md text-label-md text-primary underline rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary">${active} active job${active === 1 ? '' : 's'} · show jobs</button>` : '<span class="font-label-sm text-label-sm text-on-surface-variant">0 active jobs</span>'}
+          <span class="font-label-sm text-label-sm text-on-surface-variant">${escapeHtml(t.techId)} · demo roster</span>
         </li>`;
     }).join('');
   }
@@ -9279,6 +9528,7 @@ html { -webkit-tap-highlight-color: transparent; }
     goToProfileFromChat(customerId);
   }
 
+
   // Seed: derive jobs from existing records, then give the repair job a demo schedule and crew.
   syncTechJobs();
   (function seedTechDemoState() {
@@ -9287,6 +9537,8 @@ html { -webkit-tap-highlight-color: transparent; }
     scheduleTechJob(repair.jobId, '2026-11-01 15:00');
     assignTechJob(repair.jobId, 'TECH-01');
   })();
+  ticketFieldJobsReady = true;
+  renderTicketTable(); // rows can now show field technicians
   renderTechView();
   // New survey requests or escalations appear when the view is opened.
   window.addEventListener('hashchange', () => { if (window.location.hash === '#technicians') { syncTechJobs(); renderTechView(); } });
@@ -9389,6 +9641,8 @@ html { -webkit-tap-highlight-color: transparent; }
       conversations: conversations.length,
       aiHandled: conversations.filter(c => c.status === 'ai_handling').length,
       humanHandled: conversations.filter(c => c.status === 'human_takeover').length,
+      awaitingHumanReply: getInboxQueueCounts().awaiting,
+      unreadConversations: getInboxQueueCounts().unread,
       byChannel: ADMIN_CHANNELS.map(c => ({ label: c.label, value: conversations.filter(x => x.channel === c.key).length })),
       tickets: tickets.length,
       openTickets: openTickets.length,
@@ -9488,6 +9742,16 @@ html { -webkit-tap-highlight-color: transparent; }
     if (!grid) return;
     const m = getCrmMetrics();
     const na = 'Not available in demo data';
+    const queueBox = document.getElementById('analytics-queue');
+    if (queueBox) {
+      queueBox.innerHTML = `<button type="button" onclick="openInboxQueue('awaiting')" class="w-full text-left rounded-xl bg-surface-container-lowest p-space-lg flex flex-wrap items-center justify-between gap-space-sm hover:bg-surface-container-low focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary transition-colors" aria-describedby="analytics-queue-note">
+          <span class="flex flex-col gap-1">
+            <span class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2"><span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">support_agent</span>Awaiting human reply</span>
+            <span id="analytics-queue-note" class="font-body-sm text-body-sm text-on-surface-variant">Chats handed off from AI to staff with no staff reply since the handoff. Reading a chat does not clear it. ${m.unreadConversations} unread chat${m.unreadConversations === 1 ? '' : 's'} in total.</span>
+          </span>
+          <span class="flex items-center gap-space-sm"><span class="font-code-metric text-code-metric text-on-surface">${m.awaitingHumanReply}</span><span class="font-label-md text-label-md text-primary flex items-center gap-1">Open queue<span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span></span></span>
+        </button>`;
+    }
     grid.innerHTML = [
       renderAnalyticsCard('Conversations', `${m.conversations} chats · ${m.aiHandled} AI-handled, ${m.humanHandled} with staff`, renderBarList(m.byChannel, 'No chats.')),
       renderAnalyticsCard('Tickets', `${m.openTickets} open of ${m.tickets} · avg resolution ${m.avgResolutionHours === null ? na.toLowerCase() : `${m.avgResolutionHours.toFixed(1)} h (${m.resolutionSample} resolved tickets)`} · first response time: ${na.toLowerCase()}`, renderBarList(m.ticketsByStatus.filter(r => r.value), 'No tickets.')),
@@ -10239,6 +10503,11 @@ html { -webkit-tap-highlight-color: transparent; }
     return conns.find(c => c.isPrimary) || conns[0] || null;
   }
 
+  // The origin (ticket/chat) only applies while the workbench shows that origin's subscriber.
+  function diagOriginMatches(customerId) {
+    return !!(currentDiagOrigin && currentDiagOrigin.customerId === customerId);
+  }
+
   function recordDiagnosticSession(sessionData) {
     const num = diagnosticSessions.length + 1;
     const padNum = String(num).padStart(3, '0');
@@ -10266,8 +10535,8 @@ html { -webkit-tap-highlight-color: transparent; }
       outcome: sessionData.outcome || sessionData.severity || 'Healthy',
       timestamp: sessionData.timestamp || new Date().toISOString(),
       timeStr: sessionData.timeStr || 'Just now',
-      ticketId: sessionData.ticketId || (currentDiagOrigin && currentDiagOrigin.ticketId) || null,
-      conversationId: sessionData.conversationId || (currentDiagOrigin && currentDiagOrigin.conversationId) || null
+      ticketId: sessionData.ticketId || (diagOriginMatches(sessionData.customerId || currentDiagCustomerId) && currentDiagOrigin.ticketId) || null,
+      conversationId: sessionData.conversationId || (diagOriginMatches(sessionData.customerId || currentDiagCustomerId) && currentDiagOrigin.conversationId) || null
     };
 
     diagnosticSessions.unshift(newSession);
@@ -10894,27 +11163,35 @@ html { -webkit-tap-highlight-color: transparent; }
 
     const tkt = tickets.find(t => t.ticketId === currentDiagOrigin.ticketId);
     if (!tkt) return;
+    if (!diagOriginMatches(currentDiagCustomerId)) {
+      showToast('Not Synced', `The workbench now shows a different subscriber than ${tkt.ticketId}. Switch back to ${tkt.customerName} to sync.`);
+      return;
+    }
 
-    const activeSession = diagnosticSessions[0];
-    const sessionId = activeSession ? activeSession.sessionId : `DIAG-${Date.now()}`;
-    const assessment = assessDiagnosticCondition(currentDiagWorkflowKey, currentDiagResponses, currentDiagCircuitId);
+    // Newest session for this ticket; if none yet, record the on-screen assessment once.
+    let session = diagnosticSessions.find(d => d.ticketId === tkt.ticketId && d.customerId === currentDiagCustomerId);
+    if (!session) {
+      const assessment = assessDiagnosticCondition(currentDiagWorkflowKey, currentDiagResponses, currentDiagCircuitId);
+      session = recordDiagnosticSession({ status: 'ASSESSED', severity: assessment.severity, outcome: assessment.outcome,
+        recommendations: [assessment.recommendation], nextAction: assessment.nextAction, ticketId: tkt.ticketId });
+    }
+    if (tkt.history.some(h => h.sessionId === session.sessionId)) {
+      showToast('Already Synced', `${session.sessionId} is already in ${tkt.ticketId}'s history.`);
+      return;
+    }
 
-    const note = `Diagnostic Session ${sessionId} (${currentDiagWorkflowKey}) synced from AI Diagnostics Workbench for circuit ${currentDiagCircuitId}. Outcome: ${assessment.outcome} (${assessment.severity}). Recommendation: ${assessment.recommendation}`;
-
+    tkt.updatedAt = new Date().toISOString();
     tkt.history.push({
-      timestamp: new Date().toISOString(),
+      timestamp: tkt.updatedAt,
       timeStr: 'Just now',
       author: 'AI Troubleshooting Copilot',
       action: 'DIAGNOSTIC_EXEC',
-      notes: note
+      sessionId: session.sessionId,
+      notes: `Diagnostic session ${session.sessionId} (${session.diagnosticType}, circuit ${session.circuitId}) synced from AI Diagnostics Workbench. Outcome: ${session.outcome} (${session.severity}). Recommendation: ${(session.recommendations || [])[0] || 'none'}. Simulated assessment, not a live network measurement.`
     });
 
-    if (assessment.outcome === 'Resolved') {
-      tkt.resolutionSummary = (tkt.resolutionSummary ? tkt.resolutionSummary + '; ' : '') + `Resolved via AI Diagnostic Session ${sessionId}: ${assessment.recommendation}`;
-    }
-
     renderTicketHistory(tkt);
-    showToast('Diagnostic Synced', `Diagnostic session ${sessionId} recorded in Ticket ${tkt.ticketId} audit history.`);
+    showToast('Diagnostic Synced', `${session.sessionId} added to ${tkt.ticketId} history. Use Sync to Resolution in the ticket to add it to the resolution notes.`);
   }
 
   function markDiagnosticResolved() {
@@ -10931,8 +11208,8 @@ html { -webkit-tap-highlight-color: transparent; }
       status: 'RESOLVED',
       severity: 'Resolved',
       outcome: 'Resolved',
-      recommendations: [`Subscriber issue verified resolved through ${wf.title}. Equipment operating nominally.`],
-      nextAction: 'Session resolved and documented in subscriber timeline.'
+      recommendations: [`Agent marked the ${wf.title} check resolved (agent judgement; simulated tools, no live device data).`],
+      nextAction: 'Ticket status is unchanged; resolve the linked ticket separately if appropriate.'
     });
 
     currentDiagStageIndex = 0;
@@ -10940,7 +11217,7 @@ html { -webkit-tap-highlight-color: transparent; }
 
     renderDiagWorkflowUI();
     renderDiagHistoryUI();
-    showToast('Diagnostic Resolved', `Marked ${wf.title} as Resolved for circuit ${conn.circuitId}.`);
+    showToast('Diagnostic Check Resolved', `${wf.title} check on ${conn.circuitId} marked resolved by the agent. Any linked ticket stays open until resolved there.`);
   }
 
   function openDiagnosticsFromProfile(customerId, targetCircuitId) {
@@ -11231,7 +11508,7 @@ html { -webkit-tap-highlight-color: transparent; }
     if (nextActionText) nextActionText.textContent = assessment.nextAction;
 
     if (syncBtn) {
-      if (currentDiagOrigin && currentDiagOrigin.ticketId) {
+      if (currentDiagOrigin && currentDiagOrigin.ticketId && diagOriginMatches(currentDiagCustomerId)) {
         syncBtn.classList.remove('hidden');
         const span = syncBtn.querySelector ? syncBtn.querySelector('span:last-child') : null;
         if (span) span.textContent = `Sync to #${currentDiagOrigin.ticketId}`;
